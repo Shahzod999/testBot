@@ -10,6 +10,7 @@ interface HeaderProps {
 }
 
 const Header = ({ img }: HeaderProps) => {
+  
   return (
     <header>
       <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
