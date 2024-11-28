@@ -1,0 +1,126 @@
+.mainInfo {
+  border-radius: 20px;
+  padding: 19px 16px;
+  background-color: #fff;
+
+  &__logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    &__name {
+      flex: 1;
+      h2 {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 131%;
+        letter-spacing: -0.02em;
+        color: #000;
+      }
+      span {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 131%;
+        letter-spacing: -0.02em;
+        color: #000;
+      }
+    }
+  }
+  &__shortText {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 138%;
+    letter-spacing: -0.01em;
+    color: rgba(60, 60, 67, 0.6);
+    margin-top: 16px;
+    padding-bottom: 12px;
+    border-bottom: 0.5px solid #d1d1d6;
+  }
+  &__openHours {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    line-height: 138%;
+    letter-spacing: -0.01em;
+    text-align: center;
+    &__divider {
+      display: flex;
+      justify-content: center;
+      flex: 1;
+      div {
+        height: 32px;
+        width: 1px;
+        background-color: #d1d1d6;
+        margin: 10px 0;
+      }
+    }
+    &__left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      text-align: center;
+      flex: 1;
+      span {
+        font-size: 13px;
+        color: #007aff;
+      }
+    }
+    &__right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      text-align: center;
+      flex: 1;
+      span {
+        font-size: 13px;
+        color: rgba(60, 60, 67, 0.6);
+      }
+    }
+  }
+  &__orderbutton {
+    width: 100%;
+    padding: 13px 50px;
+    border-radius: 10px;
+    background: #007aff;
+    border: none;
+    color: white;
+
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 129%;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin: 12px 0;
+  }
+
+  .actionButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    button {
+      padding: 6px 0;
+      border-radius: 10px;
+      background: rgba(118, 118, 128, 0.12);
+      border: none;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      flex: 1;
+
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 133%;
+      color: #000;
+    }
+  }
+}

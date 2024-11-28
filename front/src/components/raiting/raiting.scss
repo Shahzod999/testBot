@@ -1,0 +1,66 @@
+.raiting {
+  border-radius: 20px;
+  background-color: #fff;
+  &__count {
+    display: flex;
+    align-items: center;
+    // gap: 70px;
+    padding-bottom: 17px;
+    border-bottom: 0.5px solid #d1d1d6;
+    padding: 17px 16px;
+
+    p {
+      flex: 1;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 131%;
+      letter-spacing: -0.02em;
+      color: #000;
+
+      span {
+        color: #007aff;
+      }
+    }
+    strong {
+      flex: 1;
+      font-weight: 700;
+      font-size: 34px;
+      line-height: 121%;
+      letter-spacing: 0.01em;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+      svg {
+        fill: #ffcc00;
+      }
+    }
+  }
+
+  &__set {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // gap: 40px;
+    padding: 17px 16px;
+    .active {
+      fill: #ffcc00;
+    }
+
+    p {
+      flex: 1;
+    }
+
+    strong {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+      svg {
+        fill: #d9d9d9;
+      }
+    }
+  }
+}
