@@ -18,3 +18,16 @@ a {
   text-decoration: none;
   color: inherit;
 }
+.errorText {
+  display: block;
+  text-align: center;
+  color: red;
+}
+
+.commonCross {
+  display: grid;
+  place-items: center;
+  background-color: rgba(118, 118, 128, 0.12);
+  border-radius: 50%;
+  padding: 10px;
+}

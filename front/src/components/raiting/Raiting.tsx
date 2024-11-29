@@ -1,12 +1,19 @@
+import { useState } from "react";
 import "./raiting.scss";
 import { IoIosStar } from "react-icons/io";
-import AddComment from "./AddComment";
+import AddComment from "./AddComment/AddComment";
 import RaitingStars from "./RaitingStars";
 
 const Raiting = () => {
+  const [openComment, setOpenCommet] = useState(false);
+
+  const toggleComment = () => {
+    setOpenCommet(!openComment);
+  };
+
   return (
     <>
-      <div className="raiting">
+      <div className="raiting" onClick={toggleComment}>
         <div className="raiting__count">
           <p>
             На основе 16 отзывов людей из <span>Google</span>
@@ -18,7 +25,8 @@ const Raiting = () => {
         </div>
         <RaitingStars />
       </div>
-      <AddComment />
+
+      <AddComment openComment={openComment} toggleComment={toggleComment} />
     </>
   );
 };
