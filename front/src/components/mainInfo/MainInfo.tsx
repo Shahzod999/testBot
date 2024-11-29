@@ -19,11 +19,14 @@ const MainInfo = ({ data }: { data: CompanyState }) => {
   return (
     <div className="mainInfo">
       <div className="mainInfo__logo">
-        <img src="" alt="logo" />
+        <div className="mainInfo__logo__img">
+          <img src={data.logo} alt="logo" />
+        </div>
         <div className="mainInfo__logo__name">
           <h2>{data.name}</h2>
           <span>{data.type}</span>
         </div>
+
         <span onClick={toggleBookMark} className="mainInfo__logo__bookMark">
           {bookMark ? <GoBookmarkFill /> : <GoBookmark />}
         </span>
@@ -55,9 +58,9 @@ const MainInfo = ({ data }: { data: CompanyState }) => {
       </button>
 
       <div className="actionButtons">
-        <ActionButtons text="Такси" icon={<BsFillTaxiFrontFill />}/>
-        <ActionButtons text="Чат" icon={<BsChatFill />}/>
-        <ActionButtons text="Маршрут" icon={<FaMap />}/>
+        <ActionButtons text="Такси" icon={<BsFillTaxiFrontFill />} />
+        <ActionButtons text="Чат" icon={<BsChatFill />} />
+        <ActionButtons text="Маршрут" icon={<FaMap />} />
         <ActionButtons text="Поделиться" icon={<FaShareAlt />} />
       </div>
     </div>

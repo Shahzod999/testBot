@@ -59,3 +59,12 @@
     }
   }
 }
+.actions--disabled {
+  opacity: 0.5; /* Снижает прозрачность */
+  pointer-events: none; /* Делает элемент недоступным для кликов */
+}
+
+.actions__text--disabled {
+  text-decoration: line-through;
+  color: red; /* Красный цвет для визуализации */
+}
