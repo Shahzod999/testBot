@@ -44,8 +44,11 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      border: none;
+      background-color: transparent;
+      width: 100%;
 
-      svg{
+      svg {
         fill: #000;
       }
 
@@ -64,23 +67,21 @@
         line-height: 131%;
         letter-spacing: -0.02em;
         color: #000;
+        text-align: left;
 
         &--disabled {
           text-decoration: line-through;
-          color: red;
-          /* Красный цвет для визуализации */
+          color: rgb(174, 0, 0);
         }
       }
 
       &__icons {
         padding-left: 16px;
-        font-size: 18px;
 
         &--disabled {
           text-decoration: line-through;
-
           svg {
-            fill: red;
+            fill: red !important;
           }
         }
       }

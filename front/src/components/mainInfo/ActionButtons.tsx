@@ -6,7 +6,9 @@ export interface ActionProps {
 const ActionButtons = ({ text, icon }: ActionProps) => {
   return (
     <button>
-      <img src={icon} alt="" />
+      <object type="image/svg+xml" data={icon}>
+        Your browser does not support SVG
+      </object>
       <span>{text}</span>
     </button>
   );

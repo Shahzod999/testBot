@@ -1,0 +1,26 @@
+import React from "react";
+import "./bottomSheet.scss";
+
+interface BottomSheetProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
+
+const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
+  return (
+    <div className="bottom__wrapper">
+      <div className={`bottom-sheet ${isOpen ? "bottom-sheet--open" : ""}`}>
+        <div className="bottom-sheet__overlay" onClick={onClose}></div>
+        <div className="bottom-sheet__content">
+          <div className="bottom-sheet__close" onClick={onClose}>
+            <div></div>
+          </div>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BottomSheet;

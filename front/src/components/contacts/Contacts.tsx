@@ -1,13 +1,9 @@
+import { useState } from "react";
 import { ContactsActions } from "./ContactsActions";
-import { TbAppsFilled } from "react-icons/tb";
-import { TbMessageChatbotFilled } from "react-icons/tb";
-import { IoCall } from "react-icons/io5";
-import { IoEarth } from "react-icons/io5";
-import { GoClockFill } from "react-icons/go";
-import { IoNavigateCircle } from "react-icons/io5";
-import { FaAddressCard } from "react-icons/fa6";
 import "./contacts.scss";
 import { CompanyState } from "../../app/types/companyType";
+import UserApps from "./Actions/UserApps";
+import BottomSheet from "./Actions/BottomSheet";
 
 const getAvailableSocialMedia = (socialMedia: Record<string, string | any | null>): string => {
   const names = Object.entries(socialMedia)
@@ -16,76 +12,134 @@ const getAvailableSocialMedia = (socialMedia: Record<string, string | any | null
   return names.length > 0 ? names.join(", ") : "Соцсети не указаны";
 };
 
-const createActionText = (field: any, fallback: string): { text: string; isDisabled: boolean } => {
-  if (field) {
-    return {
-      text: typeof field === "string" ? field : JSON.stringify(field),
-      isDisabled: false,
-    };
-  }
-  return { text: fallback, isDisabled: true };
-};
-
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   if (!companyInfo) return null;
 
   const actions = [
     {
-      ...createActionText(companyInfo.mobile_apps?.android || companyInfo.mobile_apps?.ios, "Приложение недоступно"),
-      icon: <TbAppsFilled />,
+      text: "Мобильные приложения",
+      icon: "./Vector.svg",
+      isDisabled: !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
+      key: "apps",
     },
     {
-      text: getAvailableSocialMedia(companyInfo.social_media || {}),
-      icon: <TbMessageChatbotFilled />,
+      text: getAvailableSocialMedia(companyInfo.social_media || {}) || "Нет Сетей",
+      icon: "smileCircle.svg",
       isDisabled: !Object.values(companyInfo.social_media || {}).some((url) => url),
+      key: "socialMedia",
     },
     {
-      ...createActionText(companyInfo.phone_number, "Телефон не указан"),
-      icon: <IoCall />,
+      text: companyInfo?.phone_number || "Нет Номера",
+      icon: "phone.svg",
+      isDisabled: !companyInfo?.phone_number,
+      key: "phone",
     },
     {
-      ...createActionText(companyInfo.website.replace("https://", ""), "Сайт не указан"),
-      icon: <IoEarth />,
+      text: companyInfo.website.replace("https://", "") || "Нет Сайта",
+      isDisabled: !companyInfo.website,
+      icon: "australia.svg",
+      key: "map",
     },
     {
       text: "Открыто до 22:00",
-      icon: <GoClockFill />,
+      icon: "Exclude.svg",
       isDisabled: false,
+      key: "workingHours",
     },
     {
-      ...createActionText(companyInfo.address, "Адрес не указан"),
-      icon: <IoNavigateCircle />,
+      text: companyInfo.address || "Нет Адресса",
+      isDisabled: !companyInfo.address,
+      icon: "location.svg",
+      key: "location",
     },
     {
       text: "Доступные вакансии (2)",
-      icon: <FaAddressCard />,
+      icon: "person.svg",
       isDisabled: false,
+      key: "person",
     },
   ];
 
+  const [openActions, setOpenActions] = useState(false);
+  const [activeAction, setActiveAction] = useState<string | null>(null);
+
+  const toggleActions = () => {
+    setOpenActions(!openActions);
+  };
+
+  const handleActionClick = (key: string) => {
+    setActiveAction(key);
+  };
+  const closeBottomSheet = () => {
+    setActiveAction(null);
+  };
+
   return (
-    <div className="contacts">
-      <div className="contacts__header">
-        <h2>Контакты</h2>
-        <button>
-          <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M17.5937 15L16.7603 15.9117C16.3183 16.3951 15.7189 16.6667 15.0939 16.6667C14.4688 16.6667 13.8694 16.3951 13.4274 15.9117C12.9848 15.4293 12.3854 15.1584 11.7606 15.1584C11.1357 15.1584 10.5364 15.4293 10.0937 15.9117M2.59375 16.6667H3.9892C4.39685 16.6667 4.60068 16.6667 4.79249 16.6206C4.96255 16.5798 5.12513 16.5124 5.27425 16.4211C5.44244 16.318 5.58657 16.1739 5.87482 15.8856L16.3438 5.41666C17.0341 4.72631 17.0341 3.60702 16.3438 2.91666C15.6534 2.22631 14.5341 2.22631 13.8438 2.91666L3.3748 13.3856C3.08655 13.6739 2.94242 13.818 2.83935 13.9862C2.74797 14.1353 2.68063 14.2979 2.6398 14.4679C2.59375 14.6598 2.59375 14.8636 2.59375 15.2712V16.6667Z"
-              stroke="black"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Редактировать
-        </button>
+    <>
+      <div className="contacts">
+        <div className="contacts__header">
+          <h2>Контакты</h2>
+          <button>
+            <object type="image/svg+xml" data="./edit.svg">
+              Your browser does not support SVG
+            </object>
+            Редактировать
+          </button>
+        </div>
+        <div className="contacts__actions">
+          {actions.map(({ text, icon, isDisabled, key }) => (
+            <div onClick={() => !isDisabled && handleActionClick(key)} key={key}>
+              <ContactsActions text={text} icon={icon} isDisabled={isDisabled} />
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="contacts__actions">
-        {actions.map(({ text, icon, isDisabled }, index) => (
-          <ContactsActions key={index} text={text} icon={icon} isDisabled={isDisabled} />
-        ))}
-      </div>
-    </div>
+
+      <BottomSheet isOpen={!!activeAction} onClose={closeBottomSheet}>
+        {activeAction === "apps" && (
+          <div>
+            <h3>Скачать приложения</h3>
+            <a href={companyInfo.mobile_apps?.android} target="_blank" rel="noopener noreferrer">
+              Google Play
+            </a>
+            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+              App Store
+            </a>
+          </div>
+        )}
+        {activeAction === "socialMedia" && (
+          <div>
+            <h3>Социальные сети</h3>
+            {Object.entries(companyInfo.social_media || {})
+              .filter(([_, url]) => url)
+              .map(([name, url]) => (
+                <a key={name} href={url} target="_blank" rel="noopener noreferrer">
+                  {name}
+                </a>
+              ))}
+          </div>
+        )}
+        {activeAction === "workingHours" && (
+          <div>
+            <h3>График работы</h3>
+            <p>Понедельник - Пятница: 10:00 - 22:00</p>
+            <p>Суббота - Воскресенье: 12:00 - 20:00</p>
+          </div>
+        )}
+        {activeAction === "location" && (
+          <div>
+            <h3>Адрес</h3>
+            <p>{companyInfo.address}</p>
+            <a href={`https://maps.google.com/?q=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+              Открыть в Google Maps
+            </a>
+            <a href={`https://yandex.ru/maps/?text=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+              Открыть в Яндекс.Картах
+            </a>
+          </div>
+        )}
+      </BottomSheet>
+    </>
   );
 };
 
