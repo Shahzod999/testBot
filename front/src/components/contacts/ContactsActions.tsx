@@ -6,7 +6,7 @@ interface ContactProps extends ActionProps {
 
 export const ContactsActions = ({ text, icon, isDisabled }: ContactProps) => {
   return (
-    <button className={`actions ${isDisabled ? "actions--disabled" : ""}`}>
+    <button className={`actions pressEffefct ${isDisabled ? "actions--disabled" : ""}`}>
       <span className={`actions__icons ${isDisabled ? "actions__icons--disabled" : ""}`}>
         <object type="image/svg+xml" data={icon}>
           Your browser does not support SVG

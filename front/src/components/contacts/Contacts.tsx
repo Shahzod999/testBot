@@ -2,10 +2,11 @@ import { useState } from "react";
 import { ContactsActions } from "./ContactsActions";
 import "./contacts.scss";
 import { CompanyState } from "../../app/types/companyType";
-import UserApps from "./Actions/UserApps";
-import BottomSheet from "./Actions/BottomSheet";
+import BottomSheet from "../Actions/BottomSheet";
 
-const getAvailableSocialMedia = (socialMedia: Record<string, string | any | null>): string => {
+const getAvailableSocialMedia = (
+  socialMedia: Record<string, string | any | null>,
+): string => {
   const names = Object.entries(socialMedia)
     .filter(([_, url]) => url)
     .map(([name]) => name);
@@ -13,19 +14,25 @@ const getAvailableSocialMedia = (socialMedia: Record<string, string | any | null
 };
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const [activeAction, setActiveAction] = useState<string | null>(null);
+
   if (!companyInfo) return null;
 
   const actions = [
     {
       text: "Мобильные приложения",
       icon: "./Vector.svg",
-      isDisabled: !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
+      isDisabled:
+        !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
       key: "apps",
     },
     {
-      text: getAvailableSocialMedia(companyInfo.social_media || {}) || "Нет Сетей",
+      text:
+        getAvailableSocialMedia(companyInfo.social_media || {}) || "Нет Сетей",
       icon: "smileCircle.svg",
-      isDisabled: !Object.values(companyInfo.social_media || {}).some((url) => url),
+      isDisabled: !Object.values(companyInfo.social_media || {}).some(
+        (url) => url,
+      ),
       key: "socialMedia",
     },
     {
@@ -35,7 +42,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       key: "phone",
     },
     {
-      text: companyInfo.website.replace("https://", "") || "Нет Сайта",
+      text: companyInfo?.website?.replace("https://", "") || "Нет Сайта",
       isDisabled: !companyInfo.website,
       icon: "australia.svg",
       key: "map",
@@ -60,13 +67,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     },
   ];
 
-  const [openActions, setOpenActions] = useState(false);
-  const [activeAction, setActiveAction] = useState<string | null>(null);
-
-  const toggleActions = () => {
-    setOpenActions(!openActions);
-  };
-
   const handleActionClick = (key: string) => {
     setActiveAction(key);
   };
@@ -79,7 +79,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <div className="contacts">
         <div className="contacts__header">
           <h2>Контакты</h2>
-          <button>
+          <button className="pressEffefct">
             <object type="image/svg+xml" data="./edit.svg">
               Your browser does not support SVG
             </object>
@@ -88,8 +88,14 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         </div>
         <div className="contacts__actions">
           {actions.map(({ text, icon, isDisabled, key }) => (
-            <div onClick={() => !isDisabled && handleActionClick(key)} key={key}>
-              <ContactsActions text={text} icon={icon} isDisabled={isDisabled} />
+            <div
+              onClick={() => !isDisabled && handleActionClick(key)}
+              key={key}>
+              <ContactsActions
+                text={text}
+                icon={icon}
+                isDisabled={isDisabled}
+              />
             </div>
           ))}
         </div>
@@ -97,26 +103,43 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
       <BottomSheet isOpen={!!activeAction} onClose={closeBottomSheet}>
         {activeAction === "apps" && (
-          <div>
-            <h3>Скачать приложения</h3>
-            <a href={companyInfo.mobile_apps?.android} target="_blank" rel="noopener noreferrer">
-              Google Play
-            </a>
-            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
-              App Store
-            </a>
+          <div className="socialMedia">
+            <h3>Мобильное приложение заведении</h3>
+            <div className="socialMedia__icons">
+              <a
+                href={companyInfo.mobile_apps?.android}
+                target="_blank"
+                rel="noopener noreferrer">
+                <img src="./GooglePlay.png" alt="" />
+              </a>
+              <a
+                href={companyInfo.mobile_apps?.ios}
+                target="_blank"
+                rel="noopener noreferrer">
+                <img src="./AppStore.png" alt="" />
+              </a>
+            </div>
           </div>
         )}
         {activeAction === "socialMedia" && (
-          <div>
-            <h3>Социальные сети</h3>
-            {Object.entries(companyInfo.social_media || {})
-              .filter(([_, url]) => url)
-              .map(([name, url]) => (
-                <a key={name} href={url} target="_blank" rel="noopener noreferrer">
-                  {name}
-                </a>
-              ))}
+          <div className="socialMedia">
+            <h3>Переход на страницы</h3>
+            <div className="socialMedia__icons">
+              {Object.entries(companyInfo.social_media || {})
+                .filter(([_, url]) => url)
+                .map(([name, url]) => (
+                  <a
+                    key={name}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <div className="socialMedia__icons__logo">
+                      <img src={`./${name}.png`} alt="" />
+                    </div>
+                    <span>{name}</span>
+                  </a>
+                ))}
+            </div>
           </div>
         )}
         {activeAction === "workingHours" && (
@@ -127,15 +150,36 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
         )}
         {activeAction === "location" && (
-          <div>
-            <h3>Адрес</h3>
-            <p>{companyInfo.address}</p>
-            <a href={`https://maps.google.com/?q=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
-              Открыть в Google Maps
-            </a>
-            <a href={`https://yandex.ru/maps/?text=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
-              Открыть в Яндекс.Картах
-            </a>
+          <div className="socialMedia">
+            <div className="socialMedia__icons">
+              <a
+                href={`https://maps.google.com/?q=${encodeURIComponent(
+                  companyInfo.address || "",
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer">
+                <img src="./yandex.png" alt="" />
+                <span>Яндекс карты</span>
+              </a>
+              <a
+                href={`https://yandex.ru/maps/?text=${encodeURIComponent(
+                  companyInfo.address || "",
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer">
+                <img src="./2gis.png" alt="" />
+                <span>2ГИС</span>
+              </a>
+              <a
+                href={`https://yandex.ru/maps/?text=${encodeURIComponent(
+                  companyInfo.address || "",
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer">
+                <img src="./googleMaps.png" alt="" />
+                <span>Google карты</span>
+              </a>
+            </div>
           </div>
         )}
       </BottomSheet>

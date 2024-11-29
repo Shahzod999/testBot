@@ -9,7 +9,11 @@ interface BottomSheetProps {
 
 const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
   return (
-    <div className="bottom__wrapper">
+    <>
+      <div
+        className={`bottom__wrapper ${isOpen ? "bottom__wrapper--active" : ""}`}
+        onClick={onClose}></div>
+
       <div className={`bottom-sheet ${isOpen ? "bottom-sheet--open" : ""}`}>
         <div className="bottom-sheet__overlay" onClick={onClose}></div>
         <div className="bottom-sheet__content">
@@ -19,7 +23,7 @@ const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
           {children}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

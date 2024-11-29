@@ -80,6 +80,7 @@
 
         &--disabled {
           text-decoration: line-through;
+
           svg {
             fill: red !important;
           }
@@ -88,3 +89,5 @@
     }
   }
 }
+
+

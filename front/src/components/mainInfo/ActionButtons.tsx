@@ -5,12 +5,10 @@ export interface ActionProps {
 
 const ActionButtons = ({ text, icon }: ActionProps) => {
   return (
-    <button>
-      <object type="image/svg+xml" data={icon}>
-        Your browser does not support SVG
-      </object>
+    <>
+      <img src={icon} alt="icons" />
       <span>{text}</span>
-    </button>
+    </>
   );
 };
 

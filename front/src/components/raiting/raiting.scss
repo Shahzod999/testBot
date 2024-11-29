@@ -1,6 +1,7 @@
 .raiting {
   border-radius: 20px;
   background-color: #fff;
+  margin-bottom: 2px;
 
   &__count {
     display: flex;
@@ -18,7 +19,7 @@
       letter-spacing: -0.02em;
       color: #000;
 
-      span {
+      a {
         color: #007aff;
       }
     }
