@@ -14,14 +14,17 @@
       height: 48px;
       border-radius: 50%;
       overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
     }
+
     &__name {
       flex: 1;
+
       h2 {
         font-weight: 600;
         font-size: 16px;
@@ -29,6 +32,7 @@
         letter-spacing: -0.02em;
         color: #000;
       }
+
       span {
         font-weight: 400;
         font-size: 16px;
@@ -37,8 +41,10 @@
         color: #000;
       }
     }
+
     &__bookMark {
       font-size: 23px;
+
       svg {
         fill: #3c3c43;
         stroke: #3c3c43;
@@ -46,6 +52,7 @@
       }
     }
   }
+
   &__shortText {
     font-weight: 400;
     font-size: 13px;
@@ -56,6 +63,7 @@
     padding-bottom: 12px;
     border-bottom: 0.5px solid #d1d1d6;
   }
+
   &__openHours {
     display: flex;
     align-items: center;
@@ -64,10 +72,13 @@
     line-height: 138%;
     letter-spacing: -0.01em;
     text-align: center;
+    color: #000;
+
     &__divider {
       display: flex;
       justify-content: center;
       flex: 1;
+
       div {
         height: 32px;
         width: 1px;
@@ -75,6 +86,7 @@
         margin: 10px 0;
       }
     }
+
     &__left {
       display: flex;
       flex-direction: column;
@@ -82,11 +94,13 @@
 
       text-align: center;
       flex: 1;
+
       span {
         font-size: 13px;
         color: #007aff;
       }
     }
+
     &__right {
       display: flex;
       flex-direction: column;
@@ -94,12 +108,14 @@
 
       text-align: center;
       flex: 1;
+
       span {
         font-size: 13px;
         color: rgba(60, 60, 67, 0.6);
       }
     }
   }
+
   &__orderbutton {
     width: 100%;
     padding: 13px 50px;
@@ -117,12 +133,21 @@
     justify-content: center;
     gap: 3px;
     margin: 12px 0;
+
+    &:hover {
+      filter: brightness(110%);
+    }
+
+    &:active {
+      filter: brightness(90%);
+    }
   }
 
   .actionButtons {
     display: flex;
     justify-content: space-between;
     gap: 8px;
+
     button {
       padding: 6px 0;
       border-radius: 10px;
@@ -140,6 +165,7 @@
       font-size: 12px;
       line-height: 133%;
       color: #000;
+
     }
   }
 }
