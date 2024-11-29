@@ -3,8 +3,9 @@ import "./raiting.scss";
 import { IoIosStar } from "react-icons/io";
 import AddComment from "./AddComment/AddComment";
 import RaitingStars from "./RaitingStars";
+import { CompanyState } from "../../app/types/companyType";
 
-const Raiting = () => {
+const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [openComment, setOpenCommet] = useState(false);
 
   const toggleComment = () => {
@@ -20,7 +21,7 @@ const Raiting = () => {
           </p>
           <strong>
             <IoIosStar size={27} />
-            4.9
+            {companyInfo?.rating}
           </strong>
         </div>
         <RaitingStars />

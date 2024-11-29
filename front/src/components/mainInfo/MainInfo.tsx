@@ -4,12 +4,8 @@ import { GoBookmark } from "react-icons/go";
 import { GoBookmarkFill } from "react-icons/go";
 import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
-import { FaShareAlt } from "react-icons/fa";
-import { FaMap } from "react-icons/fa";
-import { BsChatFill } from "react-icons/bs";
-import { BsFillTaxiFrontFill } from "react-icons/bs";
 
-const MainInfo = ({ data }: { data: CompanyState }) => {
+const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [bookMark, setBookMark] = useState(false);
 
   const toggleBookMark = () => {
@@ -20,11 +16,11 @@ const MainInfo = ({ data }: { data: CompanyState }) => {
     <div className="mainInfo">
       <div className="mainInfo__logo">
         <div className="mainInfo__logo__img">
-          <img src={data.logo} alt="logo" />
+          <img src={companyInfo.logoThumbnail} alt="logo" />
         </div>
         <div className="mainInfo__logo__name">
-          <h2>{data.name}</h2>
-          <span>{data.type}</span>
+          <h2>{companyInfo.name}</h2>
+          <span>{companyInfo.type}</span>
         </div>
 
         <span onClick={toggleBookMark} className="mainInfo__logo__bookMark">
@@ -43,7 +39,7 @@ const MainInfo = ({ data }: { data: CompanyState }) => {
         </div>
         <div className="mainInfo__openHours__right">
           <span>Расстояние</span>
-          <p>1.7 км</p>
+          <p>{companyInfo.distance}</p>
         </div>
       </div>
 
@@ -58,10 +54,10 @@ const MainInfo = ({ data }: { data: CompanyState }) => {
       </button>
 
       <div className="actionButtons">
-        <ActionButtons text="Такси" icon={<BsFillTaxiFrontFill />} />
-        <ActionButtons text="Чат" icon={<BsChatFill />} />
-        <ActionButtons text="Маршрут" icon={<FaMap />} />
-        <ActionButtons text="Поделиться" icon={<FaShareAlt />} />
+        <ActionButtons text="Такси" icon="./car.fill.svg" />
+        <ActionButtons text="Чат" icon="./message.fill.svg" />
+        <ActionButtons text="Маршрут" icon="./map.fill.svg" />
+        <ActionButtons text="Поделиться" icon="./Icon.svg" />
       </div>
     </div>
   );

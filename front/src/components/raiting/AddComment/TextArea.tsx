@@ -6,21 +6,21 @@ const TextArea = () => {
   const getProgressState = () => {
     const length = text.trim().length;
 
-    if (length === 0) return { state: "empty", message: "Поле не заполнено", level: -1 };
-    if (length < 10) return { state: "low", message: "Слишком мало текста", level: 0 };
+    if (length === 0) return { state: "empty", message: "Это слишком коротко.", level: -1 };
+    if (length < 10) return { state: "low", message: "Это слишком коротко.", level: 0 };
     if (length < 30)
       return {
         state: "medium",
-        message: "Неплохо, но можно подробнее",
+        message: "Это слишком коротко.",
         level: 1,
       };
     if (length < 50)
       return {
         state: "nice",
-        message: "Текст достаточно хороший",
+        message: "Выглядит хорошо. Добавьте ещё несколько слов.",
         level: 2,
       };
-    return { state: "good", message: "Отличный текст", level: 3 };
+    return { state: "good", message: "Замечательно. Поделитесь своим опытом.", level: 3 };
   };
 
   const progress = getProgressState();
@@ -32,10 +32,10 @@ const TextArea = () => {
       <div className="addComment__textArea__progress">
         <div className="progress-indicator">
           {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className={`progress-line ${index <= progress.level ? "active" : ""}`}></div>
+            <div key={index} className={`progress-line ${index <= progress.level ? progress.state : ""}`}></div>
           ))}
         </div>
-        <p className={`progress-message ${progress.state}`}>{progress.message}</p>
+        <p className="progress-message">{progress.message}</p>
       </div>
     </div>
   );

@@ -74,26 +74,28 @@
   }
 }
 
-.addComment {
+.commentsHolder {
+  z-index: 999;
   position: fixed;
-  top: 10px;
   bottom: 0;
+  top: 0;
   width: 100%;
-  z-index: 9;
-  background-color: #fff;
-  border-radius: 20px 20px 0 0;
-  padding: 20px 16px 0 16px;
-  overflow: scroll;
   transition: all 0.5s ease-in-out;
 
-  &--active {
-    position: fixed;
-    top: 10px;
-  }
   &--deActive {
-    position: fixed;
-    top: 150%;
+    transform: translateY(100%);
   }
+  &--active {
+    transform: translateY(0);
+  }
+}
+.addComment {
+  height: 100%;
+  margin-top: 10px;
+  background-color: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 20px 16px 200px 16px;
+  overflow: scroll;
 
   &__title {
     display: flex;
@@ -164,39 +166,34 @@
           background: #e0e0e0;
           border-radius: 3px;
 
-          &.active {
-            background: #007bff;
+          &.low {
+            background: #ff3b30;
           }
 
-          &.low.active {
-            background: #ff0000;
+          &.medium {
+            background: #ff9500;
+          }
+
+          &.nice {
+            background: #fc0;
+          }
+
+          &.good {
+            background: #34c759;
           }
         }
       }
 
       .progress-message {
         margin-top: 5px;
-        font-size: 14px;
-        color: #666;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 175%;
+        letter-spacing: -0.03em;
+        color: rgba(60, 60, 67, 0.5);
 
         &.empty {
           color: #aaa;
-        }
-
-        &.low {
-          color: #ff0000;
-        }
-
-        &.medium {
-          color: #ff9900;
-        }
-
-        &.nice {
-          color: green;
-        }
-
-        &.good {
-          color: #007bff;
         }
       }
     }
@@ -230,9 +227,9 @@
       position: relative;
       &__cross {
         position: absolute;
-        top: -10%;
-        right: -10%;
-        z-index: 999;
+        top: 0;
+        right: 0;
+        transform: translate(40%, -40%);
         background-color: #eeeeef;
         border-radius: 50%;
       }
@@ -276,12 +273,15 @@
 }
 
 .sendButton {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   text-align: center;
   padding: 16px;
   box-shadow: 0 -4px 12px 0 rgba(0, 0, 0, 0.05);
   background: #fff;
   border-radius: 16px 16px 0 0;
-  margin-top: 100px;
   p {
     font-weight: 400;
     font-size: 13px;

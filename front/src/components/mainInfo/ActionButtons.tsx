@@ -1,14 +1,12 @@
-import { ReactNode } from "react";
-
 export interface ActionProps {
   text: string;
-  icon: ReactNode;
+  icon: string;
 }
 
 const ActionButtons = ({ text, icon }: ActionProps) => {
   return (
     <button>
-      {icon}
+      <img src={icon} alt="" />
       <span>{text}</span>
     </button>
   );

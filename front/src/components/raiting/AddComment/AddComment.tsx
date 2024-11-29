@@ -15,21 +15,23 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   const companyInfo = useAppSelector(selectedCompany);
 
   return (
-    <div className={`addComment ${openComment ? "addComment--active" : "addComment--deActive"}`}>
-      <div className="addComment__title">
-        <h2>Оставьте отзыв</h2>
-        <Cross toggleComment={toggleComment} />
-      </div>
+    <div className={`commentsHolder ${openComment ? "commentsHolder--active" : "commentsHolder--deActive"}`}>
+      <div className={`addComment`}>
+        <div className="addComment__title">
+          <h2>Оставьте отзыв</h2>
+          <Cross toggleComment={toggleComment} />
+        </div>
 
-      <div className="addComment__info">
-        <h2>{companyInfo?.name}</h2>
-        <p className="adress">{companyInfo?.address}</p>
-      </div>
+        <div className="addComment__info">
+          <h2>{companyInfo?.name}</h2>
+          <p className="adress">{companyInfo?.address}</p>
+        </div>
 
-      <RaitingStars />
-      <TextArea />
-      <AddFoto />
-      <SendButton />
+        <RaitingStars />
+        <TextArea />
+        <AddFoto />
+        <SendButton />
+      </div>
     </div>
   );
 };
