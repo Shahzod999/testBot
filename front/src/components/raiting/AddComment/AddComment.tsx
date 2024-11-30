@@ -16,7 +16,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   const [imagesArray, setimagesArray] = useState<string[]>([]);
   const companyInfo = useAppSelector(selectedCompany);
   console.log(imagesArray);
-  
+
   return (
     <div className={`commentsHolder ${openComment ? "commentsHolder--active" : "commentsHolder--deActive"}`}>
       <div className={`addComment`}>
@@ -33,7 +33,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
         <RaitingStars />
         <TextArea />
 
-        <AddFoto imagesArray={imagesArray} setimagesArray={setimagesArray} />
+        <AddFoto imagesArray={imagesArray} setimagesArray={setimagesArray} id="addComments" />
 
         <SendButton text="Ваша оценка и отзыв будут видны всем" />
       </div>

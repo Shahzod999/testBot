@@ -27,7 +27,7 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <RaitingStars />
       </div>
 
-      <AddComment openComment={openComment} toggleComment={toggleComment}  />
+      <AddComment openComment={openComment} toggleComment={toggleComment} />
     </>
   );
 };

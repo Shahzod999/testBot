@@ -4,9 +4,10 @@ import Cross from "./Cross";
 interface addFotoProps {
   imagesArray: string[];
   setimagesArray: (images: string[]) => void;
+  id: string;
 }
 
-const AddFoto = ({ imagesArray, setimagesArray }: addFotoProps) => {
+const AddFoto = ({ imagesArray, setimagesArray, id }: addFotoProps) => {
   const [error, setError] = useState("");
 
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +40,7 @@ const AddFoto = ({ imagesArray, setimagesArray }: addFotoProps) => {
       <input
         accept="image/*"
         type="file"
-        id="addFoto__img"
+        id={id}
         onChange={(e) => {
           handleImagePreview(e);
         }}
@@ -57,7 +58,7 @@ const AddFoto = ({ imagesArray, setimagesArray }: addFotoProps) => {
           </div>
         ))}
 
-        <label htmlFor="addFoto__img">
+        <label htmlFor={id}>
           <img src="./camera.fill.svg" alt="" />
           <span>Добавить фотографию</span>
         </label>

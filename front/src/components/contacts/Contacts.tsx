@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { ContactsActions } from "./ContactsActions";
 import "./contacts.scss";
 import { CompanyState } from "../../app/types/companyType";
@@ -19,63 +19,60 @@ const getAvailableSocialMedia = (socialMedia: Record<string, string | any | null
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [error, setError] = useState("");
   const [imagesArrayNew, setimagesArrayNew] = useState<string[]>([]);
+  const [logoImg, setLogoImg] = useState(companyInfo?.logoThumbnail);
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
   if (!companyInfo) return null;
 
-  const actions = [
-    {
-      text: "Скачать приложения",
-      icon: "./Vector.svg",
-      isDisabled: !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
-      key: "apps",
-    },
-    {
-      text: getAvailableSocialMedia(companyInfo.social_media || {}) || "Нет Сетей",
-      icon: "smileCircle.svg",
-      isDisabled: !Object.values(companyInfo.social_media || {}).some((url) => url),
-      key: "socialMedia",
-    },
-    {
-      text: companyInfo?.phone_number || "Нет Номера",
-      icon: "phone.svg",
-      isDisabled: !companyInfo?.phone_number,
-      key: "phone",
-    },
-    {
-      text: companyInfo?.website?.replace("https://", "") || "Нет Сайта",
-      isDisabled: !companyInfo.website,
-      icon: "australia.svg",
-      key: "map",
-    },
-    {
-      text: "Открыто до 22:00",
-      icon: "Exclude.svg",
-      isDisabled: false,
-      key: "workingHours",
-    },
-    {
-      text: companyInfo.address || "Нет Адресса",
-      isDisabled: !companyInfo.address,
-      icon: "location.svg",
-      key: "location",
-    },
-    {
-      text: "Доступные вакансии (2)",
-      icon: "person.svg",
-      isDisabled: false,
-      key: "person",
-    },
-  ];
+  const actions = useMemo(
+    () => [
+      {
+        text: "Скачать приложения",
+        icon: "./Vector.svg",
+        isDisabled: !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
+        key: "apps",
+      },
+      {
+        text: getAvailableSocialMedia(companyInfo.social_media || {}) || "Нет Сетей",
+        icon: "smileCircle.svg",
+        isDisabled: !Object.values(companyInfo.social_media || {}).some((url) => url),
+        key: "socialMedia",
+      },
+      {
+        text: companyInfo?.phone_number || "Нет Номера",
+        icon: "phone.svg",
+        isDisabled: !companyInfo?.phone_number,
+        key: "phone",
+      },
+      {
+        text: companyInfo?.website?.replace("https://", "") || "Нет Сайта",
+        isDisabled: !companyInfo.website,
+        icon: "australia.svg",
+        key: "map",
+      },
+      {
+        text: "Открыто до 22:00",
+        icon: "Exclude.svg",
+        isDisabled: false,
+        key: "workingHours",
+      },
+      {
+        text: companyInfo.address || "Нет Адресса",
+        isDisabled: !companyInfo.address,
+        icon: "location.svg",
+        key: "location",
+      },
+      {
+        text: "Доступные вакансии (2)",
+        icon: "person.svg",
+        isDisabled: false,
+        key: "person",
+      },
+    ],
+    [companyInfo]
+  );
 
-  const handleActionClick = (key: string) => {
-    setActiveAction(key);
-  };
-  const closeBottomSheet = () => {
-    setActiveAction(null);
-  };
-
-  const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImagePreview = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       if (file.size > 1 * 1024 * 1024) {
@@ -85,12 +82,20 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        setimagesArrayNew([...imagesArrayNew, reader.result as string]);
+        setLogoImg(reader.result as string);
       };
       reader.onerror = (error) => {
         console.log("Error: ", error);
       };
     }
+  }, []);
+
+
+  const handleActionClick = (key: string) => {
+    setActiveAction(key);
+  };
+  const closeBottomSheet = () => {
+    setActiveAction(null);
   };
   console.log(imagesArrayNew, "222");
 
@@ -258,10 +263,10 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
           <div className="contacts__actions__fotoLogoEdit">
             <div className="contacts__actions__fotoLogoEdit__img">
-              <img src={companyInfo.logoThumbnail || "./imgDefault.png"} alt="" />
+              <img src={logoImg || "./imgDefault.png"} alt="" />
             </div>
 
-            <label htmlFor="addFoto__img">
+            <label htmlFor="addFoto__logo__img">
               <img src="./camera.fill.svg" alt="" />
               <span>Добавить фотографию</span>
             </label>
@@ -270,13 +275,13 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
               style={{ display: "none" }}
               accept="image/*"
               type="file"
-              id="addFoto__img"
+              id="addFoto__logo__img"
               onChange={(e) => {
                 handleImagePreview(e);
               }}
             />
           </div>
-          <AddFoto imagesArray={imagesArrayNew} setimagesArray={setimagesArrayNew}  />
+          <AddFoto imagesArray={imagesArrayNew} setimagesArray={setimagesArrayNew} id="addContacts"/>
 
           <h3 className="contacts__actions__title second__title">Оставьте комментарий</h3>
           <div className="contacts__actions__textArea">
