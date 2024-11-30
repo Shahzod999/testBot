@@ -72,6 +72,7 @@
       width: 100%;
       position: relative;
       user-select: none;
+
       &::after {
         content: "";
         width: 90%;
@@ -81,6 +82,9 @@
         height: 0.5px;
         border-radius: 10px;
         background-color: #c8c7cc;
+      }
+      &:last-of-type::after {
+        content: none; /* Убираем псевдоэлемент у последнего элемента типа */
       }
 
       svg {
@@ -111,21 +115,30 @@
 
       &__mainText {
         opacity: 1 !important;
-
-        span:first-child {
+        span {
           font-size: 16px;
           line-height: 131%;
           letter-spacing: -0.02em;
           color: #000;
+        }
+        span:first-child {
           padding: 0;
         }
         span:last-child {
-          font-size: 16px;
-          line-height: 131%;
-          letter-spacing: -0.02em;
           text-align: right;
-          color: rgba(60, 60, 67, 0.6);
         }
+        &.workHour {
+          span:last-child {
+            color: rgba(60, 60, 67, 0.6);
+          }
+        }
+        &.editWorkHour {
+          span:last-child {
+            text-align: right;
+            color: #000;
+          }
+        }
+
         .actions__icons--disabled {
           text-decoration: none;
           color: #000 !important;
@@ -139,9 +152,6 @@
         padding-left: 16px;
         &--disabled {
           text-decoration: line-through;
-
-          img {
-          }
         }
       }
     }

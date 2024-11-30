@@ -125,7 +125,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <div className="contacts__actions">
           {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
             <div key={day}>
-              <ContactsActions text={hours} mainText={day} isDisabled={hours == "Выходной"} />
+              <ContactsActions text={hours} mainText={day} style={"workHour"} isDisabled={hours == "Выходной"} />
             </div>
           ))}
 
@@ -196,7 +196,9 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
           <EditAction smallInfo="Название" text={companyInfo?.name} icon="./phone.svg" isDisabled={!companyInfo?.name} />
           <EditAction smallInfo="Адрес" text={companyInfo?.full_address} icon="./map.fill.svg" isDisabled={!companyInfo?.full_address} />
-          <EditAction smallInfo="Часы работы" text="Смотреть все" icon="Exclude.svg" isDisabled={!companyInfo?.working_hours} />
+          <div onClick={() => handleActionClick("workHours")}>
+            <EditAction smallInfo="Часы работы" text="Смотреть все" icon="Exclude.svg" isDisabled={!companyInfo?.working_hours} />
+          </div>
           <div onClick={() => handleActionClick("category")}>
             <EditAction
               smallInfo="Категория"
@@ -213,7 +215,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <h3 className="contacts__actions__title second__title">Контакты</h3>
           <EditAction smallInfo="Номер Telegram" text={companyInfo.social_media.telegram || "+000 000 00 00"} icon="./telegram.svg" isDisabled={!companyInfo.social_media.telegram} />
           <EditAction smallInfo="Номер WhatsApp" text={companyInfo?.social_media?.whatsApp || "+000 000 00 00"} icon="./whatsApp.svg" isDisabled={!companyInfo?.social_media?.whatsApp} />
-          <EditAction smallInfo="Ссылка на Instagram " text={companyInfo?.social_media?.instagram || "instagram.com/truegis"} icon="./instagram.svg" isDisabled={!companyInfo?.social_media?.instagram} />
+          <EditAction smallInfo="Ссылка на Instagram " text={companyInfo?.social_media?.instagram.replace("https://www.instagram.com/", "") || "instagram.com/truegis"} icon="./instagram.svg" isDisabled={!companyInfo?.social_media?.instagram} />
           <EditAction smallInfo="Ссылка на Facebook" text={companyInfo?.social_media?.facebook || "facebook.com/truegis"} icon="./phone.svg" isDisabled={!companyInfo?.social_media?.facebook} />
           <EditAction smallInfo="Номер телефона" text={companyInfo?.phone_number || "+998 000 67 43"} icon="./phone.svg" isDisabled={!companyInfo?.full_address} />
           <EditAction smallInfo="Сайт " text={companyInfo?.website || "truegis.com"} icon="./australia.svg" isDisabled={!companyInfo?.website} />
@@ -227,54 +229,85 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <BottomSheet isOpen={activeAction === "category"} onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <div className="contacts__actions__closeButtons">
-            <img src="./arrowLeft.svg" alt="back" className="contacts__actions__closeButtons__arrowLeft" onClick={closeBottomSheet} />
+            <img src="./arrowLeft.svg" alt="back" className="contacts__actions__closeButtons__arrowLeft" onClick={() => handleActionClick("edit")} />
             <span className="contacts__actions__closeButtons__title">Категория</span>
           </div>
           <h3 className="contacts__actions__title">Категория</h3>
           <p className="contacts__actions__warning">Максимум з категории</p>
 
-          <label className="actions pressEffefct" htmlFor="cause">
+          <label className="actions pressEffefct" htmlFor="rest">
             <span className="actions__text closedButtontext">Ресторан</span>
             <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="cause" />
+              <input type="checkbox" name="" id="rest" />
             </span>
           </label>
-          <label className="actions pressEffefct" id="closedForevew">
+          <label className="actions pressEffefct" id="cafe">
             <span className="actions__text closedButtontext">Кафе</span>
             <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="closedForevew" />
+              <input type="checkbox" name="" id="cafe" />
             </span>
           </label>
-          <label className="actions pressEffefct" htmlFor="worktime">
+          <label className="actions pressEffefct" htmlFor="cofe">
             <span className="actions__text closedButtontext">Кофейня</span>
             <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="worktime" />
+              <input type="checkbox" name="" id="cofe" />
             </span>
           </label>
-          <label className="actions pressEffefct" htmlFor="cause">
+          <label className="actions pressEffefct" htmlFor="bar">
             <span className="actions__text closedButtontext">Бар</span>
             <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="cause" />
+              <input type="checkbox" name="" id="bar" />
             </span>
           </label>
-          <label className="actions pressEffefct" id="closedForevew">
+          <label className="actions pressEffefct" id="movie">
             <span className="actions__text closedButtontext">Кинотеатр</span>
             <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="closedForevew" />
+              <input type="checkbox" name="" id="movie" />
             </span>
           </label>
-          <label className="actions pressEffefct" htmlFor="worktime">
+          <label className="actions pressEffefct" htmlFor="museum">
             <span className="actions__text closedButtontext">Музей</span>
             <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="worktime" />
+              <input type="checkbox" name="" id="museum" />
             </span>
           </label>
-          <label className="actions pressEffefct" htmlFor="worktime">
+          <label className="actions pressEffefct" htmlFor="nightBar">
             <span className="actions__text closedButtontext">Ночной клуб</span>
             <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="worktime" />
+              <input type="checkbox" name="" id="nightBar" />
             </span>
           </label>
+
+          <CommonButton createdFunction={closeBottomSheet}>
+            <span>Сохранить</span>
+          </CommonButton>
+        </div>
+      </BottomSheet>
+
+      <BottomSheet isOpen={activeAction === "workHours"} onClose={closeBottomSheet}>
+        <div className="contacts__actions">
+          <div className="contacts__actions__closeButtons">
+            <img src="./arrowLeft.svg" alt="back" className="contacts__actions__closeButtons__arrowLeft" onClick={() => handleActionClick("edit")} />
+            <span className="contacts__actions__closeButtons__title">Рабочие часы</span>
+          </div>
+          <label className="actions pressEffefct" htmlFor="chooseTime">
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="chooseTime" />
+            </span>
+            <span className="actions__text closedButtontext">Выбранные часы</span>
+          </label>
+          <label className="actions pressEffefct" id="24Hours">
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="24Hours" />
+            </span>
+            <span className="actions__text closedButtontext">24 часа</span>
+          </label>
+
+          {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
+            <div key={day}>
+              <ContactsActions text={hours} mainText={day} style={"editWorkHour"} isDisabled={hours == "Выходной"} />
+            </div>
+          ))}
 
           <CommonButton createdFunction={closeBottomSheet}>
             <span>Сохранить</span>

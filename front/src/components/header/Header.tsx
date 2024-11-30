@@ -19,7 +19,7 @@ const Header = ({ img }: HeaderProps) => {
   }
   return (
     <header onClick={() => setOpenImg(!openImg)} className={`${openImg ? "fullScreenImg" : ""}`}>
-      {/* <Swiper
+      <Swiper
         modules={[Pagination]}
         className="mySwiper"
         pagination={{
@@ -28,7 +28,7 @@ const Header = ({ img }: HeaderProps) => {
         {img?.map((item) => (
           <SwiperSlide key={item.photo_id}>{openImg ? <img src={item.photo_url_large} alt="LargePhoto photo" /> : <img src={item.photo_url} alt="photoUrl photo" />}</SwiperSlide>
         ))}
-      </Swiper> */}
+      </Swiper>
     </header>
   );
 };
