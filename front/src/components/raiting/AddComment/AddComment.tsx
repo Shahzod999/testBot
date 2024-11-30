@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { selectedCompany } from "../../../app/features/companyStateSlice";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import RaitingStars from "../RaitingStars";
@@ -12,8 +13,10 @@ interface AddCommentProps {
 }
 
 const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
+  const [imagesArray, setimagesArray] = useState<string[]>([]);
   const companyInfo = useAppSelector(selectedCompany);
-
+  console.log(imagesArray);
+  
   return (
     <div className={`commentsHolder ${openComment ? "commentsHolder--active" : "commentsHolder--deActive"}`}>
       <div className={`addComment`}>
@@ -29,9 +32,10 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
 
         <RaitingStars />
         <TextArea />
-        <AddFoto />
-        
-        <SendButton />
+
+        <AddFoto imagesArray={imagesArray} setimagesArray={setimagesArray} />
+
+        <SendButton text="Ваша оценка и отзыв будут видны всем" />
       </div>
     </div>
   );

@@ -29,8 +29,8 @@
 
   &--open {
     transform: translateY(0);
-    max-height: 100%;
-    overflow: scroll;
+    // max-height: 100%;
+    // overflow: scroll;
   }
 
   &__content {
@@ -44,6 +44,7 @@
     margin-bottom: 10px;
 
     div {
+      position: relative;
       height: 2px;
       width: 33px;
       border-radius: 10px;
@@ -61,7 +62,6 @@
     font-size: 17px;
     line-height: 129%;
     letter-spacing: -0.02em;
-    text-align: center;
     color: #000;
   }
 

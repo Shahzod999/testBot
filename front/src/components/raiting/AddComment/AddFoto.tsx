@@ -1,9 +1,13 @@
 import { useState } from "react";
 import Cross from "./Cross";
 
-const AddFoto = () => {
+interface addFotoProps {
+  imagesArray: string[];
+  setimagesArray: (images: string[]) => void;
+}
+
+const AddFoto = ({ imagesArray, setimagesArray }: addFotoProps) => {
   const [error, setError] = useState("");
-  const [imagesArray, setimagesArray] = useState<any>([]);
 
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
@@ -15,8 +19,7 @@ const AddFoto = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        setimagesArray((prev: string[]) => [...prev, reader.result]);
-        console.log(imagesArray);
+        setimagesArray([...imagesArray, reader.result as string]);
       };
       reader.onerror = (error) => {
         console.log("Error: ", error);
@@ -45,7 +48,7 @@ const AddFoto = () => {
       <p className="errorText">{error}</p>
 
       <div className="addFoto__imagesArray">
-        {imagesArray.map((item: string, index: number) => (
+        {imagesArray?.map((item: string, index: number) => (
           <div className="addFoto__imagesArray__img" key={index}>
             <div className="addFoto__imagesArray__img__cross">
               <Cross toggleComment={() => toggleSomething(item)} />

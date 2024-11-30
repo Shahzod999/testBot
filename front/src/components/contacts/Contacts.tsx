@@ -6,6 +6,8 @@ import BottomSheet from "../Actions/BottomSheet";
 import CommonButton from "../Actions/CommonButton";
 import Cross from "../raiting/AddComment/Cross";
 import EditAction from "./EditAction";
+import AddFoto from "../raiting/AddComment/AddFoto";
+import SendButton from "../raiting/AddComment/SendButton";
 
 const getAvailableSocialMedia = (socialMedia: Record<string, string | any | null>): string => {
   const names = Object.entries(socialMedia)
@@ -15,6 +17,8 @@ const getAvailableSocialMedia = (socialMedia: Record<string, string | any | null
 };
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const [error, setError] = useState("");
+  const [imagesArrayNew, setimagesArrayNew] = useState<string[]>([]);
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
   if (!companyInfo) return null;
@@ -71,7 +75,24 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     setActiveAction(null);
   };
 
-  console.log(companyInfo);
+  const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      if (file.size > 1 * 1024 * 1024) {
+        setError("File is too large");
+        return;
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setimagesArrayNew([...imagesArrayNew, reader.result as string]);
+      };
+      reader.onerror = (error) => {
+        console.log("Error: ", error);
+      };
+    }
+  };
+  console.log(imagesArrayNew, "222");
 
   return (
     <>
@@ -197,7 +218,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <EditAction smallInfo="Название" text={companyInfo?.name} icon="./phone.svg" isDisabled={!companyInfo?.name} />
           <EditAction smallInfo="Адрес" text={companyInfo?.full_address} icon="./map.fill.svg" isDisabled={!companyInfo?.full_address} />
           <div onClick={() => handleActionClick("workHours")}>
-            <EditAction smallInfo="Часы работы" text="Смотреть все" icon="Exclude.svg" isDisabled={!companyInfo?.working_hours} />
+            <EditAction smallInfo="Часы работы" text="Смотреть все" icon="Exclude.svg" isDisabled={!companyInfo?.working_hours} arrowRight={true} />
           </div>
           <div onClick={() => handleActionClick("category")}>
             <EditAction
@@ -209,22 +230,64 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
                 .join(", ")}
               icon="./type.svg"
               isDisabled={!companyInfo?.subtypes}
+              arrowRight={true}
             />
           </div>
 
           <h3 className="contacts__actions__title second__title">Контакты</h3>
-          <EditAction smallInfo="Номер Telegram" text={companyInfo.social_media.telegram || "+000 000 00 00"} icon="./telegram.svg" isDisabled={!companyInfo.social_media.telegram} />
-          <EditAction smallInfo="Номер WhatsApp" text={companyInfo?.social_media?.whatsApp || "+000 000 00 00"} icon="./whatsApp.svg" isDisabled={!companyInfo?.social_media?.whatsApp} />
-          <EditAction smallInfo="Ссылка на Instagram " text={companyInfo?.social_media?.instagram.replace("https://www.instagram.com/", "") || "instagram.com/truegis"} icon="./instagram.svg" isDisabled={!companyInfo?.social_media?.instagram} />
-          <EditAction smallInfo="Ссылка на Facebook" text={companyInfo?.social_media?.facebook || "facebook.com/truegis"} icon="./phone.svg" isDisabled={!companyInfo?.social_media?.facebook} />
-          <EditAction smallInfo="Номер телефона" text={companyInfo?.phone_number || "+998 000 67 43"} icon="./phone.svg" isDisabled={!companyInfo?.full_address} />
-          <EditAction smallInfo="Сайт " text={companyInfo?.website || "truegis.com"} icon="./australia.svg" isDisabled={!companyInfo?.website} />
-          <EditAction smallInfo="Мобильное приложение " text="https://apps.apple.com/app/" icon="./Vector.svg" isDisabled={!companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios} />
+          <EditAction smallInfo="Номер Telegram" text={companyInfo.social_media.telegram || "+000 000 00 00"} icon="./telegram.svg" isDisabled={!companyInfo.social_media.telegram} arrowRight={true} />
+          <EditAction smallInfo="Номер WhatsApp" text={companyInfo?.social_media?.whatsApp || "+000 000 00 00"} icon="./whatsApp.svg" isDisabled={!companyInfo?.social_media?.whatsApp} arrowRight={true} />
+          <EditAction
+            smallInfo="Ссылка на Instagram "
+            text={companyInfo?.social_media?.instagram.replace("https://www.instagram.com/", "") || "instagram.com/truegis"}
+            icon="./instagram.svg"
+            isDisabled={!companyInfo?.social_media?.instagram}
+            arrowRight={true}
+          />
+          <EditAction smallInfo="Ссылка на Facebook" text={companyInfo?.social_media?.facebook || "facebook.com/truegis"} icon="./phone.svg" isDisabled={!companyInfo?.social_media?.facebook} arrowRight={true} />
+          <EditAction smallInfo="Номер телефона" text={companyInfo?.phone_number || "+998 000 67 43"} icon="./phone.svg" isDisabled={!companyInfo?.full_address} arrowRight={true} />
+          <EditAction smallInfo="Сайт " text={companyInfo?.website || "truegis.com"} icon="./australia.svg" isDisabled={!companyInfo?.website} arrowRight={true} />
 
-          <CommonButton createdFunction={closeBottomSheet}>
-            <span>Отправить</span>
-          </CommonButton>
+          <EditAction smallInfo="Мобильное приложение " text="https://apps.apple.com/app/" icon="./Vector.svg" isDisabled={!companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios} arrowRight={true} />
+          {/*  */}
+          <h3 className="contacts__actions__title second__title">Кем вы являетесь?</h3>
+
+          <input type="text" placeholder="Ваша должность в этом заведении" className="contacts__actions__positionInput" />
+
+          <h3 className="contacts__actions__title second__title">Фото профиля заведения</h3>
+
+          <div className="contacts__actions__fotoLogoEdit">
+            <div className="contacts__actions__fotoLogoEdit__img">
+              <img src={companyInfo.logoThumbnail || "./imgDefault.png"} alt="" />
+            </div>
+
+            <label htmlFor="addFoto__img">
+              <img src="./camera.fill.svg" alt="" />
+              <span>Добавить фотографию</span>
+            </label>
+
+            <input
+              style={{ display: "none" }}
+              accept="image/*"
+              type="file"
+              id="addFoto__img"
+              onChange={(e) => {
+                handleImagePreview(e);
+              }}
+            />
+          </div>
+          <AddFoto imagesArray={imagesArrayNew} setimagesArray={setimagesArrayNew}  />
+
+          <h3 className="contacts__actions__title second__title">Оставьте комментарий</h3>
+          <div className="contacts__actions__textArea">
+            <textarea rows={5} placeholder="Что ещё нужно изменить?"></textarea>
+          </div>
+
+          <div className="contacts__actions__lastElement"></div>
+          {/*  */}
+          {error && <div className="errorText">{error}</div>}
         </div>
+        <SendButton text="Проверка информаций займёт 3 рабочих дня" />
       </BottomSheet>
       <BottomSheet isOpen={activeAction === "category"} onClose={closeBottomSheet}>
         <div className="contacts__actions">
@@ -305,7 +368,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
           {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
             <div key={day}>
-              <ContactsActions text={hours} mainText={day} style={"editWorkHour"} isDisabled={hours == "Выходной"} />
+              <ContactsActions text={hours} mainText={day} style={"editWorkHour"} isDisabled={hours == "Выходной"} arrowRight={true} />
             </div>
           ))}
 

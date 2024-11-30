@@ -1,10 +1,10 @@
 import CommonButton from "../../Actions/CommonButton";
 
-const SendButton = () => {
+const SendButton = ({ text }: { text: string }) => {
   return (
     <div className="sendButton">
-      <p>Ваша оценка и отзыв будут видны всем</p>
-
+      <p>{text}</p>
+      {/* <p>Ваша оценка и отзыв будут видны всем</p> */}
       <CommonButton>
         <span>Отправить</span>
       </CommonButton>

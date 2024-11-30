@@ -17,8 +17,7 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <div className="raiting" onClick={toggleComment}>
         <div className="raiting__count">
           <p>
-            На основе {companyInfo.review_count} отзывов людей из{" "}
-            <a href={companyInfo.reviews_link}>Google</a>
+            На основе {companyInfo.review_count} отзывов людей из <a href={companyInfo.reviews_link}>Google</a>
           </p>
           <strong>
             <IoIosStar size={27} />
@@ -28,7 +27,7 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <RaitingStars />
       </div>
 
-      <AddComment openComment={openComment} toggleComment={toggleComment} />
+      <AddComment openComment={openComment} toggleComment={toggleComment}  />
     </>
   );
 };

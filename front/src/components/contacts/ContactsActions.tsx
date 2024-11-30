@@ -4,13 +4,17 @@ interface ContactProps extends ActionProps {
   isDisabled?: boolean;
   mainText?: string;
   style?: string;
+  arrowRight?: boolean;
 }
 
-export const ContactsActions = ({ text, icon, isDisabled, mainText, style }: ContactProps) => {
+export const ContactsActions = ({ text, icon, isDisabled, mainText, style, arrowRight }: ContactProps) => {
   return (
     <button className={`${mainText ? "actions__mainText" : ""} ${style} actions pressEffefct ${isDisabled ? "actions--disabled" : ""}`}>
       <span className={`actions__icons ${isDisabled ? "actions__icons--disabled" : ""}`}>{mainText ? <>{mainText}</> : <img src={icon} alt="img" />}</span>
-      <span className={`actions__text  ${isDisabled ? "actions__text--disabled" : ""}`}>{text}</span>
+      <span className={`actions__text  ${isDisabled ? "actions__text--disabled" : ""}`}>
+        {text}
+        {arrowRight && <img src="./arrowRight.svg" />}
+      </span>
     </button>
   );
 };
