@@ -125,6 +125,7 @@ export interface SocialMedia {
   facebook: string
   twitter: any
   youtube: any
+  whatsApp?: string
 }
 
 export interface MobileApps {

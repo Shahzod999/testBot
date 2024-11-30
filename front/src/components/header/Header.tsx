@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { PhotosSample } from "../../app/types/companyType";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./header.scss";
-import { useState } from "react";
+
+import { Pagination } from "swiper/modules";
 
 interface HeaderProps {
   img: PhotosSample[];
@@ -13,25 +14,21 @@ interface HeaderProps {
 const Header = ({ img }: HeaderProps) => {
   const [openImg, setOpenImg] = useState(false);
 
-  console.log(openImg);
-
+  if (!img || img.length === 0) {
+    return <div>No images available</div>;
+  }
   return (
-    <header
-      onClick={() => setOpenImg(!openImg)}
-      className={`${openImg ? "fullScreenImg" : ""}`}>
-      <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+    <header onClick={() => setOpenImg(!openImg)} className={`${openImg ? "fullScreenImg" : ""}`}>
+      {/* <Swiper
+        modules={[Pagination]}
+        className="mySwiper"
+        pagination={{
+          clickable: true,
+        }}>
         {img?.map((item) => (
-          <>
-            <SwiperSlide key={item.photo_id}>
-              {openImg ? (
-                <img src={item.photo_url_large} alt="LargePhoto photo" />
-              ) : (
-                <img src={item.photo_url} alt="photoUrl photo" />
-              )}
-            </SwiperSlide>
-          </>
+          <SwiperSlide key={item.photo_id}>{openImg ? <img src={item.photo_url_large} alt="LargePhoto photo" /> : <img src={item.photo_url} alt="photoUrl photo" />}</SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
     </header>
   );
 };

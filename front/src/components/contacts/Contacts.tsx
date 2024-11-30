@@ -3,10 +3,11 @@ import { ContactsActions } from "./ContactsActions";
 import "./contacts.scss";
 import { CompanyState } from "../../app/types/companyType";
 import BottomSheet from "../Actions/BottomSheet";
+import CommonButton from "../Actions/CommonButton";
+import Cross from "../raiting/AddComment/Cross";
+import EditAction from "./EditAction";
 
-const getAvailableSocialMedia = (
-  socialMedia: Record<string, string | any | null>,
-): string => {
+const getAvailableSocialMedia = (socialMedia: Record<string, string | any | null>): string => {
   const names = Object.entries(socialMedia)
     .filter(([_, url]) => url)
     .map(([name]) => name);
@@ -20,19 +21,15 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const actions = [
     {
-      text: "Мобильные приложения",
+      text: "Скачать приложения",
       icon: "./Vector.svg",
-      isDisabled:
-        !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
+      isDisabled: !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
       key: "apps",
     },
     {
-      text:
-        getAvailableSocialMedia(companyInfo.social_media || {}) || "Нет Сетей",
+      text: getAvailableSocialMedia(companyInfo.social_media || {}) || "Нет Сетей",
       icon: "smileCircle.svg",
-      isDisabled: !Object.values(companyInfo.social_media || {}).some(
-        (url) => url,
-      ),
+      isDisabled: !Object.values(companyInfo.social_media || {}).some((url) => url),
       key: "socialMedia",
     },
     {
@@ -74,114 +71,215 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     setActiveAction(null);
   };
 
+  console.log(companyInfo);
+
   return (
     <>
       <div className="contacts">
         <div className="contacts__header">
           <h2>Контакты</h2>
-          <button className="pressEffefct">
-            <object type="image/svg+xml" data="./edit.svg">
-              Your browser does not support SVG
-            </object>
+          <button className="pressEffefct" onClick={() => handleActionClick("edit")}>
+            <img src="./edit.svg" alt="edit" />
             Редактировать
           </button>
         </div>
         <div className="contacts__actions">
           {actions.map(({ text, icon, isDisabled, key }) => (
-            <div
-              onClick={() => !isDisabled && handleActionClick(key)}
-              key={key}>
-              <ContactsActions
-                text={text}
-                icon={icon}
-                isDisabled={isDisabled}
-              />
+            <div onClick={() => !isDisabled && handleActionClick(key)} key={key}>
+              <ContactsActions text={text} icon={icon} isDisabled={isDisabled} />
             </div>
           ))}
         </div>
       </div>
+      <BottomSheet isOpen={activeAction === "apps"} onClose={closeBottomSheet}>
+        <div className="socialMedia">
+          <h3>Мобильное приложение заведении</h3>
+          <div className="socialMedia__icons">
+            <a href={companyInfo.mobile_apps?.android} target="_blank" rel="noopener noreferrer">
+              <img src="./GooglePlay.png" alt="" />
+            </a>
+            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+              <img src="./AppStore.png" alt="" />
+            </a>
+          </div>
+        </div>
+      </BottomSheet>
+      <BottomSheet isOpen={activeAction === "socialMedia"} onClose={closeBottomSheet}>
+        <div className="socialMedia">
+          <h3>Переход на страницы</h3>
+          <div className="socialMedia__icons">
+            {Object.entries(companyInfo.social_media || {})
+              .filter(([_, url]) => url)
+              .map(([name, url]) => (
+                <a key={name} href={url} target="_blank" rel="noopener noreferrer">
+                  <div className="socialMedia__icons__logo">
+                    <img src={`./${name}.png`} alt="" />
+                  </div>
+                  <span>{name}</span>
+                </a>
+              ))}
+          </div>
+        </div>
+      </BottomSheet>
+      <BottomSheet isOpen={activeAction === "workingHours"} onClose={closeBottomSheet}>
+        <div className="contacts__actions">
+          {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
+            <div key={day}>
+              <ContactsActions text={hours} mainText={day} isDisabled={hours == "Выходной"} />
+            </div>
+          ))}
 
-      <BottomSheet isOpen={!!activeAction} onClose={closeBottomSheet}>
-        {activeAction === "apps" && (
-          <div className="socialMedia">
-            <h3>Мобильное приложение заведении</h3>
-            <div className="socialMedia__icons">
-              <a
-                href={companyInfo.mobile_apps?.android}
-                target="_blank"
-                rel="noopener noreferrer">
-                <img src="./GooglePlay.png" alt="" />
-              </a>
-              <a
-                href={companyInfo.mobile_apps?.ios}
-                target="_blank"
-                rel="noopener noreferrer">
-                <img src="./AppStore.png" alt="" />
-              </a>
+          <button className="contacts__actions__closedCompanyButton" onClick={() => handleActionClick("closed")}>
+            Заведение закрыто
+          </button>
+        </div>
+      </BottomSheet>
+      <BottomSheet isOpen={activeAction === "location"} onClose={closeBottomSheet}>
+        <div className="socialMedia">
+          <div className="socialMedia__icons">
+            <a href={`https://maps.google.com/?q=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+              <img src="./yandex.png" alt="" />
+              <span>Яндекс карты</span>
+            </a>
+            <a href={`https://yandex.ru/maps/?text=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+              <img src="./2gis.png" alt="" />
+              <span>2ГИС</span>
+            </a>
+            <a href={`https://yandex.ru/maps/?text=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+              <img src="./googleMaps.png" alt="" />
+              <span>Google карты</span>
+            </a>
+          </div>
+        </div>
+      </BottomSheet>
+      <BottomSheet isOpen={activeAction === "closed"} onClose={closeBottomSheet}>
+        <div className="contacts__actions">
+          <h3 className="contacts__actions__title">Укажите причину</h3>
+          <p className="contacts__actions__warning">За недостоверное показание у вас отнимается один коин!</p>
+
+          <label className="actions pressEffefct" htmlFor="cause">
+            <span className="actions__text closedButtontext">Причина</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="cause" />
+            </span>
+          </label>
+          <label className="actions pressEffefct" id="closedForevew">
+            <span className="actions__text closedButtontext">Закрыто навсегда</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="closedForevew" />
+            </span>
+          </label>
+          <label className="actions pressEffefct" htmlFor="worktime">
+            <span className="actions__text closedButtontext">Не соответсвует с графиком работы</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="worktime" />
+            </span>
+          </label>
+          <CommonButton createdFunction={closeBottomSheet}>
+            <span>Отправить</span>
+            <span className="contacts__actions__coin">
+              +1
+              <img src="./coin.svg" alt="" />
+            </span>
+          </CommonButton>
+        </div>
+      </BottomSheet>
+      <BottomSheet isOpen={activeAction === "edit"} onClose={closeBottomSheet}>
+        <div className="contacts__actions">
+          <div className="contacts__actions__closeButtons">
+            <span className="contacts__actions__closeButtons__title">Редактировать {companyInfo.name}</span>
+            <div className="contacts__actions__closeButtons__cross">
+              <Cross toggleComment={closeBottomSheet} />
             </div>
           </div>
-        )}
-        {activeAction === "socialMedia" && (
-          <div className="socialMedia">
-            <h3>Переход на страницы</h3>
-            <div className="socialMedia__icons">
-              {Object.entries(companyInfo.social_media || {})
-                .filter(([_, url]) => url)
-                .map(([name, url]) => (
-                  <a
-                    key={name}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <div className="socialMedia__icons__logo">
-                      <img src={`./${name}.png`} alt="" />
-                    </div>
-                    <span>{name}</span>
-                  </a>
-                ))}
-            </div>
+          <h3 className="contacts__actions__title">Общая информация</h3>
+
+          <EditAction smallInfo="Название" text={companyInfo?.name} icon="./phone.svg" isDisabled={!companyInfo?.name} />
+          <EditAction smallInfo="Адрес" text={companyInfo?.full_address} icon="./map.fill.svg" isDisabled={!companyInfo?.full_address} />
+          <EditAction smallInfo="Часы работы" text="Смотреть все" icon="Exclude.svg" isDisabled={!companyInfo?.working_hours} />
+          <div onClick={() => handleActionClick("category")}>
+            <EditAction
+              smallInfo="Категория"
+              text={companyInfo.subtypes
+                .map((item) => {
+                  return item;
+                })
+                .join(", ")}
+              icon="./type.svg"
+              isDisabled={!companyInfo?.subtypes}
+            />
           </div>
-        )}
-        {activeAction === "workingHours" && (
-          <div>
-            <h3>График работы</h3>
-            <p>Понедельник - Пятница: 10:00 - 22:00</p>
-            <p>Суббота - Воскресенье: 12:00 - 20:00</p>
+
+          <h3 className="contacts__actions__title second__title">Контакты</h3>
+          <EditAction smallInfo="Номер Telegram" text={companyInfo.social_media.telegram || "+000 000 00 00"} icon="./telegram.svg" isDisabled={!companyInfo.social_media.telegram} />
+          <EditAction smallInfo="Номер WhatsApp" text={companyInfo?.social_media?.whatsApp || "+000 000 00 00"} icon="./whatsApp.svg" isDisabled={!companyInfo?.social_media?.whatsApp} />
+          <EditAction smallInfo="Ссылка на Instagram " text={companyInfo?.social_media?.instagram || "instagram.com/truegis"} icon="./instagram.svg" isDisabled={!companyInfo?.social_media?.instagram} />
+          <EditAction smallInfo="Ссылка на Facebook" text={companyInfo?.social_media?.facebook || "facebook.com/truegis"} icon="./phone.svg" isDisabled={!companyInfo?.social_media?.facebook} />
+          <EditAction smallInfo="Номер телефона" text={companyInfo?.phone_number || "+998 000 67 43"} icon="./phone.svg" isDisabled={!companyInfo?.full_address} />
+          <EditAction smallInfo="Сайт " text={companyInfo?.website || "truegis.com"} icon="./australia.svg" isDisabled={!companyInfo?.website} />
+          <EditAction smallInfo="Мобильное приложение " text="https://apps.apple.com/app/" icon="./Vector.svg" isDisabled={!companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios} />
+
+          <CommonButton createdFunction={closeBottomSheet}>
+            <span>Отправить</span>
+          </CommonButton>
+        </div>
+      </BottomSheet>
+      <BottomSheet isOpen={activeAction === "category"} onClose={closeBottomSheet}>
+        <div className="contacts__actions">
+          <div className="contacts__actions__closeButtons">
+            <img src="./arrowLeft.svg" alt="back" className="contacts__actions__closeButtons__arrowLeft" onClick={closeBottomSheet} />
+            <span className="contacts__actions__closeButtons__title">Категория</span>
           </div>
-        )}
-        {activeAction === "location" && (
-          <div className="socialMedia">
-            <div className="socialMedia__icons">
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(
-                  companyInfo.address || "",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                <img src="./yandex.png" alt="" />
-                <span>Яндекс карты</span>
-              </a>
-              <a
-                href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-                  companyInfo.address || "",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                <img src="./2gis.png" alt="" />
-                <span>2ГИС</span>
-              </a>
-              <a
-                href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-                  companyInfo.address || "",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                <img src="./googleMaps.png" alt="" />
-                <span>Google карты</span>
-              </a>
-            </div>
-          </div>
-        )}
+          <h3 className="contacts__actions__title">Категория</h3>
+          <p className="contacts__actions__warning">Максимум з категории</p>
+
+          <label className="actions pressEffefct" htmlFor="cause">
+            <span className="actions__text closedButtontext">Ресторан</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="cause" />
+            </span>
+          </label>
+          <label className="actions pressEffefct" id="closedForevew">
+            <span className="actions__text closedButtontext">Кафе</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="closedForevew" />
+            </span>
+          </label>
+          <label className="actions pressEffefct" htmlFor="worktime">
+            <span className="actions__text closedButtontext">Кофейня</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="worktime" />
+            </span>
+          </label>
+          <label className="actions pressEffefct" htmlFor="cause">
+            <span className="actions__text closedButtontext">Бар</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="cause" />
+            </span>
+          </label>
+          <label className="actions pressEffefct" id="closedForevew">
+            <span className="actions__text closedButtontext">Кинотеатр</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="closedForevew" />
+            </span>
+          </label>
+          <label className="actions pressEffefct" htmlFor="worktime">
+            <span className="actions__text closedButtontext">Музей</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="worktime" />
+            </span>
+          </label>
+          <label className="actions pressEffefct" htmlFor="worktime">
+            <span className="actions__text closedButtontext">Ночной клуб</span>
+            <span className="actions__icons closedButtonInput">
+              <input type="checkbox" name="" id="worktime" />
+            </span>
+          </label>
+
+          <CommonButton createdFunction={closeBottomSheet}>
+            <span>Сохранить</span>
+          </CommonButton>
+        </div>
       </BottomSheet>
     </>
   );

@@ -1,6 +1,6 @@
 export interface ActionProps {
-  text: string;
-  icon: string;
+  text: string | string[];
+  icon?: string;
 }
 
 const ActionButtons = ({ text, icon }: ActionProps) => {

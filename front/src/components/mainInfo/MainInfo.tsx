@@ -95,10 +95,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
         <div className="actionButtons">
           {actions.map((item) => (
-            <button
-              onClick={() => handleActions(item)}
-              className="pressEffefct"
-              key={item.key}>
+            <button onClick={() => handleActions(item)} className="pressEffefct" key={item.key}>
               <ActionButtons text={item.text} icon={item.img} />
             </button>
           ))}
@@ -109,38 +106,25 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         {activeAction === "taxi" && (
           <div className="socialMedia">
             <div className="socialMedia__icons">
-              <a
-                href={companyInfo.mobile_apps?.android}
-                target="_blank"
-                rel="noopener noreferrer">
+              <a href={companyInfo.mobile_apps?.android} target="_blank" rel="noopener noreferrer">
                 <div className="socialMedia__icons__logo">
                   <img src="./yandexGo.png" alt="" />
                 </div>
                 <span>Yandex Go</span>
               </a>
-              <a
-                href={companyInfo.mobile_apps?.ios}
-                target="_blank"
-                rel="noopener noreferrer">
+              <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
                 <div className="socialMedia__icons__logo">
                   <img src="./fasten.png" alt="" />
                 </div>
                 <span>Fasten</span>
               </a>
-              <a
-                href={companyInfo.mobile_apps?.ios}
-                target="_blank"
-                rel="noopener noreferrer">
-                {" "}
+              <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
                 <div className="socialMedia__icons__logo">
-                  <img src="./myTaxi.png" alt="" />
+                  <img src="./mytaxi.png" alt="" />
                 </div>
                 <span>My Taxi</span>
               </a>
-              <a
-                href={companyInfo.mobile_apps?.ios}
-                target="_blank"
-                rel="noopener noreferrer">
+              <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
                 <div className="socialMedia__icons__logo">
                   <img src="./uklon.png" alt="" />
                 </div>
@@ -156,11 +140,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               {Object.entries(companyInfo.social_media || {})
                 .filter(([_, url]) => url)
                 .map(([name, url]) => (
-                  <a
-                    key={name}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer">
+                  <a key={name} href={url} target="_blank" rel="noopener noreferrer">
                     <div className="socialMedia__icons__logo">
                       <img src={`./${name}.png`} alt="" />
                     </div>
@@ -170,37 +150,9 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             </div>
           </div>
         )}
-        {activeAction === "map" && (
+        {activeAction === "share" && (
           <div className="socialMedia">
-            <div className="socialMedia__icons">
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(
-                  companyInfo.address || "",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                <img src="./yandex.png" alt="" />
-                <span>Яндекс карты</span>
-              </a>
-              <a
-                href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-                  companyInfo.address || "",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                <img src="./2gis.png" alt="" />
-                <span>2ГИС</span>
-              </a>
-              <a
-                href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-                  companyInfo.address || "",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                <img src="./googleMaps.png" alt="" />
-                <span>Google карты</span>
-              </a>
-            </div>
+            <h3>Поделитесь этим!</h3>
           </div>
         )}
       </BottomSheet>

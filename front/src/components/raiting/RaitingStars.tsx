@@ -12,8 +12,8 @@ const RaitingStars = () => {
       <p>Нажмите, чтобы оценить:</p>
       <strong>
         {[...Array(5)].map((_, index) => (
-          <div>
-            <IoIosStar key={index} size={25} className={`star ${index < rating ? "active" : ""}`} onClick={() => handleStarClick(index)} />
+          <div key={index}>
+            <IoIosStar size={25} className={`star ${index < rating ? "active" : ""}`} onClick={() => handleStarClick(index)} />
           </div>
         ))}
       </strong>

@@ -1,8 +1,13 @@
+import CommonButton from "../../Actions/CommonButton";
+
 const SendButton = () => {
   return (
-    <div className="sendButton"> 
+    <div className="sendButton">
       <p>Ваша оценка и отзыв будут видны всем</p>
-      <button className="pressEffefct">Отправить</button>
+
+      <CommonButton>
+        <span>Отправить</span>
+      </CommonButton>
     </div>
   );
 };

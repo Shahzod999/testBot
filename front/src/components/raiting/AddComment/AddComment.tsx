@@ -30,6 +30,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
         <RaitingStars />
         <TextArea />
         <AddFoto />
+        
         <SendButton />
       </div>
     </div>

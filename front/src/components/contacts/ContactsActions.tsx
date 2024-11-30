@@ -1,17 +1,14 @@
 import { ActionProps } from "../mainInfo/ActionButtons";
 
 interface ContactProps extends ActionProps {
-  isDisabled: boolean;
+  isDisabled?: boolean;
+  mainText?: string;
 }
 
-export const ContactsActions = ({ text, icon, isDisabled }: ContactProps) => {
+export const ContactsActions = ({ text, icon, isDisabled, mainText }: ContactProps) => {
   return (
-    <button className={`actions pressEffefct ${isDisabled ? "actions--disabled" : ""}`}>
-      <span className={`actions__icons ${isDisabled ? "actions__icons--disabled" : ""}`}>
-        <object type="image/svg+xml" data={icon}>
-          Your browser does not support SVG
-        </object>
-      </span>
+    <button className={`${mainText ? "actions__mainText" : ""}  actions pressEffefct ${isDisabled ? "actions--disabled" : ""}`}>
+      <span className={`actions__icons ${isDisabled ? "actions__icons--disabled" : ""}`}>{mainText ? <>{mainText}</> : <img src={icon} alt="img" />}</span>
       <span className={`actions__text ${isDisabled ? "actions__text--disabled" : ""}`}>{text}</span>
     </button>
   );

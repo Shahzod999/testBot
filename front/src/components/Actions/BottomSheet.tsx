@@ -15,7 +15,7 @@ const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
         onClick={onClose}></div>
 
       <div className={`bottom-sheet ${isOpen ? "bottom-sheet--open" : ""}`}>
-        <div className="bottom-sheet__overlay" onClick={onClose}></div>
+        {/* <div className="bottom-sheet__overlay" onClick={onClose}></div> */}
         <div className="bottom-sheet__content">
           <div className="bottom-sheet__close" onClick={onClose}>
             <div></div>
