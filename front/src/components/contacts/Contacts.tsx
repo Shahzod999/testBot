@@ -22,8 +22,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [logoImg, setLogoImg] = useState(companyInfo?.logoThumbnail);
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
-  if (!companyInfo) return null;
-
   const actions = useMemo(
     () => [
       {
@@ -90,15 +88,10 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   }, []);
 
+  const handleActionClick = useCallback((key: string) => setActiveAction(key), []);
+  const closeBottomSheet = useCallback(() => setActiveAction(null), []);
 
-  const handleActionClick = (key: string) => {
-    setActiveAction(key);
-  };
-  const closeBottomSheet = () => {
-    setActiveAction(null);
-  };
-  console.log(imagesArrayNew, "222");
-
+  if (!companyInfo) return null;
   return (
     <>
       <div className="contacts">
@@ -281,7 +274,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
               }}
             />
           </div>
-          <AddFoto imagesArray={imagesArrayNew} setimagesArray={setimagesArrayNew} id="addContacts"/>
+          <AddFoto imagesArray={imagesArrayNew} setimagesArray={setimagesArrayNew} id="addContacts" />
 
           <h3 className="contacts__actions__title second__title">Оставьте комментарий</h3>
           <div className="contacts__actions__textArea">

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import "./mainInfo.scss";
 import { GoBookmark } from "react-icons/go";
 import { GoBookmarkFill } from "react-icons/go";
 import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
 import BottomSheet from "../Actions/BottomSheet";
+import AppsSceleton from "../skeleton/AppsSkeleton";
 interface ActionsState {
   text: string;
   img: string;
@@ -13,6 +14,7 @@ interface ActionsState {
 }
 
 const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(false);
 
@@ -20,29 +22,32 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     setBookMark(!bookMark);
   };
 
-  const actions = [
-    {
-      text: "Такси",
-      img: "./car.fill.svg",
-      key: "taxi",
-    },
-    {
-      text: "Чат",
-      img: "./message.fill.svg",
-      key: "chat",
-    },
-    {
-      text: "Маршрут",
-      img: "./map.fill.svg",
-      key: "map",
-    },
-    {
-      text: "Поделиться",
-      img: "./Icon.svg",
-      key: "share",
-      link: `https://t.me/share/url?url=t.me/TrueGis_bot/start?startapp=${companyInfo._id}`,
-    },
-  ];
+  const actions = useMemo(
+    () => [
+      {
+        text: "Такси",
+        img: "./car.fill.svg",
+        key: "taxi",
+      },
+      {
+        text: "Чат",
+        img: "./message.fill.svg",
+        key: "chat",
+      },
+      {
+        text: "Маршрут",
+        img: "./map.fill.svg",
+        key: "map",
+      },
+      {
+        text: "Поделиться",
+        img: "./Icon.svg",
+        key: "share",
+        link: `https://t.me/share/url?url=t.me/TrueGis_bot/start?startapp=${companyInfo._id}`,
+      },
+    ],
+    [companyInfo]
+  );
 
   const handleActions = (item: ActionsState) => {
     if (item.link) {
@@ -51,9 +56,15 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     setActiveAction(item.key);
   };
 
-  const closeBottomSheet = () => {
-    setActiveAction(null);
-  };
+  const closeBottomSheet = () => setActiveAction(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
+    return () => clearTimeout(timeoutId);
+  }, [activeAction]);
 
   return (
     <>
@@ -103,57 +114,63 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       </div>
 
       <BottomSheet isOpen={!!activeAction} onClose={closeBottomSheet}>
-        {activeAction === "taxi" && (
-          <div className="socialMedia">
-            <div className="socialMedia__icons">
-              <a href={companyInfo.mobile_apps?.android} target="_blank" rel="noopener noreferrer">
-                <div className="socialMedia__icons__logo">
-                  <img src="./yandexGo.png" alt="" />
-                </div>
-                <span>Yandex Go</span>
-              </a>
-              <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
-                <div className="socialMedia__icons__logo">
-                  <img src="./fasten.png" alt="" />
-                </div>
-                <span>Fasten</span>
-              </a>
-              <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
-                <div className="socialMedia__icons__logo">
-                  <img src="./mytaxi.png" alt="" />
-                </div>
-                <span>My Taxi</span>
-              </a>
-              <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
-                <div className="socialMedia__icons__logo">
-                  <img src="./uklon.png" alt="" />
-                </div>
-                <span>Uklon</span>
-              </a>
-            </div>
-          </div>
-        )}
-        {activeAction === "chat" && (
-          <div className="socialMedia">
-            <h3>Переход на страницы</h3>
-            <div className="socialMedia__icons">
-              {Object.entries(companyInfo.social_media || {})
-                .filter(([_, url]) => url)
-                .map(([name, url]) => (
-                  <a key={name} href={url} target="_blank" rel="noopener noreferrer">
+        {isLoading ? (
+          <AppsSceleton />
+        ) : (
+          <>
+            {activeAction === "taxi" && (
+              <div className="socialMedia">
+                <div className="socialMedia__icons">
+                  <a href={companyInfo.mobile_apps?.android} target="_blank" rel="noopener noreferrer">
                     <div className="socialMedia__icons__logo">
-                      <img src={`./${name}.png`} alt="" />
+                      <img src="./yandexGo.png" alt="" />
                     </div>
-                    <span>{name}</span>
+                    <span>Yandex Go</span>
                   </a>
-                ))}
-            </div>
-          </div>
-        )}
-        {activeAction === "share" && (
-          <div className="socialMedia">
-            <h3>Поделитесь этим!</h3>
-          </div>
+                  <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+                    <div className="socialMedia__icons__logo">
+                      <img src="./fasten.png" alt="" />
+                    </div>
+                    <span>Fasten</span>
+                  </a>
+                  <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+                    <div className="socialMedia__icons__logo">
+                      <img src="./mytaxi.png" alt="" />
+                    </div>
+                    <span>My Taxi</span>
+                  </a>
+                  <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+                    <div className="socialMedia__icons__logo">
+                      <img src="./uklon.png" alt="" />
+                    </div>
+                    <span>Uklon</span>
+                  </a>
+                </div>
+              </div>
+            )}
+            {activeAction === "chat" && (
+              <div className="socialMedia">
+                <h3>Переход на страницы</h3>
+                <div className="socialMedia__icons">
+                  {Object.entries(companyInfo.social_media || {})
+                    .filter(([_, url]) => url)
+                    .map(([name, url]) => (
+                      <a key={name} href={url} target="_blank" rel="noopener noreferrer">
+                        <div className="socialMedia__icons__logo">
+                          <img src={`./${name}.png`} alt="" />
+                        </div>
+                        <span>{name}</span>
+                      </a>
+                    ))}
+                </div>
+              </div>
+            )}
+            {activeAction === "share" && (
+              <div className="socialMedia">
+                <h3>Поделитесь этим!</h3>
+              </div>
+            )}
+          </>
         )}
       </BottomSheet>
     </>

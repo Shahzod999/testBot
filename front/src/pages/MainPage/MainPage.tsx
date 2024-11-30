@@ -7,6 +7,23 @@ import Contacts from "../../components/contacts/Contacts";
 import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { setCompany } from "../../app/features/companyStateSlice";
+import Skeleton from "../../components/skeleton/Skeleton";
+
+export {};
+
+declare global {
+  interface Window {
+    Telegram: {
+      WebApp: {
+        ready: () => void;
+        close: () => void;
+        expand: () => void;
+        initData: string;
+        initDataUnsafe: Record<string, unknown>;
+      };
+    };
+  }
+}
 
 const tg = window.Telegram.WebApp;
 
@@ -20,10 +37,12 @@ const MainPage = () => {
 
   useEffect(() => {
     tg.ready();
+    tg.expand();
+    
   }, []);
 
-  if (isLoading) return <>Loading...</>;
-  if (isError) return <>Error...</>;
+  if (isLoading) return <Skeleton />;
+  if (isError) return <Skeleton />;
   return (
     <div className="mainPage">
       <Header img={data?.data?.photos_sample || []} />
