@@ -15,10 +15,18 @@ const Header = ({ img }: HeaderProps) => {
   const [openImg, setOpenImg] = useState(false);
 
   if (!img || img.length === 0) {
-    return <div>No images available</div>;
+    return (
+      <header
+        onClick={() => setOpenImg(!openImg)}
+        className={`${openImg ? "fullScreenImg" : ""}`}>
+        <img src="./defaultMain.jpg" />
+      </header>
+    );
   }
   return (
-    <header onClick={() => setOpenImg(!openImg)} className={`${openImg ? "fullScreenImg" : ""}`}>
+    <header
+      onClick={() => setOpenImg(!openImg)}
+      className={`${openImg ? "fullScreenImg" : ""}`}>
       <Swiper
         modules={[Pagination]}
         className="mySwiper"
@@ -26,7 +34,13 @@ const Header = ({ img }: HeaderProps) => {
           clickable: true,
         }}>
         {img?.map((item) => (
-          <SwiperSlide key={item.photo_id}>{openImg ? <img src={item.photo_url_large} alt="LargePhoto photo" /> : <img src={item.photo_url} alt="photoUrl photo" />}</SwiperSlide>
+          <SwiperSlide key={item.photo_id}>
+            {openImg ? (
+              <img src={item.photo_url_large} alt="LargePhoto photo" />
+            ) : (
+              <img src={item.photo_url} alt="photoUrl photo" />
+            )}
+          </SwiperSlide>
         ))}
       </Swiper>
     </header>

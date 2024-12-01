@@ -41,7 +41,9 @@
 
   &__close {
     text-align: center;
-    margin-bottom: 10px;
+    padding: 10px 0;
+    transform: translateY(-10px);
+    cursor: pointer;
 
     div {
       position: relative;

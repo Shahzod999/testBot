@@ -237,7 +237,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <EditAction smallInfo="Номер WhatsApp" text={companyInfo?.social_media?.whatsApp || "+000 000 00 00"} icon="./whatsApp.svg" isDisabled={!companyInfo?.social_media?.whatsApp} arrowRight={true} />
           <EditAction
             smallInfo="Ссылка на Instagram "
-            text={companyInfo?.social_media?.instagram.replace("https://www.instagram.com/", "") || "instagram.com/truegis"}
+            text={companyInfo?.social_media?.instagram?.replace("https://www.instagram.com/", "") || "instagram.com"}
             icon="./instagram.svg"
             isDisabled={!companyInfo?.social_media?.instagram}
             arrowRight={true}
