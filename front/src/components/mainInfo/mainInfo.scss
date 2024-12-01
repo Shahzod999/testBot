@@ -142,10 +142,10 @@
     padding: 13px 50px;
     border-radius: 10px;
     // background: #007aff;
-    background: var(--tg-theme-button-color);
+    background: var(--tg-theme-button-color, #007aff);
     border: none;
     // color: white;
-    color: var(--tg-theme-button-text-color);
+    color: var(--tg-theme-button-text-color, #fff);
 
     font-weight: 600;
     font-size: 17px;
