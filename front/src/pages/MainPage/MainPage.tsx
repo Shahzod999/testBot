@@ -18,6 +18,8 @@ declare global {
         ready: () => void;
         close: () => void;
         expand: () => void;
+        requestFullscreen: () => void;
+        version: string;
         initData: string;
         initDataUnsafe: Record<string, unknown>;
       };
@@ -29,16 +31,27 @@ const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
-  const { data, isLoading, isError } = useGetCompanyByIdQuery("673a89577d6d20cabf0ad3cb");
+  const { data, isLoading, isError } = useGetCompanyByIdQuery(
+    "673a89577d6d20cabf0ad3cb",
+  );
 
   useEffect(() => {
     dispatch(setCompany(data?.data));
   }, [data, dispatch]);
 
   useEffect(() => {
+    const requiredVersion = "7.0";
+    const currentVersion = window.Telegram.WebApp.version;
     tg.ready();
     tg.expand();
     
+    if (currentVersion > requiredVersion) {
+      tg.requestFullscreen();
+    } else {
+      console.log(
+        `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,
+      );
+    }
   }, []);
 
   if (isLoading) return <Skeleton />;

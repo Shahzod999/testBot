@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import "./mainInfo.scss";
 import { GoBookmark } from "react-icons/go";
 import { GoBookmarkFill } from "react-icons/go";
@@ -53,25 +53,30 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     [companyInfo],
   );
 
-  const handleActions = (item: ActionsState) => {
+  const handleActions = useCallback((item: ActionsState) => {
     if (item.link) {
       window.location.href = item.link;
     }
     setActiveAction(item.key);
-  };
+  }, []);
 
-  const closeBottomSheet = () => setActiveAction(null);
+  const closeBottomSheet = useCallback(() => {
+    setActiveAction(null);
+  }, []);
 
   useEffect(() => {
+    if (activeAction) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    
     setIsLoading(true);
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
     }, 200);
     return () => clearTimeout(timeoutId);
   }, [activeAction]);
-
-  console.log(companyInfo.location.coordinates);
-  
 
   return (
     <>
@@ -112,7 +117,10 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <div className="mainInfo__openHours__right">
             <span>Расстояние</span>
             {location ? (
-              <DistanceCalculator tragetLocation={companyInfo?.location?.coordinates}  userCoordinates={userCoordinates} />
+              <DistanceCalculator
+                tragetLocation={companyInfo?.location?.coordinates}
+                userCoordinates={userCoordinates}
+              />
             ) : (
               error
             )}

@@ -1,18 +1,43 @@
 @import "./fonts.scss";
 
+
+// сделать drag and drop
+// чтобы задний  фон не прокручивался ++
+// коментария меню чтобы открывалась только при нажатии нижней части ++
+// звонок 
+// доступные вакансии
+// user-select: none;
+// показать только те карты и приложения те у котрых есть
+
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: "SFProText";
   font-weight: 400;
+
   user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 body {
-  background-color: var(--tg-theme-bg-color);
-  color: var(--tg-theme-text-color);
+  background-color: var(--tg-theme-bg-color, #fff);
+  color: var(--tg-theme-text-color, #000);
   height: var(--tg-viewport-height);
+  max-width: 450px;
+  margin: auto;
+
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 a {

@@ -1,5 +1,6 @@
 .actions {
   &__icons__edit {
+
   }
   &__info {
     display: flex;
@@ -10,7 +11,7 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 133%;
-      color: rgba(60, 60, 67, 0.6);
+      color: var(--tg-theme-hint-color);
       text-align: left !important;
     }
     &__text__main {
@@ -18,7 +19,8 @@
       font-size: 17px;
       line-height: 118%;
       letter-spacing: -0.02em;
-      color: #000;
+      color: var(--tg-theme-text-color, #000);
+
       text-align: left !important;
     }
   }

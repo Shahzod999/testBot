@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./bottomSheet.scss";
 
 interface BottomSheetProps {
@@ -7,10 +7,12 @@ interface BottomSheetProps {
   children: React.ReactNode;
 }
 
-const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
+const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
   return (
     <>
-      <div className={`bottom__wrapper ${isOpen ? "bottom__wrapper--active" : ""}`} onClick={onClose}></div>
+      <div
+        className={`bottom__wrapper ${isOpen ? "bottom__wrapper--active" : ""}`}
+        onClick={onClose}></div>
 
       <div className={`bottom-sheet ${isOpen ? "bottom-sheet--open" : ""}`}>
         <div className="bottom-sheet__content">
@@ -22,6 +24,6 @@ const BottomSheet = ({ isOpen, onClose, children }: BottomSheetProps) => {
       </div>
     </>
   );
-};
+});
 
 export default BottomSheet;
