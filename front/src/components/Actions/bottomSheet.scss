@@ -37,6 +37,9 @@
     // max-height: 100%;
     // overflow: scroll;
   }
+  &--dragging {
+    transform: translateY(50px); // Убираем плавность, чтобы не мешать движению
+  }
 
   &__content {
     span {
