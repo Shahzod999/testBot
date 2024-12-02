@@ -36,6 +36,8 @@
   background-color: var(--tg-theme-bg-color, #fff);
   color: var(--tg-theme-text-color, #000);
   border-radius: 16px 16px 0 0;
+  max-width: 450px;
+  min-width: 290px;
 
   p {
     font-weight: 400;
@@ -43,7 +45,7 @@
     line-height: 138%;
     letter-spacing: -0.01em;
     text-align: center;
-    color: var(--tg-theme-hint-color, #3C3C43);
+    color: var(--tg-theme-hint-color, #3c3c43);
     margin-bottom: 20px;
   }
 }

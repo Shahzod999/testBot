@@ -1,6 +1,5 @@
 @import "./fonts.scss";
 
-
 // сделать drag and drop
 // чтобы задний  фон не прокручивался ++
 // коментария меню чтобы открывалась только при нажатии нижней части ++
@@ -8,7 +7,6 @@
 // доступные вакансии++
 // user-select: none;++
 // показать только те карты и приложения те у котрых есть
-
 
 * {
   padding: 0;
@@ -54,13 +52,30 @@ a {
   color: red;
   margin: 20px 0;
 }
+.noAwailibleText {
+  text-decoration: line-through;
+  color: rgb(174, 0, 0) !important;
+  opacity: 0.5;
+}
 
 .commonCross {
   display: grid;
   place-items: center;
   background-color: rgba(118, 118, 128, 0.12);
   border-radius: 50%;
-  padding: 10px;
+  padding: 15px;
+  position: relative;
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: var(--tg-theme-text-color, #000);
+
+    path {
+      fill: var(--tg-theme-text-color, #000);
+    }
+  }
 }
 
 .pressEffefct {

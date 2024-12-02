@@ -55,7 +55,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         link: `https://t.me/share/url?url=t.me/TrueGis_bot/start?startapp=${companyInfo?._id}`,
       },
     ],
-    [companyInfo],
+    [companyInfo]
   );
 
   const handleActions = useCallback((item: ActionsState) => {
@@ -82,10 +82,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <div className="mainInfo">
         <div className="mainInfo__logo">
           <div className="mainInfo__logo__img">
-            <img
-              src={companyInfo.logoThumbnail || "./imgDefault.png"}
-              alt="logo"
-            />
+            <img src={companyInfo.logoThumbnail || "./imgDefault.png"} alt="logo" />
           </div>
           <div className="mainInfo__logo__name">
             <h2>{companyInfo.name}</h2>
@@ -115,14 +112,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
           <div className="mainInfo__openHours__right">
             <span>Расстояние</span>
-            {location ? (
-              <DistanceCalculator
-                tragetLocation={companyInfo?.location?.coordinates}
-                userCoordinates={userCoordinates}
-              />
-            ) : (
-              error
-            )}
+            {location ? <DistanceCalculator tragetLocation={companyInfo?.location?.coordinates} userCoordinates={userCoordinates} /> : error}
           </div>
         </div>
 
@@ -133,59 +123,60 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
         <div className="actionButtons">
           {actions.map((item) => (
-            <button
-              onClick={() => handleActions(item)}
-              className="pressEffefct"
-              key={item.key}>
+            <button onClick={() => handleActions(item)} className="pressEffefct" key={item.key}>
               <ActionButtons text={item.text} icon={item.img} />
             </button>
           ))}
         </div>
       </div>
 
-      <BottomSheet isOpen={!!activeAction} onClose={closeBottomSheet}>
-        {activeAction === "taxi" && (
-          <div className="socialMedia">
-            <div className="socialMedia__icons">
-              <a
-                href={companyInfo.mobile_apps?.android}
-                target="_blank"
-                rel="noopener noreferrer">
-                <div className="socialMedia__icons__logo">
-                  <img src="./yandexGo.png" alt="" />
-                </div>
-                <span>Yandex Go</span>
-              </a>
-              <a
-                href={companyInfo.mobile_apps?.ios}
-                target="_blank"
-                rel="noopener noreferrer">
-                <div className="socialMedia__icons__logo">
-                  <img src="./fasten.png" alt="" />
-                </div>
-                <span>Fasten</span>
-              </a>
-              <a
-                href={companyInfo.mobile_apps?.ios}
-                target="_blank"
-                rel="noopener noreferrer">
-                <div className="socialMedia__icons__logo">
-                  <img src="./mytaxi.png" alt="" />
-                </div>
-                <span>My Taxi</span>
-              </a>
-              <a
-                href={companyInfo.mobile_apps?.ios}
-                target="_blank"
-                rel="noopener noreferrer">
-                <div className="socialMedia__icons__logo">
-                  <img src="./uklon.png" alt="" />
-                </div>
-                <span>Uklon</span>
-              </a>
-            </div>
+      <BottomSheet isOpen={activeAction === "taxi"} onClose={closeBottomSheet}>
+        <div className="socialMedia">
+          <div className="socialMedia__icons">
+            <a href={companyInfo.mobile_apps?.android} target="_blank" rel="noopener noreferrer">
+              <div className="socialMedia__icons__logo">
+                <img src="./yandexGo.png" alt="" />
+              </div>
+              <span>Yandex Go</span>
+            </a>
+            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+              <div className="socialMedia__icons__logo">
+                <img src="./fasten.png" alt="" />
+              </div>
+              <span>Fasten</span>
+            </a>
+            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+              <div className="socialMedia__icons__logo">
+                <img src="./mytaxi.png" alt="" />
+              </div>
+              <span>My Taxi</span>
+            </a>
+            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+              <div className="socialMedia__icons__logo">
+                <img src="./uklon.png" alt="" />
+              </div>
+              <span>Uklon</span>
+            </a>
           </div>
-        )}
+        </div>
+      </BottomSheet>
+      <BottomSheet isOpen={activeAction === "map"} onClose={closeBottomSheet}>
+        <div className="socialMedia">
+          <div className="socialMedia__icons">
+            <a href={`https://maps.google.com/?q=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+              <img src="./yandex.png" alt="" />
+              <span>Яндекс карты</span>
+            </a>
+            <a href={`https://yandex.ru/maps/?text=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+              <img src="./2gis.png" alt="" />
+              <span>2ГИС</span>
+            </a>
+            <a href={`https://yandex.ru/maps/?text=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+              <img src="./googleMaps.png" alt="" />
+              <span>Google карты</span>
+            </a>
+          </div>
+        </div>
       </BottomSheet>
     </>
   );

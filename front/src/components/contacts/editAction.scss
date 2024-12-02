@@ -1,18 +1,31 @@
 .actions {
   &__icons__edit {
+    svg {
+      fill: var(--tg-theme-text-color, #000);
+      stroke: inherit;
 
+      path {
+        fill: var(--tg-theme-text-color, #000);
+        stroke: inherit;
+      }
+    }
   }
   &__info {
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 20px 0;
+    width: 100px;
+    flex: 1;
     &__smallInfo {
       font-weight: 400;
       font-size: 12px;
       line-height: 133%;
-      color: var(--tg-theme-hint-color, #3C3C43);
+      color: var(--tg-theme-hint-color, #3c3c43);
       text-align: left !important;
+      text-overflow: ellipsis;
+      width: 100%;
+      overflow: hidden;
     }
     &__text__main {
       font-weight: 400;
@@ -22,9 +35,19 @@
       color: var(--tg-theme-text-color, #000);
 
       text-align: left !important;
+      text-overflow: ellipsis;
+      width: 100%;
+      overflow: hidden;
     }
   }
   &__arrowRight {
-    margin-left: auto;
+    // margin-left: auto;
+    svg {
+      fill: var(--tg-theme-text-color, #000);
+
+      path {
+        fill: var(--tg-theme-text-color, #000);
+      }
+    }
   }
 }

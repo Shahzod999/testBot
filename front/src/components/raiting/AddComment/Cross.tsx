@@ -1,7 +1,10 @@
+import { ReactSVG } from "react-svg";
+
 const Cross = ({ toggleComment }: { toggleComment: () => void }) => {
   return (
     <span onClick={toggleComment} className="commonCross">
-      <img src="./cross.svg" alt="" />
+      <ReactSVG src="./cross.svg" />
+      {/* <img src="./cross.svg" alt="" /> */}
     </span>
   );
 };

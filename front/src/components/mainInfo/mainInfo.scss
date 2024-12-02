@@ -35,7 +35,6 @@
         letter-spacing: -0.02em;
         // color: #000;
         color: var(--tg-theme-text-color, #000);
-
       }
 
       span {
@@ -45,7 +44,6 @@
         letter-spacing: -0.02em;
         // color: #000;
         color: var(--tg-theme-text-color, #000);
-
       }
     }
 
@@ -53,10 +51,17 @@
       cursor: pointer;
       font-size: 23px;
 
+      // svg {
+      //   fill: #3c3c43;
+      //   stroke: #3c3c43;
+      //   fill-opacity: 0.6;
+      // }
       svg {
-        fill: #3c3c43;
-        stroke: #3c3c43;
-        fill-opacity: 0.6;
+        fill: var(--tg-theme-text-color, #3c3c43);
+
+        path {
+          fill: var(--tg-theme-text-color, #3c3c43);
+        }
       }
     }
   }
@@ -66,7 +71,7 @@
     font-size: 13px;
     line-height: 138%;
     letter-spacing: -0.01em;
-    color: var(--tg-theme-hint-color, #3C3C43);
+    color: var(--tg-theme-hint-color, #3c3c43);
     margin-top: 16px;
     padding-bottom: 2px;
   }
@@ -95,7 +100,6 @@
 
     border-top: 0.5px solid #d1d1d6;
 
-
     &__divider {
       display: flex;
       justify-content: center;
@@ -119,7 +123,7 @@
 
       span {
         font-size: 13px;
-        color: var(--tg-theme-accent-text-color, #007AFF);
+        color: var(--tg-theme-accent-text-color, #007aff);
       }
     }
 
@@ -133,7 +137,7 @@
 
       span {
         font-size: 13px;
-        color: var(--tg-theme-hint-color, #3C3C43);
+        color: var(--tg-theme-hint-color, #3c3c43);
       }
     }
   }
@@ -161,7 +165,6 @@
     img {
       padding-bottom: 4px;
     }
-
   }
 
   .actionButtons {
@@ -196,7 +199,6 @@
       path {
         fill: var(--tg-theme-text-color, #000);
         stroke: var(--tg-theme-text-color, #000);
-
       }
     }
   }

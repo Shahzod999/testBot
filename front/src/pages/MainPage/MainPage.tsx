@@ -31,9 +31,7 @@ const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
-  const { data, isLoading, isError } = useGetCompanyByIdQuery(
-    "673a89577d6d20cabf0ad3cb",
-  );
+  const { data, isLoading, isError } = useGetCompanyByIdQuery("673a89567d6d20cabf0ad3bb");
 
   useEffect(() => {
     dispatch(setCompany(data?.data));
@@ -44,13 +42,11 @@ const MainPage = () => {
     const currentVersion = window.Telegram.WebApp.version;
     tg.ready();
     tg.expand();
-    
+
     if (currentVersion > requiredVersion) {
       tg.requestFullscreen();
     } else {
-      console.log(
-        `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,
-      );
+      console.log(`requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`);
     }
   }, []);
 
