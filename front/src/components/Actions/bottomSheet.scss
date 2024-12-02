@@ -28,6 +28,9 @@
   border-radius: 16px 16px 0 0;
   overflow: hidden;
   box-shadow: 0 -4px 12px 0 rgba(0, 0, 0, 0.05);
+  max-width: 450px;
+  min-width: 290px;
+  margin: auto;
 
   &--open {
     transform: translateY(0);
@@ -66,15 +69,14 @@
     font-size: 17px;
     line-height: 129%;
     letter-spacing: -0.02em;
-    // color: #000;
     color: var(--tg-theme-text-color, #000);
   }
 
   &__icons {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 2px;
+    justify-content: center;
+    gap: 5px;
 
     &__logo {
       width: 100%;

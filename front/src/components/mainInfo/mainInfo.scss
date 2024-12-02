@@ -50,6 +50,7 @@
     }
 
     &__bookMark {
+      cursor: pointer;
       font-size: 23px;
 
       svg {
@@ -65,7 +66,7 @@
     font-size: 13px;
     line-height: 138%;
     letter-spacing: -0.01em;
-    color: var(--tg-theme-hint-color);
+    color: var(--tg-theme-hint-color, #3C3C43);
     margin-top: 16px;
     padding-bottom: 2px;
   }
@@ -118,7 +119,7 @@
 
       span {
         font-size: 13px;
-        color: var(--tg-theme-accent-text-color);
+        color: var(--tg-theme-accent-text-color, #007AFF);
       }
     }
 
@@ -132,7 +133,7 @@
 
       span {
         font-size: 13px;
-        color: var(--tg-theme-hint-color);
+        color: var(--tg-theme-hint-color, #3C3C43);
       }
     }
   }
@@ -187,7 +188,16 @@
       // color: #000;
       color: var(--tg-theme-text-color, #000);
 
+      svg {
+        fill: var(--tg-theme-text-color, #000);
+        stroke: var(--tg-theme-text-color, #000);
+      }
 
+      path {
+        fill: var(--tg-theme-text-color, #000);
+        stroke: var(--tg-theme-text-color, #000);
+
+      }
     }
   }
 }

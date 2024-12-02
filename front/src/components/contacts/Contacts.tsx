@@ -8,6 +8,9 @@ import Cross from "../raiting/AddComment/Cross";
 import EditAction from "./EditAction";
 import AddFoto from "../raiting/AddComment/AddFoto";
 import SendButton from "../raiting/AddComment/SendButton";
+import { ReactSVG } from "react-svg";
+import Lottie from "lottie-react";
+import notFound from "../../../public/notFound.json"
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -136,7 +139,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <button
             className="pressEffefct"
             onClick={() => handleActionClick("edit")}>
-            <img src="./edit.svg" alt="edit" />
+            <ReactSVG src="./edit.svg" />
             Редактировать
           </button>
         </div>
@@ -571,7 +574,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         isOpen={activeAction === "person"}
         onClose={closeBottomSheet}>
         <div className="contacts__actions">
-          <img src="./utyaDuck.svg" alt="" />
+          <Lottie animationData={notFound} />
         </div>
       </BottomSheet>
     </>

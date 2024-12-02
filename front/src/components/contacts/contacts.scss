@@ -37,6 +37,15 @@
       letter-spacing: -0.01em;
       // color: #000;
       color: var(--tg-theme-text-color, #000);
+
+      svg {
+        stroke: var(--tg-theme-text-color, #000);
+
+        path {
+          stroke: var(--tg-theme-text-color, #000);
+        }
+
+      }
     }
   }
 
@@ -94,9 +103,9 @@
       // &:last-of-type::after {
       //   content: none; /* Убираем псевдоэлемент у последнего элемента типа */
       // }
-      svg {
-        fill: #000;
-      }
+      // svg {
+      //   fill: #000;
+      // }
 
       &--disabled {
         opacity: 0.5;
@@ -147,7 +156,7 @@
 
         &.workHour {
           .actions__text {
-            color: var(--tg-theme-hint-color);
+            color: var(--tg-theme-hint-color, #3C3C43);
           }
         }
 
@@ -171,6 +180,14 @@
 
       &__icons {
         padding-left: 16px;
+
+        svg {
+          fill: var(--tg-theme-text-color, #000);
+        }
+
+        path {
+          fill: var(--tg-theme-text-color, #000);
+        }
 
         &--disabled {
           text-decoration: line-through;
@@ -253,7 +270,7 @@
       padding: 16px 12px;
       background: rgba(118, 118, 128, 0.07);
       border-radius: 16px;
-      color: var(--tg-theme-hint-color);
+      color: var(--tg-theme-hint-color, #3C3C43);
       outline: none;
       border: none;
     }

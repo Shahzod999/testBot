@@ -1,3 +1,5 @@
+import { ReactSVG } from "react-svg";
+
 export interface ActionProps {
   text: string | string[];
   icon?: string;
@@ -6,7 +8,7 @@ export interface ActionProps {
 const ActionButtons = ({ text, icon }: ActionProps) => {
   return (
     <>
-      <img src={icon} alt="icons" />
+      <ReactSVG src={icon || ""} />
       <span>{text}</span>
     </>
   );

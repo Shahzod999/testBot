@@ -33,11 +33,16 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         img: "./car.fill.svg",
         key: "taxi",
       },
-      {
-        text: "Чат",
-        img: "./message.fill.svg",
-        key: "chat",
-      },
+      ...(companyInfo?.phone_number
+        ? [
+            {
+              text: "Чат",
+              img: "./message.fill.svg",
+              key: "chat",
+              link: `https://t.me/${companyInfo.phone_number}`,
+            },
+          ]
+        : []),
       {
         text: "Маршрут",
         img: "./map.fill.svg",
@@ -47,7 +52,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         text: "Поделиться",
         img: "./Icon.svg",
         key: "share",
-        link: `https://t.me/share/url?url=t.me/TrueGis_bot/start?startapp=${companyInfo._id}`,
+        link: `https://t.me/share/url?url=t.me/TrueGis_bot/start?startapp=${companyInfo?._id}`,
       },
     ],
     [companyInfo],
@@ -55,7 +60,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const handleActions = useCallback((item: ActionsState) => {
     if (item.link) {
-      window.location.href = item.link;
+      return (window.location.href = item.link);
     }
     setActiveAction(item.key);
   }, []);
@@ -70,12 +75,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     } else {
       document.body.style.overflow = "";
     }
-    
-    setIsLoading(true);
-    const timeoutId = setTimeout(() => {
-      setIsLoading(false);
-    }, 200);
-    return () => clearTimeout(timeoutId);
   }, [activeAction]);
 
   return (
@@ -145,79 +144,47 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       </div>
 
       <BottomSheet isOpen={!!activeAction} onClose={closeBottomSheet}>
-        {isLoading ? (
-          <AppsSceleton />
-        ) : (
-          <>
-            {activeAction === "taxi" && (
-              <div className="socialMedia">
-                <div className="socialMedia__icons">
-                  <a
-                    href={companyInfo.mobile_apps?.android}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <div className="socialMedia__icons__logo">
-                      <img src="./yandexGo.png" alt="" />
-                    </div>
-                    <span>Yandex Go</span>
-                  </a>
-                  <a
-                    href={companyInfo.mobile_apps?.ios}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <div className="socialMedia__icons__logo">
-                      <img src="./fasten.png" alt="" />
-                    </div>
-                    <span>Fasten</span>
-                  </a>
-                  <a
-                    href={companyInfo.mobile_apps?.ios}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <div className="socialMedia__icons__logo">
-                      <img src="./mytaxi.png" alt="" />
-                    </div>
-                    <span>My Taxi</span>
-                  </a>
-                  <a
-                    href={companyInfo.mobile_apps?.ios}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <div className="socialMedia__icons__logo">
-                      <img src="./uklon.png" alt="" />
-                    </div>
-                    <span>Uklon</span>
-                  </a>
+        {activeAction === "taxi" && (
+          <div className="socialMedia">
+            <div className="socialMedia__icons">
+              <a
+                href={companyInfo.mobile_apps?.android}
+                target="_blank"
+                rel="noopener noreferrer">
+                <div className="socialMedia__icons__logo">
+                  <img src="./yandexGo.png" alt="" />
                 </div>
-              </div>
-            )}
-            {activeAction === "chat" && (
-              <div className="socialMedia">
-                <h3>Переход на страницы</h3>
-                <div className="socialMedia__icons">
-                  {Object.entries(companyInfo.social_media || {})
-                    .filter(([_, url]) => url)
-                    .map(([name, url]) => (
-                      <a
-                        key={name}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        <div className="socialMedia__icons__logo">
-                          <img src={`./${name}.png`} alt="" />
-                        </div>
-                        <span>{name}</span>
-                      </a>
-                    ))}
+                <span>Yandex Go</span>
+              </a>
+              <a
+                href={companyInfo.mobile_apps?.ios}
+                target="_blank"
+                rel="noopener noreferrer">
+                <div className="socialMedia__icons__logo">
+                  <img src="./fasten.png" alt="" />
                 </div>
-              </div>
-            )}
-            {activeAction === "share" && (
-              <div className="socialMedia">
-                <h3>Поделитесь этим!</h3>
-              </div>
-            )}
-          </>
+                <span>Fasten</span>
+              </a>
+              <a
+                href={companyInfo.mobile_apps?.ios}
+                target="_blank"
+                rel="noopener noreferrer">
+                <div className="socialMedia__icons__logo">
+                  <img src="./mytaxi.png" alt="" />
+                </div>
+                <span>My Taxi</span>
+              </a>
+              <a
+                href={companyInfo.mobile_apps?.ios}
+                target="_blank"
+                rel="noopener noreferrer">
+                <div className="socialMedia__icons__logo">
+                  <img src="./uklon.png" alt="" />
+                </div>
+                <span>Uklon</span>
+              </a>
+            </div>
+          </div>
         )}
       </BottomSheet>
     </>

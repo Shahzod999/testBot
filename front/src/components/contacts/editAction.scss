@@ -11,7 +11,7 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 133%;
-      color: var(--tg-theme-hint-color);
+      color: var(--tg-theme-hint-color, #3C3C43);
       text-align: left !important;
     }
     &__text__main {
