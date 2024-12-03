@@ -48,8 +48,11 @@
     }
 
     &__bookMark {
+      display: flex;
       cursor: pointer;
       font-size: 23px;
+      -webkit-tap-highlight-color: transparent;
+    
 
       // svg {
       //   fill: #3c3c43;

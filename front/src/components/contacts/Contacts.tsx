@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { ContactsActions } from "./ContactsActions";
 import "./contacts.scss";
 import { CompanyState } from "../../app/types/companyType";
@@ -97,7 +97,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const handleActionClick = useCallback((key: string | null) => {
     console.log(key);
-
     if (key) {
       document.body.style.overflow = "hidden";
     }

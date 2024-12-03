@@ -31,6 +31,7 @@
   max-width: 450px;
   min-width: 290px;
   margin: auto;
+  max-height: 100%;
 
   &--open {
     transform: translateY(0);
@@ -42,6 +43,7 @@
   }
 
   &__content {
+    height: 100%;
     span {
       text-align: center;
     }

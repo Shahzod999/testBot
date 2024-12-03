@@ -83,20 +83,21 @@
 }
 
 .commentsHolder {
-  z-index: 999;
-  position: fixed;
-  bottom: 0;
-  top: 0;
+  // z-index: 999;
+  // position: fixed;
+  // bottom: 0;
+  // top: 0;
   width: 100%;
+  height: 100%;
   transition: all 0.5s ease-in-out;
 
-  &--deActive {
-    transform: translateY(100%);
-  }
+  // &--deActive {
+  //   transform: translateY(100%);
+  // }
 
-  &--active {
-    transform: translateY(0);
-  }
+  // &--active {
+  //   transform: translateY(0);
+  // }
 }
 
 .addComment {
