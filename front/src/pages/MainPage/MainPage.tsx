@@ -31,7 +31,7 @@ const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
-  const { data, isLoading, isError } = useGetCompanyByIdQuery("673a89567d6d20cabf0ad3bb");
+  const { data, isLoading, isError } = useGetCompanyByIdQuery("673a89577d6d20cabf0ad3cb");
 
   useEffect(() => {
     dispatch(setCompany(data?.data));
