@@ -20,8 +20,8 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
 
   return (
     <BottomSheet isOpen={openComment} onClose={toggleComment}>
-      <div className={`commentsHolder`}>
-        <div className={`addComment`}>
+      <div className="commentsHolder">
+        <div className="addComment">
           <div className="addComment__title">
             <h2>Оставьте отзыв</h2>
             <Cross toggleComment={toggleComment} />
@@ -35,7 +35,11 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
           <RaitingStars />
           <TextArea />
 
-          <AddFoto imagesArray={imagesArray} setimagesArray={setimagesArray} id="addComments" />
+          <AddFoto
+            imagesArray={imagesArray}
+            setimagesArray={setimagesArray}
+            id="addComments"
+          />
 
           <SendButton text="Ваша оценка и отзыв будут видны всем" />
         </div>

@@ -9,6 +9,11 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [openComment, setOpenCommet] = useState(false);
 
   const toggleComment = () => {
+    if (!openComment) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
     setOpenCommet(!openComment);
   };
 
@@ -25,7 +30,7 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
             {companyInfo?.rating}
           </strong>
         </div>
-        <RaitingStars toggleComment={toggleComment}/>
+        <RaitingStars toggleComment={toggleComment} />
       </div>
 
       <AddComment openComment={openComment} toggleComment={toggleComment} />

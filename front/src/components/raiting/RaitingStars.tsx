@@ -1,16 +1,23 @@
-import { useState } from "react";
 import { IoIosStar } from "react-icons/io";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import {
+  selectedRaitingCount,
+  setCountRaiting,
+} from "../../app/features/RaitingStarsSlice";
 
 interface RaitingProps {
   toggleComment?: () => void;
 }
 
 const RaitingStars = ({ toggleComment }: RaitingProps) => {
-  const [rating, setRating] = useState(0);
+  const dispatch = useAppDispatch();
+  const count = useAppSelector(selectedRaitingCount);
 
   const handleStarClick = (index: number) => {
-    setRating(index + 1);
+    dispatch(setCountRaiting(index + 1));
   };
+
+
   return (
     <div className="raiting__set" onClick={toggleComment}>
       <p>Нажмите, чтобы оценить:</p>
@@ -19,7 +26,7 @@ const RaitingStars = ({ toggleComment }: RaitingProps) => {
           <div key={index}>
             <IoIosStar
               size={25}
-              className={`star ${index < rating ? "active" : ""}`}
+              className={`star ${index < count ? "active" : ""}`}
               onClick={() => handleStarClick(index)}
             />
           </div>
