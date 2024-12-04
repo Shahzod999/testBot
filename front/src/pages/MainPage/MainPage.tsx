@@ -8,6 +8,7 @@ import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { setCompany } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
+import FeedBack from "../../components/FeedBack/FeedBack";
 
 export {};
 
@@ -57,6 +58,7 @@ const MainPage = () => {
       <Header img={data?.data?.photos_sample || []} />
       <MainInfo companyInfo={data?.data} />
       <Raiting companyInfo={data?.data} />
+      <FeedBack />
       <Contacts companyInfo={data?.data} />
     </div>
   );

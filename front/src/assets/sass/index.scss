@@ -8,12 +8,11 @@
 // user-select: none;++
 // показать только те карты и приложения те у котрых есть
 
-
 // звездочки соеденить в стейт
 // коментарии пусть тоже закоываеся
 // пусть с зади звездочек при прикосании не загорает синий цвет
 // андроид бук марк
-// 
+//
 
 * {
   padding: 0;
@@ -33,7 +32,7 @@
 }
 
 body {
-  background-color: var(--tg-theme-bg-color, #fff);
+  background-color: var(--tg-theme-bg-color, #000000);
   color: var(--tg-theme-text-color, #000);
   height: var(--tg-viewport-height);
 }

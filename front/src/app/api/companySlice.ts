@@ -22,6 +22,11 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         url: `/favorite/favorite/${id}`,
         method: "POST"
       })
+    }),
+    getCommentsbycompany: builder.query({
+      query: (id) => ({
+        url: `comment/get-by-company/${id}`
+      })
     })
   }),
 });

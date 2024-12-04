@@ -1,0 +1,8 @@
+.feedBack {
+  border-radius: 20px;
+  // background-color: #fff;
+  background-color: var(--tg-theme-bg-color, #fff);
+  color: var(--tg-theme-text-color, #000);
+  margin-bottom: 2px;
+  padding: 17px 16px;
+}
