@@ -1,8 +1,50 @@
 .feedBack {
   border-radius: 20px;
-  // background-color: #fff;
   background-color: var(--tg-theme-bg-color, #fff);
   color: var(--tg-theme-text-color, #000);
   margin-bottom: 2px;
   padding: 17px 16px;
+  h2 {
+    font-family: var(--third-family);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+    letter-spacing: 0.02em;
+    color: var(--tg-theme-text-color, #000);
+  }
+  &__more {
+    font-family: var(--font-family);
+    font-size: 13px;
+    line-height: 138%;
+    letter-spacing: -0.01em;
+    color: var(--tg-theme-text-color, #000);
+
+    display: block;
+    width: fit-content;
+    border-radius: 16px;
+    padding: 5px 12px;
+    background: rgba(118, 118, 128, 0.12);
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  &__comment {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s forwards;
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// background-color: var(--tg-theme-bg-color, #000000);
+// color: var(--tg-theme-text-color, #000);

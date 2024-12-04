@@ -3,12 +3,14 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import CompanyStateSlice from "./features/companyStateSlice";
 import { apiSlice } from "./api/apiSlice";
 import countRaitingStateSlice from "./features/RaitingStarsSlice";
+import getCompanyIdSlcie from "./features/getCompanyIdSlice";
 
 export const store = configureStore({
   reducer: {
     company: CompanyStateSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
     raitingCount: countRaitingStateSlice,
+    companyId: getCompanyIdSlcie
   },
 
   middleware: (getDefaultMiddleware) =>

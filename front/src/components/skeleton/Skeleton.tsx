@@ -23,39 +23,78 @@ const SkeletonBox: React.FC<SkeletonBoxProps> = ({ width, height, borderRadius =
 
 const Skeleton: React.FC = () => {
   return (
-    <div style={{ padding: "16px", maxWidth: "400px" }}>
-      <SkeletonBox width="100%" height="250px" borderRadius="8px" />
-
-      <div style={{ marginTop: "16px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <SkeletonBox width="60px" height="60px" borderRadius="50%" />
-          <div>
-            <SkeletonBox width="200px" height="20px" />
-            <SkeletonBox width="100px" height="20px" />
+    <div className="skeleton-box" style={{ maxWidth: "400px" }}>
+      <div className="box-1"></div>
+      <div className="box-2">
+        <div className="box-3">
+          <div className="box-4"></div>
+          <div className="box-5">
+            <div className="box-6"></div>
+            <div className="box-7"></div>
           </div>
         </div>
-
-        <div style={{ margin: "10px 0" }}>
-          <SkeletonBox width="80%" height="16px" />
+        <div className="box-8"></div>
+        <div className="box-9">
+          <div>
+            <div className="box-10"></div>
+            <div className="box-11"></div>
+          </div>
+          <div className="box-14">
+            <div className="box-12"></div>
+            <div className="box-13"></div>
+          </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <SkeletonBox width="100%" height="100px" />
-          <SkeletonBox width="100%" height="100px" />
+        <div className="box-15"></div>
+        <div className="box-16">
+          <div className="box-17"></div>
+          <div className="box-17"></div>
+          <div className="box-17"></div>
+          <div className="box-17"></div>
         </div>
-        <SkeletonBox width="100%" height="40px" />
-        <AppsSceleton />
-
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "30px" }}>
-          <SkeletonBox width="100%" height="40px" />
-          <SkeletonBox width="100%" height="40px" />
+      </div>
+      <div className="box-18">
+        <div>
+          <div className="box-19"></div>
+          <div className="box-20"></div>
+          <div className="box-21"></div>
+          <div className="box-22"></div>
         </div>
-        <div style={{ margin: "10px 0" }}>
-          <SkeletonBox width="100%" height="150px" />
+        <div className="box-23"></div>
+      </div>
+      <div className="box-24">
+        <div className="box-25">
+          <div className="box-26"></div>
+          <div className="box-27"></div>
         </div>
-        <div style={{ marginTop: "16px" }}>
-          {[...Array(5)].map((_, index) => (
-            <SkeletonBox key={index} width="100%" height="20px" />
-          ))}
+        <div>
+          <div className="box-28">
+            <div className="box-29"></div>
+            <div className="box-30"></div>
+          </div>
+          <div className="box-28">
+            <div className="box-29"></div>
+            <div className="box-30"></div>
+          </div>
+          <div className="box-28">
+            <div className="box-29"></div>
+            <div className="box-30"></div>
+          </div>
+          <div className="box-28">
+            <div className="box-29"></div>
+            <div className="box-30"></div>
+          </div>
+          <div className="box-28">
+            <div className="box-29"></div>
+            <div className="box-30"></div>
+          </div>
+          <div className="box-28">
+            <div className="box-29"></div>
+            <div className="box-30"></div>
+          </div>
+          <div className="box-28">
+            <div className="box-29"></div>
+            <div className="box-30"></div>
+          </div>
         </div>
       </div>
     </div>

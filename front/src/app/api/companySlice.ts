@@ -23,12 +23,15 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         method: "POST"
       })
     }),
-    getCommentsbycompany: builder.query({
-      query: (id) => ({
-        url: `comment/get-by-company/${id}`
+    getCommentsbyCompany: builder.query({
+      query: ({ id, limit }) => ({
+        url: `comment/get-by-company/${id}`,
+        params: {
+          limit
+        }
       })
     })
   }),
 });
-export const { useGetCompanyQuery, useGetCompanyByIdQuery, useGetCommentsByCompanyQuery, useFavoriteApiMutation } = companyApiSlice;
+export const { useGetCompanyQuery, useGetCompanyByIdQuery, useGetCommentsByCompanyQuery, useFavoriteApiMutation, useGetCommentsbyCompanyQuery } = companyApiSlice;
 

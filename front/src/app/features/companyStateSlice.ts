@@ -20,5 +20,5 @@ export const companyStateSlice = createSlice({
 });
 
 export const { setCompany, clearCompany } = companyStateSlice.actions;
-export const selectedCompany = (state: RootState) => state.company.value 
+export const selectedCompany = (state: RootState) => state.company.value
 export default companyStateSlice.reducer;

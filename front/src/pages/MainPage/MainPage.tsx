@@ -5,10 +5,11 @@ import { useEffect } from "react";
 import Raiting from "../../components/raiting/Raiting";
 import Contacts from "../../components/contacts/Contacts";
 import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
-import { useAppDispatch } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { setCompany } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
 import FeedBack from "../../components/FeedBack/FeedBack";
+import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 
 export {};
 
@@ -31,8 +32,9 @@ declare global {
 const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
+  const companyId = useAppSelector(selectedCompanyId);
   const dispatch = useAppDispatch();
-  const { data, isLoading, isError } = useGetCompanyByIdQuery("673a89577d6d20cabf0ad3cb");
+  const { data, isLoading, isError } = useGetCompanyByIdQuery(companyId);
 
   useEffect(() => {
     dispatch(setCompany(data?.data));

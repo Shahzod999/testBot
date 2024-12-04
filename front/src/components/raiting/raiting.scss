@@ -1,17 +1,16 @@
 .raiting {
   border-radius: 20px;
-  // background-color: #fff;
   background-color: var(--tg-theme-bg-color, #fff);
   color: var(--tg-theme-text-color, #000);
   margin-bottom: 2px;
+  padding: 17px 16px;
 
   &__count {
     display: flex;
     align-items: center;
-    // gap: 70px;
     padding-bottom: 17px;
+    margin-bottom: 17px;
     border-bottom: 0.5px solid #d1d1d6;
-    padding: 17px 16px;
 
     p {
       flex: 1;
@@ -19,12 +18,10 @@
       font-size: 16px;
       line-height: 131%;
       letter-spacing: -0.02em;
-      // color: #000;
       color: var(--tg-theme-text-color, #000);
 
       a {
-        // color: #007aff;
-        color: var(--tg-theme-link-color, #007AFF);
+        color: var(--tg-theme-link-color, #007aff);
       }
     }
 
@@ -53,7 +50,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 17px 16px;
 
     .active {
       fill: #ffcc00;
@@ -72,10 +68,9 @@
       flex: 1;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      // justify-content: flex-end;
       gap: 5px;
       -webkit-tap-highlight-color: transparent;
-
 
       svg {
         fill: #d9d9d9;
