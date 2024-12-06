@@ -11,17 +11,23 @@ const ToastContainer = ({ toast }: { toast: Toast }) => {
       if (toastRef.current) {
         toastRef.current.classList.add("hideToast");
       }
-    }, 3000);
+    }, 30000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div ref={toastRef} className={`toast-container ${toast.state}`}>
-      <span>{toast.text}</span>
-      <span className="toast-close" onClick={() => dispatch(removeToast(toast.id))}>
+      {/* <span>{toast.text}</span> */}
+      {/* <span className="toast-close" onClick={() => dispatch(removeToast(toast.id))}>
         ✖
-      </span>
+      </span> */}
+      <div className="check__svg">
+        <img src="./check.png" alt="" />
+      </div>
+      <div className="check__text">
+        <h2>{toast.text}</h2>
+      </div>
     </div>
   );
 };

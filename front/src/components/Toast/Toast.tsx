@@ -12,7 +12,7 @@ const Toast = () => {
     const timers = messages.map((toast) =>
       setTimeout(() => {
         dispatch(removeToast(toast.id));
-      }, 3500)
+      }, 35000)
     );
     return () => timers.forEach(clearTimeout);
   }, [messages, dispatch]);
