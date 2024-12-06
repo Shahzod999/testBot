@@ -116,7 +116,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   //   }
   // }, [activeAction]);
 
-  console.log(companyInfo);
+  console.log(companyInfo, "ya tuuutu");
 
   if (!companyInfo) return null;
 
@@ -172,7 +172,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <div className="contacts__actions">
           {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
             <div key={day}>
-              <ContactsActions time={true} text={hours} mainText={day} style={"workHour"} isDisabled={hours == "Выходной"} />
+              <ContactsActions text={hours} mainText={day} style={"editWorkHour"} isDisabled={hours == "Closed"} time={true} arrowRight={true} />
             </div>
           ))}
 
@@ -231,6 +231,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </CommonButton>
         </div>
       </BottomSheet>
+
       <BottomSheet isOpen={activeAction === "edit"} onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <div className="contacts__actions__closeButtons">
@@ -242,6 +243,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <h3 className="contacts__actions__title">Общая информация</h3>
 
           <EditAction smallInfo="Название" text={companyInfo?.name} icon="./phone.svg" isDisabled={!companyInfo?.name} />
+
           <EditAction smallInfo="Адрес" text={companyInfo?.full_address} icon="./map.fill.svg" isDisabled={!companyInfo?.full_address} />
           <div onClick={() => handleActionClick("workHours")}>
             <EditAction smallInfo="Часы работы" text="Смотреть все" icon="Exclude.svg" isDisabled={!companyInfo?.working_hours} arrowRight={true} />
@@ -304,11 +306,11 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
 
           <div className="contacts__actions__lastElement"></div>
-          {/*  */}
           {error && <div className="errorText">{error}</div>}
         </div>
         <SendButton text="Проверка информаций займёт 3 рабочих дня" />
       </BottomSheet>
+
       <BottomSheet isOpen={activeAction === "category"} onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <div className="contacts__actions__closeButtons">

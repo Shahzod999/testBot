@@ -11,23 +11,19 @@ interface ContactProps extends ActionProps {
 }
 
 export const ContactsActions = ({ time, text, icon, isDisabled, mainText, style, arrowRight, phone }: ContactProps) => {
-  const formatTime = (input: string) => {
-    if (input === "Closed") {
-      return "Закрыто";
+  const formatTime = (input: string | string[]) => {
+    if (Array.isArray(input)) {
+      return input
+        .map((day) => {
+          if (day === "Open 24 hours") return "Открыто 24 часа";
+          if (day === "Closed") return "Выходной";
+          return day;
+        })
+        .join(", ");
     }
-
-    const [start, end] = input.split("–").map((time) => {
-      const [hour, meridian] = time.trim().split(" ");
-      let hours = parseInt(hour, 10);
-      if (meridian === "PM" && hours !== 12) {
-        hours += 12;
-      } else if (meridian === "AM" && hours === 12) {
-        hours = 0;
-      }
-      return hours;
-    });
-
-    return `${start}:00–${end}:00`;
+    if (input === "Open 24 hours") return "Открыто 24 часа";
+    if (input === "Closed") return "Выходной";
+    return input;
   };
 
   const handleClick = () => {
@@ -37,16 +33,18 @@ export const ContactsActions = ({ time, text, icon, isDisabled, mainText, style,
     }
   };
 
-  const processText = (input: string | string[]) => {
-    if (Array.isArray(input) && input.length > 0) {
-      return time ? formatTime(input[0]) : input[0];
+  const processText = (input: string | string[] | Record<string, string[]>) => {
+    if (typeof input === "object" && !Array.isArray(input)) {
+      return Object.entries(input)
+        .map(([day, hours]) => `${day}: ${formatTime(hours)}`)
+        .join("\n");
+    } else if (Array.isArray(input)) {
+      return formatTime(input);
     }
     return input || "";
   };
 
   const displayText = processText(text);
-
-  console.log(text);
 
   return (
     <button onClick={handleClick} className={`${mainText ? "actions__mainText" : ""} ${style} actions pressEffefct ${isDisabled ? "actions--disabled" : ""}`}>

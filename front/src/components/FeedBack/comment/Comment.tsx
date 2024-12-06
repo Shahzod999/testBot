@@ -9,7 +9,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const timeAgo = useTimeAgo(comment?.user?.updated_at);
   const textRef = useRef<HTMLParagraphElement>(null);
-  
+
   useEffect(() => {
     if (textRef.current) {
       const isOverflow = textRef.current.scrollHeight > textRef.current.offsetHeight;

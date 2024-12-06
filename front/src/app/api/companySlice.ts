@@ -12,10 +12,13 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         url: `/company/${id}`
       })
     }),
-    getCommentsByCompany: builder.query({
-      query: (id) => ({
-        url: `/comment/get-by-company/${id}`
-      })
+    sendCommentByCompany: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/comment/${id}`,
+        method: "POST",
+        body: data
+      }),
+      invalidatesTags: ["Comment"]
     }),
     favoriteApi: builder.mutation({
       query: (id) => ({
@@ -33,5 +36,6 @@ export const companyApiSlice = apiSlice.injectEndpoints({
     })
   }),
 });
-export const { useGetCompanyQuery, useGetCompanyByIdQuery, useGetCommentsByCompanyQuery, useFavoriteApiMutation, useGetCommentsbyCompanyQuery } = companyApiSlice;
+export const { useGetCompanyQuery, useGetCompanyByIdQuery, useFavoriteApiMutation, useGetCommentsbyCompanyQuery, useSendCommentByCompanyMutation } = companyApiSlice;
 
+// https://dev.admin13.uz/v1/delivery/bot/comment/673a89577d6d20cabf0ad3cb // company_id

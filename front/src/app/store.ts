@@ -4,13 +4,15 @@ import CompanyStateSlice from "./features/companyStateSlice";
 import { apiSlice } from "./api/apiSlice";
 import countRaitingStateSlice from "./features/RaitingStarsSlice";
 import getCompanyIdSlcie from "./features/getCompanyIdSlice";
+import toastReducer from './features/toastSlice';
 
 export const store = configureStore({
   reducer: {
     company: CompanyStateSlice,
     [apiSlice.reducerPath]: apiSlice.reducer,
     raitingCount: countRaitingStateSlice,
-    companyId: getCompanyIdSlcie
+    companyId: getCompanyIdSlcie,
+    toast: toastReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

@@ -1,8 +1,9 @@
-import { useState } from "react";
+interface TextProps {
+  text: string;
+  setText: (e: string) => void;
+}
 
-const TextArea = () => {
-  const [text, setText] = useState("");
-
+const TextArea = ({ text, setText }: TextProps) => {
   const getProgressState = () => {
     const length = text.trim().length;
 

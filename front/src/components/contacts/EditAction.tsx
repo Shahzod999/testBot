@@ -12,7 +12,6 @@ const EditAction = ({ text, icon, isDisabled, smallInfo, arrowRight }: ContactPr
     <button className={`actions pressEffefct ${isDisabled ? "actions--disabled" : ""}`}>
       <span className="actions__icons__edit">
         <ReactSVG src={icon || ""} />
-        {/* <img src={icon} alt="img" /> */}
       </span>
       <div className="actions__info">
         <span className="actions__info__smallInfo">{smallInfo}</span>

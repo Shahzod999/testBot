@@ -30,7 +30,6 @@
   --grey-40: rgba(0, 0, 0, 0.7);
 }
 
-
 :root {
   --font-family: "SF Pro Text", sans-serif;
   --second-family: "Sf pro text", sans-serif;
@@ -42,9 +41,6 @@
   --font7: "Inter", sans-serif;
   --font8: "Lato", sans-serif;
 }
-
-
-
 
 * {
   padding: 0;
@@ -125,4 +121,7 @@ a {
     filter: brightness(100%);
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05) inset;
   }
+}
+button:disabled {
+  filter: contrast(0.5);
 }

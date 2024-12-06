@@ -8,6 +8,8 @@ import BottomSheet from "../Actions/BottomSheet";
 import AppsSceleton from "../skeleton/AppsSkeleton";
 import useGeolocation from "../../hooks/useGeolocation";
 import DistanceCalculator from "../../hooks/DistanceCalculator";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { succesToast } from "../../app/features/toastSlice";
 interface ActionsState {
   text: string;
   img: string;
@@ -16,7 +18,7 @@ interface ActionsState {
 }
 
 const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useAppDispatch();
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(false);
   const { location, error } = useGeolocation();
@@ -24,6 +26,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const toggleBookMark = () => {
     setBookMark(!bookMark);
+    dispatch(succesToast("Избранный Изменен"));
   };
 
   const actions = useMemo(
@@ -77,6 +80,9 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   }, [activeAction]);
 
+  const handleOrder = () => {
+    dispatch(succesToast("Заказ Оформлен"));
+  };
   return (
     <>
       <div className="mainInfo">
@@ -116,7 +122,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
         </div>
 
-        <button className="mainInfo__orderbutton pressEffefct">
+        <button className="mainInfo__orderbutton pressEffefct" onClick={handleOrder}>
           <img src="./bag.svg" alt="" />
           Заказать
         </button>

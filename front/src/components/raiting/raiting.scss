@@ -107,6 +107,9 @@
   overflow: scroll;
   max-width: 450px;
   min-width: 290px;
+  .raiting__set {
+    margin: 20px 0;
+  }
 
   &__title {
     display: flex;

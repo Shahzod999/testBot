@@ -4,11 +4,12 @@ import { ReactNode } from "react";
 interface CommonButtonProps {
   children: ReactNode;
   createdFunction?: () => void;
+  disabled?: boolean;
 }
 
-const CommonButton = ({ children, createdFunction }: CommonButtonProps) => {
+const CommonButton = ({ children, createdFunction, disabled }: CommonButtonProps) => {
   return (
-    <button className="commonButton" onClick={createdFunction}>
+    <button className="commonButton" onClick={createdFunction} disabled={disabled}>
       {children}
     </button>
   );

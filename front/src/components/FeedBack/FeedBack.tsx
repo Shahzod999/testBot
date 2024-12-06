@@ -12,7 +12,7 @@ const FeedBack = () => {
   const companyId = useAppSelector(selectedCompanyId);
   const { data } = useGetCommentsbyCompanyQuery({ id: companyId, limit });
 
-  console.log(data?.pagination?.total);
+  console.log(data, "2");
 
   const limitHandler = () => {
     setLimit(limit + 5);
@@ -20,6 +20,8 @@ const FeedBack = () => {
       return setEnd(false);
     }
   };
+
+  if (!data?.pagination?.total) return;
 
   return (
     <div className="feedBack">
