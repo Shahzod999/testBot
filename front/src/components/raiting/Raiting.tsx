@@ -4,7 +4,10 @@ import { IoIosStar } from "react-icons/io";
 import AddComment from "./AddComment/AddComment";
 import RaitingStars from "./RaitingStars";
 import { CompanyState } from "../../app/types/companyType";
-import { selectedRaitingCount, setCountRaiting } from "../../app/features/RaitingStarsSlice";
+import {
+  selectedRaitingCount,
+  setCountRaiting,
+} from "../../app/features/RaitingStarsSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 
 const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
@@ -30,11 +33,12 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <div className="raiting">
         <div className="raiting__count">
           <p>
-            На основе {companyInfo.review_count} отзывов людей из <a href={companyInfo.reviews_link}>Google</a>
+            На основе {companyInfo.review_count} отзывов людей из{" "}
+            <a href={companyInfo.reviews_link}>Google</a>
           </p>
           <strong>
             <IoIosStar size={27} />
-            {companyInfo?.rating}
+            {companyInfo?.rating || "0"}
           </strong>
         </div>
 
