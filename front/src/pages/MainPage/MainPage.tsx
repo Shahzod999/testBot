@@ -11,7 +11,6 @@ import Skeleton from "../../components/skeleton/Skeleton";
 import FeedBack from "../../components/FeedBack/FeedBack";
 import {
   selectedCompanyId,
-  selectedUserTelegramId,
   setCompanyId,
   setUserTelegramId,
 } from "../../app/features/getCompanyIdSlice";
@@ -45,13 +44,10 @@ const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
-  const userTelegramId = useAppSelector(selectedUserTelegramId);
-
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetCompanyByIdQuery(
     tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId,
   );
-
 
   useEffect(() => {
     dispatch(setCompany(data?.data));
@@ -88,8 +84,6 @@ const MainPage = () => {
       <Header img={data?.data?.photos_sample || []} />
       <MainInfo companyInfo={data?.data} />
       <Raiting companyInfo={data?.data} />
-      <h1 style={{ color: "white" }}>{userTelegramId}</h1>
-
       <FeedBack />
       <Contacts companyInfo={data?.data} />
     </div>

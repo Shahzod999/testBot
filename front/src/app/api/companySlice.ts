@@ -4,38 +4,48 @@ export const companyApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCompany: builder.query({
       query: () => ({
-        url: "/company"
-      })
+        url: "/company",
+      }),
     }),
     getCompanyById: builder.query({
       query: (id) => ({
-        url: `/company/${id}`
-      })
+        url: `/company/${id}`,
+      }),
     }),
     sendCommentByCompany: builder.mutation({
       query: ({ id, data }) => ({
         url: `/comment/${id}`,
         method: "POST",
-        body: data
+        body: data,
       }),
-      invalidatesTags: ["Comment"]
+      invalidatesTags: ["Comment"],
     }),
     favoriteApi: builder.mutation({
-      query: (id) => ({
+      query: ({ id, tgId }) => ({
         url: `/favorite/favorite/${id}`,
-        method: "POST"
-      })
+        method: "POST",
+        headers: {
+          "telegram-id": tgId,
+          "Content-Type": "application/json",
+        },
+      }),
     }),
     getCommentsbyCompany: builder.query({
       query: ({ id, limit }) => ({
         url: `comment/get-by-company/${id}`,
         params: {
-          limit
-        }
-      })
-    })
+          limit,
+        },
+      }),
+    }),
   }),
 });
-export const { useGetCompanyQuery, useGetCompanyByIdQuery, useFavoriteApiMutation, useGetCommentsbyCompanyQuery, useSendCommentByCompanyMutation } = companyApiSlice;
+export const {
+  useGetCompanyQuery,
+  useGetCompanyByIdQuery,
+  useFavoriteApiMutation,
+  useGetCommentsbyCompanyQuery,
+  useSendCommentByCompanyMutation,
+} = companyApiSlice;
 
 // https://dev.admin13.uz/v1/delivery/bot/comment/673a89577d6d20cabf0ad3cb // company_id
