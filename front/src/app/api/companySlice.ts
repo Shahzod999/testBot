@@ -21,14 +21,16 @@ export const companyApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Comment"],
     }),
     favoriteApi: builder.mutation({
-      query: ({ id, tgId }) => ({
+      query: (id) => ({
         url: `/favorite/favorite/${id}`,
         method: "POST",
-        headers: {
-          "Telegram-id": tgId,
-          "Content-Type": "application/json",
-          'lang': "uz",
-          "type": "company"
+        // headers: {
+        //   "Telegram-id": tgId,
+        //   "Content-Type": "application/json",
+        //   lang: "uz",
+        // },
+        body: {
+          type: "company",
         },
       }),
     }),

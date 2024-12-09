@@ -9,10 +9,7 @@ import useGeolocation from "../../hooks/useGeolocation";
 import DistanceCalculator from "../../hooks/DistanceCalculator";
 import { useFavoriteApiMutation } from "../../app/api/companySlice";
 import { useAppSelector } from "../../hooks/reduxHooks";
-import {
-  selectedCompanyId,
-  selectedUserTelegramId,
-} from "../../app/features/getCompanyIdSlice";
+import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 interface ActionsState {
   text: string;
   img: string;
@@ -26,12 +23,12 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { location, error } = useGeolocation();
   const userCoordinates = { lat: location?.latitude, lon: location?.longitude };
   const companyId = useAppSelector(selectedCompanyId);
-  const tgId = useAppSelector(selectedUserTelegramId);
+  // const tgId = useAppSelector(selectedUserTelegramId);
   const [favoriteApi] = useFavoriteApiMutation();
 
   const toggleBookMark = () => {
     try {
-      const res = favoriteApi({ id: companyId, tgId }).unwrap();
+      const res = favoriteApi(companyId).unwrap();
       setBookMark(!bookMark);
       console.log(res);
     } catch (error) {
