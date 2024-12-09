@@ -58,6 +58,8 @@ const MainPage = () => {
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
+    dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
+
     dispatch(
       setCompanyId(
         tg?.initDataUnsafe?.start_param
@@ -65,8 +67,6 @@ const MainPage = () => {
           : companyId,
       ),
     );
-
-    dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "11"));
 
     if (currentVersion > requiredVersion) {
       tg.requestFullscreen();
