@@ -9,9 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { setCompany } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
 import FeedBack from "../../components/FeedBack/FeedBack";
-import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
-
-export {};
+import { selectedCompanyId, setCompanyId } from "../../app/features/getCompanyIdSlice";
 
 declare global {
   interface Window {
@@ -22,7 +20,7 @@ declare global {
         expand: () => void;
         requestFullscreen: () => void;
         version: string;
-        initData: string;
+        initData: any;
         initDataUnsafe: Record<string, unknown>;
       };
     };
@@ -34,7 +32,9 @@ const tg = window.Telegram.WebApp;
 const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
   const dispatch = useAppDispatch();
-  const { data, isLoading, isError } = useGetCompanyByIdQuery(companyId);
+  const { data, isLoading, isError } = useGetCompanyByIdQuery(
+    tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId,
+  );
 
   useEffect(() => {
     dispatch(setCompany(data?.data));
@@ -42,14 +42,17 @@ const MainPage = () => {
 
   useEffect(() => {
     const requiredVersion = "7.0";
-    const currentVersion = window.Telegram.WebApp.version;
+    const currentVersion = tg.version;
     tg.ready();
     tg.expand();
+    dispatch(setCompanyId(tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId))
 
     if (currentVersion > requiredVersion) {
       tg.requestFullscreen();
     } else {
-      console.log(`requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`);
+      console.log(
+        `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,
+      );
     }
   }, []);
 

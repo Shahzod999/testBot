@@ -10,7 +10,7 @@ interface ContactProps extends ActionProps {
   time?: boolean; // Указывает, требуется ли обработка времени
 }
 
-export const ContactsActions = ({ time, text, icon, isDisabled, mainText, style, arrowRight, phone }: ContactProps) => {
+export const ContactsActions = ({ text, icon, isDisabled, mainText, style, arrowRight, phone }: ContactProps) => {
   const formatTime = (input: string | string[]) => {
     if (Array.isArray(input)) {
       return input
@@ -28,7 +28,6 @@ export const ContactsActions = ({ time, text, icon, isDisabled, mainText, style,
 
   const handleClick = () => {
     if (phone) {
-      console.log(phone);
       window.location.href = phone;
     }
   };

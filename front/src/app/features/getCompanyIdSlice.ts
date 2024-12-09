@@ -9,10 +9,13 @@ export const getCompanyIdSlcie = createSlice({
   name: "companyId",
   initialState,
   reducers: {
-
+    setCompanyId(state, action) {
+      state.companyId = action.payload;
+    },
   },
 });
 
-export const { } = getCompanyIdSlcie.actions;
-export const selectedCompanyId = (state: RootState) => state.companyId.companyId
+export const { setCompanyId } = getCompanyIdSlcie.actions;
+export const selectedCompanyId = (state: RootState) =>
+  state.companyId.companyId;
 export default getCompanyIdSlcie.reducer;

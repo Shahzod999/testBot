@@ -36,7 +36,6 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
     setIsDragging(false);
   };
 
-  console.log(isDragging);
 
   return (
     <>

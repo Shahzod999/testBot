@@ -2,40 +2,51 @@
   border-bottom: 0.5px solid #d1d1d6;
   padding-bottom: 16px;
   margin-top: 20px;
+
   &__title {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 12px;
     margin-bottom: 12px;
+
     &__img {
       width: 48px;
       height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
     }
+
     &__user {
       flex: 1;
+
       h3 {
         font-family: var(--font-family);
         font-weight: 600;
         font-size: 17px;
         line-height: 129%;
         letter-spacing: -0.02em;
-        color: var(--text-color);
+        color: var(--tg-theme-text-color, #000);
       }
+
       &__raiting {
         svg {
           width: 15px;
           height: 15px;
         }
+
         strong {
           gap: 1px;
         }
       }
     }
+
     &__ago {
       font-family: var(--font-family);
       font-weight: 400;
@@ -43,13 +54,15 @@
       line-height: 129%;
       letter-spacing: -0.02em;
       text-align: right;
-      color: rgba(60, 60, 67, 0.6);
+
+      color: var(--tg-theme-hint-color, #c7c7cc)
     }
   }
 
   &__box {
     display: flex;
     align-items: flex-end;
+
     p {
       font-family: var(--font-family);
       font-weight: 400;
@@ -58,6 +71,7 @@
       letter-spacing: -0.02em;
       color: var(--tg-theme-text-color, #000);
     }
+
     span {
       cursor: pointer;
       font-family: var(--font-family);
@@ -76,15 +90,49 @@
 
   &__closeText {
     p {
-      display: -webkit-box; /* Включает режим flex-коробок */
-      -webkit-box-orient: vertical; /* Задает направление линий */
-      overflow: hidden; /* Скрывает лишний текст */
-      text-overflow: ellipsis; /* Добавляет троеточие */
-      -webkit-line-clamp: 2; /* Ограничивает текст двумя строками */
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
     }
+
     span {
       color: var(--tg-theme-link-color, #007aff);
     }
+  }
+
+  &__images {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 16px 0;
+
+    &__img {
+      height: 70px;
+      width: 70px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.replyComment {
+  padding-left: 45px;
+
+  .comment__title__ago {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  svg {
+    fill: var(--tg-theme-hint-color, #c7c7cc)
   }
 }
 

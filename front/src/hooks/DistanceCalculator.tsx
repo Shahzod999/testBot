@@ -1,8 +1,8 @@
 import React from "react";
 
 interface Coordinates {
-  lat: number | undefined;
-  lon: number | undefined;
+  lat: number | any;
+  lon: number | any;
 }
 
 interface DistanceCalculatorProps {

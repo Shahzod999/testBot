@@ -2,7 +2,7 @@
   min-height: 500px;
   border-radius: 20px;
   // background-color: #fff;
-  background-color: var(--tg-theme-bg-color, #fff);
+  background-color: var(--tg-theme-secondary-bg-color, #fff);
   color: var(--tg-theme-text-color, #000);
   padding-bottom: 50px;
 
@@ -52,7 +52,7 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    max-height: 90vh;
+    max-height: 80vh;
     overflow: scroll;
 
     &__coin {
@@ -107,7 +107,6 @@
       // }
 
       &--disabled {
-        opacity: 0.5;
         pointer-events: none;
       }
 
@@ -126,7 +125,6 @@
         text-align: left;
 
         &--disabled {
-          text-decoration: line-through;
           color: rgb(174, 0, 0);
         }
 
@@ -196,9 +194,7 @@
           fill: var(--tg-theme-text-color, #000);
         }
 
-        &--disabled {
-          text-decoration: line-through;
-        }
+        &--disabled {}
       }
     }
 
@@ -311,10 +307,14 @@
         background: rgba(118, 118, 128, 0.12);
         text-align: center;
 
-        img {
+        svg {
           width: 28px;
           height: 28px;
-          object-fit: contain;
+          fill: var(--tg-theme-text-color, #000);
+
+          path {
+            fill: var(--tg-theme-text-color, #000);
+          }
         }
 
         span {
@@ -344,51 +344,53 @@
         }
       }
 
-      &__progress {
-        padding: 0 10px;
 
-        .progress-indicator {
-          display: flex;
-          margin-top: 10px;
-          gap: 5px;
+      //удалить стили
+      // &__progress {
+      //   padding: 0 10px;
 
-          .progress-line {
-            flex: 1;
-            height: 2px;
-            background: #e0e0e0;
-            border-radius: 3px;
+      //   .progress-indicator {
+      //     display: flex;
+      //     margin-top: 10px;
+      //     gap: 5px;
 
-            &.low {
-              background: #ff3b30;
-            }
+      //     .progress-line {
+      //       flex: 1;
+      //       height: 2px;
+      //       background: #e0e0e0;
+      //       border-radius: 3px;
 
-            &.medium {
-              background: #ff9500;
-            }
+      //       &.low {
+      //         background: #ff3b30;
+      //       }
 
-            &.nice {
-              background: #fc0;
-            }
+      //       &.medium {
+      //         background: #ff9500;
+      //       }
 
-            &.good {
-              background: #34c759;
-            }
-          }
-        }
+      //       &.nice {
+      //         background: #fc0;
+      //       }
 
-        .progress-message {
-          margin-top: 5px;
-          font-weight: 400;
-          font-size: 12px;
-          line-height: 175%;
-          letter-spacing: -0.03em;
-          color: rgba(60, 60, 67, 0.5);
+      //       &.good {
+      //         background: #34c759;
+      //       }
+      //     }
+      //   }
 
-          &.empty {
-            color: #aaa;
-          }
-        }
-      }
+      //   .progress-message {
+      //     margin-top: 5px;
+      //     font-weight: 400;
+      //     font-size: 12px;
+      //     line-height: 175%;
+      //     letter-spacing: -0.03em;
+      //     color: rgba(60, 60, 67, 0.5);
+
+      //     &.empty {
+      //       color: #aaa;
+      //     }
+      //   }
+      // }
     }
 
     &__lastElement {

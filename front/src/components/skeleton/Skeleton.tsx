@@ -1,25 +1,6 @@
 import React from "react";
 import "./skeleton.scss";
-import AppsSceleton from "./AppsSkeleton";
 
-interface SkeletonBoxProps {
-  width: string;
-  height: string;
-  borderRadius?: string;
-}
-
-const SkeletonBox: React.FC<SkeletonBoxProps> = ({ width, height, borderRadius = "4px" }) => (
-  <div
-    style={{
-      width,
-      height,
-      backgroundColor: "#e0e0e0",
-      borderRadius,
-      marginBottom: "8px",
-      animation: "pulse 1.5s infinite",
-    }}
-  />
-);
 
 const Skeleton: React.FC = () => {
   return (

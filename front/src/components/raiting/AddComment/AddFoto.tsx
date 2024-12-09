@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Cross from "./Cross";
+import { ReactSVG } from "react-svg";
 
 interface addFotoProps {
   imagesArray: string[];
@@ -59,7 +60,7 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: addFotoProps) => {
         ))}
 
         <label htmlFor={id}>
-          <img src="./camera.fill.svg" alt="" />
+          <ReactSVG src="./camera.fill.svg" />
           <span>Добавить фотографию</span>
         </label>
       </div>

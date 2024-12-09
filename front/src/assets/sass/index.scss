@@ -1,4 +1,4 @@
-@import "./fonts.scss";
+// @import "./fonts.scss";
 
 // сделать drag and drop
 // чтобы задний  фон не прокручивался ++
@@ -12,7 +12,27 @@
 // коментарии пусть тоже закоываеся
 // пусть с зади звездочек при прикосании не загорает синий цвет
 // андроид бук марк
-//
+// если чегото нет то просто красный без перечеркивания
+
+
+// пусть линк переход будет через url
+
+
+
+
+// убрать зум
+// ташакурнома тоаст ++
+// цвета починить ++
+// починить время коментарии ++
+// убрать тоаст с сохранить ++
+// кнопку заказать поменять на позвонить если нет возмодности заказать 
+// докацию сделать так чтобы не спрашивало
+// увеличить черточку при открывающихся окон снизу
+// пусть открывается снизу окна до закрытия 
+// при нажатии избранного надо чтобы добавлялось в избранные
+// починить чекбокс схожи на ui
+// текст оставляемых коментарии должен быть схожим с telegram цвет и пусть сзади звездочек не выделяется ++
+// скролл в коментариях
 
 :root {
   --bg-color: #fff;
@@ -42,13 +62,49 @@
   --font8: "Lato", sans-serif;
 }
 
+
+@font-face {
+  src: url("../fonts/SFProText-Heavy.ttf");
+  font-family: "SF Pro Text";
+  font-weight: 900;
+}
+
+@font-face {
+  src: url("../fonts/SFProText-Bold.ttf");
+  font-family: "SF Pro Text";
+  font-weight: 700;
+}
+
+@font-face {
+  src: url("../fonts/SFProText-Semibold.ttf");
+  font-family: "SF Pro Text";
+  font-weight: 600;
+}
+
+@font-face {
+  src: url("../fonts/SFProText-Medium.ttf");
+  font-family: "SF Pro Text";
+  font-weight: 500;
+}
+
+@font-face {
+  src: url("../fonts/SFProText-Regular.ttf");
+  font-family: "SF Pro Text";
+  font-weight: 400;
+}
+
+@font-face {
+  src: url("../fonts/SFProText-Light.ttf");
+  font-family: "SF Pro Text";
+  font-weight: 300;
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "SFProText";
+  font-family: "SF Pro Text", sans-serif;
   font-weight: 400;
-
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -60,7 +116,7 @@
 }
 
 body {
-  background-color: var(--tg-theme-bg-color, #000000);
+  background: var(--tg-theme-bg-color, #000000) !important;
   color: var(--tg-theme-text-color, #000);
   height: var(--tg-viewport-height);
 }
@@ -70,6 +126,7 @@ html {
   min-width: 290px;
   margin: auto;
   position: relative;
+  scroll-behavior: smooth;
 }
 
 .no-scroll {
@@ -87,8 +144,8 @@ a {
   color: red;
   margin: 20px 0;
 }
+
 .noAwailibleText {
-  text-decoration: line-through;
   color: rgb(174, 0, 0) !important;
   opacity: 0.5;
 }
@@ -100,6 +157,7 @@ a {
   border-radius: 50%;
   padding: 15px;
   position: relative;
+
   svg {
     position: absolute;
     top: 50%;
@@ -123,6 +181,56 @@ a {
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05) inset;
   }
 }
+
 button:disabled {
   filter: contrast(0.5);
+}
+
+
+
+
+
+.fullScreenImg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  height: 100%;
+
+  img {
+    object-fit: contain !important;
+  }
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  // border-radius: 20px;
+  overflow: hidden;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: var(--tg-theme-secondary-bg-color, #000000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  // object-fit: cover !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: #ffffff;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
 }

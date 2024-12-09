@@ -4,39 +4,42 @@ interface TextProps {
 }
 
 const TextArea = ({ text, setText }: TextProps) => {
+  const maxLength = 50; // Максимальная длина текста
+
+  // Функция для определения текущего состояния
   const getProgressState = () => {
     const length = text.trim().length;
 
-    if (length === 0) return { state: "empty", message: "Это слишком коротко.", level: -1 };
-    if (length < 10) return { state: "low", message: "Это слишком коротко.", level: 0 };
-    if (length < 30)
-      return {
-        state: "medium",
-        message: "Это слишком коротко.",
-        level: 1,
-      };
-    if (length < 50)
-      return {
-        state: "nice",
-        message: "Выглядит хорошо. Добавьте ещё несколько слов.",
-        level: 2,
-      };
-    return { state: "good", message: "Замечательно. Поделитесь своим опытом.", level: 3 };
+    if (length === 0) return { state: "low", width: 0 };
+    if (length < 10) return { state: "low", width: (length / maxLength) * 100 };
+    if (length < 30) return { state: "medium", width: (length / maxLength) * 100 };
+    if (length < 50) return { state: "nice", width: (length / maxLength) * 100 };
+    return { state: "good", width: 100 };
   };
 
   const progress = getProgressState();
 
   return (
     <div className="addComment__textArea">
-      <textarea rows={5} placeholder="Расскажите нам про это место" value={text} onChange={(e) => setText(e.target.value)}></textarea>
+      <textarea
+        rows={5}
+        placeholder="Расскажите нам про это место"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      ></textarea>
 
       <div className="addComment__textArea__progress">
         <div className="progress-indicator">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div key={index} className={`progress-line ${index <= progress.level ? progress.state : ""}`}></div>
-          ))}
+          <div
+            className={`progress-bar ${progress.state}`}
+            style={{ width: `${progress.width}%` }}
+          ></div>
         </div>
-        <p className="progress-message">{progress.message}</p>
+        <p className="progress-message">
+          {progress.state === "good"
+            ? "Замечательно. Вы достигли максимума!"
+            : "Добавьте ещё символы, чтобы улучшить текст."}
+        </p>
       </div>
     </div>
   );

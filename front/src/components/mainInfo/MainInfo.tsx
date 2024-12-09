@@ -5,11 +5,11 @@ import { GoBookmarkFill } from "react-icons/go";
 import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
 import BottomSheet from "../Actions/BottomSheet";
-import AppsSceleton from "../skeleton/AppsSkeleton";
 import useGeolocation from "../../hooks/useGeolocation";
 import DistanceCalculator from "../../hooks/DistanceCalculator";
-import { useAppDispatch } from "../../hooks/reduxHooks";
-import { succesToast } from "../../app/features/toastSlice";
+import { useFavoriteApiMutation } from "../../app/api/companySlice";
+import { useAppSelector } from "../../hooks/reduxHooks";
+import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 interface ActionsState {
   text: string;
   img: string;
@@ -18,15 +18,21 @@ interface ActionsState {
 }
 
 const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
-  const dispatch = useAppDispatch();
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(false);
   const { location, error } = useGeolocation();
   const userCoordinates = { lat: location?.latitude, lon: location?.longitude };
+  const companyId = useAppSelector(selectedCompanyId);
+  const [favoriteApi] = useFavoriteApiMutation();
 
   const toggleBookMark = () => {
-    setBookMark(!bookMark);
-    dispatch(succesToast("Избранный Изменен"));
+    try {
+      const res = favoriteApi(companyId).unwrap();
+      setBookMark(!bookMark);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const actions = useMemo(
@@ -58,7 +64,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         link: `https://t.me/share/url?url=t.me/TrueGis_bot/start?startapp=${companyInfo?._id}`,
       },
     ],
-    [companyInfo]
+    [companyInfo],
   );
 
   const handleActions = useCallback((item: ActionsState) => {
@@ -81,14 +87,17 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   }, [activeAction]);
 
   const handleOrder = () => {
-    dispatch(succesToast("Заказ Оформлен"));
+    console.log("nice");
   };
   return (
     <>
       <div className="mainInfo">
         <div className="mainInfo__logo">
           <div className="mainInfo__logo__img">
-            <img src={companyInfo.logoThumbnail || "./imgDefault.png"} alt="logo" />
+            <img
+              src={companyInfo.logoThumbnail || "./imgDefault.png"}
+              alt="logo"
+            />
           </div>
           <div className="mainInfo__logo__name">
             <h2>{companyInfo.name}</h2>
@@ -118,18 +127,30 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
           <div className="mainInfo__openHours__right">
             <span>Расстояние</span>
-            {location ? <DistanceCalculator tragetLocation={companyInfo?.location?.coordinates} userCoordinates={userCoordinates} /> : error}
+            {location ? (
+              <DistanceCalculator
+                tragetLocation={companyInfo?.location?.coordinates}
+                userCoordinates={userCoordinates}
+              />
+            ) : (
+              error
+            )}
           </div>
         </div>
 
-        <button className="mainInfo__orderbutton pressEffefct" onClick={handleOrder}>
+        <button
+          className="mainInfo__orderbutton pressEffefct"
+          onClick={handleOrder}>
           <img src="./bag.svg" alt="" />
           Заказать
         </button>
 
         <div className="actionButtons">
           {actions.map((item) => (
-            <button onClick={() => handleActions(item)} className="pressEffefct" key={item.key}>
+            <button
+              onClick={() => handleActions(item)}
+              className="pressEffefct"
+              key={item.key}>
               <ActionButtons text={item.text} icon={item.img} />
             </button>
           ))}
@@ -139,25 +160,37 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <BottomSheet isOpen={activeAction === "taxi"} onClose={closeBottomSheet}>
         <div className="socialMedia">
           <div className="socialMedia__icons">
-            <a href={companyInfo.mobile_apps?.android} target="_blank" rel="noopener noreferrer">
+            <a
+              href={companyInfo.mobile_apps?.android}
+              target="_blank"
+              rel="noopener noreferrer">
               <div className="socialMedia__icons__logo">
                 <img src="./yandexGo.png" alt="" />
               </div>
               <span>Yandex Go</span>
             </a>
-            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+            <a
+              href={companyInfo.mobile_apps?.ios}
+              target="_blank"
+              rel="noopener noreferrer">
               <div className="socialMedia__icons__logo">
                 <img src="./fasten.png" alt="" />
               </div>
               <span>Fasten</span>
             </a>
-            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+            <a
+              href={companyInfo.mobile_apps?.ios}
+              target="_blank"
+              rel="noopener noreferrer">
               <div className="socialMedia__icons__logo">
                 <img src="./mytaxi.png" alt="" />
               </div>
               <span>My Taxi</span>
             </a>
-            <a href={companyInfo.mobile_apps?.ios} target="_blank" rel="noopener noreferrer">
+            <a
+              href={companyInfo.mobile_apps?.ios}
+              target="_blank"
+              rel="noopener noreferrer">
               <div className="socialMedia__icons__logo">
                 <img src="./uklon.png" alt="" />
               </div>
@@ -169,15 +202,30 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <BottomSheet isOpen={activeAction === "map"} onClose={closeBottomSheet}>
         <div className="socialMedia">
           <div className="socialMedia__icons">
-            <a href={`https://maps.google.com/?q=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(
+                companyInfo.address || "",
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer">
               <img src="./yandex.png" alt="" />
               <span>Яндекс карты</span>
             </a>
-            <a href={`https://yandex.ru/maps/?text=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+            <a
+              href={`https://yandex.ru/maps/?text=${encodeURIComponent(
+                companyInfo.address || "",
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer">
               <img src="./2gis.png" alt="" />
               <span>2ГИС</span>
             </a>
-            <a href={`https://yandex.ru/maps/?text=${encodeURIComponent(companyInfo.address || "")}`} target="_blank" rel="noopener noreferrer">
+            <a
+              href={`https://yandex.ru/maps/?text=${encodeURIComponent(
+                companyInfo.address || "",
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer">
               <img src="./googleMaps.png" alt="" />
               <span>Google карты</span>
             </a>

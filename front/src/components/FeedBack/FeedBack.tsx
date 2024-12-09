@@ -12,31 +12,42 @@ const FeedBack = () => {
   const companyId = useAppSelector(selectedCompanyId);
   const { data } = useGetCommentsbyCompanyQuery({ id: companyId, limit });
 
-  console.log(data, "2");
-
   const limitHandler = () => {
     setLimit(limit + 5);
-    if (data?.pagination?.total < limit) {
+    if (data?.pagination?.total <= limit) {
       return setEnd(false);
     }
+  };
+
+  const closeComments = () => {
+    setLimit(1);
+    setEnd(true);
+    window.location.href = "#feedBack";
   };
 
   if (!data?.pagination?.total) return;
 
   return (
-    <div className="feedBack">
+    <div className="feedBack" id="feedBack">
       <h2>Отзывы пользователей TrueGis</h2>
       <div className="feedBack__comments__wrapper">
         {data?.data?.map((comment: SingleComment, index: number) => (
-          <div className="feedBack__comment" key={comment._id} style={{ animationDelay: `${index * 0.1}s` }}>
+          <div
+            className="feedBack__comment"
+            key={comment._id}
+            style={{ animationDelay: `${index * 0.1}s` }}>
             <Comment comment={comment} />
           </div>
         ))}
       </div>
 
-      {end && (
+      {end ? (
         <span className="feedBack__more" onClick={limitHandler}>
           Читать далее
+        </span>
+      ) : (
+        <span className="feedBack__more" onClick={closeComments}>
+          Свернуть
         </span>
       )}
     </div>

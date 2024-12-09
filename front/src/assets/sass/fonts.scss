@@ -1,8 +1,0 @@
-$SFProText: ("Bold", 700), ("Medium" 500), ("Regular", 400), ("Light", 400);
-@each $name, $weight in $SFProText {
-  @font-face {
-    font-family: "SFProText";
-    src: url("../fonts/SFProText-#{$name}.ttf");
-    font-weight: $weight;
-  }
-}

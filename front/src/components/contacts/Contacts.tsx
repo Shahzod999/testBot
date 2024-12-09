@@ -96,7 +96,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   }, []);
 
   const handleActionClick = useCallback((key: string | null) => {
-    console.log(key);
     if (key) {
       document.body.style.overflow = "hidden";
     }
@@ -107,16 +106,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     document.body.style.overflow = "";
     setActiveAction(null);
   }, []);
-
-  // useEffect(() => {
-  //   if (activeAction) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "";
-  //   }
-  // }, [activeAction]);
-
-  console.log(companyInfo, "ya tuuutu");
 
   if (!companyInfo) return null;
 
@@ -236,9 +225,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <div className="contacts__actions">
           <div className="contacts__actions__closeButtons">
             <span className="contacts__actions__closeButtons__title">Редактировать {companyInfo.name}</span>
-            <div className="contacts__actions__closeButtons__cross">
-              <Cross toggleComment={closeBottomSheet} />
-            </div>
           </div>
           <h3 className="contacts__actions__title">Общая информация</h3>
 
@@ -284,7 +270,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
             </div>
 
             <label htmlFor="addFoto__logo__img">
-              <img src="./camera.fill.svg" alt="" />
+              <ReactSVG src="./camera.fill.svg"/>
               <span>Добавить фотографию</span>
             </label>
 

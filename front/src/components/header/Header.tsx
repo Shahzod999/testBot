@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { PhotosSample } from "../../app/types/companyType";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/swiper-bundle.css";
+// import "swiper/css/pagination";
 import "./header.scss";
 
 import { Pagination } from "swiper/modules";
@@ -38,7 +38,11 @@ const Header = ({ img }: HeaderProps) => {
             {openImg ? (
               <img src={item.photo_url_large} alt="LargePhoto photo" />
             ) : (
-              <img src={item.photo_url} alt="photoUrl photo" />
+              <img
+                src={item.photo_url}
+                alt="photoUrl photo"
+                className="headerSwiper"
+              />
             )}
           </SwiperSlide>
         ))}

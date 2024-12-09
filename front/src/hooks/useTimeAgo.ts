@@ -1,4 +1,4 @@
-const useTimeAgo = (dateString: string) => {
+const useTimeAgo = (dateString: number) => {
   const now = new Date();
   const pastDate = new Date(dateString);
   const diffMs = now.getTime() - pastDate.getTime();

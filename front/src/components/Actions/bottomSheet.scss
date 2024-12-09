@@ -20,7 +20,7 @@
   min-height: 150px;
   transform: translateY(100%);
   transition: all 0.3s ease-in-out;
-  background-color: var(--tg-theme-bg-color, #fff);
+  background-color: var(--tg-theme-secondary-bg-color, #fff);
   color: var(--tg-theme-text-color, #000);
   z-index: 100;
 
@@ -59,10 +59,10 @@
 
     div {
       position: relative;
-      height: 2px;
-      width: 33px;
+      height: 5px;
+      width: 60px;
       border-radius: 10px;
-      background: #c7c7cc;
+      background: var(--tg-theme-hint-color, #c7c7cc);
       margin: auto;
     }
   }
