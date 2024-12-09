@@ -25,8 +25,10 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         url: `/favorite/favorite/${id}`,
         method: "POST",
         headers: {
-          "telegram-id": tgId,
+          "Telegram-id": tgId,
           "Content-Type": "application/json",
+          'lang': "uz",
+          "type": "company"
         },
       }),
     }),
