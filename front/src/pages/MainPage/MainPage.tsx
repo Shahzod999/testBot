@@ -58,7 +58,7 @@ const MainPage = () => {
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
-    dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
+    dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || ""));
 
     dispatch(
       setCompanyId(
