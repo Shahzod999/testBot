@@ -2,7 +2,6 @@ import { useState } from "react";
 import { PhotosSample } from "../../app/types/companyType";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-// import "swiper/css/pagination";
 import "./header.scss";
 
 import { Pagination } from "swiper/modules";

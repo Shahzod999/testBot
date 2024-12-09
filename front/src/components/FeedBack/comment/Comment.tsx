@@ -99,7 +99,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
       </div>
 
       {comment?.replies?.map((item) => (
-        <ReplyComment reply={item} />
+        <ReplyComment reply={item} key={item.reply_id} />
       ))}
     </div>
   );

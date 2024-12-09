@@ -8,15 +8,17 @@ import "./feedBack.scss";
 
 const FeedBack = () => {
   const [end, setEnd] = useState(true);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(3);
   const companyId = useAppSelector(selectedCompanyId);
   const { data } = useGetCommentsbyCompanyQuery({ id: companyId, limit });
 
   const limitHandler = () => {
-    setLimit(limit + 5);
-    if (data?.pagination?.total <= limit) {
+    if (data?.pagination?.pages <= 1) {
+      console.log("111");
+
       return setEnd(false);
     }
+    setLimit(limit + 3);
   };
 
   const closeComments = () => {
@@ -24,6 +26,8 @@ const FeedBack = () => {
     setEnd(true);
     window.location.href = "#feedBack";
   };
+
+  console.log(data, "1111");
 
   if (!data?.pagination?.total) return;
 
