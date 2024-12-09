@@ -17,8 +17,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
 
   useEffect(() => {
     if (textRef.current) {
-      const isOverflow =
-        textRef.current.scrollHeight > textRef.current.offsetHeight;
+      const isOverflow = textRef.current.scrollHeight > textRef.current.offsetHeight;
       setIsOverflowing(isOverflow);
     }
   }, [comment?.message]);
@@ -36,14 +35,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     <div className="comment">
       <div className="comment__title">
         <div className="comment__title__img">
-          <img
-            src={
-              comment.user.telegram_profile_photo?.image
-                ? `https://dev.admin13.uz${comment.user.telegram_profile_photo.image}`
-                : "./defaultCommentImg.png"
-            }
-            alt=""
-          />
+          <img src={comment.user.telegram_profile_photo?.image ? `https://dev.admin13.uz${comment.user.telegram_profile_photo.image}` : "./defaultCommentImg.png"} alt="" />
         </div>
         <div className="comment__title__user">
           <h3>{comment?.user?.telegram_name}</h3>
@@ -87,14 +79,9 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
         </div>
       )} */}
 
-      <div
-        className={`comment__box ${
-          open ? "comment__text" : "comment__closeText"
-        }`}>
+      <div className={`comment__box ${open ? "comment__text" : "comment__closeText"}`}>
         <p ref={textRef}>{comment?.message}</p>
-        {isOverflowing && !open && (
-          <span onClick={toggleOpen}>{open ? "Свернуть" : "Ещё"}</span>
-        )}
+        {isOverflowing && !open && <span onClick={toggleOpen}>{open ? "Свернуть" : "Ещё"}</span>}
         {open && <span onClick={toggleOpen}>Свернуть</span>}
       </div>
 
