@@ -4,7 +4,7 @@ import "./contacts.scss";
 import { CompanyState } from "../../app/types/companyType";
 import BottomSheet from "../Actions/BottomSheet";
 import CommonButton from "../Actions/CommonButton";
-import Cross from "../raiting/AddComment/Cross";
+// import Cross from "../raiting/AddComment/Cross";
 import EditAction from "./EditAction";
 import AddFoto from "../raiting/AddComment/AddFoto";
 import SendButton from "../raiting/AddComment/SendButton";
