@@ -9,7 +9,12 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { setCompany } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
 import FeedBack from "../../components/FeedBack/FeedBack";
-import { selectedCompanyId, setCompanyId } from "../../app/features/getCompanyIdSlice";
+import {
+  selectedCompanyId,
+  selectedUserTelegramId,
+  setCompanyId,
+  setUserTelegramId,
+} from "../../app/features/getCompanyIdSlice";
 
 declare global {
   interface Window {
@@ -20,8 +25,17 @@ declare global {
         expand: () => void;
         requestFullscreen: () => void;
         version: string;
-        initData: any;
-        initDataUnsafe: Record<string, unknown>;
+        initDataUnsafe: {
+          start_param?: string;
+          user?: {
+            id: number;
+            isBot?: boolean;
+            first_name?: string;
+            last_name?: string;
+            username?: string;
+            language_code: string;
+          };
+        };
       };
     };
   }
@@ -31,10 +45,13 @@ const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
+  const userTelegramId = useAppSelector(selectedUserTelegramId);
+
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetCompanyByIdQuery(
     tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId,
   );
+
 
   useEffect(() => {
     dispatch(setCompany(data?.data));
@@ -45,7 +62,15 @@ const MainPage = () => {
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
-    dispatch(setCompanyId(tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId))
+    dispatch(
+      setCompanyId(
+        tg?.initDataUnsafe?.start_param
+          ? tg.initDataUnsafe.start_param
+          : companyId,
+      ),
+    );
+
+    dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "11"));
 
     if (currentVersion > requiredVersion) {
       tg.requestFullscreen();
@@ -63,6 +88,8 @@ const MainPage = () => {
       <Header img={data?.data?.photos_sample || []} />
       <MainInfo companyInfo={data?.data} />
       <Raiting companyInfo={data?.data} />
+      <h1 style={{ color: "white" }}>{userTelegramId}</h1>
+
       <FeedBack />
       <Contacts companyInfo={data?.data} />
     </div>
