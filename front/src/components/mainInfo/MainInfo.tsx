@@ -203,7 +203,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <div className="socialMedia">
           <div className="socialMedia__icons">
             <a
-              href={`https://maps.google.com/?q=${encodeURIComponent(
+              href={`https://yandex.ru/maps/?text=${encodeURIComponent(
                 companyInfo.address || "",
               )}`}
               target="_blank"
@@ -221,7 +221,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               <span>2ГИС</span>
             </a>
             <a
-              href={`https://yandex.ru/maps/?text=${encodeURIComponent(
+              href={`https://maps.google.com/?q=${encodeURIComponent(
                 companyInfo.address || "",
               )}`}
               target="_blank"
