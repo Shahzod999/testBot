@@ -14,10 +14,6 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: addFotoProps) => {
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
-      if (file.size > 1 * 1024 * 1024) {
-        setError("File is too large");
-        return;
-      }
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -25,6 +21,7 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: addFotoProps) => {
       };
       reader.onerror = (error) => {
         console.log("Error: ", error);
+        setError("Error")
       };
     }
   };
