@@ -11,6 +11,7 @@ import Skeleton from "../../components/skeleton/Skeleton";
 import FeedBack from "../../components/FeedBack/FeedBack";
 import {
   selectedCompanyId,
+  selectedUserTelegramId,
   setCompanyId,
   setUserTelegramId,
 } from "../../app/features/getCompanyIdSlice";
@@ -44,18 +45,26 @@ const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
+  const telegramId = useAppSelector(selectedUserTelegramId);
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetCompanyByIdQuery(
     tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId,
   );
 
+  console.log(telegramId, "<<<<<123");
+
   dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
+
+  useEffect(() => {
+    dispatch(setCompany(data?.data));
+  }, [data, dispatch]);
 
   useEffect(() => {
     const requiredVersion = "7.0";
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
+
     dispatch(
       setCompanyId(
         tg?.initDataUnsafe?.start_param
@@ -63,6 +72,7 @@ const MainPage = () => {
           : companyId,
       ),
     );
+
     if (currentVersion > requiredVersion) {
       tg.requestFullscreen();
     } else {
@@ -71,10 +81,6 @@ const MainPage = () => {
       );
     }
   }, []);
-
-  useEffect(() => {
-    dispatch(setCompany(data?.data));
-  }, [data, dispatch]);
 
   if (isLoading) return <Skeleton />;
   if (isError) return <Skeleton />;
