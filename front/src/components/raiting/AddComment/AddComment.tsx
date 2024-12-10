@@ -12,7 +12,11 @@ import {
 } from "../../../app/features/RaitingStarsSlice";
 import { useSendCommentByCompanyMutation } from "../../../app/api/companySlice";
 import { selectedCompanyId } from "../../../app/features/getCompanyIdSlice";
-import { errorToast, succesToast } from "../../../app/features/toastSlice";
+import {
+  errorToast,
+  infoToast,
+  succesToast,
+} from "../../../app/features/toastSlice";
 
 interface AddCommentProps {
   openComment: boolean;
@@ -35,6 +39,8 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!textArea) return dispatch(infoToast("Заполните все поля"));
+
     const sendComment = {
       message: textArea,
       images: [
@@ -52,7 +58,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
       setTextArea("");
       console.log(res);
     } catch (error) {
-      dispatch(errorToast("Ошибка при добавлении комментария"));
+      dispatch(errorToast("Заполните все поля"));
       console.log(error);
     }
   };

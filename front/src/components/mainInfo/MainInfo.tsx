@@ -5,11 +5,11 @@ import { GoBookmarkFill } from "react-icons/go";
 import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
 import BottomSheet from "../Actions/BottomSheet";
-import useGeolocation from "../../hooks/useGeolocation";
 import DistanceCalculator from "../../hooks/DistanceCalculator";
 import { useFavoriteApiMutation } from "../../app/api/companySlice";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
+import { selectedUserLocation } from "../../app/features/userLocationSlice";
 interface ActionsState {
   text: string;
   img: string;
@@ -20,14 +20,9 @@ interface ActionsState {
 const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(companyInfo?.is_favorite);
-  const { location, error } = useGeolocation();
-  const userCoordinates = { lat: location?.latitude, lon: location?.longitude };
+  const userCoordinates = useAppSelector(selectedUserLocation)
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
-
-  console.log(companyInfo);
-  console.log(companyInfo.is_favorite);
-  console.log(bookMark);
 
   const toggleBookMark = () => {
     try {
@@ -132,13 +127,13 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
           <div className="mainInfo__openHours__right">
             <span>Расстояние</span>
-            {location ? (
+            {userCoordinates ? (
               <DistanceCalculator
                 tragetLocation={companyInfo?.location?.coordinates}
                 userCoordinates={userCoordinates}
               />
             ) : (
-              error
+              <span>loading...</span>
             )}
           </div>
         </div>

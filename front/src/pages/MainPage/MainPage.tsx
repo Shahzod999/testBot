@@ -11,32 +11,22 @@ import Skeleton from "../../components/skeleton/Skeleton";
 import FeedBack from "../../components/FeedBack/FeedBack";
 import {
   selectedCompanyId,
-  selectedUserTelegramId,
   setCompanyId,
   setUserTelegramId,
 } from "../../app/features/getCompanyIdSlice";
+import { TelegramTypes } from "../../app/types/telegramTypes";
+import { setuserLocation } from "../../app/features/userLocationSlice";
 
+interface TelegramTotalTypes extends TelegramTypes {
+  ready: () => void;
+  close: () => void;
+  expand: () => void;
+  requestFullscreen: () => void;
+}
 declare global {
   interface Window {
     Telegram: {
-      WebApp: {
-        ready: () => void;
-        close: () => void;
-        expand: () => void;
-        requestFullscreen: () => void;
-        version: string;
-        initDataUnsafe: {
-          start_param?: string;
-          user?: {
-            id: number;
-            isBot?: boolean;
-            first_name?: string;
-            last_name?: string;
-            username?: string;
-            language_code: string;
-          };
-        };
-      };
+      WebApp: TelegramTotalTypes;
     };
   }
 }
@@ -45,13 +35,11 @@ const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
-  const telegramId = useAppSelector(selectedUserTelegramId);
   const dispatch = useAppDispatch();
   const { data, isLoading, isError } = useGetCompanyByIdQuery(
     tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId,
   );
 
-  console.log(telegramId, "<<<<<123");
 
   dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
 
@@ -64,6 +52,20 @@ const MainPage = () => {
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
+
+    tg.LocationManager.init(() => {
+      console.log("LocationManager initialized.");
+      tg.LocationManager.getLocation((location: any) => {
+        if (location) {
+          dispatch(setuserLocation({ lat: location.latitude, lon: location.longitude }))
+          console.log("Latitude:", location.latitude);
+          console.log("Longitude:", location.longitude);
+        } else {
+          console.log("Location access was not granted or is unavailable.");
+        }
+      });
+    });
+
 
     dispatch(
       setCompanyId(

@@ -14,8 +14,6 @@ const FeedBack = () => {
 
   const limitHandler = () => {
     if (data?.pagination?.pages <= 1) {
-      console.log("111");
-
       return setEnd(false);
     }
     setLimit(limit + 3);
@@ -26,8 +24,6 @@ const FeedBack = () => {
     setEnd(true);
     window.location.href = "#feedBack";
   };
-
-  console.log(data, "1111");
 
   if (!data?.pagination?.total) return;
 

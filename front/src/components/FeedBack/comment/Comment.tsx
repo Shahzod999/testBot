@@ -30,7 +30,6 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   //   setImgOpen(!imgOpen);
   // };
 
-  console.log(comment.replies, "123");
   return (
     <div className="comment">
       <div className="comment__title">
