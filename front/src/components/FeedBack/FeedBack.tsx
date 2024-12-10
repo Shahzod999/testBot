@@ -20,7 +20,7 @@ const FeedBack = () => {
   };
 
   const closeComments = () => {
-    setLimit(1);
+    setLimit(3);
     setEnd(true);
     window.location.href = "#feedBack";
   };

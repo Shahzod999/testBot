@@ -96,6 +96,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         };
         reader.onerror = (error) => {
           console.log("Error: ", error);
+          setError("Error")
         };
       }
     },
