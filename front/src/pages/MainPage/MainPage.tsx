@@ -49,17 +49,13 @@ const MainPage = () => {
     tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId,
   );
 
-  useEffect(() => {
-    dispatch(setCompany(data?.data));
-  }, [data, dispatch]);
+  dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
 
   useEffect(() => {
     const requiredVersion = "7.0";
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
-    dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || ""));
-
     dispatch(
       setCompanyId(
         tg?.initDataUnsafe?.start_param
@@ -67,7 +63,6 @@ const MainPage = () => {
           : companyId,
       ),
     );
-
     if (currentVersion > requiredVersion) {
       tg.requestFullscreen();
     } else {
@@ -76,6 +71,10 @@ const MainPage = () => {
       );
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(setCompany(data?.data));
+  }, [data, dispatch]);
 
   if (isLoading) return <Skeleton />;
   if (isError) return <Skeleton />;
