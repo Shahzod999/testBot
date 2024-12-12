@@ -125,7 +125,7 @@
         text-align: left;
 
         &--disabled {
-          color: rgb(174, 0, 0);
+          color: var(--destructive-color);
         }
 
         svg {
@@ -161,7 +161,7 @@
 
         &.workHour {
           .actions__text {
-            color: var(--tg-theme-hint-color, #3c3c43);
+            color: var(--hint-color);
           }
         }
 
@@ -170,16 +170,6 @@
             // color: #000;
             color: var(--tg-theme-text-color, #000);
           }
-        }
-
-        .actions__icons--disabled {
-          text-decoration: none;
-          color: #000 !important;
-        }
-
-        .actions__text--disabled {
-          text-decoration: none;
-          color: #ff3b30 !important;
         }
       }
 
@@ -193,8 +183,6 @@
         path {
           fill: var(--tg-theme-text-color, #000);
         }
-
-        &--disabled {}
       }
     }
 
@@ -273,7 +261,7 @@
       padding: 16px 12px;
       background: rgba(118, 118, 128, 0.07);
       border-radius: 16px;
-      color: var(--tg-theme-hint-color, #3c3c43);
+      color: var(--hint-color);
       outline: none;
       border: none;
     }

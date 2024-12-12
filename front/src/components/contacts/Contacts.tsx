@@ -10,6 +10,7 @@ import SendButton from "../raiting/AddComment/SendButton";
 import { ReactSVG } from "react-svg";
 import Lottie from "lottie-react";
 import notFound from "../../../public/notFound.json";
+import AdressLinks from "../adressLinks/AdressLinks";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -96,7 +97,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         };
         reader.onerror = (error) => {
           console.log("Error: ", error);
-          setError("Error")
+          setError("Error");
         };
       }
     },
@@ -214,37 +215,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <BottomSheet
         isOpen={activeAction === "location"}
         onClose={closeBottomSheet}>
-        <div className="socialMedia">
-          <div className="socialMedia__icons">
-            <a
-              href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-                companyInfo.address || "",
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer">
-              <img src="./yandex.png" alt="" />
-              <span>Яндекс карты</span>
-            </a>
-            <a
-              href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-                companyInfo.address || "",
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer">
-              <img src="./2gis.png" alt="" />
-              <span>2ГИС</span>
-            </a>
-            <a
-              href={`https://maps.google.com/?q=${encodeURIComponent(
-                companyInfo.address || "",
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer">
-              <img src="./googleMaps.png" alt="" />
-              <span>Google карты</span>
-            </a>
-          </div>
-        </div>
+        <AdressLinks companyInfo={companyInfo} />
       </BottomSheet>
       <BottomSheet
         isOpen={activeAction === "closed"}

@@ -52,7 +52,7 @@ export const ContactsActions = ({ text, icon, isDisabled, mainText, style, arrow
       {displayText === "Закрыто" ? (
         <span className="actions__text noAwailibleText">Закрыто</span>
       ) : (
-        <span className={`actions__text ${isDisabled ? "actions__text--disabled" : ""}`}>
+        <span className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
           {displayText}
           {arrowRight && <ReactSVG src="./arrowRight.svg" />}
         </span>

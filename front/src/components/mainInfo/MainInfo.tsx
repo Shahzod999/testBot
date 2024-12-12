@@ -10,6 +10,8 @@ import { useFavoriteApiMutation } from "../../app/api/companySlice";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 import { selectedUserLocation } from "../../app/features/userLocationSlice";
+import AdressLinks from "../adressLinks/AdressLinks";
+import { useWorkingHours } from "./WorkingHours";
 interface ActionsState {
   text: string;
   img: string;
@@ -20,9 +22,10 @@ interface ActionsState {
 const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(companyInfo?.is_favorite);
-  const userCoordinates = useAppSelector(selectedUserLocation)
+  const userCoordinates = useAppSelector(selectedUserLocation);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
+  const { isOpen, hours } = useWorkingHours(companyInfo.working_hours);
 
   const toggleBookMark = () => {
     try {
@@ -119,8 +122,16 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
         <div className="mainInfo__openHours">
           <div className="mainInfo__openHours__left">
-            <span>Открыто</span>
-            <p>До 22:00</p>
+            {isOpen ? (
+              <span>Открыто</span>
+            ) : (
+              <span className="noAwailibleText">Закрыто</span>
+            )}
+            <p>
+              {isOpen
+                ? `До ${hours.split("–")[1] || "завтра"}`
+                : "Закрыто до завтра"}
+            </p>
           </div>
           <div className="mainInfo__openHours__divider">
             <div></div>
@@ -199,38 +210,9 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
         </div>
       </BottomSheet>
+
       <BottomSheet isOpen={activeAction === "map"} onClose={closeBottomSheet}>
-        <div className="socialMedia">
-          <div className="socialMedia__icons">
-            <a
-              href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-                companyInfo.address || "",
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer">
-              <img src="./yandex.png" alt="" />
-              <span>Яндекс карты</span>
-            </a>
-            <a
-              href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-                companyInfo.address || "",
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer">
-              <img src="./2gis.png" alt="" />
-              <span>2ГИС</span>
-            </a>
-            <a
-              href={`https://maps.google.com/?q=${encodeURIComponent(
-                companyInfo.address || "",
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer">
-              <img src="./googleMaps.png" alt="" />
-              <span>Google карты</span>
-            </a>
-          </div>
-        </div>
+        <AdressLinks companyInfo={companyInfo} />
       </BottomSheet>
     </>
   );

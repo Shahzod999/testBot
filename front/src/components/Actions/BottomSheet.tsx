@@ -36,18 +36,30 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
     setIsDragging(false);
   };
 
-
   return (
     <>
-      <div className={`bottom__wrapper ${isOpen ? "bottom__wrapper--active" : ""}`} onClick={onClose}></div>
+      <div
+        className={`bottom__wrapper ${isOpen ? "bottom__wrapper--active" : ""}`}
+        onClick={onClose}></div>
 
-      <div className={`bottom-sheet ${isOpen ? "bottom-sheet--open" : ""} ${isDragging ? "bottom-sheet--dragging" : ""}`} draggable={false} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
+      <div
+        className={`bottom-sheet ${isOpen ? "bottom-sheet--open" : ""} ${
+          isDragging ? "bottom-sheet--dragging" : ""
+        }`}
+        draggable={false}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}>
         <div className="bottom-sheet__content">
           <div className="bottom-sheet__close" onClick={onClose}>
             <div></div>
           </div>
           {children}
         </div>
+
+        <p className="bottom-sheet__companyLink">
+          Powered by <a href="">Cosinus LLC</a> v0.0.1
+        </p>
       </div>
     </>
   );
