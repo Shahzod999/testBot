@@ -7,7 +7,7 @@ interface getCompanyState {
 }
 
 const initialState: getCompanyState = {
-  companyId: "673a89567d6d20cabf0ad3bf",
+  companyId: "673a89577d6d20cabf0ad3cb",
   userTelegramId: "",
 };
 

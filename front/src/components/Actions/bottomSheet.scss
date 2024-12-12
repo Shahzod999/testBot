@@ -123,12 +123,18 @@
       // color: #000;
       color: var(--text-color);
 
-      img {
+      img,
+      svg {
         border-radius: 16px;
         margin-bottom: 5px;
         width: 60px;
         height: 60px;
         object-fit: contain;
+      }
+
+      .borderSvg {
+        border-radius: 16px;
+        border: 0.5px solid var(--hint-color);
       }
     }
   }
@@ -139,6 +145,14 @@
     justify-content: space-between;
     gap: 10px;
     margin: 20px 0;
+
+    svg {
+      stroke: var(--tg-theme-text-color, #000);
+
+      path {
+        fill: var(--tg-theme-text-color, #000);
+      }
+    }
 
     &__text {
       font-family: var(--font-family);

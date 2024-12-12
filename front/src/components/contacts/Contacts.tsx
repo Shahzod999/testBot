@@ -180,7 +180,8 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
                   target="_blank"
                   rel="noopener noreferrer">
                   <div className="socialMedia__icons__logo">
-                    <img src={`./${name}.png`} alt="" />
+                    <ReactSVG src={`./social/${name}.svg`}/>
+                    {/* <img src={`./${name}.png`} alt="" /> */}
                   </div>
                   <span>{name}</span>
                 </a>
