@@ -84,12 +84,10 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
             setimagesArray={setimagesArray}
             id="addComments"
           />
-          <button type="submit">
-            <SendButton
-              text="Ваша оценка и отзыв будут видны всем"
-              disabled={sendCommentLoading}
-            />
-          </button>
+          <SendButton
+            text="Ваша оценка и отзыв будут видны всем"
+            disabled={sendCommentLoading}
+          />
         </form>
       </div>
     </BottomSheet>
