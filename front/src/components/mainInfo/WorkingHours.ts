@@ -5,7 +5,6 @@ import { WorkingHours } from "../../app/types/companyType";
 const convertTo24HourFormat = (timeRange: string): string => {
   if (timeRange === "Closed") return "Закрыто";
   if (timeRange === "Open 24 hours") return "Открыто 24 часа";
-
   if (!timeRange || !timeRange.includes("–")) return "Некорректные данные";
 
   const [start, end] = timeRange.split("–").map((time) => time.trim());
@@ -33,11 +32,28 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
       "Saturday",
     ];
     const today = daysOfWeek[new Date().getDay()];
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes(); // Текущее время в минутах
+
     const hours = workingHours[today]?.[0] || "Closed";
 
-    const isOpen = hours !== "Closed" && hours !== "Закрыто";
-    const convertedHours = convertTo24HourFormat(hours);
+    if (hours === "Closed" || hours === "Закрыто") {
+      return { isOpen: false, hours: "Закрыто", willOpenAt: null };
+    }
 
-    return { isOpen, hours: convertedHours };
+    if (hours === "Open 24 hours") {
+      return { isOpen: true, hours: "Открыто 24 часа", willOpenAt: null };
+    }
+
+    const convertedHours = convertTo24HourFormat(hours);
+    const [start, end] = convertedHours.split("–").map((time) => {
+      const [h, m] = time.split(":").map(Number);
+      return h * 60 + m; // Время в минутах
+    });
+
+    const isOpen = currentMinutes >= start && currentMinutes < end;
+    const willOpenAt = !isOpen && currentMinutes < start ? convertedHours.split("–")[0] : null;
+
+    return { isOpen, hours: convertedHours, willOpenAt };
   }, [workingHours]);
 };

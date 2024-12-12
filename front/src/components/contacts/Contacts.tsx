@@ -250,10 +250,10 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </label>
           <CommonButton createdFunction={closeBottomSheet}>
             <span>Отправить</span>
-            <span className="contacts__actions__coin">
+            {/* <span className="contacts__actions__coin">
               +1
               <img src="./coin.svg" alt="" />
-            </span>
+            </span> */}
           </CommonButton>
         </div>
       </BottomSheet>

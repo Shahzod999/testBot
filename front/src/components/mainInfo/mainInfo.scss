@@ -3,7 +3,7 @@
   padding: 19px 16px;
   // background-color: #fff;
   background-color: var(--tg-theme-secondary-bg-color, #fff);
-  color: var(--tg-theme-text-color, #000);
+  color: var(--text-color);
   margin-bottom: 2px;
 
   &__logo {
@@ -34,7 +34,7 @@
         line-height: 131%;
         letter-spacing: -0.02em;
         // color: #000;
-        color: var(--tg-theme-text-color, #000);
+        color: var(--text-color);
       }
 
       span {
@@ -43,7 +43,7 @@
         line-height: 131%;
         letter-spacing: -0.02em;
         // color: #000;
-        color: var(--tg-theme-text-color, #000);
+        color: var(--text-color);
       }
     }
 
@@ -52,7 +52,7 @@
       cursor: pointer;
       font-size: 23px;
       -webkit-tap-highlight-color: transparent;
-    
+
 
       // svg {
       //   fill: #3c3c43;
@@ -85,7 +85,7 @@
     line-height: 131%;
     letter-spacing: -0.02em;
     // color: #000;
-    color: var(--tg-theme-text-color, #000);
+    color: var(--text-color);
 
     padding-bottom: 16px;
   }
@@ -99,7 +99,7 @@
     letter-spacing: -0.01em;
     text-align: center;
     // color: #000;
-    color: var(--tg-theme-text-color, #000);
+    color: var(--text-color);
 
     border-top: 0.5px solid #d1d1d6;
 
@@ -192,7 +192,7 @@
       font-size: 12px;
       line-height: 133%;
       // color: #000;
-      color: var(--tg-theme-text-color, #000);
+      color: var(--text-color);
 
       svg {
         fill: var(--tg-theme-text-color, #000);
@@ -202,6 +202,32 @@
       path {
         fill: var(--tg-theme-text-color, #000);
         stroke: var(--tg-theme-text-color, #000);
+      }
+    }
+  }
+}
+
+.mainInfoTaxi {
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    position: relative;
+    user-select: none;
+
+    &__info {
+      flex-direction: column-reverse !important;
+      &__smallInfo {
+        font-family: var(--second-family);
+        font-weight: 400;
+        font-size: 17px !important;
+        line-height: 129%;
+        letter-spacing: -0.03em;
+        color: var(--hint-color);
       }
     }
   }

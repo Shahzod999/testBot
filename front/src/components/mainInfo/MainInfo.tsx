@@ -11,7 +11,8 @@ import { useAppSelector } from "../../hooks/reduxHooks";
 import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 import { selectedUserLocation } from "../../app/features/userLocationSlice";
 import AdressLinks from "../adressLinks/AdressLinks";
-import { useWorkingHours } from "./WorkingHours";
+import WorkTime from "./WorkTime";
+import EditAction from "../contacts/EditAction";
 interface ActionsState {
   text: string;
   img: string;
@@ -25,7 +26,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const userCoordinates = useAppSelector(selectedUserLocation);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
-  const { isOpen, hours } = useWorkingHours(companyInfo.working_hours);
 
   const toggleBookMark = () => {
     try {
@@ -121,18 +121,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         )}
 
         <div className="mainInfo__openHours">
-          <div className="mainInfo__openHours__left">
-            {isOpen ? (
-              <span>Открыто</span>
-            ) : (
-              <span className="noAwailibleText">Закрыто</span>
-            )}
-            <p>
-              {isOpen
-                ? `До ${hours.split("–")[1] || "завтра"}`
-                : "Закрыто до завтра"}
-            </p>
-          </div>
+          <WorkTime working_hours={companyInfo.working_hours} />
           <div className="mainInfo__openHours__divider">
             <div></div>
           </div>
@@ -152,8 +141,15 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <button
           className="mainInfo__orderbutton pressEffefct"
           onClick={handleOrder}>
-          <img src="./bag.svg" alt="" />
-          Заказать
+          {companyInfo.is_accept_orders ? (
+            <>
+              {" "}
+              <img src="./bag.svg" alt="" />
+              Заказать
+            </>
+          ) : (
+            <>Позвонить</>
+          )}
         </button>
 
         <div className="actionButtons">
@@ -168,10 +164,15 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         </div>
       </div>
 
-      <BottomSheet isOpen={activeAction === "taxi"} onClose={closeBottomSheet}>
-        <div className="socialMedia">
-          <div className="socialMedia__icons">
-            <a
+      <div className="mainInfoTaxi">
+        <BottomSheet
+          isOpen={activeAction === "taxi"}
+          onClose={closeBottomSheet}>
+          <div className="contacts__actions">
+            {/* <div className="socialMedia"> */}
+            <h3 className="contacts__actions__centerTitle">Такси</h3>
+            {/* <div className="socialMedia__icons"> */}
+            {/* <a
               href={companyInfo.mobile_apps?.android}
               target="_blank"
               rel="noopener noreferrer">
@@ -188,8 +189,37 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
                 <img src="./fasten.png" alt="" />
               </div>
               <span>Fasten</span>
-            </a>
-            <a
+            </a> */}
+
+            <EditAction
+              smallInfo="4km • 15-20 min • 20,000 so’m"
+              text="Yandex Go"
+              icon="./yandexGo.svg"
+              isDisabled={!companyInfo?.working_hours}
+              arrowRight={true}
+            />
+            <EditAction
+              smallInfo="4km • 15-20 min • 20,000 so’m"
+              text="Fasten"
+              icon="./fasten.svg"
+              isDisabled={!companyInfo?.working_hours}
+              arrowRight={true}
+            />
+            <EditAction
+              smallInfo="4km • 15-20 min • 20,000 so’m"
+              text="My taxi"
+              icon="./mytaxi.svg"
+              isDisabled={!companyInfo?.working_hours}
+              arrowRight={true}
+            />
+            <EditAction
+              smallInfo="4km • 15-20 min • 20,000 so’m"
+              text="Uklon"
+              icon="./uklon.svg"
+              isDisabled={!companyInfo?.working_hours}
+              arrowRight={true}
+            />
+            {/* <a
               href={companyInfo.mobile_apps?.ios}
               target="_blank"
               rel="noopener noreferrer">
@@ -206,10 +236,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
                 <img src="./uklon.png" alt="" />
               </div>
               <span>Uklon</span>
-            </a>
+            </a> */}
           </div>
-        </div>
-      </BottomSheet>
+          {/* </div> */}
+        </BottomSheet>
+      </div>
 
       <BottomSheet isOpen={activeAction === "map"} onClose={closeBottomSheet}>
         <AdressLinks companyInfo={companyInfo} />
