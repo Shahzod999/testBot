@@ -138,19 +138,21 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
         </div>
 
-        <button
-          className="mainInfo__orderbutton pressEffefct"
-          onClick={handleOrder}>
-          {companyInfo.is_accept_orders ? (
-            <>
-              {" "}
-              <img src="./bag.svg" alt="" />
-              Заказать
-            </>
-          ) : (
-            <a href={`tel:${companyInfo.phone_number}`}>Позвонить</a>
-          )}
-        </button>
+        {companyInfo.is_accept_orders ? (
+          <button
+            className="mainInfo__orderbutton pressEffefct"
+            onClick={handleOrder}>
+            {" "}
+            <img src="./bag.svg" alt="" />
+            Заказать
+          </button>
+        ) : (
+          <a
+            href={`tel:${companyInfo.phone_number}`}
+            className="mainInfo__orderbutton pressEffefct">
+            Позвонить
+          </a>
+        )}
 
         <div className="actionButtons">
           {actions.map((item) => (
