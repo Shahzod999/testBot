@@ -148,7 +148,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               Заказать
             </>
           ) : (
-            <>Позвонить</>
+            <a href={`tel:${companyInfo.phone_number}`}>Позвонить</a>
           )}
         </button>
 
@@ -169,28 +169,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           isOpen={activeAction === "taxi"}
           onClose={closeBottomSheet}>
           <div className="contacts__actions">
-            {/* <div className="socialMedia"> */}
             <h3 className="contacts__actions__centerTitle">Такси</h3>
-            {/* <div className="socialMedia__icons"> */}
-            {/* <a
-              href={companyInfo.mobile_apps?.android}
-              target="_blank"
-              rel="noopener noreferrer">
-              <div className="socialMedia__icons__logo">
-                <img src="./yandexGo.png" alt="" />
-              </div>
-              <span>Yandex Go</span>
-            </a>
-            <a
-              href={companyInfo.mobile_apps?.ios}
-              target="_blank"
-              rel="noopener noreferrer">
-              <div className="socialMedia__icons__logo">
-                <img src="./fasten.png" alt="" />
-              </div>
-              <span>Fasten</span>
-            </a> */}
-
             <EditAction
               smallInfo="4km • 15-20 min • 20,000 so’m"
               text="Yandex Go"
@@ -219,26 +198,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               isDisabled={!companyInfo?.working_hours}
               arrowRight={true}
             />
-            {/* <a
-              href={companyInfo.mobile_apps?.ios}
-              target="_blank"
-              rel="noopener noreferrer">
-              <div className="socialMedia__icons__logo">
-                <img src="./mytaxi.png" alt="" />
-              </div>
-              <span>My Taxi</span>
-            </a>
-            <a
-              href={companyInfo.mobile_apps?.ios}
-              target="_blank"
-              rel="noopener noreferrer">
-              <div className="socialMedia__icons__logo">
-                <img src="./uklon.png" alt="" />
-              </div>
-              <span>Uklon</span>
-            </a> */}
           </div>
-          {/* </div> */}
         </BottomSheet>
       </div>
 
