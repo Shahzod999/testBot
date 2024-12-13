@@ -16,6 +16,7 @@ import {
 } from "../../app/features/getCompanyIdSlice";
 import { TelegramTypes } from "../../app/types/telegramTypes";
 import { setuserLocation } from "../../app/features/userLocationSlice";
+import CompanyLink from "../../components/CompanyLink/CompanyLink";
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -42,6 +43,7 @@ const MainPage = () => {
 
 
   dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
+  
 
   useEffect(() => {
     dispatch(setCompany(data?.data));
@@ -52,6 +54,7 @@ const MainPage = () => {
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
+    
 
     tg.LocationManager.init(() => {
       console.log("LocationManager initialized.");
@@ -93,6 +96,7 @@ const MainPage = () => {
       <Raiting companyInfo={data?.data} />
       <FeedBack />
       <Contacts companyInfo={data?.data} />
+      <CompanyLink/>
     </div>
   );
 };

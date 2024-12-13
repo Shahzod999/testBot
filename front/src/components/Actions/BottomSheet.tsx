@@ -1,5 +1,6 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "./bottomSheet.scss";
+import CompanyLink from "../CompanyLink/CompanyLink";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -36,6 +37,21 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
     setIsDragging(false);
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      window.Telegram.WebApp.BackButton.show();
+      window.Telegram.WebApp.BackButton.onClick(onClose);
+    } else {
+      window.Telegram.WebApp.BackButton.hide();
+      window.Telegram.WebApp.BackButton.offClick(() => {});
+    }
+
+    return () => {
+      window.Telegram.WebApp.BackButton.hide();
+      window.Telegram.WebApp.BackButton.offClick(() => {});
+    };
+  }, [isOpen, onClose]);
+
   return (
     <>
       <div
@@ -56,10 +72,7 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
           </div>
           {children}
         </div>
-
-        <p className="bottom-sheet__companyLink">
-          Powered by <a href="">Cosinus LLC</a> v0.0.1
-        </p>
+        <CompanyLink />
       </div>
     </>
   );

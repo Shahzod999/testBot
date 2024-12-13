@@ -14,7 +14,6 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./yandex.svg"/>
-          {/* <img src="./yandex.svg" alt="" /> */}
           <span>Яндекс карты</span>
         </a>
         <a
@@ -24,7 +23,6 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./2gis.svg" />
-          {/* <img src="./2gis.svg" alt="" /> */}
           <span>2ГИС</span>
         </a>
         <a
@@ -35,7 +33,6 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           rel="noopener noreferrer">
 
           <ReactSVG src="./googleMaps.svg" />
-          {/* <img src="./googleMaps.svg" alt="" /> */}
           <span>Google карты</span>
         </a>
         <a
@@ -45,7 +42,6 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./waze.svg" />
-          {/* <img src="./waze.svg" alt="" /> */}
           <span>Waze</span>
         </a>
       </div>

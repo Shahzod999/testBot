@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PhotosSample } from "../../app/types/companyType";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
@@ -12,6 +12,22 @@ interface HeaderProps {
 
 const Header = ({ img }: HeaderProps) => {
   const [openImg, setOpenImg] = useState(false);
+
+  useEffect(() => {
+    if (openImg) {
+      window.Telegram.WebApp.BackButton.show();
+      window.Telegram.WebApp.BackButton.onClick(() => setOpenImg(false));
+    } else {
+      window.Telegram.WebApp.BackButton.hide();
+      window.Telegram.WebApp.BackButton.offClick(()=>{});
+    }
+
+    return () => {
+      window.Telegram.WebApp.BackButton.hide();
+      window.Telegram.WebApp.BackButton.offClick(()=>{});
+    };
+  }, [openImg]);
+  
 
   if (!img || img.length === 0) {
     return (
