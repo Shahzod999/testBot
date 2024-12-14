@@ -28,13 +28,17 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
     dispatch(setCountRaiting(index + 1));
   };
 
+  const handleOrder = () => {
+    window.open(companyInfo.reviews_link);
+  };
+
   return (
     <>
       <div className="raiting">
         <div className="raiting__count">
           <p>
             На основе {companyInfo.review_count} отзывов людей из{" "}
-            <a href={companyInfo.reviews_link}>Google</a>
+            <span onClick={handleOrder}>Google</span>
           </p>
           <strong>
             <IoIosStar size={27} />

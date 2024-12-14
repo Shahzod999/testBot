@@ -46,9 +46,7 @@
   --gray-color: #8e8e93;
   --separator-color: #c8c7cb;
   --grey-40: rgba(0, 0, 0, 0.7);
-}
-
-:root {
+  /////
   --font-family: "SF Pro Text", sans-serif;
   --second-family: "Sf pro text", sans-serif;
   --third-family: "SF Pro Display", sans-serif;
@@ -110,6 +108,11 @@
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+html,
+body {
+  touch-action: manipulation;
 }
 
 body {

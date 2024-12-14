@@ -3,6 +3,8 @@ import { CompanyState } from "../../app/types/companyType";
 import "./adressLinks.scss";
 
 const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  console.log(companyInfo.longitude);
+
   return (
     <div className="socialMedia">
       <h3>Навигаторы и карты</h3>
@@ -13,11 +15,11 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           )}`}
           target="_blank"
           rel="noopener noreferrer">
-          <ReactSVG src="./yandex.svg"/>
+          <ReactSVG src="./yandex.svg" />
           <span>Яндекс карты</span>
         </a>
         <a
-          href={`https://yandex.ru/maps/?text=${encodeURIComponent(
+          href={`https://2gis.uz/search/${encodeURIComponent(
             companyInfo.address || "",
           )}`}
           target="_blank"
@@ -31,14 +33,11 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           )}`}
           target="_blank"
           rel="noopener noreferrer">
-
           <ReactSVG src="./googleMaps.svg" />
           <span>Google карты</span>
         </a>
         <a
-          href={`https://www.waze.com/ru/live-map/?q=${encodeURIComponent(
-            companyInfo.address || "",
-          )}`}
+          href={`https://www.waze.com/ru/live-map/?ll=${companyInfo.latitude},${companyInfo.longitude}&navigate=yes`}
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./waze.svg" />

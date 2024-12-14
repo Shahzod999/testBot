@@ -29,6 +29,7 @@ const Header = ({ img }: HeaderProps) => {
   }, [openImg]);
   
 
+  
   if (!img || img.length === 0) {
     return (
       <header

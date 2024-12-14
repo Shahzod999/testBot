@@ -43,7 +43,7 @@ export interface CompanyState {
   owner_telegram_id: any
   location: Location
   logo: string
-  logoThumbnail: string
+  logoThumbnail: any
   order_type: any
   is_accept_orders: boolean
   is_partner: boolean
@@ -55,7 +55,8 @@ export interface CompanyState {
   created_at: number
   created_by: any
   updated_at: number
-  distance: string
+  logo_icon_light: string
+  logo_icon_dark: string
   payment: any
   is_favorite: boolean
   comments: Comment[]
@@ -144,28 +145,35 @@ export interface Comment {
   status: string
   created_at: number
   deleted: boolean
+  replies?: Reply[]
   user: User
+}
+
+export interface Reply {
+  reply_id: string
+  message: string
+  reply_by: string
+  reply_from: string
+  reply_date: number
 }
 
 export interface User {
   _id: string
   telegram_id: number
-  lang?: string
+  lang: string
   phone: any
   full_name: any
   step: any
   search_query: any
-  telegram_name?: string
-  telegram_username?: string
-  telegram_profile_photo?: TelegramProfilePhoto
+  telegram_name: string
+  telegram_username: string
+  telegram_profile_photo: TelegramProfilePhoto
   last_location: LastLocation
   created_at: string
   updated_at: string
   is_blocked: boolean
   is_admin: boolean
-  can_order?: boolean
-  is_active?: boolean
-  is_verified?: boolean
+  can_order: boolean
 }
 
 export interface TelegramProfilePhoto {
@@ -175,8 +183,6 @@ export interface TelegramProfilePhoto {
 }
 
 export interface LastLocation {
-  latitude?: number
-  longitude?: number
-  type?: string
-  coordinates?: number[]
+  type: string
+  coordinates: number[]
 }

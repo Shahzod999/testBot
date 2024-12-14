@@ -26,6 +26,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const userCoordinates = useAppSelector(selectedUserLocation);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
+  const isDarkMode = window.Telegram.WebApp.colorScheme === "dark";
 
   const toggleBookMark = () => {
     try {
@@ -89,7 +90,10 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   }, [activeAction]);
 
   const handleOrder = () => {
-    console.log("nice");
+    if (companyInfo.is_accept_orders) {
+      console.log("nice");
+    }
+    window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
 
   return (
@@ -98,7 +102,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <div className="mainInfo__logo">
           <div className="mainInfo__logo__img">
             <img
-              src={companyInfo.logoThumbnail || "./imgDefault.png"}
+              src={
+                companyInfo.logoThumbnail || isDarkMode
+                  ? companyInfo.logo_icon_dark
+                  : companyInfo.logo_icon_light
+              }
               alt="logo"
             />
           </div>
@@ -138,21 +146,18 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
         </div>
 
-        {companyInfo.is_accept_orders ? (
-          <button
-            className="mainInfo__orderbutton pressEffefct"
-            onClick={handleOrder}>
-            {" "}
-            <img src="./bag.svg" alt="" />
-            Заказать
-          </button>
-        ) : (
-          <a
-            href={`tel:${companyInfo.phone_number}`}
-            className="mainInfo__orderbutton pressEffefct">
-            Позвонить
-          </a>
-        )}
+        <button
+          className="mainInfo__orderbutton pressEffefct"
+          onClick={handleOrder}>
+          {companyInfo.is_accept_orders ? (
+            <>
+              <img src="./bag.svg" alt="" />
+              Заказать
+            </>
+          ) : (
+            "Позвонить"
+          )}
+        </button>
 
         <div className="actionButtons">
           {actions.map((item) => (
@@ -176,28 +181,24 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               smallInfo="4km • 15-20 min • 20,000 so’m"
               text="Yandex Go"
               icon="./yandexGo.svg"
-              isDisabled={!companyInfo?.working_hours}
               arrowRight={true}
             />
             <EditAction
               smallInfo="4km • 15-20 min • 20,000 so’m"
               text="Fasten"
               icon="./fasten.svg"
-              isDisabled={!companyInfo?.working_hours}
               arrowRight={true}
             />
             <EditAction
               smallInfo="4km • 15-20 min • 20,000 so’m"
               text="My taxi"
               icon="./mytaxi.svg"
-              isDisabled={!companyInfo?.working_hours}
               arrowRight={true}
             />
             <EditAction
               smallInfo="4km • 15-20 min • 20,000 so’m"
               text="Uklon"
               icon="./uklon.svg"
-              isDisabled={!companyInfo?.working_hours}
               arrowRight={true}
             />
           </div>

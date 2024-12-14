@@ -10,7 +10,15 @@ interface ContactProps extends ActionProps {
   time?: boolean; // Указывает, требуется ли обработка времени
 }
 
-export const ContactsActions = ({ text, icon, isDisabled, mainText, style, arrowRight, phone }: ContactProps) => {
+export const ContactsActions = ({
+  text,
+  icon,
+  isDisabled,
+  mainText,
+  style,
+  arrowRight,
+  phone,
+}: ContactProps) => {
   const formatTime = (input: string | string[]) => {
     if (Array.isArray(input)) {
       return input
@@ -28,7 +36,7 @@ export const ContactsActions = ({ text, icon, isDisabled, mainText, style, arrow
 
   const handleClick = () => {
     if (phone) {
-      window.location.href = phone;
+      window.open(phone);
     }
   };
 
@@ -46,13 +54,25 @@ export const ContactsActions = ({ text, icon, isDisabled, mainText, style, arrow
   const displayText = processText(text);
 
   return (
-    <button onClick={handleClick} className={`${mainText ? "actions__mainText" : ""} ${style} actions pressEffefct ${isDisabled ? "actions--disabled" : ""}`}>
-      <span className={`actions__icons ${isDisabled ? "actions__icons--disabled" : ""}`}>{mainText ? <>{mainText}</> : <ReactSVG src={icon || ""} />}</span>
+    <button
+      onClick={handleClick}
+      className={`${
+        mainText ? "actions__mainText" : ""
+      } ${style} actions pressEffefct ${
+        isDisabled ? "actions--disabled" : ""
+      }`}>
+      <span
+        className={`actions__icons ${
+          isDisabled ? "actions__icons--disabled" : ""
+        }`}>
+        {mainText ? <>{mainText}</> : <ReactSVG src={icon || ""} />}
+      </span>
 
       {displayText === "Закрыто" ? (
         <span className="actions__text noAwailibleText">Закрыто</span>
       ) : (
-        <span className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
+        <span
+          className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
           {displayText}
           {arrowRight && <ReactSVG src="./arrowRight.svg" />}
         </span>

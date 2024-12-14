@@ -41,7 +41,6 @@ const MainPage = () => {
     tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId,
   );
 
-
   dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
   
 

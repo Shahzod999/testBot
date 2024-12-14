@@ -65,6 +65,7 @@ export interface ThemeParams {
   section_header_text_color: string;
   subtitle_text_color: string;
   destructive_text_color: string;
+  theme?: string
 }
 
 export interface SafeAreaInset {
