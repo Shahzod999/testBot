@@ -27,26 +27,6 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setOpen(!open);
   };
 
-  const [dots, setDots] = useState(0);
-
-  useEffect(() => {
-    setDots(0);
-    const timer = setInterval(() => {
-      if (dots == 3) {
-        setDots(0);
-      }
-      setDots((prev) => (prev < 3 ? prev + 1 : 0));
-    }, 500);
-    return () => clearInterval(timer);
-  }, [comment]);
-
-  console.log(dots);
-
-  // const toggleImgOpen = () => {
-  //   setImgOpen(!imgOpen);
-  // };
-
-  //
   return (
     <div className="comment">
       <div className="comment__title">
@@ -74,9 +54,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
           {comment.status == "pending" && (
             <div className="pending">
               в ожидании
-              {Array.from({ length: dots }, (_, index) => (
-                <span key={index}>.</span>
-              ))}
+              <span className="dots"></span>
             </div>
           )}
         </span>
