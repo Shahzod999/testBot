@@ -63,3 +63,29 @@ export interface Pagination {
   limit: number;
   pages: number;
 }
+
+export interface SendingComment {
+  id: string;
+  data: {
+    message: string;
+    images: string[];
+    rating: number;
+  };
+}
+
+export interface SuccessComment {
+  status: string;
+  message: string;
+  id: string;
+}
+
+export interface ErrorComment {
+  status: number;
+  data: Data;
+}
+
+export interface Data {
+  status: string;
+  message: string;
+  error_full_name: string;
+}

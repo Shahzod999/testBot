@@ -25,6 +25,9 @@ const FeedBack = () => {
     window.location.href = "#feedBack";
   };
 
+  console.log(data);
+  
+
   if (!data?.pagination?.total) return;
 
   return (

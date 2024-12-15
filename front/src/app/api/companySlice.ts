@@ -1,3 +1,4 @@
+import { ErrorComment, SendingComment, SuccessComment } from "../types/commentType";
 import { apiSlice } from "./apiSlice";
 
 export const companyApiSlice = apiSlice.injectEndpoints({
@@ -12,7 +13,7 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         url: `/company/${id}`,
       }),
     }),
-    sendCommentByCompany: builder.mutation({
+    sendCommentByCompany: builder.mutation<SuccessComment | ErrorComment, SendingComment>({
       query: ({ id, data }) => ({
         url: `/comment/${id}`,
         method: "POST",

@@ -163,10 +163,10 @@ a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    fill: var(--tg-theme-text-color, #000);
+    fill: var(--hint-color);
 
     path {
-      fill: var(--tg-theme-text-color, #000);
+      fill: var(--hint-color);
     }
   }
 }
@@ -239,4 +239,9 @@ button:disabled {
   div{
     display: flex;
   }
+}
+.pending{
+  color: var(--warning-color);
+  font-size: 12px;
+  text-wrap: wrap;
 }

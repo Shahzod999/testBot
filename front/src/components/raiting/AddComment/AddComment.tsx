@@ -17,6 +17,7 @@ import {
   infoToast,
   succesToast,
 } from "../../../app/features/toastSlice";
+import { ErrorComment } from "../../../app/types/commentType";
 
 interface AddCommentProps {
   openComment: boolean;
@@ -39,7 +40,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!textArea) return dispatch(infoToast("Заполните все поля"));
+    if (!textArea || !count) return dispatch(infoToast("Заполните все поля"));
 
     const sendComment = {
       message: textArea,
@@ -58,8 +59,9 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
       setTextArea("");
       console.log(res);
     } catch (error) {
-      dispatch(errorToast("Заполните все поля"));
-      console.log(error);
+      const er = error as ErrorComment;
+      dispatch(errorToast(er.data.message));
+      console.log(er.data.message);
     }
   };
 

@@ -17,7 +17,8 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
 
   useEffect(() => {
     if (textRef.current) {
-      const isOverflow = textRef.current.scrollHeight > textRef.current.offsetHeight;
+      const isOverflow =
+        textRef.current.scrollHeight > textRef.current.offsetHeight;
       setIsOverflowing(isOverflow);
     }
   }, [comment?.message]);
@@ -26,15 +27,38 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setOpen(!open);
   };
 
+  const [dots, setDots] = useState(0);
+
+  useEffect(() => {
+    setDots(0);
+    const timer = setInterval(() => {
+      if (dots == 3) {
+        setDots(0);
+      }
+      setDots((prev) => (prev < 3 ? prev + 1 : 0));
+    }, 500);
+    return () => clearInterval(timer);
+  }, [comment]);
+
+  console.log(dots);
+
   // const toggleImgOpen = () => {
   //   setImgOpen(!imgOpen);
   // };
 
+  //
   return (
     <div className="comment">
       <div className="comment__title">
         <div className="comment__title__img">
-          <img src={comment.user.telegram_profile_photo?.image ? `https://dev.admin13.uz${comment.user.telegram_profile_photo.image}` : "./defaultCommentImg.png"} alt="" />
+          <img
+            src={
+              comment.user.telegram_profile_photo?.image
+                ? `https://dev.admin13.uz${comment.user.telegram_profile_photo.image}`
+                : "./defaultCommentImg.png"
+            }
+            alt=""
+          />
         </div>
         <div className="comment__title__user">
           <h3>{comment?.user?.telegram_name}</h3>
@@ -44,7 +68,18 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
             </div>
           </div>
         </div>
-        <span className="comment__title__ago">{timeAgo}</span>
+
+        <span className="comment__title__ago">
+          {timeAgo}
+          {comment.status == "pending" && (
+            <div className="pending">
+              в ожидании
+              {Array.from({ length: dots }, (_, index) => (
+                <span key={index}>.</span>
+              ))}
+            </div>
+          )}
+        </span>
       </div>
 
       {/* {imgOpen ? (
@@ -78,9 +113,14 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
         </div>
       )} */}
 
-      <div className={`comment__box ${open ? "comment__text" : "comment__closeText"}`}>
+      <div
+        className={`comment__box ${
+          open ? "comment__text" : "comment__closeText"
+        }`}>
         <p ref={textRef}>{comment?.message}</p>
-        {isOverflowing && !open && <span onClick={toggleOpen}>{open ? "Свернуть" : "Ещё"}</span>}
+        {isOverflowing && !open && (
+          <span onClick={toggleOpen}>{open ? "Свернуть" : "Ещё"}</span>
+        )}
         {open && <span onClick={toggleOpen}>Свернуть</span>}
       </div>
 
