@@ -18,7 +18,7 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
       ) : willOpenAt ? (
         <>
           <span className="noAwailibleText">Закрыто</span>
-          <p>{`Откроется в ${willOpenAt}`}</p>
+          <p>{`Откроется ${willOpenAt}`}</p>
         </>
       ) : (
         <>

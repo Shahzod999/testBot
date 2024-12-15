@@ -74,7 +74,7 @@ export const ContactsActions = ({
         <span
           className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
           {displayText}
-          {arrowRight && <ReactSVG src="./arrowRight.svg" />}
+          {arrowRight && <ReactSVG src="./arrowRight.svg" className="svgController"/>}
         </span>
       )}
     </button>

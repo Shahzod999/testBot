@@ -36,6 +36,7 @@ export const companyApiSlice = apiSlice.injectEndpoints({
           limit,
         },
       }),
+      providesTags: ["Comment"]
     }),
   }),
 });

@@ -180,7 +180,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
                   target="_blank"
                   rel="noopener noreferrer">
                   <div className="socialMedia__icons__logo">
-                    <ReactSVG src={`./social/${name}.svg`}/>
+                    <ReactSVG src={`./social/${name}.svg`} />
                     {/* <img src={`./${name}.png`} alt="" /> */}
                   </div>
                   <span>{name}</span>
@@ -201,7 +201,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
                 style={"editWorkHour"}
                 isDisabled={hours == "Closed"}
                 time={true}
-                arrowRight={true}
               />
             </div>
           ))}
@@ -429,12 +428,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <div className="contacts__actions__closeButtons">
-            <img
-              src="./arrowLeft.svg"
-              alt="back"
-              className="contacts__actions__closeButtons__arrowLeft"
-              onClick={() => handleActionClick("edit")}
-            />
             <span className="contacts__actions__closeButtons__title">
               Категория
             </span>
@@ -495,12 +488,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <div className="contacts__actions__closeButtons">
-            <img
-              src="./arrowLeft.svg"
-              alt="back"
-              className="contacts__actions__closeButtons__arrowLeft"
-              onClick={() => handleActionClick("edit")}
-            />
             <span className="contacts__actions__closeButtons__title">
               Рабочие часы
             </span>

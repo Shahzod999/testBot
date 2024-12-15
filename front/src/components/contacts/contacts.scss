@@ -1,10 +1,11 @@
 .contacts {
   min-height: 500px;
   border-radius: 20px;
-  // background-color: #fff;
   background-color: var(--tg-theme-secondary-bg-color, #fff);
   color: var(--text-color);
   padding-bottom: 50px;
+  padding-left: 16px;
+  padding-right: 16px;
 
   &__header {
     display: flex;
@@ -16,7 +17,6 @@
       font-size: 20px;
       line-height: 120%;
       letter-spacing: 0.02em;
-      // color: #000;
       color: var(--text-color);
     }
 
@@ -35,7 +35,6 @@
       font-size: 14px;
       line-height: 143%;
       letter-spacing: -0.01em;
-      // color: #000;
       color: var(--text-color);
 
       svg {
@@ -74,7 +73,6 @@
       letter-spacing: -0.02em;
       text-align: center;
       color: #000;
-      // color: var(--text-color);
       margin-top: 50px;
     }
 
@@ -109,12 +107,6 @@
         background-color: #c8c7cc;
       }
 
-      // &:last-of-type::after {
-      //   content: none; /* Убираем псевдоэлемент у последнего элемента типа */
-      // }
-      // svg {
-      //   fill: #000;
-      // }
 
       &--disabled {
         pointer-events: none;
@@ -130,7 +122,6 @@
         font-size: 16px;
         line-height: 131%;
         letter-spacing: -0.02em;
-        // color: #000;
         color: var(--text-color);
         text-align: left;
 
@@ -154,13 +145,9 @@
           font-size: 16px;
           line-height: 131%;
           letter-spacing: -0.02em;
-          // color: #000;
           color: var(--text-color);
         }
 
-        .actions__icons {
-          padding: 0;
-        }
 
         .actions__text {
           display: flex;
@@ -177,15 +164,12 @@
 
         &.editWorkHour {
           .actions__text {
-            // color: #000;
             color: var(--text-color);
           }
         }
       }
 
       &__icons {
-        padding-left: 16px;
-
         svg {
           fill: var(--tg-theme-text-color, #000);
         }
@@ -201,14 +185,8 @@
       align-items: center;
       gap: 2px;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       position: relative;
-
-      &__cross {
-        // position: absolute;
-        // right: 0;
-        // top: -30%;
-      }
 
       &__arrowLeft {
         position: absolute;
@@ -222,7 +200,6 @@
         line-height: 133%;
         letter-spacing: -0.02em;
         text-align: center;
-        // color: #000;
         color: var(--text-color);
       }
     }
@@ -232,9 +209,7 @@
       font-size: 22px;
       line-height: 127%;
       letter-spacing: 0.02em;
-      // color: #000;
       color: var(--text-color);
-
       margin-bottom: 5px;
     }
 
@@ -248,7 +223,6 @@
       font-size: 15px;
       line-height: 133%;
       letter-spacing: -0.02em;
-      // color: #000;
       color: var(--text-color);
 
       margin-top: 10px;
@@ -259,7 +233,6 @@
       font-size: 16px;
       line-height: 131%;
       letter-spacing: -0.02em;
-      // color: #000;
       color: var(--text-color);
     }
 
@@ -320,7 +293,6 @@
           font-size: 13px;
           line-height: 138%;
           letter-spacing: -0.01em;
-          // color: #000;
           color: var(--text-color);
         }
       }
@@ -341,54 +313,6 @@
           border-color: #007bff;
         }
       }
-
-
-      //удалить стили
-      // &__progress {
-      //   padding: 0 10px;
-
-      //   .progress-indicator {
-      //     display: flex;
-      //     margin-top: 10px;
-      //     gap: 5px;
-
-      //     .progress-line {
-      //       flex: 1;
-      //       height: 2px;
-      //       background: #e0e0e0;
-      //       border-radius: 3px;
-
-      //       &.low {
-      //         background: #ff3b30;
-      //       }
-
-      //       &.medium {
-      //         background: #ff9500;
-      //       }
-
-      //       &.nice {
-      //         background: #fc0;
-      //       }
-
-      //       &.good {
-      //         background: #34c759;
-      //       }
-      //     }
-      //   }
-
-      //   .progress-message {
-      //     margin-top: 5px;
-      //     font-weight: 400;
-      //     font-size: 12px;
-      //     line-height: 175%;
-      //     letter-spacing: -0.03em;
-      //     color: rgba(60, 60, 67, 0.5);
-
-      //     &.empty {
-      //       color: #aaa;
-      //     }
-      //   }
-      // }
     }
 
     &__lastElement {

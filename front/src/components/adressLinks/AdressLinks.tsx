@@ -10,9 +10,7 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <h3>Навигаторы и карты</h3>
       <div className="socialMedia__icons">
         <a
-          href={`https://yandex.ru/maps/?text=${encodeURIComponent(
-            companyInfo.address || "",
-          )}`}
+          href={`https://yandex.ru/maps/?whatshere[point]=${companyInfo.longitude},${companyInfo.latitude}&z=16`}
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./yandex.svg" />
@@ -28,9 +26,7 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <span>2ГИС</span>
         </a>
         <a
-          href={`https://maps.google.com/?q=${encodeURIComponent(
-            companyInfo.address || "",
-          )}`}
+          href={`https://maps.google.com/?q=${companyInfo.latitude},${companyInfo.longitude}`}
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./googleMaps.svg" />

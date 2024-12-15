@@ -104,6 +104,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::-webkit-scrollbar {
@@ -229,4 +230,13 @@ button:disabled {
 
 .swiper-pagination-bullet-active {
   background-color: white !important;
+}
+
+.svgController{
+  display: flex;
+  place-items: center;
+
+  div{
+    display: flex;
+  }
 }

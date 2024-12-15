@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { WorkingHours } from "../../app/types/companyType";
 
-// Функция для преобразования времени из формата AM/PM в 24-часовой формат
 const convertTo24HourFormat = (timeRange: string): string => {
   if (timeRange === "Closed") return "Закрыто";
   if (timeRange === "Open 24 hours") return "Открыто 24 часа";
@@ -31,29 +30,70 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
       "Friday",
       "Saturday",
     ];
-    const today = daysOfWeek[new Date().getDay()];
+    const todayIndex = new Date().getDay();
     const now = new Date();
     const currentMinutes = now.getHours() * 60 + now.getMinutes(); // Текущее время в минутах
 
-    const hours = workingHours[today]?.[0] || "Closed";
+    // Функция получения времени открытия
+    const getOpeningTime = (dayIndex: number): string | null => {
+      const day = daysOfWeek[dayIndex];
+      const hours = workingHours[day]?.[0] || "Closed";
 
-    if (hours === "Closed" || hours === "Закрыто") {
-      return { isOpen: false, hours: "Закрыто", willOpenAt: null };
+      if (hours === "Closed" || hours === "Закрыто") return null;
+      return convertTo24HourFormat(hours).split("–")[0]; // Возвращаем время открытия
+    };
+
+    // Проверяем сегодняшнее расписание
+    const todayHours = workingHours[daysOfWeek[todayIndex]]?.[0] || "Closed";
+
+    if (todayHours === "Open 24 hours") {
+      // Если заведение работает круглосуточно
+      return {
+        isOpen: true,
+        hours: "Открыто 24 часа",
+        willOpenAt: null,
+      };
+    }
+    
+    if (todayHours !== "Closed") {
+      const [start, end] = convertTo24HourFormat(todayHours)
+        .split("–")
+        .map((time) => {
+          const [h, m] = time.split(":").map(Number);
+          return h * 60 + m; // Время в минутах
+        });
+
+      if (currentMinutes < start) {
+        // Сегодня заведение еще не открылось
+        return {
+          isOpen: false,
+          hours: todayHours,
+          willOpenAt: `сегодня в ${
+            convertTo24HourFormat(todayHours).split("–")[0]
+          }`,
+        };
+      } else if (currentMinutes >= start && currentMinutes < end) {
+        // Сегодня заведение открыто
+        return { isOpen: true, hours: convertTo24HourFormat(todayHours), willOpenAt: null };
+      }
     }
 
-    if (hours === "Open 24 hours") {
-      return { isOpen: true, hours: "Открыто 24 часа", willOpenAt: null };
+    // Ищем ближайший день открытия
+    for (let offset = 1; offset < 7; offset++) {
+      const nextDayIndex = (todayIndex + offset) % 7;
+      const nextOpeningTime = getOpeningTime(nextDayIndex);
+
+      if (nextOpeningTime) {
+        const nextDayName = offset === 1 ? "завтра" : daysOfWeek[nextDayIndex];
+        return {
+          isOpen: false,
+          hours: "Закрыто",
+          willOpenAt: `${nextDayName} в ${nextOpeningTime}`,
+        };
+      }
     }
 
-    const convertedHours = convertTo24HourFormat(hours);
-    const [start, end] = convertedHours.split("–").map((time) => {
-      const [h, m] = time.split(":").map(Number);
-      return h * 60 + m; // Время в минутах
-    });
-
-    const isOpen = currentMinutes >= start && currentMinutes < end;
-    const willOpenAt = !isOpen && currentMinutes < start ? convertedHours.split("–")[0] : null;
-
-    return { isOpen, hours: convertedHours, willOpenAt };
+    // Если заведение не работает всю неделю
+    return { isOpen: false, hours: "Закрыто", willOpenAt: null };
   }, [workingHours]);
 };
