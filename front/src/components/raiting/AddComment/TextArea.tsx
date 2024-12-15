@@ -4,9 +4,8 @@ interface TextProps {
 }
 
 const TextArea = ({ text, setText }: TextProps) => {
-  const maxLength = 50; // Максимальная длина текста
+  const maxLength = 50; 
 
-  // Функция для определения текущего состояния
   const getProgressState = () => {
     const length = text.trim().length;
 

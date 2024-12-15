@@ -1,34 +1,22 @@
-import { useState } from "react";
 import Cross from "./Cross";
 import { ReactSVG } from "react-svg";
 
-interface addFotoProps {
-  imagesArray: string[];
-  setimagesArray: (images: string[]) => void;
+interface AddFotoProps {
+  imagesArray: File[];
+  setimagesArray: React.Dispatch<React.SetStateAction<File[]>>;
   id: string;
 }
 
-const AddFoto = ({ imagesArray, setimagesArray, id }: addFotoProps) => {
-  const [error, setError] = useState("");
-
+const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setimagesArray([...imagesArray, reader.result as string]);
-      };
-      reader.onerror = (error) => {
-        console.log("Error: ", error);
-        setError("Error")
-      };
+    const files = e.target.files;
+    if (files) {
+      setimagesArray((prev: File[]) => [...prev, ...Array.from(files)]);
     }
   };
 
-  const toggleSomething = (id: string) => {
-    const newArray = imagesArray.filter((item: string) => item !== id);
-    setimagesArray(newArray);
+  const removeImage = (index: number) => {
+    setimagesArray((prev: File[]) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -39,20 +27,16 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: addFotoProps) => {
         accept="image/*"
         type="file"
         id={id}
-        onChange={(e) => {
-          handleImagePreview(e);
-        }}
+        onChange={handleImagePreview}
       />
 
-      <p className="errorText">{error}</p>
-
       <div className="addFoto__imagesArray">
-        {imagesArray?.map((item: string, index: number) => (
+        {imagesArray.map((file, index) => (
           <div className="addFoto__imagesArray__img" key={index}>
             <div className="addFoto__imagesArray__img__cross">
-              <Cross toggleComment={() => toggleSomething(item)} />
+              <Cross toggleComment={() => removeImage(index)} />
             </div>
-            <img src={item} alt="" />
+            <img src={URL.createObjectURL(file)} alt={`preview-${index}`} />
           </div>
         ))}
 

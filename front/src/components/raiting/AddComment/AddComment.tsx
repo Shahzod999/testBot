@@ -10,8 +10,10 @@ import {
   selectedRaitingCount,
   setCountRaiting,
 } from "../../../app/features/RaitingStarsSlice";
-import { useSendCommentByCompanyMutation } from "../../../app/api/companySlice";
-import { selectedCompanyId } from "../../../app/features/getCompanyIdSlice";
+import {
+  useSendCommentByCompanyMutation,
+  useUploadImageMutation,
+} from "../../../app/api/companySlice";
 import {
   errorToast,
   infoToast,
@@ -26,42 +28,55 @@ interface AddCommentProps {
 
 const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   const dispatch = useAppDispatch();
-  const [imagesArray, setimagesArray] = useState<string[]>([]);
+  const [imagesArray, setimagesArray] = useState<File[]>([]);
   const [textArea, setTextArea] = useState("");
-
-  const companyInfo = useAppSelector(selectedCompany);
   const count = useAppSelector(selectedRaitingCount);
+  const companyInfo = useAppSelector(selectedCompany);
+  const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
   const [sendCommentByCompany, { isLoading: sendCommentLoading }] =
     useSendCommentByCompanyMutation();
-  const companyId = useAppSelector(selectedCompanyId);
 
   const handleStarClick = (index: number) => {
     dispatch(setCountRaiting(index + 1));
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!textArea || !count) return dispatch(infoToast("Заполните все поля"));
 
-    const sendComment = {
-      message: textArea,
-      images: [
-        "/images/truegis/8f039cf4-f0eb-436e-93b8-51b284eca884.jpg",
-        "/images/truegis/8f039cf4-f0eb-436e-93b8-51b284eca884.jpg",
-      ],
-      rating: count,
-    };
+    if (!textArea || !count) {
+      return dispatch(infoToast("Заполните все поля"));
+    }
+
     try {
-      const res = await sendCommentByCompany({
-        id: companyId,
+      const uploadedUrls = await Promise.all(
+        imagesArray.map(async (file) => {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("page", "truegis");
+          const response = await uploadImage(formData).unwrap();
+          return `${import.meta.env.VITE_IMAGE_URL}${response}`;
+        }),
+      );
+
+      // Формируем данные для отправки комментария
+      const sendComment = {
+        message: textArea,
+        images: uploadedUrls,
+        rating: count,
+      };
+
+      // Отправляем комментарий
+      await sendCommentByCompany({
+        id: companyInfo?._id || "",
         data: sendComment,
       }).unwrap();
-      dispatch(succesToast("Коментарии добавлен"));
+
+      dispatch(succesToast("Комментарий добавлен"));
       setTextArea("");
-      console.log(res);
+      setimagesArray([]); // Сбрасываем изображения
     } catch (error) {
       const er = error as ErrorComment;
-      dispatch(errorToast(er.data.message));
-      console.log(er.data.message);
+      dispatch(errorToast(er.data?.message || "Ошибка при отправке"));
     }
   };
 
@@ -88,7 +103,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
           />
           <SendButton
             text="Ваша оценка и отзыв будут видны всем"
-            disabled={sendCommentLoading}
+            disabled={sendCommentLoading || uploading}
           />
         </form>
       </div>

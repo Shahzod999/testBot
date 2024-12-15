@@ -1,4 +1,8 @@
-import { ErrorComment, SendingComment, SuccessComment } from "../types/commentType";
+import {
+  ErrorComment,
+  SendingComment,
+  SuccessComment,
+} from "../types/commentType";
 import { apiSlice } from "./apiSlice";
 
 export const companyApiSlice = apiSlice.injectEndpoints({
@@ -13,7 +17,10 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         url: `/company/${id}`,
       }),
     }),
-    sendCommentByCompany: builder.mutation<SuccessComment | ErrorComment, SendingComment>({
+    sendCommentByCompany: builder.mutation<
+      SuccessComment | ErrorComment,
+      SendingComment
+    >({
       query: ({ id, data }) => ({
         url: `/comment/${id}`,
         method: "POST",
@@ -37,7 +44,14 @@ export const companyApiSlice = apiSlice.injectEndpoints({
           limit,
         },
       }),
-      providesTags: ["Comment"]
+      providesTags: ["Comment"],
+    }),
+    uploadImage: builder.mutation<string, FormData>({
+      query: (formData) => ({
+        url: "/image/upload",
+        method: "POST",
+        body: formData,
+      }),
     }),
   }),
 });
@@ -47,6 +61,7 @@ export const {
   useFavoriteApiMutation,
   useGetCommentsbyCompanyQuery,
   useSendCommentByCompanyMutation,
+  useUploadImageMutation,
 } = companyApiSlice;
 
 // https://dev.admin13.uz/v1/delivery/bot/comment/673a89577d6d20cabf0ad3cb // company_id
