@@ -2,6 +2,7 @@ import {
   ErrorComment,
   SendingComment,
   SuccessComment,
+  SuccessUploadImg,
 } from "../types/commentType";
 import { apiSlice } from "./apiSlice";
 
@@ -9,12 +10,12 @@ export const companyApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCompany: builder.query({
       query: () => ({
-        url: "/company",
+        url: "/delivery/bot/company",
       }),
     }),
     getCompanyById: builder.query({
       query: (id) => ({
-        url: `/company/${id}`,
+        url: `/delivery/bot/company/${id}`,
       }),
     }),
     sendCommentByCompany: builder.mutation<
@@ -22,7 +23,7 @@ export const companyApiSlice = apiSlice.injectEndpoints({
       SendingComment
     >({
       query: ({ id, data }) => ({
-        url: `/comment/${id}`,
+        url: `/delivery/bot/comment/${id}`,
         method: "POST",
         body: data,
       }),
@@ -30,7 +31,7 @@ export const companyApiSlice = apiSlice.injectEndpoints({
     }),
     favoriteApi: builder.mutation({
       query: (id) => ({
-        url: `/favorite/favorite/${id}`,
+        url: `/delivery/bot/favorite/favorite/${id}`,
         method: "POST",
         body: {
           type: "company",
@@ -39,14 +40,14 @@ export const companyApiSlice = apiSlice.injectEndpoints({
     }),
     getCommentsbyCompany: builder.query({
       query: ({ id, limit }) => ({
-        url: `comment/get-by-company/${id}`,
+        url: `/delivery/bot/comment/get-by-company/${id}`,
         params: {
           limit,
         },
       }),
       providesTags: ["Comment"],
     }),
-    uploadImage: builder.mutation<string, FormData>({
+    uploadImage: builder.mutation<SuccessUploadImg, FormData>({
       query: (formData) => ({
         url: "/image/upload",
         method: "POST",

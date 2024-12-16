@@ -73,6 +73,13 @@ export interface SendingComment {
   };
 }
 
+
+export interface SuccessUploadImg {
+  status: string
+  image: string
+  thumbnail: string
+}
+
 export interface SuccessComment {
   status: string;
   message: string;

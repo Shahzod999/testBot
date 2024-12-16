@@ -102,6 +102,10 @@
     }
   }
 
+  &__FullImage{
+    background-color: var(--tg-theme-secondary-bg-color, #000000);
+  }
+
   &__images {
     display: flex;
     align-items: center;
@@ -112,6 +116,8 @@
     &__img {
       height: 70px;
       width: 70px;
+      border-radius: 10px;
+      overflow: hidden;
 
       img {
         width: 100%;

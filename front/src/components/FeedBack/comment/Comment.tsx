@@ -3,14 +3,14 @@ import { useState, useEffect, useRef } from "react";
 import { SingleComment } from "../../../app/types/commentType";
 import RaitingStars from "../../raiting/RaitingStars";
 import useTimeAgo from "../../../hooks/useTimeAgo";
-// import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import ReplyComment from "./ReplyComment";
-// import { Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 
 const Comment = ({ comment }: { comment: SingleComment }) => {
   const [open, setOpen] = useState(false);
-  // const [imgOpen, setImgOpen] = useState(false);
+  const [imgOpen, setImgOpen] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const timeAgo = useTimeAgo(comment?.created_at);
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -26,6 +26,10 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   const toggleOpen = () => {
     setOpen(!open);
   };
+
+  const toggleImgOpen = () =>{
+    setImgOpen(!imgOpen)
+  }
 
   console.log(comment);
 
@@ -66,7 +70,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
         </span>
       </div>
 
-      {/* {imgOpen ? (
+      {imgOpen ? (
         <div className="fullScreenImg" onClick={toggleImgOpen}>
           <Swiper
             modules={[Pagination]}
@@ -77,8 +81,9 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
             {comment.images?.map((item, i) => (
               <SwiperSlide key={i}>
                 <img
-                  src={`https://dev.admin13.uz${item}`}
+                  src={item}
                   alt="LargePhoto photo"
+                  className="comment__FullImage"
                 />
               </SwiperSlide>
             ))}
@@ -91,11 +96,11 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
               className="comment__images__img"
               key={i}
               onClick={toggleImgOpen}>
-              <img src={`https://dev.admin13.uz${item}`} alt="" />
+              <img src={item} alt="" />
             </div>
           ))}
         </div>
-      )} */}
+      )}
 
       <div
         className={`comment__box ${

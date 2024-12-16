@@ -54,18 +54,25 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
           formData.append("file", file);
           formData.append("page", "truegis");
           const response = await uploadImage(formData).unwrap();
-          return `${import.meta.env.VITE_IMAGE_URL}${response}`;
+
+          return {
+            url: `https://dev.admin13.uz${response.image}`,
+            thumbnail: `https://dev.admin13.uz${response.thumbnail}`,
+          };
         }),
       );
 
-      // Формируем данные для отправки комментария
+      if (!uploadedUrls.length) {
+        return dispatch(infoToast("Добавьте хотя бы одно изображение"));
+      }
+
       const sendComment = {
         message: textArea,
-        images: uploadedUrls,
+        images: uploadedUrls.map((item) => item.url),
+        thumbnails: uploadedUrls.map((item) => item.thumbnail),
         rating: count,
       };
 
-      // Отправляем комментарий
       await sendCommentByCompany({
         id: companyInfo?._id || "",
         data: sendComment,
@@ -73,7 +80,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
 
       dispatch(succesToast("Комментарий добавлен"));
       setTextArea("");
-      setimagesArray([]); // Сбрасываем изображения
+      setimagesArray([]);
     } catch (error) {
       const er = error as ErrorComment;
       dispatch(errorToast(er.data?.message || "Ошибка при отправке"));
