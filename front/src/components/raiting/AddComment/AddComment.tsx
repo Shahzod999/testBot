@@ -56,8 +56,8 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
           const response = await uploadImage(formData).unwrap();
 
           return {
-            url: `https://dev.admin13.uz${response.image}`,
-            thumbnail: `https://dev.admin13.uz${response.thumbnail}`,
+            url: response.image,
+            thumbnail: response.thumbnail,
           };
         }),
       );

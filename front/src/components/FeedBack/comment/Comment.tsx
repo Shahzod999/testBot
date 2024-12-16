@@ -31,8 +31,6 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setImgOpen(!imgOpen)
   }
 
-  console.log(comment);
-
   return (
     <div className="comment">
       <div className="comment__title">
@@ -96,7 +94,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
               className="comment__images__img"
               key={i}
               onClick={toggleImgOpen}>
-              <img src={item} alt="" />
+              <img src={`https://dev.admin13.uz${item}`} alt="" />
             </div>
           ))}
         </div>

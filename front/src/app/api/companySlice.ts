@@ -14,8 +14,9 @@ export const companyApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getCompanyById: builder.query({
-      query: (id) => ({
+      query: ({ id, lat, long }) => ({
         url: `/delivery/bot/company/${id}`,
+        params: { lat, long },
       }),
     }),
     sendCommentByCompany: builder.mutation<

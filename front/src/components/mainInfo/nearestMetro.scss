@@ -1,0 +1,51 @@
+.nearestMetro {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 0;
+    position: relative;
+
+    &:last-child {
+        padding-bottom: 0;
+
+        &::after {
+            display: none;
+        }
+    }
+
+    &__hint {
+        display: block;
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 133%;
+        color: var(--hint-color);
+    }
+
+    &__text {
+        display: flex;
+        align-items: center;
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 129%;
+        letter-spacing: -0.02em;
+        color: var(--text-color);
+
+        path {
+            fill: var(--tg-theme-text-color, #000);
+        }
+
+    }
+
+    &::after {
+        content: "";
+        width: 93%;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        height: 0.5px;
+        border-radius: 10px;
+        background-color: #c8c7cc;
+    }
+}

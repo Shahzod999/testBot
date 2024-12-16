@@ -13,6 +13,7 @@ import { selectedUserLocation } from "../../app/features/userLocationSlice";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "./WorkTime";
 import EditAction from "../contacts/EditAction";
+import NearestMetroHolder from "./NearestMetroHolder";
 interface ActionsState {
   text: string;
   img: string;
@@ -96,6 +97,8 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
 
+  console.log(companyInfo, "111");
+
   return (
     <>
       <div className="mainInfo">
@@ -169,6 +172,9 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             </button>
           ))}
         </div>
+
+        <NearestMetroHolder metro={companyInfo.company_nearest_metro} from="Ближайшее метро к заведению"/>
+        <NearestMetroHolder metro={companyInfo.nearest_metro} from="Ближайшее метро вам"/>
       </div>
 
       <div className="mainInfoTaxi">

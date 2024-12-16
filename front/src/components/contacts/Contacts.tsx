@@ -11,6 +11,8 @@ import { ReactSVG } from "react-svg";
 import Lottie from "lottie-react";
 import notFound from "../../../public/notFound.json";
 import AdressLinks from "../adressLinks/AdressLinks";
+import WorkTime from "../mainInfo/WorkTime";
+import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -23,7 +25,7 @@ const getAvailableSocialMedia = (
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [error, setError] = useState("");
-  const [imagesArrayNew, setimagesArrayNew] = useState<string[]>([]);
+  const [imagesArrayNew, setimagesArrayNew] = useState<File[]>([]);
   const [logoImg, setLogoImg] = useState(companyInfo?.logoThumbnail);
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
@@ -65,7 +67,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         phone: companyInfo?.website ? companyInfo.website : null,
       },
       {
-        text: "Открыто до 22:00",
+        timeComponent: <WorkTime working_hours={companyInfo.working_hours} />,
         icon: "Exclude.svg",
         isDisabled: false,
         key: "workingHours",
@@ -131,19 +133,22 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </button>
         </div>
         <div className="contacts__actions">
-          {actions.map(({ text, icon, isDisabled, key, phone }, index) => (
-            <div
-              onClick={() => !isDisabled && handleActionClick(key || null)}
-              key={index}>
-              <ContactsActions
-                text={text}
-                icon={icon}
-                isDisabled={isDisabled}
-                arrowRight={true}
-                phone={phone}
-              />
-            </div>
-          ))}
+          {actions.map(
+            ({ text, icon, isDisabled, key, phone, timeComponent }, index) => (
+              <div
+                onClick={() => !isDisabled && handleActionClick(key || null)}
+                key={index}>
+                <ContactsActions
+                  text={text}
+                  icon={icon}
+                  isDisabled={isDisabled}
+                  arrowRight={true}
+                  phone={phone}
+                  timeComponent={timeComponent}
+                />
+              </div>
+            ),
+          )}
         </div>
       </div>
       <BottomSheet isOpen={activeAction === "apps"} onClose={closeBottomSheet}>
@@ -196,11 +201,10 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
             <div key={day}>
               <ContactsActions
-                text={hours}
+                text={convertTo24HourFormat(hours)}
                 mainText={day}
                 style={"editWorkHour"}
                 isDisabled={hours == "Closed"}
-                time={true}
               />
             </div>
           ))}
@@ -359,7 +363,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
             isDisabled={!companyInfo?.website}
             arrowRight={true}
           />
-
           <EditAction
             smallInfo="Мобильное приложение "
             text="https://apps.apple.com/app/"
@@ -369,7 +372,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
             }
             arrowRight={true}
           />
-          {/*  */}
           <h3 className="contacts__actions__title second__title">
             Кем вы являетесь?
           </h3>
@@ -510,11 +512,10 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
             <div key={day}>
               <ContactsActions
-                text={hours}
+                text={convertTo24HourFormat(hours)}
                 mainText={day}
                 style={"editWorkHour"}
                 isDisabled={hours == "Closed"}
-                time={true}
                 arrowRight={true}
               />
             </div>

@@ -37,12 +37,13 @@ const tg = window.Telegram.WebApp;
 const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
   const dispatch = useAppDispatch();
-  const { data, isLoading, isError } = useGetCompanyByIdQuery(
-    tg?.initDataUnsafe?.start_param ? tg.initDataUnsafe.start_param : companyId,
-  );
+  const { data, isLoading, isError } = useGetCompanyByIdQuery({
+    id: tg?.initDataUnsafe?.start_param || companyId,
+    lat: "41.3132667",
+    long: "69.2914963",
+  });
 
   dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
-  
 
   useEffect(() => {
     dispatch(setCompany(data?.data));
@@ -53,13 +54,17 @@ const MainPage = () => {
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
-    
 
     tg.LocationManager.init(() => {
       console.log("LocationManager initialized.");
       tg.LocationManager.getLocation((location: any) => {
         if (location) {
-          dispatch(setuserLocation({ lat: location.latitude, lon: location.longitude }))
+          dispatch(
+            setuserLocation({
+              lat: location.latitude,
+              lon: location.longitude,
+            }),
+          );
           console.log("Latitude:", location.latitude);
           console.log("Longitude:", location.longitude);
         } else {
@@ -67,7 +72,6 @@ const MainPage = () => {
         }
       });
     });
-
 
     dispatch(
       setCompanyId(
@@ -95,7 +99,7 @@ const MainPage = () => {
       <Raiting companyInfo={data?.data} />
       <FeedBack />
       <Contacts companyInfo={data?.data} />
-      <CompanyLink/>
+      <CompanyLink />
     </div>
   );
 };
