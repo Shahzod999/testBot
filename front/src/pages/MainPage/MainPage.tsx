@@ -15,10 +15,7 @@ import {
   setUserTelegramId,
 } from "../../app/features/getCompanyIdSlice";
 import { TelegramTypes } from "../../app/types/telegramTypes";
-import {
-  selectedUserLocation,
-  setuserLocation,
-} from "../../app/features/userLocationSlice";
+import { setuserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
 
 interface TelegramTotalTypes extends TelegramTypes {
@@ -40,7 +37,6 @@ const tg = window.Telegram.WebApp;
 const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
   const dispatch = useAppDispatch();
-  const userLocation = useAppSelector(selectedUserLocation);
   const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
   dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));

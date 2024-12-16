@@ -173,8 +173,18 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           ))}
         </div>
 
-        <NearestMetroHolder metro={companyInfo.company_nearest_metro} from="Ближайшее метро к заведению"/>
-        <NearestMetroHolder metro={companyInfo.nearest_metro} from="Ближайшее метро вам"/>
+        {companyInfo?.nearest_metro && (
+          <>
+            <NearestMetroHolder
+              metro={companyInfo?.nearest_metro}
+              from="Ближайшее метро вам"
+            />
+            <NearestMetroHolder
+              metro={companyInfo?.company_nearest_metro}
+              from="Ближайшее метро к заведению"
+            />
+          </>
+        )}
       </div>
 
       <div className="mainInfoTaxi">
