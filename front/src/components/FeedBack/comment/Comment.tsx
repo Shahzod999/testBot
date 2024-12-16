@@ -27,15 +27,22 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setOpen(!open);
   };
 
-  const toggleImgOpen = () =>{
-    if (!imgOpen) {
+
+  useEffect(() => {
+    if (imgOpen) {
       window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(()=>setImgOpen(false));
+      window.Telegram.WebApp.BackButton.onClick(() => {
+        setImgOpen(false); 
+      });
     } else {
       window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(() => {});
     }
+    return () => {
+      window.Telegram.WebApp.BackButton.offClick(() => {});
+    };
+  }, [imgOpen]);
 
+  const toggleImgOpen = () =>{
     setImgOpen(!imgOpen)
   }
 
