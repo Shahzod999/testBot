@@ -1,7 +1,7 @@
 import MainInfo from "../../components/mainInfo/MainInfo";
 import Header from "../../components/header/Header";
 import "./mainPage.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Raiting from "../../components/raiting/Raiting";
 import Contacts from "../../components/contacts/Contacts";
 import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
@@ -41,6 +41,7 @@ const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
   const dispatch = useAppDispatch();
   const userLocation = useAppSelector(selectedUserLocation);
+  const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
   dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
 
@@ -62,6 +63,10 @@ const MainPage = () => {
           );
           console.log("Latitude:", location.latitude);
           console.log("Longitude:", location.longitude);
+          setLoc({
+            lat: location.latitude,
+            lon: location.longitude,
+          });
         } else {
           console.log("Location access was not granted or is unavailable.");
         }
@@ -87,8 +92,8 @@ const MainPage = () => {
 
   const { data, isLoading, isError } = useGetCompanyByIdQuery({
     id: tg?.initDataUnsafe?.start_param || companyId,
-    lat: userLocation.lat,
-    long: userLocation.lon,
+    lat: loc.lat,
+    long: loc.lon,
   });
 
   useEffect(() => {
