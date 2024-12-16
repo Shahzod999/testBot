@@ -9,7 +9,8 @@
     color: var(--hint-color);
     padding: 15px 0;
 
-    a {
+    span {
+      cursor: pointer;
       color: var(--link-color);
     }
   }

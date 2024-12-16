@@ -28,9 +28,19 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   };
 
   const toggleImgOpen = () =>{
+    if (imgOpen) {
+      window.Telegram.WebApp.BackButton.show();
+      window.Telegram.WebApp.BackButton.onClick(()=>setImgOpen(false));
+    } else {
+      window.Telegram.WebApp.BackButton.hide();
+      window.Telegram.WebApp.BackButton.offClick(() => {});
+    }
+
     setImgOpen(!imgOpen)
   }
 
+  console.log(comment,'ttuut');
+  
   return (
     <div className="comment">
       <div className="comment__title">
@@ -76,10 +86,10 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
             pagination={{
               clickable: true,
             }}>
-            {comment.images?.map((item, i) => (
+            {comment?.images?.map((item, i) => (
               <SwiperSlide key={i}>
                 <img
-                  src={item}
+                  src={`https://dev.admin13.uz${item}`}
                   alt="LargePhoto photo"
                   className="comment__FullImage"
                 />
@@ -89,7 +99,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
         </div>
       ) : (
         <div className="comment__images">
-          {comment.images.map((item, i) => (
+          {comment?.images?.map((item, i) => (
             <div
               className="comment__images__img"
               key={i}

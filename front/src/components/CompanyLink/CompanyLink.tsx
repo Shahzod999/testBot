@@ -1,9 +1,14 @@
 import "./companyLink.scss";
 
 const CompanyLink = () => {
+
+  const handleOrder = () => {
+    window.open("https://cosinus.uz/");
+  };
+
   return (
     <p className="companyLink">
-      Powered by <a href="">Cosinus LLC</a> v0.0.1
+      Powered by <span onClick={handleOrder}>Cosinus LLC</span> v0.0.1
     </p>
   );
 };
