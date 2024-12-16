@@ -28,7 +28,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   };
 
   const toggleImgOpen = () =>{
-    if (imgOpen) {
+    if (!imgOpen) {
       window.Telegram.WebApp.BackButton.show();
       window.Telegram.WebApp.BackButton.onClick(()=>setImgOpen(false));
     } else {

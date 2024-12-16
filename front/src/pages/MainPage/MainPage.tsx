@@ -39,7 +39,7 @@ const MainPage = () => {
   const dispatch = useAppDispatch();
   const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
-  dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || ""));
+  dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || import.meta.env.VITE_TELEGRAMID));
 
   useEffect(() => {
     const requiredVersion = "7.0";
