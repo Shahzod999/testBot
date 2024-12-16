@@ -15,7 +15,10 @@ import {
   setUserTelegramId,
 } from "../../app/features/getCompanyIdSlice";
 import { TelegramTypes } from "../../app/types/telegramTypes";
-import { selectedUserLocation, setuserLocation } from "../../app/features/userLocationSlice";
+import {
+  selectedUserLocation,
+  setuserLocation,
+} from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
 
 interface TelegramTotalTypes extends TelegramTypes {
@@ -37,18 +40,9 @@ const tg = window.Telegram.WebApp;
 const MainPage = () => {
   const companyId = useAppSelector(selectedCompanyId);
   const dispatch = useAppDispatch();
-  const userLocation = useAppSelector(selectedUserLocation)
-  const { data, isLoading, isError } = useGetCompanyByIdQuery({
-    id: tg?.initDataUnsafe?.start_param || companyId,
-    lat: userLocation.lat,
-    long: userLocation.lon,
-  });
+  const userLocation = useAppSelector(selectedUserLocation);
 
   dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || "44197361"));
-
-  useEffect(() => {
-    dispatch(setCompany(data?.data));
-  }, [data, dispatch]);
 
   useEffect(() => {
     const requiredVersion = "7.0";
@@ -90,6 +84,16 @@ const MainPage = () => {
       );
     }
   }, []);
+
+  const { data, isLoading, isError } = useGetCompanyByIdQuery({
+    id: tg?.initDataUnsafe?.start_param || companyId,
+    lat: userLocation.lat,
+    long: userLocation.lon,
+  });
+
+  useEffect(() => {
+    dispatch(setCompany(data?.data));
+  }, [data, dispatch]);
 
   if (isLoading) return <Skeleton />;
   if (isError) return <Skeleton />;
