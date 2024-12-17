@@ -113,7 +113,7 @@
       }
 
       &__text {
-        width: 100%;
+        flex: 1;
         padding: 20px 0;
         display: flex;
         justify-content: space-between;
@@ -124,6 +124,14 @@
         letter-spacing: -0.02em;
         color: var(--text-color);
         text-align: left;
+
+
+        &__letters{
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 300px;
+        }
 
         .mainInfo__openHours__left {
           width: 100%;

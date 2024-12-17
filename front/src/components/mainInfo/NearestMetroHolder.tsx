@@ -8,6 +8,7 @@ interface nearestMetroProps {
 }
 
 const NearestMetroHolder = ({ metro, from }: nearestMetroProps) => {
+  console.log(metro, "sss");
 
   return (
     <div className="nearestMetro">
@@ -16,9 +17,11 @@ const NearestMetroHolder = ({ metro, from }: nearestMetroProps) => {
         <span className="nearestMetro__hint">{from}</span>
 
         <div className="nearestMetro__text">
-          <span>{metro?.name} • </span>
+          <span>{metro?.name} - </span>
           <ReactSVG src="./walkPerson.svg" />
           <span>{metro?.distance?.walking_duration}</span>
+          <span>•</span>
+          <span>{metro?.distance?.distance}</span>
         </div>
       </div>
     </div>

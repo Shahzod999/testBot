@@ -8,7 +8,7 @@ interface ContactProps extends ActionProps {
   style?: string;
   arrowRight?: boolean;
   phone?: string | null;
-  timeComponent?: ReactNode; 
+  timeComponent?: ReactNode;
 }
 
 export const ContactsActions = ({
@@ -45,7 +45,7 @@ export const ContactsActions = ({
       {timeComponent ? (
         <span
           className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
-          {timeComponent}
+          <span className="actions__text__letters">{timeComponent}</span>
           {arrowRight && (
             <ReactSVG src="./arrowRight.svg" className="svgController" />
           )}
@@ -53,7 +53,7 @@ export const ContactsActions = ({
       ) : (
         <span
           className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
-          {text}
+          <span className="actions__text__letters">{text}</span>
           {arrowRight && (
             <ReactSVG src="./arrowRight.svg" className="svgController" />
           )}
