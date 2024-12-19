@@ -5,7 +5,7 @@ import AddFoto from "../raiting/AddComment/AddFoto";
 import { ReactSVG } from "react-svg";
 import { CompanyState, MobileApps } from "../../app/types/companyType";
 import "./editActions.scss";
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
 import CommonButton from "../Actions/CommonButton";
 import {
@@ -13,6 +13,7 @@ import {
   useUploadImageMutation,
 } from "../../app/api/companySlice";
 import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
+import { errorToast, succesToast } from "../../app/features/toastSlice";
 
 interface EditCompanyProps {
   activeAction: string | null;
@@ -27,6 +28,7 @@ const EditCompany = ({
   closeBottomSheet,
   handleActionClick,
 }: EditCompanyProps) => {
+  const dispatch = useAppDispatch();
   const companyId = useAppSelector(selectedCompanyId);
   const [newCompanyInfo, setNewCompanyInfo] = useState(companyInfo);
   const [error, setError] = useState("");
@@ -92,7 +94,6 @@ const EditCompany = ({
             const response = await uploadImage(formData).unwrap();
 
             console.log("array fotos", response);
-            
 
             return {
               photo_id: response.image,
@@ -117,9 +118,11 @@ const EditCompany = ({
       }).unwrap();
 
       console.log(res);
+      dispatch(succesToast("Успешно"));
     } catch (error) {
       console.log(error);
       setError("Ошибка");
+      dispatch(errorToast("Ошибка"));
     }
     console.log(newCompanyInfo);
   };
