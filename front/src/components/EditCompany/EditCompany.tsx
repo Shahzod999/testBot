@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import BottomSheet from "../Actions/BottomSheet";
 import EditAction from "../contacts/EditAction";
 import AddFoto from "../raiting/AddComment/AddFoto";
