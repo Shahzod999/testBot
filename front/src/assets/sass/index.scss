@@ -39,7 +39,7 @@
   --link-color: var(--tg-theme-link-color, #007aff);
   --button-color: #007aff;
   --button-text-color: #fff;
-  --secondary-bg-color: #efeff4;
+  --secondary-bg-color: var(--tg-theme-secondary-bg-color, #fff);
   --destructive-color: var(--tg-theme-destructive-text-color, #ff3b30);
   --warning-color: #ff9500;
   --success-color: #34c759;
@@ -273,6 +273,7 @@ button:disabled {
     content: "";
   }
 }
-.nowrap{
+
+.nowrap {
   white-space: nowrap;
 }

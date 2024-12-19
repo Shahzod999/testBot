@@ -61,6 +61,9 @@ export interface CompanyState {
   distance: Distance;
   nearest_metro: NearestMetro;
   company_nearest_metro: CompanyNearestMetro;
+  requester_name: string;
+  requester_phone_number: string;
+  requester_position: string;
 }
 
 export interface WorkingHours {
@@ -83,6 +86,7 @@ export interface PhotosSample {
   type: string;
   photo_datetime_utc: string;
   photo_timestamp: number;
+  file: any;
 }
 
 export interface ReviewsPerRating {
@@ -108,12 +112,6 @@ export interface ServiceOptions {
   "In-store pickup": boolean;
   "Same-day delivery": boolean;
 }
-
-
-
-
-
-
 
 export interface Amenities {
   "Wi-Fi": boolean;
@@ -168,12 +166,6 @@ export interface Distance3 {
   duration: string;
   walking_duration: string;
 }
-
-
-
-
-
-
 
 ///
 
@@ -231,12 +223,3 @@ export interface LastLocation {
 }
 
 ///
-
-
-
-
-
-
-
-
-

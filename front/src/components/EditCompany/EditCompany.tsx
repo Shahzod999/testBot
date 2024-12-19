@@ -1,9 +1,12 @@
-import { useState } from "react";
-import BottomSheet from "../Actions/BottomSheet";
+import { useCallback, useEffect, useState } from "react";
 import EditAction from "../contacts/EditAction";
 import AddFoto from "../raiting/AddComment/AddFoto";
 import { ReactSVG } from "react-svg";
-import { CompanyState, MobileApps } from "../../app/types/companyType";
+import {
+  CompanyState,
+  MobileApps,
+  PhotosSample,
+} from "../../app/types/companyType";
 import "./editActions.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
@@ -13,35 +16,54 @@ import {
   useUploadImageMutation,
 } from "../../app/api/companySlice";
 import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
-import { errorToast, succesToast } from "../../app/features/toastSlice";
+import {
+  errorToast,
+  infoToast,
+  succesToast,
+} from "../../app/features/toastSlice";
 
 interface EditCompanyProps {
-  activeAction: string | null;
   companyInfo: CompanyState;
-  closeBottomSheet: () => void;
   handleActionClick: (key: string) => void;
 }
 
-const EditCompany = ({
-  activeAction,
-  companyInfo,
-  closeBottomSheet,
-  handleActionClick,
-}: EditCompanyProps) => {
+const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
   const dispatch = useAppDispatch();
   const companyId = useAppSelector(selectedCompanyId);
-  const [newCompanyInfo, setNewCompanyInfo] = useState(companyInfo);
-  const [error, setError] = useState("");
-  const [imagesArrayNew, setimagesArrayNew] = useState<File[]>([]);
   const isDarkmode = useAppSelector(selectedIsDarkMode);
-  const [updateRequest, { isLoading }] = useUpdateRequestMutation();
-  const [uploadImage] = useUploadImageMutation();
 
+  const [newCompanyInfo, setNewCompanyInfo] = useState(companyInfo);
+  const [imagesArrayNew, setimagesArrayNew] = useState<PhotosSample[]>([]);
   const [logoImg, setLogoImg] = useState<string | File>(
     companyInfo.logoThumbnail || isDarkmode
       ? companyInfo.logo_icon_dark
       : companyInfo.logo_icon_light,
   );
+  const [error, setError] = useState("");
+
+  const [updateRequest, { isLoading: updateLoading }] =
+    useUpdateRequestMutation();
+  const [uploadImage, { isLoading: uploadLoading }] = useUploadImageMutation();
+
+  console.log(imagesArrayNew);
+
+  useEffect(() => {
+    // Устанавливаем логотип
+    setLogoImg(
+      companyInfo.logoThumbnail ||
+        (isDarkmode ? companyInfo.logo_icon_dark : companyInfo.logo_icon_light),
+    );
+
+    // Устанавливаем массив изображений
+    if (companyInfo.photos_sample && companyInfo.photos_sample.length > 0) {
+      const initialImages = companyInfo.photos_sample.map((photo) => ({
+        photo_id: photo.photo_id,
+        photo_url: photo.photo_url,
+        photo_url_large: photo.photo_url_large,
+      }));
+      setimagesArrayNew(initialImages as any);
+    }
+  }, [companyInfo, isDarkmode]);
 
   const deepCopy = (obj: any): any => {
     if (typeof obj !== "object" || obj === null) return obj;
@@ -53,7 +75,7 @@ const EditCompany = ({
     return newObj;
   };
 
-  const handleEditTotalCompany = (key: string, value: string) => {
+  const handleEditTotalCompany = useCallback((key: string, value: string) => {
     const keys = key.split(".");
     setNewCompanyInfo((prevCompanyInfo) => {
       let updatedInfo = deepCopy(prevCompanyInfo);
@@ -68,47 +90,55 @@ const EditCompany = ({
 
       return updatedInfo;
     });
+  }, []);
+
+  const handleImageUpload = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("page", "truegis");
+    const response = await uploadImage(formData).unwrap();
+    return response.thumbnail;
   };
+
+  console.log(imagesArrayNew, "22");
 
   const handleSubmit = async () => {
     try {
       let logoThumbnail = newCompanyInfo.logoThumbnail;
-      let uploadedUrls;
 
       if (logoImg instanceof File) {
-        const formData = new FormData();
-        formData.append("file", logoImg);
-        formData.append("page", "truegis");
-
-        const response = await uploadImage(formData).unwrap();
-
-        logoThumbnail = response.thumbnail;
+        logoThumbnail = await handleImageUpload(logoImg);
       }
 
-      if (imagesArrayNew && imagesArrayNew.length > 0) {
-        uploadedUrls = await Promise.all(
-          imagesArrayNew.map(async (file) => {
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("page", "truegis");
-            const response = await uploadImage(formData).unwrap();
-
-            console.log("array fotos", response);
-
+      const uploadedPhotos = await Promise.all(
+        imagesArrayNew.map(async (image) => {
+          if (image.file) {
+            const uploadedUrl = await handleImageUpload(image.file);
             return {
-              photo_id: response.image,
-              photo_url: response.image,
-              photo_url_large: response.image,
+              photo_id: uploadedUrl, // Используем URL как временный ID
+              photo_url: uploadedUrl,
+              photo_url_large: uploadedUrl,
             };
-          }),
-        );
-      }
+          }
+          return image; // Уже существующие изображения
+        }),
+      );
 
       const requestData = {
         ...newCompanyInfo,
         logoThumbnail,
-        photos_sample: uploadedUrls || [],
+        photos_sample: uploadedPhotos,
       };
+
+      if (!newCompanyInfo.requester_name) {
+        return dispatch(infoToast("Заполните поля"));
+      }
+      if (!newCompanyInfo.requester_phone_number) {
+        return dispatch(infoToast("Заполните поля"));
+      }
+      if (!newCompanyInfo.requester_position) {
+        return dispatch(infoToast("Заполните поля"));
+      }
 
       console.log("Request payload:", requestData);
 
@@ -118,11 +148,11 @@ const EditCompany = ({
       }).unwrap();
 
       console.log(res);
-      dispatch(succesToast("Успешно"));
+      dispatch(succesToast("Успешно обновлено!"));
     } catch (error) {
       console.log(error);
-      setError("Ошибка");
-      dispatch(errorToast("Ошибка"));
+      setError("Ошибка при обновлении данных");
+      dispatch(errorToast("Ошибка при отправке данныхка"));
     }
     console.log(newCompanyInfo);
   };
@@ -130,7 +160,7 @@ const EditCompany = ({
   //t.me изменить
 
   return (
-    <BottomSheet isOpen={activeAction === "edit"} onClose={closeBottomSheet}>
+    <div className="edit">
       <div className="contacts__actions editActions">
         <div className="contacts__actions__closeButtons">
           <span className="contacts__actions__closeButtons__title">
@@ -300,7 +330,10 @@ const EditCompany = ({
           id="addContacts"
         />
 
-        <h3 className="contacts__actions__title second__title">Ваше имя</h3>
+        <h3 className="contacts__actions__title second__title">
+          Ваше имя
+          <span>*</span>
+        </h3>
         <input
           type="text"
           placeholder="Как ваше имя"
@@ -312,6 +345,7 @@ const EditCompany = ({
         />
         <h3 className="contacts__actions__title second__title">
           Номер телефона
+          <span>*</span>
         </h3>
 
         <input
@@ -325,6 +359,7 @@ const EditCompany = ({
         />
         <h3 className="contacts__actions__title second__title">
           Кем вы являетесь?
+          <span>*</span>
         </h3>
         <input
           type="text"
@@ -343,17 +378,18 @@ const EditCompany = ({
           <textarea rows={5} placeholder="Что ещё нужно изменить?"></textarea>
         </div> */}
 
-        <div className="contacts__actions__lastElement"></div>
         {error && <div className="errorText">{error}</div>}
       </div>
 
       <div className="sendButton">
         <p>"Проверка информаций займёт 3 рабочих дня"</p>
-        <CommonButton createdFunction={handleSubmit} disabled={isLoading}>
+        <CommonButton
+          createdFunction={handleSubmit}
+          disabled={updateLoading || uploadLoading}>
           <span>Отправить</span>
         </CommonButton>
       </div>
-    </BottomSheet>
+    </div>
   );
 };
 

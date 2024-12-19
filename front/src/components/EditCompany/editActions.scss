@@ -1,3 +1,26 @@
+.edit {
+    background: var(--secondary-bg-color);
+    padding: 16px;
+    border-radius: 20px;
+
+    .contacts__actions {
+        max-height: unset;
+        overflow: auto;
+    }
+
+    .sendButton {
+        position: relative;
+        margin-top: 50px;
+    }
+
+    .second__title {
+        span {
+            color: red;
+            font-size: 15px;
+        }
+    }
+}
+
 .editActions {
     .actions__info {
         padding-bottom: 0 !important;
@@ -6,6 +29,8 @@
         input {
             border: none;
             padding: 10px 0;
+            background: transparent;
+            color: var(--text-color);
         }
     }
 

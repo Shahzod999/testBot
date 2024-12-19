@@ -10,7 +10,7 @@ import notFound from "../../../public/notFound.json";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "../mainInfo/WorkTime";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
-import EditCompany from "../EditCompany/EditCompany";
+import { Link } from "react-router-dom";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -96,18 +96,15 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   }, []);
 
   if (!companyInfo) return null;
-
   return (
     <>
       <div className="contacts">
         <div className="contacts__header">
           <h2>Контакты</h2>
-          <button
-            className="pressEffefct"
-            onClick={() => handleActionClick("edit")}>
+          <Link to="edit" className="pressEffefct contacts__header__button">
             <ReactSVG src="./edit.svg" />
             Редактировать
-          </button>
+          </Link>
         </div>
         <div className="contacts__actions">
           {actions.map(
@@ -234,12 +231,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         </div>
       </BottomSheet>
 
-      <EditCompany
-        activeAction={activeAction}
-        companyInfo={companyInfo}
-        closeBottomSheet={closeBottomSheet}
-        handleActionClick={handleActionClick}
-      />
       {/* <BottomSheet
         isOpen={activeAction === "category"}
         onClose={closeBottomSheet}>
@@ -300,47 +291,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </CommonButton>
         </div>
       </BottomSheet> */}
-      <BottomSheet
-        isOpen={activeAction === "workHours"}
-        onClose={closeBottomSheet}>
-        <div className="contacts__actions">
-          <div className="contacts__actions__closeButtons">
-            <span className="contacts__actions__closeButtons__title">
-              Рабочие часы
-            </span>
-          </div>
-          <label className="actions pressEffefct" htmlFor="chooseTime">
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="chooseTime" />
-            </span>
-            <span className="actions__text closedButtontext">
-              Выбранные часы
-            </span>
-          </label>
-          <label className="actions pressEffefct" id="24Hours">
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="24Hours" />
-            </span>
-            <span className="actions__text closedButtontext">24 часа</span>
-          </label>
 
-          {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
-            <div key={day}>
-              <ContactsActions
-                text={convertTo24HourFormat(hours)}
-                mainText={day}
-                style={"editWorkHour"}
-                isDisabled={hours == "Closed"}
-                arrowRight={true}
-              />
-            </div>
-          ))}
-
-          <CommonButton createdFunction={() => handleActionClick("edit")}>
-            <span>Сохранить</span>
-          </CommonButton>
-        </div>
-      </BottomSheet>
       <BottomSheet
         isOpen={activeAction === "person"}
         onClose={closeBottomSheet}>

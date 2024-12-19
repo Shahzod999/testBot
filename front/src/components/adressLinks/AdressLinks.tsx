@@ -3,7 +3,17 @@ import { CompanyState } from "../../app/types/companyType";
 import "./adressLinks.scss";
 
 const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
-  console.log(companyInfo.longitude);
+  const handleCopyAdress = (copy: string) => {
+    const textToCopy = copy; // Это может быть любая строка или значение
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        console.log("Текст скопирован в буфер обмена");
+      })
+      .catch((error) => {
+        console.error("Не удалось скопировать текст: ", error);
+      });
+  };
 
   return (
     <div className="socialMedia">
@@ -41,9 +51,24 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
         </a>
       </div>
 
-      <div className="socialMedia__adress">
+      <div
+        className="socialMedia__adress"
+        onClick={() => handleCopyAdress(`${companyInfo.full_address}`)}>
         <ReactSVG src="./locationNavig.svg" />
         <p className="socialMedia__adress__text">{companyInfo.full_address}</p>
+      </div>
+
+      <div
+        className="coordinates"
+        onClick={() =>
+          handleCopyAdress(`${companyInfo.latitude},${companyInfo.longitude}`)
+        }>
+        <span>Координаты:</span>
+        <strong>{companyInfo.latitude},</strong>
+        <strong>{companyInfo.longitude}</strong>
+        <span>
+          <ReactSVG src="./copy.svg" />
+        </span>
       </div>
     </div>
   );

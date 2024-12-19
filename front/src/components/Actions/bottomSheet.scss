@@ -20,7 +20,7 @@
   min-height: 150px;
   transform: translateY(100%);
   transition: all 0.3s ease-in-out;
-  background-color: var(--tg-theme-secondary-bg-color, #fff);
+  background-color: var(--secondary-bg-color);
   color: var(--text-color);
   z-index: 100;
 
@@ -128,9 +128,10 @@
   &__adress {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
     gap: 10px;
     margin: 20px 0;
+    cursor: pointer;
 
     svg {
       stroke: var(--tg-theme-text-color, #000);

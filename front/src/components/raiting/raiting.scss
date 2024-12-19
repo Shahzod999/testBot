@@ -1,6 +1,6 @@
 .raiting {
   border-radius: 20px;
-  background-color: var(--tg-theme-secondary-bg-color, #fff);
+  background-color: var(--secondary-bg-color);
   color: var(--text-color);
   margin-bottom: 2px;
   padding: 17px 16px;
@@ -101,7 +101,7 @@
 .addComment {
   max-height: 80vh;
   // background-color: #fff;
-  background-color: var(--tg-theme-secondary-bg-color, #fff);
+  background-color: var(--secondary-bg-color);
   color: var(--text-color);
   border-radius: 20px 20px 0 0;
   // padding: 0 16px 200px 16px;

@@ -1,0 +1,29 @@
+.coordinates {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 133%;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+
+
+    span {
+        color: var(--hint-color);
+    }
+
+    strong {
+        color: var(--text-color);
+    }
+
+
+    svg {
+        fill: var(--tg-theme-text-color, #3c3c43);
+
+        path {
+            fill: var(--tg-theme-text-color, #3c3c43);
+        }
+    }
+}

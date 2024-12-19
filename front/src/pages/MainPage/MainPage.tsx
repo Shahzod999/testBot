@@ -1,14 +1,9 @@
-import MainInfo from "../../components/mainInfo/MainInfo";
-import Header from "../../components/header/Header";
 import "./mainPage.scss";
 import { useEffect, useState } from "react";
-import Raiting from "../../components/raiting/Raiting";
-import Contacts from "../../components/contacts/Contacts";
 import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { setCompany, setDarkMode } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
-import FeedBack from "../../components/FeedBack/FeedBack";
 import {
   selectedCompanyId,
   setCompanyId,
@@ -17,6 +12,8 @@ import {
 import { TelegramTypes } from "../../app/types/telegramTypes";
 import { setuserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
+import Toast from "../../components/Toast/Toast";
+import { Outlet } from "react-router-dom";
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -105,14 +102,13 @@ const MainPage = () => {
   if (isLoading) return <Skeleton />;
   if (isError) return <Skeleton />;
   return (
-    <div className="mainPage">
-      <Header img={data?.data?.photos_sample || []} />
-      <MainInfo companyInfo={data?.data} />
-      <Raiting companyInfo={data?.data} />
-      <FeedBack />
-      <Contacts companyInfo={data?.data} />
-      <CompanyLink />
-    </div>
+    <>
+      <Toast />
+      <div className="mainPage">
+        <Outlet />
+      </div>
+      <CompanyLink/>
+    </>
   );
 };
 
