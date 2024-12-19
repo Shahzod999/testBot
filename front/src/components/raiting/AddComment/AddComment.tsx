@@ -20,6 +20,7 @@ import {
   succesToast,
 } from "../../../app/features/toastSlice";
 import { ErrorComment } from "../../../app/types/commentType";
+import { PhotosSample } from "../../../app/types/companyType";
 
 interface AddCommentProps {
   openComment: boolean;
@@ -28,7 +29,7 @@ interface AddCommentProps {
 
 const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   const dispatch = useAppDispatch();
-  const [imagesArray, setimagesArray] = useState<File[]>([]);
+  const [imagesArray, setimagesArray] = useState<PhotosSample[]>([]);
   const [textArea, setTextArea] = useState("");
   const count = useAppSelector(selectedRaitingCount);
   const companyInfo = useAppSelector(selectedCompany);
@@ -51,7 +52,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
       const uploadedUrls = await Promise.all(
         imagesArray.map(async (file) => {
           const formData = new FormData();
-          formData.append("file", file);
+          formData.append("file", file.file);
           formData.append("page", "truegis");
           const response = await uploadImage(formData).unwrap();
 
