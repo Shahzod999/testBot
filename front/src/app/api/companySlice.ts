@@ -55,6 +55,13 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         body: formData,
       }),
     }),
+    updateRequest: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/delivery/bot/company/update-request/${id}`,
+        method: "POST", 
+        body: data, 
+      }),
+    }),
   }),
 });
 export const {
@@ -64,6 +71,7 @@ export const {
   useGetCommentsbyCompanyQuery,
   useSendCommentByCompanyMutation,
   useUploadImageMutation,
+  useUpdateRequestMutation
 } = companyApiSlice;
 
 // https://dev.admin13.uz/v1/delivery/bot/comment/673a89577d6d20cabf0ad3cb // company_id

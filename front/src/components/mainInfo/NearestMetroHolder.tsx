@@ -19,9 +19,9 @@ const NearestMetroHolder = ({ metro, from }: nearestMetroProps) => {
         <div className="nearestMetro__text">
           <span>{metro?.name} - </span>
           <ReactSVG src="./walkPerson.svg" />
-          <span>{metro?.distance?.walking_duration}</span>
+          <span className="nowrap">{metro?.distance?.walking_duration}</span>
           <span>•</span>
-          <span>{metro?.distance?.distance}</span>
+          <span className="nowrap">{metro?.distance?.distance}</span>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import Raiting from "../../components/raiting/Raiting";
 import Contacts from "../../components/contacts/Contacts";
 import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { setCompany } from "../../app/features/companyStateSlice";
+import { setCompany, setDarkMode } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
 import FeedBack from "../../components/FeedBack/FeedBack";
 import {
@@ -39,13 +39,18 @@ const MainPage = () => {
   const dispatch = useAppDispatch();
   const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
-  dispatch(setUserTelegramId(tg?.initDataUnsafe?.user?.id || import.meta.env.VITE_TELEGRAMID));
+  dispatch(
+    setUserTelegramId(
+      tg?.initDataUnsafe?.user?.id || import.meta.env.VITE_TELEGRAMID,
+    ),
+  );
 
   useEffect(() => {
     const requiredVersion = "7.0";
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
+    const mode = tg.colorScheme == "dark";
 
     tg.LocationManager.init(() => {
       console.log("LocationManager initialized.");
@@ -76,6 +81,7 @@ const MainPage = () => {
           : companyId,
       ),
     );
+    dispatch(setDarkMode(mode));
 
     if (currentVersion > requiredVersion) {
       tg.requestFullscreen();

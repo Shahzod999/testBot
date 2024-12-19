@@ -4,15 +4,13 @@ import "./contacts.scss";
 import { CompanyState } from "../../app/types/companyType";
 import BottomSheet from "../Actions/BottomSheet";
 import CommonButton from "../Actions/CommonButton";
-import EditAction from "./EditAction";
-import AddFoto from "../raiting/AddComment/AddFoto";
-import SendButton from "../raiting/AddComment/SendButton";
 import { ReactSVG } from "react-svg";
 import Lottie from "lottie-react";
 import notFound from "../../../public/notFound.json";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "../mainInfo/WorkTime";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
+import EditCompany from "../EditCompany/EditCompany";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -24,9 +22,6 @@ const getAvailableSocialMedia = (
 };
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
-  const [error, setError] = useState("");
-  const [imagesArrayNew, setimagesArrayNew] = useState<File[]>([]);
-  const [logoImg, setLogoImg] = useState(companyInfo?.logoThumbnail);
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
   const actions = useMemo(
@@ -86,24 +81,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       },
     ],
     [companyInfo],
-  );
-
-  const handleImagePreview = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files && e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          setLogoImg(reader.result as string);
-        };
-        reader.onerror = (error) => {
-          console.log("Error: ", error);
-          setError("Error");
-        };
-      }
-    },
-    [],
   );
 
   const handleActionClick = useCallback((key: string | null) => {
@@ -253,178 +230,17 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </label>
           <CommonButton createdFunction={closeBottomSheet}>
             <span>Отправить</span>
-            {/* <span className="contacts__actions__coin">
-              +1
-              <img src="./coin.svg" alt="" />
-            </span> */}
           </CommonButton>
         </div>
       </BottomSheet>
 
-      <BottomSheet isOpen={activeAction === "edit"} onClose={closeBottomSheet}>
-        <div className="contacts__actions">
-          <div className="contacts__actions__closeButtons">
-            <span className="contacts__actions__closeButtons__title">
-              Редактировать {companyInfo.name}
-            </span>
-          </div>
-          <h3 className="contacts__actions__title">Общая информация</h3>
-
-          <EditAction
-            smallInfo="Название"
-            text={companyInfo?.name}
-            icon="./phone.svg"
-            isDisabled={!companyInfo?.name}
-          />
-
-          <EditAction
-            smallInfo="Адрес"
-            text={companyInfo?.full_address}
-            icon="./map.fill.svg"
-            isDisabled={!companyInfo?.full_address}
-          />
-          <div onClick={() => handleActionClick("workHours")}>
-            <EditAction
-              smallInfo="Часы работы"
-              text="Смотреть все"
-              icon="Exclude.svg"
-              isDisabled={!companyInfo?.working_hours}
-              arrowRight={true}
-            />
-          </div>
-          <div onClick={() => handleActionClick("category")}>
-            <EditAction
-              smallInfo="Категория"
-              text={companyInfo.subtypes
-                .map((item) => {
-                  return item;
-                })
-                .join(", ")}
-              icon="./type.svg"
-              isDisabled={!companyInfo?.subtypes}
-              arrowRight={true}
-            />
-          </div>
-
-          <h3 className="contacts__actions__title second__title">Контакты</h3>
-          <EditAction
-            smallInfo="Номер Telegram"
-            text={
-              companyInfo.social_media.telegram?.replace("https://", "") ||
-              "+000 000 00 00"
-            }
-            icon="./telegram.svg"
-            isDisabled={!companyInfo.social_media.telegram}
-            arrowRight={true}
-          />
-          <EditAction
-            smallInfo="Номер WhatsApp"
-            text={companyInfo?.social_media?.whatsApp || "+000 000 00 00"}
-            icon="./whatsApp.svg"
-            isDisabled={!companyInfo?.social_media?.whatsApp}
-            arrowRight={true}
-          />
-          <EditAction
-            smallInfo="Ссылка на Instagram "
-            text={
-              companyInfo?.social_media?.instagram?.replace(
-                "https://www.",
-                "",
-              ) || "instagram.com"
-            }
-            icon="./instagram.svg"
-            isDisabled={!companyInfo?.social_media?.instagram}
-            arrowRight={true}
-          />
-          <EditAction
-            smallInfo="Ссылка на Facebook"
-            text={
-              companyInfo?.social_media?.facebook?.replace("https://", "") ||
-              "facebook.com/truegis"
-            }
-            icon="./phone.svg"
-            isDisabled={!companyInfo?.social_media?.facebook}
-            arrowRight={true}
-          />
-          <EditAction
-            smallInfo="Номер телефона"
-            text={companyInfo?.phone_number || "+998 000 67 43"}
-            icon="./phone.svg"
-            isDisabled={!companyInfo?.full_address}
-            arrowRight={true}
-          />
-          <EditAction
-            smallInfo="Сайт "
-            text={
-              companyInfo?.website?.replace("https://", "") || "truegis.com"
-            }
-            icon="./australia.svg"
-            isDisabled={!companyInfo?.website}
-            arrowRight={true}
-          />
-          <EditAction
-            smallInfo="Мобильное приложение "
-            text="https://apps.apple.com/app/"
-            icon="./Vector.svg"
-            isDisabled={
-              !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios
-            }
-            arrowRight={true}
-          />
-          <h3 className="contacts__actions__title second__title">
-            Кем вы являетесь?
-          </h3>
-
-          <input
-            type="text"
-            placeholder="Ваша должность в этом заведении"
-            className="contacts__actions__positionInput"
-          />
-
-          <h3 className="contacts__actions__title second__title">
-            Фото профиля заведения
-          </h3>
-
-          <div className="contacts__actions__fotoLogoEdit">
-            <div className="contacts__actions__fotoLogoEdit__img">
-              <img src={logoImg || "./imgDefault.png"} alt="" />
-            </div>
-
-            <label htmlFor="addFoto__logo__img">
-              <ReactSVG src="./camera.fill.svg" />
-              <span>Добавить фотографию</span>
-            </label>
-
-            <input
-              style={{ display: "none" }}
-              accept="image/*"
-              type="file"
-              id="addFoto__logo__img"
-              onChange={(e) => {
-                handleImagePreview(e);
-              }}
-            />
-          </div>
-          <AddFoto
-            imagesArray={imagesArrayNew}
-            setimagesArray={setimagesArrayNew}
-            id="addContacts"
-          />
-
-          <h3 className="contacts__actions__title second__title">
-            Оставьте комментарий
-          </h3>
-          <div className="contacts__actions__textArea">
-            <textarea rows={5} placeholder="Что ещё нужно изменить?"></textarea>
-          </div>
-
-          <div className="contacts__actions__lastElement"></div>
-          {error && <div className="errorText">{error}</div>}
-        </div>
-        <SendButton text="Проверка информаций займёт 3 рабочих дня" />
-      </BottomSheet>
-
-      <BottomSheet
+      <EditCompany
+        activeAction={activeAction}
+        companyInfo={companyInfo}
+        closeBottomSheet={closeBottomSheet}
+        handleActionClick={handleActionClick}
+      />
+      {/* <BottomSheet
         isOpen={activeAction === "category"}
         onClose={closeBottomSheet}>
         <div className="contacts__actions">
@@ -479,11 +295,11 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
             </span>
           </label>
 
-          <CommonButton createdFunction={closeBottomSheet}>
+          <CommonButton createdFunction={() => handleActionClick("edit")}>
             <span>Сохранить</span>
           </CommonButton>
         </div>
-      </BottomSheet>
+      </BottomSheet> */}
       <BottomSheet
         isOpen={activeAction === "workHours"}
         onClose={closeBottomSheet}>
@@ -520,7 +336,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
             </div>
           ))}
 
-          <CommonButton createdFunction={closeBottomSheet}>
+          <CommonButton createdFunction={() => handleActionClick("edit")}>
             <span>Сохранить</span>
           </CommonButton>
         </div>

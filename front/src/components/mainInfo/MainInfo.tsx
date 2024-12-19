@@ -14,6 +14,7 @@ import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "./WorkTime";
 import EditAction from "../contacts/EditAction";
 import NearestMetroHolder from "./NearestMetroHolder";
+import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
 interface ActionsState {
   text: string;
   img: string;
@@ -27,7 +28,8 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const userCoordinates = useAppSelector(selectedUserLocation);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
-  const isDarkMode = window.Telegram.WebApp.colorScheme === "dark";
+
+  const isDarkMode = useAppSelector(selectedIsDarkMode);
 
   const toggleBookMark = () => {
     try {
