@@ -3,10 +3,9 @@ import { useState, useEffect, useRef } from "react";
 import { SingleComment } from "../../../app/types/commentType";
 import RaitingStars from "../../raiting/RaitingStars";
 import useTimeAgo from "../../../hooks/useTimeAgo";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import ReplyComment from "./ReplyComment";
-import { Pagination } from "swiper/modules";
+import FullScreenImgSwiper from "../../FullScreenImgSwiper/FullScreenImgSwiper";
 
 const Comment = ({ comment }: { comment: SingleComment }) => {
   const [open, setOpen] = useState(false);
@@ -14,6 +13,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const timeAgo = useTimeAgo(comment?.created_at);
   const textRef = useRef<HTMLParagraphElement>(null);
+  const [indexImg, setIndexImg] = useState(0);
 
   useEffect(() => {
     if (textRef.current) {
@@ -27,27 +27,11 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setOpen(!open);
   };
 
+  const toggleImgOpen = (i: number) => {
+    setIndexImg(i);
+    setImgOpen(!imgOpen);
+  };
 
-  useEffect(() => {
-    if (imgOpen) {
-      window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(() => {
-        setImgOpen(false); 
-      });
-    } else {
-      window.Telegram.WebApp.BackButton.hide();
-    }
-    return () => {
-      window.Telegram.WebApp.BackButton.offClick(() => {});
-    };
-  }, [imgOpen]);
-
-  const toggleImgOpen = () =>{
-    setImgOpen(!imgOpen)
-  }
-
-  console.log(comment,'ttuut');
-  
   return (
     <div className="comment">
       <div className="comment__title">
@@ -86,31 +70,20 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
       </div>
 
       {imgOpen ? (
-        <div className="fullScreenImg" onClick={toggleImgOpen}>
-          <Swiper
-            modules={[Pagination]}
-            className="mySwiper"
-            pagination={{
-              clickable: true,
-            }}>
-            {comment?.images?.map((item, i) => (
-              <SwiperSlide key={i}>
-                <img
-                  src={`https://dev.admin13.uz${item}`}
-                  alt="LargePhoto photo"
-                  className="comment__FullImage"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+        <FullScreenImgSwiper
+          imgOpen={imgOpen}
+          setImgOpen={setImgOpen}
+          images={comment?.images}
+          toggleImgOpen={toggleImgOpen}
+          indexImg={indexImg}
+        />
       ) : (
         <div className="comment__images">
           {comment?.images?.map((item, i) => (
             <div
               className="comment__images__img"
               key={i}
-              onClick={toggleImgOpen}>
+              onClick={() => toggleImgOpen(i)}>
               <img src={`https://dev.admin13.uz${item}`} alt="" />
             </div>
           ))}
