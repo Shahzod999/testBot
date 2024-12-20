@@ -4,6 +4,7 @@ import {
   SuccessComment,
   SuccessUploadImg,
 } from "../types/commentType";
+import { TaxiType } from "../types/companyType";
 import { apiSlice } from "./apiSlice";
 
 export const companyApiSlice = apiSlice.injectEndpoints({
@@ -58,8 +59,18 @@ export const companyApiSlice = apiSlice.injectEndpoints({
     updateRequest: builder.mutation({
       query: ({ id, data }) => ({
         url: `/delivery/bot/company/update-request/${id}`,
-        method: "POST", 
-        body: data, 
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getYandexPrice: builder.query<TaxiType, any>({
+      query: ({ from_address, to_address }) => ({
+        url: "https://dev.admin13.uz/v1/common/bot/taxi-price/checker/",
+        method: "POST",
+        body: {
+          from_address,
+          to_address,
+        },
       }),
     }),
   }),
@@ -71,7 +82,8 @@ export const {
   useGetCommentsbyCompanyQuery,
   useSendCommentByCompanyMutation,
   useUploadImageMutation,
-  useUpdateRequestMutation
+  useUpdateRequestMutation,
+  useGetYandexPriceQuery,
 } = companyApiSlice;
 
 // https://dev.admin13.uz/v1/delivery/bot/comment/673a89577d6d20cabf0ad3cb // company_id

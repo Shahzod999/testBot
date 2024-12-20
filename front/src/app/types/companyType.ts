@@ -167,7 +167,7 @@ export interface Distance3 {
   walking_duration: string;
 }
 
-///
+///2
 
 export interface Comment {
   _id: string;
@@ -222,4 +222,26 @@ export interface LastLocation {
   coordinates: number[];
 }
 
+///3
 ///
+export interface TaxiType {
+  status: string
+  message: string
+  data: Data
+}
+
+export interface Data {
+  currency: string
+  options: Option[]
+  estimatedTime: number
+}
+
+export interface Option {
+  className: string
+  classText: string
+  price: number
+  minPrice: number
+  priceText: string
+  waitingTime: number
+}
+

@@ -1,16 +1,21 @@
 import { ReactSVG } from "react-svg";
 import { CompanyState } from "../../app/types/companyType";
 import "./adressLinks.scss";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { errorToast, succesToast } from "../../app/features/toastSlice";
 
 const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const dispatch = useAppDispatch();
   const handleCopyAdress = (copy: string) => {
     const textToCopy = copy; // Это может быть любая строка или значение
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
+        dispatch(succesToast("Copy"));
         console.log("Текст скопирован в буфер обмена");
       })
       .catch((error) => {
+        dispatch(errorToast("Error"));
         console.error("Не удалось скопировать текст: ", error);
       });
   };
@@ -64,8 +69,8 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           handleCopyAdress(`${companyInfo.latitude},${companyInfo.longitude}`)
         }>
         <span>Координаты:</span>
-        <strong>{companyInfo.latitude},</strong>
-        <strong>{companyInfo.longitude}</strong>
+        <strong>{companyInfo.latitude.toFixed(4)},</strong>
+        <strong>{companyInfo.longitude.toFixed(4)}</strong>
         <span>
           <ReactSVG src="./copy.svg" />
         </span>

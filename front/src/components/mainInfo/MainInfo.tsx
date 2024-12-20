@@ -15,6 +15,7 @@ import WorkTime from "./WorkTime";
 import EditAction from "../contacts/EditAction";
 import NearestMetroHolder from "./NearestMetroHolder";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
+import Taxi from "./Taxi/Taxi";
 interface ActionsState {
   text: string;
   img: string;
@@ -189,39 +190,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         )}
       </div>
 
-      <div className="mainInfoTaxi">
-        <BottomSheet
-          isOpen={activeAction === "taxi"}
-          onClose={closeBottomSheet}>
-          <div className="contacts__actions">
-            <h3 className="contacts__actions__centerTitle">Такси</h3>
-            <EditAction
-              smallInfo="4km • 15-20 min • 20,000 so’m"
-              text="Yandex Go"
-              icon="./yandexGo.svg"
-              arrowRight={true}
-            />
-            <EditAction
-              smallInfo="4km • 15-20 min • 20,000 so’m"
-              text="Fasten"
-              icon="./fasten.svg"
-              arrowRight={true}
-            />
-            <EditAction
-              smallInfo="4km • 15-20 min • 20,000 so’m"
-              text="My taxi"
-              icon="./mytaxi.svg"
-              arrowRight={true}
-            />
-            <EditAction
-              smallInfo="4km • 15-20 min • 20,000 so’m"
-              text="Uklon"
-              icon="./uklon.svg"
-              arrowRight={true}
-            />
-          </div>
-        </BottomSheet>
-      </div>
+      <Taxi activeAction={activeAction} closeBottomSheet={closeBottomSheet} companyInfo={companyInfo}/>
 
       <BottomSheet isOpen={activeAction === "map"} onClose={closeBottomSheet}>
         <AdressLinks companyInfo={companyInfo} />
