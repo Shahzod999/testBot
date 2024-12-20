@@ -6,9 +6,6 @@ const ToastContainer = ({ toast }: { toast: Toast }) => {
 
   return (
     <div ref={toastRef} className={`toast-container ${toast.state}`}>
-      {/* <div className="check__svg">
-        <img src="./check.png" alt="" />
-      </div> */}
       <div className="check__text">
         <h2>{toast.text}</h2>
       </div>

@@ -9,11 +9,11 @@ export interface Toast {
 }
 
 interface ToastState {
-  messages: Toast[];
+  message: Toast | null;
 }
 
 const initialState: ToastState = {
-  messages: [],
+  message: null,
 };
 
 export const toastSlice = createSlice({
@@ -21,20 +21,22 @@ export const toastSlice = createSlice({
   initialState,
   reducers: {
     succesToast: (state, action) => {
-      state.messages.push({ id: uuidv4(), text: action.payload, state: "success" })
+      state.message = { id: uuidv4(), text: action.payload, state: "success" };
     },
     errorToast: (state, action) => {
-      state.messages.push({ id: uuidv4(), text: action.payload, state: "error" })
+      state.message = { id: uuidv4(), text: action.payload, state: "error" };
     },
     infoToast: (state, action) => {
-      state.messages.push({ id: uuidv4(), text: action.payload, state: "info" })
+      state.message = { id: uuidv4(), text: action.payload, state: "info" };
     },
-    removeToast: (state, action) => {
-      state.messages = state.messages.filter((toast) => toast.id !== action.payload);
+    removeToast: (state) => {
+      state.message = null;
     },
   },
 });
 
-export const { removeToast, succesToast, errorToast, infoToast } = toastSlice.actions;
-export const selectToastMessages = (state: RootState) => state.toast.messages;
+export const { succesToast, errorToast, infoToast, removeToast } = toastSlice.actions;
+
+export const selectToastMessage = (state: RootState) => state.toast.message;
+
 export default toastSlice.reducer;

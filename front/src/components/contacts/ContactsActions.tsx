@@ -46,18 +46,15 @@ export const ContactsActions = ({
         <span
           className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
           <span className="actions__text__letters">{timeComponent}</span>
-          {arrowRight && (
-            <ReactSVG src="./arrowRight.svg" className="svgController" />
-          )}
         </span>
       ) : (
         <span
           className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
           <span className="actions__text__letters">{text}</span>
-          {arrowRight && (
-            <ReactSVG src="./arrowRight.svg" className="svgController" />
-          )}
         </span>
+      )}
+      {arrowRight && (
+        <ReactSVG src="./arrowRight.svg" className="svgController" />
       )}
     </button>
   );

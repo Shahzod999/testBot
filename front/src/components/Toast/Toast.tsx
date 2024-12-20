@@ -1,27 +1,30 @@
 import { useEffect } from "react";
-import { removeToast, selectToastMessages } from "../../app/features/toastSlice";
-import "./toast.scss";
-import ToastContainer from "./ToastContainer";
+import { removeToast, selectToastMessage } from "../../app/features/toastSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import "./toast.scss";
 
 const Toast = () => {
   const dispatch = useAppDispatch();
-  const messages = useAppSelector(selectToastMessages);
+  const message = useAppSelector(selectToastMessage);
 
   useEffect(() => {
-    const timers = messages.map((toast) =>
-      setTimeout(() => {
-        dispatch(removeToast(toast.id));
-      }, 1000)
-    );
-    return () => timers.forEach(clearTimeout);
-  }, [messages, dispatch]);
+    if (message) {
+      const timer = setTimeout(() => {
+        dispatch(removeToast());
+      }, 3000); // Убираем тост через 3 секунды
+      return () => clearTimeout(timer);
+    }
+  }, [message, dispatch]);
+
+  if (!message) return null; // Если тоста нет, ничего не рендерим
 
   return (
     <div className="toast-wrapper">
-      {messages.map((toast) => (
-        <ToastContainer toast={toast} key={toast.id} />
-      ))}
+    <div className={`toast-container ${message.state}`}>
+      <div className="check__text">
+        <h2>{message.text}</h2>
+      </div>
+    </div>
     </div>
   );
 };

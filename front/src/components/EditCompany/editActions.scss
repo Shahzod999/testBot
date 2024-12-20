@@ -1,6 +1,5 @@
 .edit {
     background: var(--secondary-bg-color);
-    padding: 16px;
     border-radius: 20px;
 
     .contacts__actions {
@@ -22,6 +21,8 @@
 }
 
 .editActions {
+    padding: 16px;
+
     .actions__info {
         padding-bottom: 0 !important;
         gap: 0 !important;
@@ -31,6 +32,11 @@
             padding: 10px 0;
             background: transparent;
             color: var(--text-color);
+            max-width: 100%;
+            text-overflow: ellipsis;
+            font-size: 17px;
+
+
         }
     }
 
