@@ -12,7 +12,6 @@ import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 import { selectedUserLocation } from "../../app/features/userLocationSlice";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "./WorkTime";
-import EditAction from "../contacts/EditAction";
 import NearestMetroHolder from "./NearestMetroHolder";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
 import Taxi from "./Taxi/Taxi";

@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useAppDispatch } from "./reduxHooks";
+import { setDistance } from "../app/features/companyStateSlice";
 
 interface Coordinates {
   lat: number | any;
@@ -48,6 +50,12 @@ const DistanceCalculator: React.FC<DistanceCalculatorProps> = ({
     targetCoordinates.lat,
     targetCoordinates.lon,
   );
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setDistance(distance.toFixed(2)));
+  }, [distance]);
 
   return <p>{distance.toFixed(2)} км</p>;
 };

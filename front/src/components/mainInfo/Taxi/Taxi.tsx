@@ -1,4 +1,5 @@
 import { useGetYandexPriceQuery } from "../../../app/api/companySlice";
+import { selectedDistance } from "../../../app/features/companyStateSlice";
 import { selectedUserLocation } from "../../../app/features/userLocationSlice";
 import { CompanyState } from "../../../app/types/companyType";
 import { useAppSelector } from "../../../hooks/reduxHooks";
@@ -13,18 +14,17 @@ interface TaxiProps {
 
 const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
   const location = useAppSelector(selectedUserLocation);
+  const distance = useAppSelector(selectedDistance);
   const { data, isLoading, isFetching } = useGetYandexPriceQuery({
     from_address: {
-      lat: 41.311081,
-      long: 69.240562,
+      lat: location.lat,
+      long: location.lon,
     },
     to_address: {
-      lat: 41.325638,
-      long: 69.228487,
+      lat: companyInfo.latitude,
+      long: companyInfo.longitude,
     },
   });
-
-  console.log(data, "eee");
 
   return (
     <div className="mainInfoTaxi">
@@ -36,9 +36,11 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
               isLoading || isFetching
                 ? "...Wait"
                 : data?.data.options?.[0]
-                ? ` • ${(data.data.options[0].waitingTime / 60).toFixed(
-                    1,
-                  )} мин • ${data.data.options[0].price} ${data.data.currency}`
+                ? `${distance}км • ${(
+                    data.data.options[0].waitingTime / 60
+                  ).toFixed(1)} мин • ${data.data.options[0].price} ${
+                    data.data.currency
+                  }`
                 : "No data available"
             }
             text="Yandex Go"
@@ -46,19 +48,19 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
             arrowRight={true}
           />
           <EditAction
-            smallInfo="4km • 15-20 min • 20,000 so’m"
+            smallInfo="узнать подробнее в приложении"
             text="Fasten"
             icon="./fasten.svg"
             arrowRight={true}
           />
           <EditAction
-            smallInfo="4km • 15-20 min • 20,000 so’m"
+            smallInfo="узнать подробнее в приложении"
             text="My taxi"
             icon="./mytaxi.svg"
             arrowRight={true}
           />
           <EditAction
-            smallInfo="4km • 15-20 min • 20,000 so’m"
+            smallInfo="узнать подробнее в приложении"
             text="Uklon"
             icon="./uklon.svg"
             arrowRight={true}
