@@ -16,15 +16,19 @@ const Toast = () => {
     }
   }, [message, dispatch]);
 
+  const handleRemoveToast = () => {
+    dispatch(removeToast());
+  };
+
   if (!message) return null; // Если тоста нет, ничего не рендерим
 
   return (
-    <div className="toast-wrapper">
-    <div className={`toast-container ${message.state}`}>
-      <div className="check__text">
-        <h2>{message.text}</h2>
+    <div className="toast-wrapper" onClick={handleRemoveToast}>
+      <div className={`toast-container ${message.state}`}>
+        <div className="check__text">
+          <h2>{message.text}</h2>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

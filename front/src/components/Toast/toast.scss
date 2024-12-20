@@ -50,7 +50,9 @@
 
 .toast-container.info {
   &::before {
-    background-image: url(../../../public/info.png);
+    background-image: url(../../../public/warning.svg);
+    background-position: center;
+    background-size: contain;
   }
 }
 
