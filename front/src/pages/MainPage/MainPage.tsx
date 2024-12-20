@@ -59,8 +59,6 @@ const MainPage = () => {
               lon: location.longitude,
             }),
           );
-          console.log("Latitude:", location.latitude);
-          console.log("Longitude:", location.longitude);
           setLoc({
             lat: location.latitude,
             lon: location.longitude,
