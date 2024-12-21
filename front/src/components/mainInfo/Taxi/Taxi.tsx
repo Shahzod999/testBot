@@ -25,28 +25,34 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
       long: companyInfo.longitude,
     },
   });
+  
+   const yandexUrl = `https://3.redirect.appmetrica.yandex.com/route?start-lat=${location.lat}&start-lon=${location.lon}&end-lat=${companyInfo.latitude}&end-lon=${companyInfo.longitude}&tariffClass=econom&ref=https://truegiswebapp.uz/&appmetrica_tracking_id=1178268795219780156`
+
 
   return (
     <div className="mainInfoTaxi">
       <BottomSheet isOpen={activeAction === "taxi"} onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <h3 className="contacts__actions__centerTitle">Такси</h3>
-          <EditAction
-            smallInfo={
-              isLoading || isFetching
-                ? "...Wait"
-                : data?.data.options?.[0]
-                ? `${distance}км • ${(
-                    data.data.options[0].waitingTime / 60
-                  ).toFixed(1)} мин • ${data.data.options[0].price} ${
-                    data.data.currency
-                  }`
-                : "No data available"
-            }
-            text="Yandex Go"
-            icon="./yandexGo.svg"
-            arrowRight={true}
-          />
+          <a href={yandexUrl} target="_blank" rel="noopener noreferrer">
+            <EditAction
+              smallInfo={
+                isLoading || isFetching
+                  ? "...Wait"
+                  : data?.data.options?.[0]
+                  ? `${distance}км • ${(
+                      data.data.options[0].waitingTime / 60
+                    ).toFixed(1)} мин • ${data.data.options[0].price} ${
+                      data.data.currency
+                    }`
+                  : "No data available"
+              }
+              text="Yandex Go"
+              icon="./yandexGo.svg"
+              arrowRight={true}
+            />
+          </a>
+
           <EditAction
             smallInfo="узнать подробнее в приложении"
             text="Fasten"

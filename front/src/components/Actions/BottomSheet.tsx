@@ -38,25 +38,19 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
   };
 
   useEffect(() => {
-    const handleBackButtonClick = () => {
-      if (isOpen) {
-        window.history.back();
-      }
-    };
-
     if (isOpen) {
       window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(handleBackButtonClick);
+      window.Telegram.WebApp.BackButton.onClick(onClose);
     } else {
       window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
+      window.Telegram.WebApp.BackButton.offClick(() => {});
     }
 
     return () => {
       window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
+      window.Telegram.WebApp.BackButton.offClick(() => {});
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   return (
     <>

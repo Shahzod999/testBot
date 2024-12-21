@@ -163,7 +163,7 @@ const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
       <div className="contacts__actions editActions">
         <div className="contacts__actions__closeButtons">
           <span className="contacts__actions__closeButtons__title">
-            Редактировать {newCompanyInfo.name}
+            Редактировать <br />{newCompanyInfo.name}
           </span>
         </div>
         <h3 className="contacts__actions__title">Общая информация</h3>
