@@ -1,6 +1,10 @@
 .edit {
     background: var(--secondary-bg-color);
     border-radius: 20px;
+    padding-top: var(--tg-safe-area-inset-top);
+    padding-bottom: var(--tg-safe-area-inset-bottom);
+    padding-left: var(--tg-safe-area-inset-left);
+    padding-right: var(--tg-safe-area-inset-right);
 
     .contacts__actions {
         max-height: unset;

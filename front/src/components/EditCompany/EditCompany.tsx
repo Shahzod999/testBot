@@ -100,7 +100,6 @@ const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
     return response.thumbnail;
   };
 
-  console.log(imagesArrayNew, "22");
 
   const handleSubmit = async () => {
     try {
@@ -250,7 +249,7 @@ const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
             newCompanyInfo?.social_media?.facebook?.replace("https://", "") ||
             "facebook.com/truegis"
           }
-          icon="./phone.svg"
+          icon="./facebook.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="social_media.facebook"

@@ -1,6 +1,11 @@
 .actions {
   &__icons__edit {
+    width: 20px;
+    height: 20px;
+
     svg {
+      width: 100%;
+      height: 100%;
       fill: var(--tg-theme-text-color, #000);
       stroke: inherit;
 
@@ -10,6 +15,7 @@
       }
     }
   }
+
   &__info {
     display: flex;
     flex-direction: column;
@@ -17,6 +23,7 @@
     padding: 20px 0;
     width: 100px;
     flex: 1;
+
     &__smallInfo {
       font-weight: 400;
       font-size: 12px;
@@ -27,6 +34,7 @@
       width: 100%;
       overflow: hidden;
     }
+
     &__text__main {
       font-weight: 400;
       font-size: 17px;
@@ -40,7 +48,9 @@
       overflow: hidden;
     }
   }
+
   &__arrowRight {
+
     // margin-left: auto;
     svg {
       fill: var(--tg-theme-text-color, #000);
