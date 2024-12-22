@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CompanyState } from "../../app/types/companyType";
 import BottomSheet from "../Actions/BottomSheet";
 import CommonButton from "../Actions/CommonButton";
@@ -7,15 +8,20 @@ interface EditCompanyProps {
   activeAction: string | null;
   companyInfo: CompanyState;
   closeBottomSheet: () => void;
-  handleActionClick: (key: string) => void;
 }
 
 const WorkingHours = ({
   activeAction,
   closeBottomSheet,
-  handleActionClick,
   companyInfo,
 }: EditCompanyProps) => {
+  const [totalTime, setTotalTime] = useState("");
+
+  const handleSubmit = () => {
+    closeBottomSheet();
+    console.log(totalTime, "qwert");
+  };
+
   return (
     <BottomSheet
       isOpen={activeAction === "workHours"}
@@ -40,10 +46,15 @@ const WorkingHours = ({
         </label>
 
         {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
-          <EditWorkHours day={day} hours={hours} key={day} />
+          <EditWorkHours
+            day={day}
+            hours={hours}
+            key={day}
+            setTotalTime={setTotalTime}
+          />
         ))}
 
-        <CommonButton createdFunction={() => handleActionClick("edit")}>
+        <CommonButton createdFunction={handleSubmit}>
           <span>Сохранить</span>
         </CommonButton>
       </div>

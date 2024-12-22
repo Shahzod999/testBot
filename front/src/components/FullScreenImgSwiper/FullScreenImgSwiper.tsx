@@ -34,7 +34,6 @@ const FullScreenImgSwiper = ({
       window.Telegram.WebApp.BackButton.offClick(() => {});
     };
   }, [imgOpen]);
-  console.log(images, "222");
 
   return (
     <div className="fullScreenImg" onClick={() => toggleImgOpen(0)}>

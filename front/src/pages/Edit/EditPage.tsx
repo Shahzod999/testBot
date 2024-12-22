@@ -34,6 +34,8 @@ const EditPage = () => {
     };
   }, [navigate]);
 
+  
+
   if (!companyInfo) return;
   return (
     <>
@@ -45,7 +47,6 @@ const EditPage = () => {
         companyInfo={companyInfo}
         activeAction={activeAction}
         closeBottomSheet={closeBottomSheet}
-        handleActionClick={handleActionClick}
       />
     </>
   );

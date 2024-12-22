@@ -31,7 +31,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setIndexImg(i);
     setImgOpen(!imgOpen);
   };
-
+  
   return (
     <div className="comment">
       <div className="comment__title">

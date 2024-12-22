@@ -7,11 +7,17 @@ import "./editWorkHours.scss";
 interface EditWorkHoursProps {
   day: string;
   hours: string;
+  setTotalTime: (prev: any) => void;
 }
-const EditWorkHours = ({ day, hours }: EditWorkHoursProps) => {
-  const [time, setTime] = useState(false);
 
+const EditWorkHours = ({
+  day,
+  hours,
+  setTotalTime,
+}: EditWorkHoursProps) => {
+  const [time, setTime] = useState(false);
   const [cur, setCur] = useState("");
+
   const initialTime = convertTo24HourFormat(hours).split("–");
 
   const [currentTime, setCurrentTime] = useState({
@@ -39,31 +45,31 @@ const EditWorkHours = ({ day, hours }: EditWorkHoursProps) => {
     const formattedHour = workingHour.hour.toString().padStart(2, "0");
     const formattedMinute = workingHour.minute.toString().padStart(2, "0");
 
-    if (cur == "open") {
-      setCurrentTime((prevTime) => ({
-        ...prevTime,
-        openTime: {
-          hour: formattedHour,
-          minute: formattedMinute,
-        },
-      }));
-    } else if (cur == "close") {
-      setCurrentTime((prevTime) => ({
-        ...prevTime,
-        closeTime: {
-          hour: formattedHour,
-          minute: formattedMinute,
-        },
-      }));
-    }
+    const updatedCurrentTime =
+      cur === "open"
+        ? {
+            ...currentTime,
+            openTime: { hour: formattedHour, minute: formattedMinute },
+          }
+        : {
+            ...currentTime,
+            closeTime: { hour: formattedHour, minute: formattedMinute },
+          };
+
+    setCurrentTime(updatedCurrentTime);
+
+    const updatedTime = `${updatedCurrentTime.openTime.hour}:${updatedCurrentTime.openTime.minute}-${updatedCurrentTime.closeTime.hour}:${updatedCurrentTime.closeTime.minute}`;
+
+    setTotalTime((prevTotalTime: any) => ({
+      ...prevTotalTime,
+      [day]: [updatedTime],
+    }));
   };
 
   const handelTimeChange = (m: "open" | "close" | "") => {
     setPickerActive(true);
     setCur(m);
   };
-
-  console.log(currentTime,'curr');
 
   useEffect(() => {
     if (cur === "open") {
@@ -78,6 +84,7 @@ const EditWorkHours = ({ day, hours }: EditWorkHoursProps) => {
       });
     }
   }, [cur]);
+  
 
   return (
     <>
