@@ -172,6 +172,7 @@ a {
 }
 
 .pressEffefct {
+  cursor: pointer;
   &:hover {
     filter: brightness(110%);
   }

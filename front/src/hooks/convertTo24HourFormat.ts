@@ -3,8 +3,6 @@ const convertTo24HourFormat = (timeRange: string | string[]): string => {
     return timeRange.map(convertTo24HourFormat).join(", ");
   }
 
-  console.log(timeRange, 'sa');
-
   if (timeRange === "Closed") return "Закрыто";
   if (timeRange === "Open 24 hours") return "Открыто 24 часа";
   if (!timeRange || !timeRange.includes("–")) return "Некорректные данные";

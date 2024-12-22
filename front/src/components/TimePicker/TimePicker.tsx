@@ -1,25 +1,56 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import "./TimePicker.scss";
 
-const TimePicker = () => {
+interface TimePickerProps {
+  workingHour: { hour: number; minute: number };
+  setWorkingHour: React.Dispatch<
+    React.SetStateAction<{ hour: number; minute: number }>
+  >;
+}
+
+const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
   const hours = Array.from({ length: 24 }, (_, i) => i);
   const minutes = Array.from({ length: 60 }, (_, i) => i);
-
-  const [selectedHour, setSelectedHour] = useState(12);
-  const [selectedMinute, setSelectedMinute] = useState(30);
 
   const hourRef = useRef<HTMLDivElement>(null);
   const minuteRef = useRef<HTMLDivElement>(null);
 
-  const handleScroll = (
-    e: React.UIEvent<HTMLDivElement>,
+  const scrollTimeout = useRef<any | null>(null);
+
+  const handleScrollEnd = (
+    ref: React.RefObject<HTMLDivElement>,
     items: number[],
-    setSelected: (value: number) => void,
+    key: "hour" | "minute",
   ) => {
-    const scrollTop = e.currentTarget.scrollTop;
-    const itemHeight = 40; // Высота одного элемента
-    const index = Math.round(scrollTop / itemHeight);
-    setSelected(items[index]);
+    if (ref.current) {
+      const itemHeight = 40;
+      const scrollTop = ref.current.scrollTop;
+      const index = Math.round(scrollTop / itemHeight);
+
+      setWorkingHour((prev) => ({
+        ...prev,
+        [key]: items[index],
+      }));
+
+      ref.current.scrollTo({
+        top: index * itemHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleScroll = (
+    items: number[],
+    key: "hour" | "minute",
+    ref: React.RefObject<HTMLDivElement>,
+  ) => {
+    if (scrollTimeout.current) {
+      clearTimeout(scrollTimeout.current);
+    }
+
+    scrollTimeout.current = setTimeout(() => {
+      handleScrollEnd(ref, items, key);
+    }, 150);
   };
 
   const scrollToValue = (
@@ -36,25 +67,23 @@ const TimePicker = () => {
   };
 
   useEffect(() => {
-    scrollToValue(hourRef, selectedHour);
-    scrollToValue(minuteRef, selectedMinute);
-  }, [selectedHour, selectedMinute]);
-
-  console.log(selectedHour, selectedMinute);
+    scrollToValue(hourRef, workingHour.hour);
+    scrollToValue(minuteRef, workingHour.minute);
+  }, [workingHour]);
 
   return (
-    <div className="timepicker" onClick={(e) => e.stopPropagation()}>
+    <div className="timepicker">
       <div
         className="picker"
         ref={hourRef}
-        onScroll={(e) => handleScroll(e, hours, setSelectedHour)}>
+        onScroll={() => handleScroll(hours, "hour", hourRef)}>
         <div className="picker-padding" />
         <div className="picker-list">
           {hours.map((hour) => (
             <div
               key={hour}
               className={`picker-item ${
-                hour === selectedHour ? "selected" : ""
+                hour === workingHour.hour ? "selected" : ""
               }`}>
               {hour.toString().padStart(2, "0")}
             </div>
@@ -65,14 +94,14 @@ const TimePicker = () => {
       <div
         className="picker"
         ref={minuteRef}
-        onScroll={(e) => handleScroll(e, minutes, setSelectedMinute)}>
+        onScroll={() => handleScroll(minutes, "minute", minuteRef)}>
         <div className="picker-padding" />
         <div className="picker-list">
           {minutes.map((minute) => (
             <div
               key={minute}
               className={`picker-item ${
-                minute === selectedMinute ? "selected" : ""
+                minute === workingHour.minute ? "selected" : ""
               }`}>
               {minute.toString().padStart(2, "0")}
             </div>
@@ -80,9 +109,6 @@ const TimePicker = () => {
         </div>
         <div className="picker-padding" />
       </div>
-
-
-      <button>SEt</button>
     </div>
   );
 };

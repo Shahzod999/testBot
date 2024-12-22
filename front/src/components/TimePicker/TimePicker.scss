@@ -1,6 +1,10 @@
 .timepicker {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
 }
 
 .picker {
@@ -12,7 +16,7 @@
   border-radius: 10px;
   background: #fff;
   scroll-snap-type: y mandatory;
-  scrollbar-width: none; /* Скрываем скроллбар */
+  scrollbar-width: none;
 }
 
 .picker::-webkit-scrollbar {
@@ -40,7 +44,7 @@
 }
 
 .picker-padding {
-  height: 80px; /* Отступы, чтобы выбранный элемент всегда оставался в центре */
+  height: 80px;
 }
 
 .picker::before,
