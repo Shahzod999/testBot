@@ -63,7 +63,7 @@ const EditWorkHours = ({ day, hours }: EditWorkHoursProps) => {
     setCur(m);
   };
 
-  console.log(currentTime);
+  console.log(currentTime,'curr');
 
   useEffect(() => {
     if (cur === "open") {
@@ -83,7 +83,7 @@ const EditWorkHours = ({ day, hours }: EditWorkHoursProps) => {
     <>
       <div onClick={() => setTime(true)}>
         <ContactsActions
-          text={convertTo24HourFormat(hours)}
+          text={`${currentTime.openTime.hour}:${currentTime.openTime.minute}:${currentTime.closeTime.hour}:${currentTime.closeTime.minute}`}
           mainText={day}
           style={"editWorkHour"}
           isDisabled={hours == "Closed"}
