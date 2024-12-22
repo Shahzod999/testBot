@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import { ContactsActions } from "../contacts/ContactsActions";
 import TimePicker from "../TimePicker/TimePicker";
@@ -25,8 +25,6 @@ const EditWorkHours = ({ day, hours }: EditWorkHoursProps) => {
     },
   });
 
-  console.log(currentTime);
-
   const [pickerActive, setPickerActive] = useState(false);
   const [workingHour, setWorkingHour] = useState<{
     hour: number;
@@ -38,13 +36,25 @@ const EditWorkHours = ({ day, hours }: EditWorkHoursProps) => {
 
   const handleSend = () => {
     setPickerActive(false);
+    const formattedHour = workingHour.hour.toString().padStart(2, "0");
+    const formattedMinute = workingHour.minute.toString().padStart(2, "0");
+
     if (cur == "open") {
-      console.log(workingHour);
-      // setCurrentTime((prevTime) => ({
-      //   ...prevTime,
-      //   openTime: workingHour,
-      // }));
+      setCurrentTime((prevTime) => ({
+        ...prevTime,
+        openTime: {
+          hour: formattedHour,
+          minute: formattedMinute,
+        },
+      }));
     } else if (cur == "close") {
+      setCurrentTime((prevTime) => ({
+        ...prevTime,
+        closeTime: {
+          hour: formattedHour,
+          minute: formattedMinute,
+        },
+      }));
     }
   };
 
@@ -52,6 +62,22 @@ const EditWorkHours = ({ day, hours }: EditWorkHoursProps) => {
     setPickerActive(true);
     setCur(m);
   };
+
+  console.log(currentTime);
+
+  useEffect(() => {
+    if (cur === "open") {
+      setWorkingHour({
+        hour: parseInt(currentTime.openTime.hour, 10),
+        minute: parseInt(currentTime.openTime.minute, 10),
+      });
+    } else if (cur === "close") {
+      setWorkingHour({
+        hour: parseInt(currentTime.closeTime.hour, 10),
+        minute: parseInt(currentTime.closeTime.minute, 10),
+      });
+    }
+  }, [cur]);
 
   return (
     <>

@@ -27,9 +27,11 @@ const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
       const scrollTop = ref.current.scrollTop;
       const index = Math.round(scrollTop / itemHeight);
 
+      const formattedValue = items[index].toString().padStart(2, "0");
+
       setWorkingHour((prev) => ({
         ...prev,
-        [key]: items[index],
+        [key]: formattedValue,
       }));
 
       ref.current.scrollTo({
@@ -83,7 +85,7 @@ const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
             <div
               key={hour}
               className={`picker-item ${
-                hour === workingHour.hour ? "selected" : ""
+                hour == workingHour.hour ? "selected" : ""
               }`}>
               {hour.toString().padStart(2, "0")}
             </div>
@@ -101,7 +103,7 @@ const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
             <div
               key={minute}
               className={`picker-item ${
-                minute === workingHour.minute ? "selected" : ""
+                minute == workingHour.minute ? "selected" : ""
               }`}>
               {minute.toString().padStart(2, "0")}
             </div>

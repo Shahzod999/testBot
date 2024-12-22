@@ -10,6 +10,7 @@ interface FullScreenImgSwiperProps {
   images: string[];
   toggleImgOpen: (i: number) => void;
   indexImg: number;
+  local?: boolean;
 }
 
 const FullScreenImgSwiper = ({
@@ -18,6 +19,7 @@ const FullScreenImgSwiper = ({
   images,
   toggleImgOpen,
   indexImg,
+  local,
 }: FullScreenImgSwiperProps) => {
   useEffect(() => {
     if (imgOpen) {
@@ -45,11 +47,19 @@ const FullScreenImgSwiper = ({
         initialSlide={indexImg}>
         {images?.map((item, i) => (
           <SwiperSlide key={i}>
-            <img
-              src={`https://dev.admin13.uz${item}`}
-              alt="LargePhoto photo"
-              className="comment__FullImage"
-            />
+            {local ? (
+              <img
+                src={item}
+                alt="LargePhoto photo"
+                className="comment__FullImage"
+              />
+            ) : (
+              <img
+                src={`https://dev.admin13.uz${item}`}
+                alt="LargePhoto photo"
+                className="comment__FullImage"
+              />
+            )}
           </SwiperSlide>
         ))}
       </Swiper>
