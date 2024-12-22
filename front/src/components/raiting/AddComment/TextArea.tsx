@@ -1,40 +1,44 @@
 interface TextProps {
   text: string;
   setText: (e: string) => void;
+  count: number;
 }
 
-const TextArea = ({ text, setText }: TextProps) => {
-  const maxLength = 50; 
+const TextArea = ({ text, setText, count }: TextProps) => {
+  const maxLength = 50;
 
   const getProgressState = () => {
     const length = text.trim().length;
 
-    if (length === 0)
-      return { state: "low", width: 0, text: "Это слишком коротко." };
+    if (length === 0) return { state: "low", width: 0 };
     if (length < 10)
       return {
         state: "low",
         width: (length / maxLength) * 100,
-        text: "Это слишком коротко.",
       };
     if (length < 30)
       return {
         state: "medium",
         width: (length / maxLength) * 100,
-        text: "Это слишком коротко.",
       };
     if (length < 50)
       return {
         state: "nice",
         width: (length / maxLength) * 100,
-        text: "Выглядит хорошо. Добавьте ещё несколько слов.",
       };
     return {
       state: "good",
       width: 100,
-      text: "Замечательно. Поделитесь своим опытом.",
     };
   };
+
+  const message = [
+    "Кажется, вам тут совсем не понравилось. Что пошло не так?",
+    "Не понравилось здесь? Расскажите, что пошло не так?",
+    "Кажется, было средне. Расскажите, чего не хватило?",
+    "Понравилось здесь? Расскажите, что именно порадовало",
+    "Кажется, вы в восторге! Поделитесь, что именно понравилось?",
+  ];
 
   const progress = getProgressState();
 
@@ -52,7 +56,7 @@ const TextArea = ({ text, setText }: TextProps) => {
             className={`progress-bar ${progress.state}`}
             style={{ width: `${progress.width}%` }}></div>
         </div>
-        <p className="progress-message">{progress.text}</p>
+        <p className="progress-message">Оценка принята. {message[count - 1]}</p>
       </div>
     </div>
   );

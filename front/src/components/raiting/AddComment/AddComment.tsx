@@ -100,10 +100,15 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
             <p className="adress">{companyInfo?.address}</p>
           </div>
           <div className="raiting__set">
-            <p>Нажмите, чтобы оценить:</p>
+            {/* <p>Нажмите, чтобы оценить:</p> */}
             <RaitingStars count={count} handleStarClick={handleStarClick} />
           </div>
-          <TextArea text={textArea} setText={setTextArea} />
+
+
+
+          <TextArea text={textArea} setText={setTextArea} count={count}/>
+
+
           <AddFoto
             imagesArray={imagesArray}
             setimagesArray={setimagesArray}

@@ -1,0 +1,62 @@
+.timepicker {
+  display: flex;
+  gap: 20px;
+}
+
+.picker {
+  width: 60px;
+  height: 200px;
+  overflow-y: scroll;
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none; /* Скрываем скроллбар */
+}
+
+.picker::-webkit-scrollbar {
+  display: none;
+}
+
+.picker-list {
+  text-align: center;
+}
+
+.picker-item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #333;
+  scroll-snap-align: center;
+}
+
+.picker-item.selected {
+  font-weight: bold;
+  font-size: 22px;
+  color: #007aff;
+}
+
+.picker-padding {
+  height: 80px; /* Отступы, чтобы выбранный элемент всегда оставался в центре */
+}
+
+.picker::before,
+.picker::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  z-index: 1;
+}
+
+.picker::before {
+  top: 0;
+}
+
+.picker::after {
+  bottom: 0;
+}

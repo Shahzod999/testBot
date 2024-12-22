@@ -7,6 +7,7 @@ import Skeleton from "../../components/skeleton/Skeleton";
 import {
   selectedCompanyId,
   setCompanyId,
+  setPlatform,
   setUserTelegramId,
 } from "../../app/features/getCompanyIdSlice";
 import { TelegramTypes } from "../../app/types/telegramTypes";
@@ -76,6 +77,7 @@ const MainPage = () => {
           : companyId,
       ),
     );
+    dispatch(setPlatform(tg.platform));
     dispatch(setDarkMode(mode));
 
     if (currentVersion > requiredVersion) {
@@ -105,7 +107,7 @@ const MainPage = () => {
       <div className="mainPage">
         <Outlet />
       </div>
-      <CompanyLink/>
+      <CompanyLink />
     </>
   );
 };

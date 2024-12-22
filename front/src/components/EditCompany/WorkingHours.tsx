@@ -1,8 +1,7 @@
 import { CompanyState } from "../../app/types/companyType";
-import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import BottomSheet from "../Actions/BottomSheet";
 import CommonButton from "../Actions/CommonButton";
-import { ContactsActions } from "../contacts/ContactsActions";
+import EditWorkHours from "./EditWorkHours";
 
 interface EditCompanyProps {
   activeAction: string | null;
@@ -41,15 +40,7 @@ const WorkingHours = ({
         </label>
 
         {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
-          <div key={day}>
-            <ContactsActions
-              text={convertTo24HourFormat(hours)}
-              mainText={day}
-              style={"editWorkHour"}
-              isDisabled={hours == "Closed"}
-              arrowRight={true}
-            />
-          </div>
+          <EditWorkHours day={day} hours={hours} key={day} />
         ))}
 
         <CommonButton createdFunction={() => handleActionClick("edit")}>
