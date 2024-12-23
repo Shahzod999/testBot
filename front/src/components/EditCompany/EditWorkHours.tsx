@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import { ContactsActions } from "../contacts/ContactsActions";
 import TimePicker from "../TimePicker/TimePicker";
@@ -12,7 +12,7 @@ interface EditWorkHoursProps {
 
 const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
   const [time, setTime] = useState(false);
-  const [cur, setCur] = useState("");
+  const [cur, setCur] = useState<"open" | "close" | "">("");
 
   const parseInitialTime = (hours: string) => {
     if (hours === "Closed") {
@@ -53,24 +53,23 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
   });
 
   const handleSend = () => {
-    setPickerActive(false);
     const formattedHour = workingHour.hour.toString().padStart(2, "0");
     const formattedMinute = workingHour.minute.toString().padStart(2, "0");
 
-    const updatedCurrentTime =
-      cur === "open"
-        ? {
-            ...currentTime,
-            openTime: { hour: formattedHour, minute: formattedMinute },
-          }
-        : {
-            ...currentTime,
-            closeTime: { hour: formattedHour, minute: formattedMinute },
-          };
+    const updatedCurrentTime = {
+      ...currentTime,
+      [cur === "open" ? "openTime" : "closeTime"]: {
+        hour: formattedHour,
+        minute: formattedMinute,
+      },
+    };
 
     setCurrentTime(updatedCurrentTime);
+    setPickerActive(false);
+  };
 
-    const updatedTime = `${updatedCurrentTime.openTime.hour}:${updatedCurrentTime.openTime.minute}-${updatedCurrentTime.closeTime.hour}:${updatedCurrentTime.closeTime.minute}`;
+  const handleSave = () => {
+    const updatedTime = `${currentTime.openTime.hour}:${currentTime.openTime.minute}-${currentTime.closeTime.hour}:${currentTime.closeTime.minute}`;
 
     setTotalTime((prevTotalTime: any) => ({
       ...prevTotalTime,
@@ -78,13 +77,14 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
     }));
 
     setOriginalTime([
-      `${updatedCurrentTime.openTime.hour}:${updatedCurrentTime.openTime.minute}`,
-      `${updatedCurrentTime.closeTime.hour}:${updatedCurrentTime.closeTime.minute}`,
+      `${currentTime.openTime.hour}:${currentTime.openTime.minute}`,
+      `${currentTime.closeTime.hour}:${currentTime.closeTime.minute}`,
     ]);
+
+    setTime(false);
   };
 
   const handleCancel = () => {
-    setTime(false);
     setCurrentTime({
       openTime: {
         hour: originalTime[0]?.split(":")[0] || "00",
@@ -95,37 +95,33 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
         minute: originalTime[1]?.split(":")[1] || "00",
       },
     });
+    setTime(false);
+    setPickerActive(false);
   };
 
-  
-  const handelTimeChange = (m: "open" | "close" | "") => {
+  const handleTimeChange = (m: "open" | "close") => {
     setPickerActive(true);
     setCur(m);
+    setWorkingHour({
+      hour: parseInt(
+        currentTime[m === "open" ? "openTime" : "closeTime"].hour,
+        10,
+      ),
+      minute: parseInt(
+        currentTime[m === "open" ? "openTime" : "closeTime"].minute,
+        10,
+      ),
+    });
   };
-
-  useEffect(() => {
-    if (cur === "open") {
-      setWorkingHour({
-        hour: parseInt(currentTime.openTime.hour, 10),
-        minute: parseInt(currentTime.openTime.minute, 10),
-      });
-    } else if (cur === "close") {
-      setWorkingHour({
-        hour: parseInt(currentTime.closeTime.hour, 10),
-        minute: parseInt(currentTime.closeTime.minute, 10),
-      });
-    }
-  }, [cur]);
-
 
   return (
     <>
       <div onClick={() => setTime(true)}>
         <ContactsActions
-          text={`${currentTime.openTime.hour}:${currentTime.openTime.minute}:${currentTime.closeTime.hour}:${currentTime.closeTime.minute}`}
+          text={`${currentTime.openTime.hour}:${currentTime.openTime.minute}-${currentTime.closeTime.hour}:${currentTime.closeTime.minute}`}
           mainText={day}
           style={"editWorkHour"}
-          isDisabled={hours == "Closed"}
+          isDisabled={hours === "Closed"}
           arrowRight={true}
         />
       </div>
@@ -146,7 +142,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
             <div className="timepickerHolder__box__current">
               <div
                 className="timepickerHolder__box__current__info"
-                onClick={() => handelTimeChange("open")}>
+                onClick={() => handleTimeChange("open")}>
                 <strong>Открытие</strong>
                 <span className="timepickerHolder__box__current__info__time">
                   {currentTime.openTime.hour}:{currentTime.openTime.minute}
@@ -157,7 +153,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
 
               <div
                 className="timepickerHolder__box__current__info"
-                onClick={() => handelTimeChange("close")}>
+                onClick={() => handleTimeChange("close")}>
                 <strong>Закрытие</strong>
 
                 <span className="timepickerHolder__box__current__info__time">
@@ -184,7 +180,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
               {pickerActive ? (
                 <button onClick={handleSend}>Изменить</button>
               ) : (
-                <button onClick={() => setTime(false)}>Сохранить</button>
+                <button onClick={handleSave}>Сохранить</button>
               )}
             </div>
           </div>
