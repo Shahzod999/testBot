@@ -6,12 +6,14 @@ import MainPage from "./pages/MainPage/MainPage.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage.tsx";
 import EditPage from "./pages/Edit/EditPage.tsx";
+import NotFoundPage from "./pages/SmallPages/404/NotFoundPage.tsx";
+import Welcome from "./pages/SmallPages/welComePages/Welcome.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainPage />,
-    errorElement: <>Uzur Error 404</>,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "",
@@ -22,6 +24,11 @@ const router = createBrowserRouter([
         element: <EditPage />,
       },
     ],
+  },
+  {
+    path: "/welcome",
+    element: <Welcome />,
+    errorElement: <NotFoundPage />,
   },
 ]);
 

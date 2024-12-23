@@ -29,11 +29,10 @@
 // починить чекбокс схожи на ui
 // текст оставляемых коментарии должен быть схожим с telegram цвет и пусть сзади звездочек не выделяется ++
 // скролл в коментариях
-
-
 //
+
 :root {
-  --bg-color: #fff;
+  --bg-color: var(--tg-theme-bg-color, #000000);
   --text-color: var(--tg-theme-text-color, #000);
   --hint-color: var(--tg-theme-hint-color, #8e8e93);
   --link-color: var(--tg-theme-link-color, #007aff);
@@ -117,7 +116,7 @@ body {
 }
 
 body {
-  background: var(--tg-theme-bg-color, #000000) !important;
+  background: var(--bg-color) !important;
   color: var(--text-color);
   height: var(--tg-viewport-height);
 }
