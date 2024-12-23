@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PhotosSample } from "../../../app/types/companyType";
 import Cross from "./Cross";
 import { ReactSVG } from "react-svg";
@@ -15,7 +15,6 @@ interface AddFotoProps {
 const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
   const [imgOpen, setImgOpen] = useState(false);
   const [indexImg, setIndexImg] = useState(0);
-
 
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -36,6 +35,12 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
     }
   };
 
+  useEffect(() => {
+    if (!imgOpen) {
+      window.Telegram.WebApp.BackButton.hide(); // Гарантируем, что кнопка скрыта
+    }
+  }, [imgOpen]);
+
   const removeImage = (index: number) => {
     setimagesArray((prev) => prev.filter((_, i) => i !== index));
   };
@@ -45,8 +50,6 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
     setImgOpen(!imgOpen);
   };
 
-
-  
   return (
     <div className="addFoto">
       <h2>Добавить фотографию</h2>
@@ -74,7 +77,10 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
         ) : (
           <>
             {imagesArray.map((image, index) => (
-              <div className="addFoto__imagesArray__img" key={index} onClick={() => toggleImgOpen(index)}>
+              <div
+                className="addFoto__imagesArray__img"
+                key={index}
+                onClick={() => toggleImgOpen(index)}>
                 <div className="addFoto__imagesArray__img__cross">
                   <Cross toggleComment={() => removeImage(index)} />
                 </div>

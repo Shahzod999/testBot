@@ -23,6 +23,12 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     }
   }, [comment?.message]);
 
+  useEffect(() => {
+    if (!imgOpen) {
+      window.Telegram.WebApp.BackButton.hide(); // Гарантируем, что кнопка скрыта
+    }
+  }, [imgOpen]);
+
   const toggleOpen = () => {
     setOpen(!open);
   };
@@ -31,7 +37,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setIndexImg(i);
     setImgOpen(!imgOpen);
   };
-  
+
   return (
     <div className="comment">
       <div className="comment__title">
