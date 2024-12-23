@@ -17,14 +17,15 @@
         width: 100%;
 
         &__box {
-            padding: 30px;
+            padding: 13px 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            // &__img{
-            //     width: 80%;
-            // }
+
+            &__img {
+                width: 70%;
+            }
         }
 
         h2 {

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import "./fullScreenImgSwiper.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import { Pagination } from "swiper/modules";
+import { Pagination, Zoom } from "swiper/modules";
 
 interface FullScreenImgSwiperProps {
   imgOpen: boolean;
@@ -38,27 +38,30 @@ const FullScreenImgSwiper = ({
   return (
     <div className="fullScreenImg" onClick={() => toggleImgOpen(0)}>
       <Swiper
-        modules={[Pagination]}
+        modules={[Pagination, Zoom]}
         className="mySwiper"
         pagination={{
           clickable: true,
         }}
+        zoom={{ maxRatio: 3 }}
         initialSlide={indexImg}>
         {images?.map((item, i) => (
           <SwiperSlide key={i}>
-            {local ? (
-              <img
-                src={item}
-                alt="LargePhoto photo"
-                className="comment__FullImage"
-              />
-            ) : (
-              <img
-                src={`https://dev.admin13.uz${item}`}
-                alt="LargePhoto photo"
-                className="comment__FullImage"
-              />
-            )}
+            <div className="swiper-zoom-container">
+              {local ? (
+                <img
+                  src={item}
+                  alt="LargePhoto photo"
+                  className="comment__FullImage"
+                />
+              ) : (
+                <img
+                  src={`https://dev.admin13.uz${item}`}
+                  alt="LargePhoto photo"
+                  className="comment__FullImage"
+                />
+              )}
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

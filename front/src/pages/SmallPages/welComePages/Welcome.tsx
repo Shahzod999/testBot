@@ -3,6 +3,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Pagination } from "swiper/modules";
 import welcomeSecond from "../../../../public/welcomeSecond.json";
+import baristaUtya from "../../../../public/baristaUtya.json";
+import searchUtya from "../../../../public/searchUtya.json";
 import "./welcome.scss";
 import CommonButton from "../../../components/Actions/CommonButton";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +27,7 @@ const Welcome = () => {
           }}>
           <SwiperSlide>
             <WelcomeBox
-              img={welcomeSecond}
+              img={searchUtya}
               title="O’zingizga eng yaqin bo’lgan joylarni bir zumda toping!"
               text="Restoranlar, kafelar va qahvaxonalarni telegramdan chiqmasdan toping va do’stlaringiz bilan ulashing!"
               button="Дальше"
@@ -41,7 +43,7 @@ const Welcome = () => {
           </SwiperSlide>
           <SwiperSlide>
             <WelcomeBox
-              img={welcomeSecond}
+              img={baristaUtya}
               title="O’zingizga eng yaqin bo’lgan joylarni bir zumda toping!"
               text="Restoranlar, kafelar va qahvaxonalarni telegramdan chiqmasdan toping va do’stlaringiz bilan ulashing!"
               button="Начать"
