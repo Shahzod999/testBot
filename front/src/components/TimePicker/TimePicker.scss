@@ -1,3 +1,13 @@
+$picker-width: 60px;
+$picker-height: 200px;
+$item-height: 40px;
+$padding-height: 80px;
+$font-size: 18px;
+$font-size-selected: 22px;
+$font-color: #646464;
+$font-color-selected: #fff;
+$picker-background: #373737;
+
 .timepicker {
   display: flex;
   justify-content: center;
@@ -5,62 +15,59 @@
   gap: 20px;
   border-radius: 10px;
   margin: 20px 0;
+  background-color: $picker-background;
 }
 
 .picker {
-  width: 60px;
-  height: 200px;
+  width: $picker-width;
+  height: $picker-height;
   overflow-y: scroll;
   position: relative;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: #fff;
   scroll-snap-type: y mandatory;
   scrollbar-width: none;
-}
 
-.picker::-webkit-scrollbar {
-  display: none;
-}
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-.picker-list {
-  text-align: center;
-}
+  .picker-list {
+    text-align: center;
+  }
 
-.picker-item {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #333;
-  scroll-snap-align: center;
-}
+  .picker-item {
+    height: $item-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size;
+    color: $font-color;
+    scroll-snap-align: center;
 
-.picker-item.selected {
-  font-weight: bold;
-  font-size: 22px;
-  color: #007aff;
-}
+    &.selected {
+      font-weight: bold;
+      font-size: $font-size-selected;
+      color: $font-color-selected;
+    }
+  }
 
-.picker-padding {
-  height: 80px;
-}
+  .picker-padding {
+    height: $padding-height;
+  }
 
-.picker::before,
-.picker::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 50px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
-  z-index: 1;
-}
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    z-index: 1;
+  }
 
-.picker::before {
-  top: 0;
-}
+  &::before {
+    top: 0;
+  }
 
-.picker::after {
-  bottom: 0;
+  &::after {
+    bottom: 0;
+  }
 }

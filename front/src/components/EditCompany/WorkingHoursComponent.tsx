@@ -8,18 +8,20 @@ interface EditCompanyProps {
   activeAction: string | null;
   companyInfo: CompanyState;
   closeBottomSheet: () => void;
+  setChangedTotalTime: (value: any) => void;
 }
 
-const WorkingHours = ({
+const WorkingHoursComponent = ({
   activeAction,
   closeBottomSheet,
   companyInfo,
+  setChangedTotalTime,
 }: EditCompanyProps) => {
-  const [totalTime, setTotalTime] = useState("");
+  const [totalTime, setTotalTime] = useState({});
 
   const handleSubmit = () => {
     closeBottomSheet();
-    console.log(totalTime, "qwert");
+    setChangedTotalTime({ ...companyInfo?.working_hours, ...totalTime });
   };
 
   return (
@@ -62,4 +64,4 @@ const WorkingHours = ({
   );
 };
 
-export default WorkingHours;
+export default WorkingHoursComponent;

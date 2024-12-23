@@ -6,6 +6,7 @@ import {
   CompanyState,
   MobileApps,
   PhotosSample,
+  WorkingHours,
 } from "../../app/types/companyType";
 import "./editActions.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
@@ -25,9 +26,14 @@ import {
 interface EditCompanyProps {
   companyInfo: CompanyState;
   handleActionClick: (key: string) => void;
+  changedTotalTime: WorkingHours | undefined;
 }
 
-const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
+const EditCompany = ({
+  companyInfo,
+  handleActionClick,
+  changedTotalTime,
+}: EditCompanyProps) => {
   const dispatch = useAppDispatch();
   const companyId = useAppSelector(selectedCompanyId);
   const isDarkmode = useAppSelector(selectedIsDarkMode);
@@ -45,16 +51,12 @@ const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
     useUpdateRequestMutation();
   const [uploadImage, { isLoading: uploadLoading }] = useUploadImageMutation();
 
-  console.log(imagesArrayNew);
-
   useEffect(() => {
-    // Устанавливаем логотип
     setLogoImg(
       companyInfo.logoThumbnail ||
         (isDarkmode ? companyInfo.logo_icon_dark : companyInfo.logo_icon_light),
     );
 
-    // Устанавливаем массив изображений
     if (companyInfo.photos_sample && companyInfo.photos_sample.length > 0) {
       const initialImages = companyInfo.photos_sample.map((photo) => ({
         photo_id: photo.photo_id,
@@ -100,7 +102,6 @@ const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
     return response.thumbnail;
   };
 
-
   const handleSubmit = async () => {
     try {
       let logoThumbnail = newCompanyInfo.logoThumbnail;
@@ -114,12 +115,12 @@ const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
           if (image.file) {
             const uploadedUrl = await handleImageUpload(image.file);
             return {
-              photo_id: uploadedUrl, // Используем URL как временный ID
+              photo_id: uploadedUrl,
               photo_url: uploadedUrl,
               photo_url_large: uploadedUrl,
             };
           }
-          return image; // Уже существующие изображения
+          return image;
         }),
       );
 
@@ -127,7 +128,8 @@ const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
         ...newCompanyInfo,
         logoThumbnail,
         photos_sample: uploadedPhotos,
-      };
+        ...(changedTotalTime ? { working_hours: changedTotalTime } : {})
+      };      
 
       if (!newCompanyInfo.requester_name) {
         return dispatch(infoToast("Заполните поля"));
@@ -163,7 +165,8 @@ const EditCompany = ({ companyInfo, handleActionClick }: EditCompanyProps) => {
       <div className="contacts__actions editActions">
         <div className="contacts__actions__closeButtons">
           <span className="contacts__actions__closeButtons__title">
-            Редактировать <br />{newCompanyInfo.name}
+            Редактировать <br />
+            {newCompanyInfo.name}
           </span>
         </div>
         <h3 className="contacts__actions__title">Общая информация</h3>

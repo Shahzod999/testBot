@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { WorkingHours } from "../../app/types/companyType";
-import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
+import { WorkingHours } from "../app/types/companyType";
+import convertTo24HourFormat from "./convertTo24HourFormat";
 
 export const useWorkingHours = (workingHours: WorkingHours) => {
   return useMemo(() => {

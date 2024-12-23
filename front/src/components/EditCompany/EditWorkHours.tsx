@@ -10,11 +10,7 @@ interface EditWorkHoursProps {
   setTotalTime: (prev: any) => void;
 }
 
-const EditWorkHours = ({
-  day,
-  hours,
-  setTotalTime,
-}: EditWorkHoursProps) => {
+const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
   const [time, setTime] = useState(false);
   const [cur, setCur] = useState("");
 
@@ -84,7 +80,6 @@ const EditWorkHours = ({
       });
     }
   }, [cur]);
-  
 
   return (
     <>
@@ -103,20 +98,35 @@ const EditWorkHours = ({
           <div
             className="timepickerHolder__box"
             onClick={(e) => e.stopPropagation()}>
-            <button>Круглосуточно</button>
+            <div className="switch-container">
+              <span>Круглосуточно</span>
+              <label className="switch">
+                <input type="checkbox" />
+                <span />
+              </label>
+            </div>
 
             <div className="timepickerHolder__box__current">
-              <span
-                className="timepickerHolder__box__current__time"
-                onClick={() => handelTimeChange("open")}>
-                {currentTime.openTime.hour}:{currentTime.openTime.minute}
-              </span>
-              <span>|</span>
-              <span
-                className="timepickerHolder__box__current__time"
-                onClick={() => handelTimeChange("close")}>
-                {currentTime.closeTime.hour}:{currentTime.closeTime.minute}
-              </span>
+              <div className="timepickerHolder__box__current__info">
+                <strong>Открытие</strong>
+                <span
+                  className="timepickerHolder__box__current__info__time"
+                  onClick={() => handelTimeChange("open")}>
+                  {currentTime.openTime.hour}:{currentTime.openTime.minute}
+                </span>
+              </div>
+
+              <span className="timepickerHolder-devider"></span>
+
+              <div className="timepickerHolder__box__current__info">
+              <strong>Закрытие</strong>
+
+                <span
+                  className="timepickerHolder__box__current__info__time"
+                  onClick={() => handelTimeChange("close")}>
+                  {currentTime.closeTime.hour}:{currentTime.closeTime.minute}
+                </span>
+              </div>
             </div>
 
             <div

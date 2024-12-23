@@ -1,5 +1,5 @@
 import { WorkingHours } from "../../app/types/companyType";
-import { useWorkingHours } from "./WorkingHours";
+import { useWorkingHours } from "../../hooks/useWorkingHours";
 
 const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
   const { isOpen, hours, willOpenAt } = useWorkingHours(working_hours);

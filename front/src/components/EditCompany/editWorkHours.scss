@@ -10,18 +10,26 @@
     align-items: center;
     z-index: 999;
 
+    &-devider {
+        width: 1px;
+        height: 40px;
+        background-color: #373737;
+        border-radius: 10px;
+    }
+
     &__box {
         border-radius: 10px;
         background-color: #dddddd62;
         padding: 20px;
+        min-width: 65%;
+
+
 
         &__normal {
             transition: 0.5s ease-in-out;
         }
 
-        &__active {
-            
-        }
+        &__active {}
 
         &__disable {
             transform: scale(0.95);
@@ -32,21 +40,30 @@
         &__current {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             background-color: white;
             margin: 20px 0;
             padding: 20px;
             border-radius: 10px;
             color: black;
 
-            &__time {
-                cursor: pointer;
-                flex: 1;
-                transition: transform 0.2s ease-in-out;
+            &__info {
+                display: flex;
+                flex-direction: column;
 
-                &:hover {
-                    transform: scale(1.1);
+                span {}
+
+                &__time {
+                    cursor: pointer;
+                    flex: 1;
+                    transition: transform 0.2s ease-in-out;
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
                 }
             }
+
         }
 
         button {
@@ -58,6 +75,62 @@
             font-weight: bolder;
             text-transform: uppercase;
             color: black;
+        }
+    }
+}
+
+.switch-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 42px;
+        height: 26px;
+
+        input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        span {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 26px;
+            transition: 0.4s;
+
+            &::before {
+                position: absolute;
+                content: "";
+                height: 20px;
+                width: 20px;
+                left: 3px;
+                bottom: 3px;
+                background-color: white;
+                border-radius: 50%;
+                transition: 0.4s;
+            }
+        }
+
+        input:checked+span {
+            background-color: #34c759;
+
+            &::before {
+                transform: translateX(16px);
+            }
         }
     }
 }

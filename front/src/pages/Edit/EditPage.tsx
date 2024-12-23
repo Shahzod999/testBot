@@ -2,13 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 import { selectedCompany } from "../../app/features/companyStateSlice";
 import EditCompany from "../../components/EditCompany/EditCompany";
 import { useAppSelector } from "../../hooks/reduxHooks";
-import WorkingHours from "../../components/EditCompany/WorkingHours";
+import WorkingHoursComponent from "../../components/EditCompany/WorkingHoursComponent";
 import { useNavigate } from "react-router-dom";
 
 const EditPage = () => {
   const navigate = useNavigate();
   const [activeAction, setActiveAction] = useState<string | null>("edit");
   const companyInfo = useAppSelector(selectedCompany);
+  
+  const [changedTotalTime, setChangedTotalTime] = useState(companyInfo?.working_hours);
 
   const closeBottomSheet = useCallback(() => {
     document.body.style.overflow = "";
@@ -34,7 +36,8 @@ const EditPage = () => {
     };
   }, [navigate]);
 
-  
+
+  console.log(changedTotalTime,'chatnged');
 
   if (!companyInfo) return;
   return (
@@ -42,11 +45,13 @@ const EditPage = () => {
       <EditCompany
         companyInfo={companyInfo}
         handleActionClick={handleActionClick}
+        changedTotalTime={changedTotalTime}
       />
-      <WorkingHours
+      <WorkingHoursComponent
         companyInfo={companyInfo}
         activeAction={activeAction}
         closeBottomSheet={closeBottomSheet}
+        setChangedTotalTime={setChangedTotalTime}
       />
     </>
   );
