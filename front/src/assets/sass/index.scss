@@ -173,6 +173,7 @@ a {
 
 .pressEffefct {
   cursor: pointer;
+
   &:hover {
     filter: brightness(110%);
   }
@@ -239,6 +240,14 @@ button:disabled {
 
   div {
     display: flex;
+  }
+
+  svg {
+    fill: var(--tg-theme-text-color, #000);
+
+    path {
+      fill: var(--tg-theme-text-color, #000);
+    }
   }
 }
 

@@ -43,39 +43,52 @@
             align-items: center;
             background-color: white;
             margin: 20px 0;
-            padding: 20px;
+            padding: 1px;
             border-radius: 10px;
             color: black;
+            gap: 15px;
 
             &__info {
                 display: flex;
                 flex-direction: column;
+                padding: 15px;
+                transition: transform 0.2s ease-in-out;
+                cursor: pointer;
+                flex: 1;
 
-                span {}
 
-                &__time {
-                    cursor: pointer;
-                    flex: 1;
-                    transition: transform 0.2s ease-in-out;
-
-                    &:hover {
-                        transform: scale(1.1);
-                    }
+                &:hover {
+                    transform: scale(1.1);
                 }
+
             }
 
         }
 
-        button {
-            width: 100%;
-            padding: 25px 30px;
-            border-radius: 10px;
-            background-color: white;
-            border: none;
-            font-weight: bolder;
-            text-transform: uppercase;
-            color: black;
+        &__buttons {
+            display: flex;
+            gap: 17px;
+            align-items: center;
+
+
+
+            button {
+                width: 100%;
+                padding: 20px 0;
+                border-radius: 10px;
+                background-color: rgb(255, 255, 255);
+                border: none;
+                font-weight: bolder;
+                text-transform: uppercase;
+                color: black;
+                cursor: pointer;
+            }
+
+            .cancel {
+                background-color: rgb(147, 147, 147);
+            }
         }
+
     }
 }
 
