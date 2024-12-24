@@ -99,7 +99,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
 
-  console.log(companyInfo, "111");
 
   return (
     <>

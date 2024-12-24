@@ -37,6 +37,9 @@ const MainPage = () => {
   const navigate = useNavigate();
   const companyId = useAppSelector(selectedCompanyId);
   const telegramId = useAppSelector(selectedUserTelegramId);
+  
+
+
   const dispatch = useAppDispatch();
   const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
