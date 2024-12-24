@@ -8,6 +8,7 @@ import HomePage from "./pages/Home/HomePage.tsx";
 import EditPage from "./pages/Edit/EditPage.tsx";
 import NotFoundPage from "./pages/SmallPages/404/NotFoundPage.tsx";
 import Welcome from "./pages/SmallPages/welComePages/Welcome.tsx";
+import Snowfall from "react-snowfall";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,15 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
+    <Snowfall
+      style={{
+        position: "fixed",
+        width: "100vw",
+        height: "100vh",
+        opacity: 0.5
+      }}
+    />
+
     <RouterProvider router={router} />
   </Provider>,
 );

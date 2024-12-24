@@ -151,18 +151,23 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
         </div>
 
-        <button
-          className="mainInfo__orderbutton pressEffefct"
-          onClick={handleOrder}>
-          {companyInfo.is_accept_orders ? (
-            <>
-              <img src="./bag.svg" alt="" />
-              Заказать
-            </>
-          ) : (
-            "Позвонить"
-          )}
-        </button>
+        <div className="newYear">
+          <button
+            className="mainInfo__orderbutton pressEffefct"
+            onClick={handleOrder}>
+            <div className="newYear__button">
+              <img src="./NewYear/open.png" alt="" />
+            </div>
+            {companyInfo.is_accept_orders ? (
+              <>
+                <img src="./bag.svg" alt="" />
+                Заказать
+              </>
+            ) : (
+              "Позвонить"
+            )}
+          </button>
+        </div>
 
         <div className="actionButtons">
           {actions.map((item) => (
@@ -189,7 +194,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         )}
       </div>
 
-      <Taxi activeAction={activeAction} closeBottomSheet={closeBottomSheet} companyInfo={companyInfo}/>
+      <Taxi
+        activeAction={activeAction}
+        closeBottomSheet={closeBottomSheet}
+        companyInfo={companyInfo}
+      />
 
       <BottomSheet isOpen={activeAction === "map"} onClose={closeBottomSheet}>
         <AdressLinks companyInfo={companyInfo} />

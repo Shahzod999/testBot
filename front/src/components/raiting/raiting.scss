@@ -4,6 +4,7 @@
   color: var(--text-color);
   margin-bottom: 2px;
   padding: 17px 16px;
+  overflow: hidden;
 
   &__count {
     display: flex;

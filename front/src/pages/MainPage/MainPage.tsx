@@ -37,11 +37,13 @@ const MainPage = () => {
   const dispatch = useAppDispatch();
   const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
-  dispatch(
-    setUserTelegramId(
-      tg?.initDataUnsafe?.user?.id || import.meta.env.VITE_TELEGRAMID,
-    ),
-  );
+  useEffect(() => {
+    dispatch(
+      setUserTelegramId(
+        tg?.initDataUnsafe?.user?.id || import.meta.env.VITE_TELEGRAMID,
+      ),
+    );
+  }, [dispatch]);
 
   useEffect(() => {
     const requiredVersion = "7.0";
@@ -53,7 +55,10 @@ const MainPage = () => {
     tg.LocationManager.init(() => {
       console.log("LocationManager initialized.");
       tg.LocationManager.getLocation((location: any) => {
-        if (location) {
+        if (
+          location &&
+          (location.latitude !== loc.lat || location.longitude !== loc.lon)
+        ) {
           dispatch(
             setuserLocation({
               lat: location.latitude,
@@ -87,7 +92,7 @@ const MainPage = () => {
         `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,
       );
     }
-  }, []);
+  }, [dispatch, companyId]);
 
   const { data, isLoading, isError } = useGetCompanyByIdQuery({
     id: tg?.initDataUnsafe?.start_param || companyId,
@@ -96,11 +101,12 @@ const MainPage = () => {
   });
 
   useEffect(() => {
-    dispatch(setCompany(data?.data));
+    if (data?.data) {
+      dispatch(setCompany(data.data));
+    }
   }, [data, dispatch]);
 
-  if (isLoading) return <Skeleton />;
-  if (isError) return <Skeleton />;
+  if (isLoading || isError) return <Skeleton />;
   return (
     <>
       <Toast />

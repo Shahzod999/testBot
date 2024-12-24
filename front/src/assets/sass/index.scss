@@ -286,3 +286,50 @@ button:disabled {
 .nowrap {
   white-space: nowrap;
 }
+
+
+
+///
+/// 
+/// 
+/// 
+/// npm uninstall react-snowfall
+.newYear {
+  position: relative;
+  pointer-events: none;
+
+  &__button {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -30%;
+    right: -5%;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__three {
+    width: 119%;
+    height: 50px;
+    position: absolute;
+    bottom: -40px;
+    right: 0;
+    left: -20px;
+    filter: drop-shadow(2px 4px 6px black);
+  }
+
+  &__lights {
+    position: absolute;
+    right: -10px;
+    top: -170px;
+    filter: drop-shadow(2px 4px 6px rgb(255, 254, 245));
+    transform: rotate(25deg);
+    height: 150px;
+    width: 150px;
+  }
+
+}
