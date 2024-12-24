@@ -158,6 +158,8 @@ const EditCompany = ({
     console.log(newCompanyInfo);
   };
 
+  
+
   //t.me изменить
 
   return (
@@ -215,10 +217,10 @@ const EditCompany = ({
 
         <h3 className="contacts__actions__title second__title">Контакты</h3>
         <EditAction
-          smallInfo="Номер Telegram"
+          smallInfo="Ссылка на Telegram"
           text={
             newCompanyInfo.social_media.telegram?.replace("https://", "") ||
-            "+000 000 00 00"
+            "@User"
           }
           icon="./telegram.svg"
           editable
