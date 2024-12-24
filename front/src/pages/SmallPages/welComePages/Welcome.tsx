@@ -8,9 +8,10 @@ import searchUtya from "../../../../public/searchUtya.json";
 import "./welcome.scss";
 import CommonButton from "../../../components/Actions/CommonButton";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Welcome = () => {
+  const [text, setText] = useState("Дальше");
   const navigate = useNavigate();
   const swiperRef = useRef<any>(null);
 
@@ -20,6 +21,9 @@ const Welcome = () => {
 
     swiper.slideNext();
 
+    if (currentSlideIndex === 1) {
+      setText("Начать");
+    }
     if (currentSlideIndex === 2) {
       navigate("/");
     }
@@ -27,6 +31,9 @@ const Welcome = () => {
 
   return (
     <div className="notFoundPage">
+      <div className="notFoundPage__icon" onClick={() => navigate("/")}>
+        <span>Пропустить</span>
+      </div>
       <div className="notFoundPage__sticker">
         <Swiper
           modules={[Pagination]}
@@ -60,7 +67,7 @@ const Welcome = () => {
       </div>
 
       <div className="notFoundPage__button">
-        <CommonButton createdFunction={handleLink}>Дальше</CommonButton>
+        <CommonButton createdFunction={handleLink}>{text}</CommonButton>
       </div>
     </div>
   );

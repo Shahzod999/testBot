@@ -6,6 +6,17 @@
   padding: 17px 16px;
   overflow: hidden;
 
+  .raiting__set {
+    strong {
+      justify-content: center;
+
+      svg {
+        width: 36px;
+        height: 36px;
+      }
+    }
+  }
+
   &__count {
     display: flex;
     align-items: center;

@@ -47,7 +47,6 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
         </div>
 
         <div className="raiting__set" onClick={toggleComment}>
-          <p>Нажмите, чтобы оценить:</p>
           <RaitingStars count={count} handleStarClick={handleStarClick} />
         </div>
 
