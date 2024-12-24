@@ -50,11 +50,6 @@ const MainPage = () => {
     }
   }, [telegramId, dispatch]);
 
-  useEffect(()=>{
-    if(!tg.LocationManager.isAccessGranted){
-      navigate("/welcome")
-    }
-  },[])
 
   useEffect(() => {
     const requiredVersion = "7.0";
@@ -62,6 +57,10 @@ const MainPage = () => {
     tg.ready();
     tg.expand();
     const mode = tg.colorScheme == "dark";
+
+    if(tg.LocationManager.isAccessGranted){
+      navigate("/welcome")
+    }
 
     tg.LocationManager.init(() => {
       console.log("LocationManager initialized.");
