@@ -5,7 +5,6 @@ interface WelcomeBoxProps {
   img: object;
   title: string;
   text: string;
-  button: string;
 }
 
 const WelcomeBox = ({ img, title, text }: WelcomeBoxProps) => {

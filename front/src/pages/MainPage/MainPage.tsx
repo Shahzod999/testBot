@@ -6,6 +6,7 @@ import { setCompany, setDarkMode } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
 import {
   selectedCompanyId,
+  selectedUserTelegramId,
   setCompanyId,
   setPlatform,
   setUserTelegramId,
@@ -14,7 +15,7 @@ import { TelegramTypes } from "../../app/types/telegramTypes";
 import { setuserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
 import Toast from "../../components/Toast/Toast";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -33,17 +34,27 @@ declare global {
 const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
+  const navigate = useNavigate()
   const companyId = useAppSelector(selectedCompanyId);
+  const telegramId = useAppSelector(selectedUserTelegramId);
   const dispatch = useAppDispatch();
   const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
   useEffect(() => {
-    dispatch(
-      setUserTelegramId(
-        tg?.initDataUnsafe?.user?.id || import.meta.env.VITE_TELEGRAMID,
-      ),
-    );
-  }, [dispatch]);
+    if (!telegramId) {
+      const userId =
+        tg?.initDataUnsafe?.user?.id || import.meta.env.VITE_TELEGRAMID;
+      if (userId) {
+        dispatch(setUserTelegramId(userId));
+      }
+    }
+  }, [telegramId, dispatch]);
+
+  useEffect(()=>{
+    if(!tg.LocationManager.isAccessGranted){
+      navigate("/welcome")
+    }
+  },[])
 
   useEffect(() => {
     const requiredVersion = "7.0";
@@ -75,13 +86,7 @@ const MainPage = () => {
       });
     });
 
-    dispatch(
-      setCompanyId(
-        tg?.initDataUnsafe?.start_param
-          ? tg.initDataUnsafe.start_param
-          : companyId,
-      ),
-    );
+    dispatch(setCompanyId(tg?.initDataUnsafe?.start_param || companyId));
     dispatch(setPlatform(tg.platform));
     dispatch(setDarkMode(mode));
 
