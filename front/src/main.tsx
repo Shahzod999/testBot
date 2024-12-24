@@ -24,12 +24,11 @@ const router = createBrowserRouter([
         path: "edit",
         element: <EditPage />,
       },
+      {
+        path: "welcome",
+        element: <Welcome />,
+      },
     ],
-  },
-  {
-    path: "/welcome",
-    element: <Welcome />,
-    errorElement: <NotFoundPage />,
   },
 ]);
 
@@ -40,7 +39,7 @@ createRoot(document.getElementById("root")!).render(
         position: "fixed",
         width: "100vw",
         height: "100vh",
-        opacity: 0.5
+        opacity: 0.5,
       }}
     />
 

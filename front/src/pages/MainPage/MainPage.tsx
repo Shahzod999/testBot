@@ -34,7 +34,7 @@ declare global {
 const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const companyId = useAppSelector(selectedCompanyId);
   const telegramId = useAppSelector(selectedUserTelegramId);
   const dispatch = useAppDispatch();
@@ -50,7 +50,6 @@ const MainPage = () => {
     }
   }, [telegramId, dispatch]);
 
-
   useEffect(() => {
     const requiredVersion = "7.0";
     const currentVersion = tg.version;
@@ -58,12 +57,15 @@ const MainPage = () => {
     tg.expand();
     const mode = tg.colorScheme == "dark";
 
-    if(tg.LocationManager.isAccessGranted){
-      navigate("/welcome")
+    if (tg?.LocationManager?.isAccessGranted) {
+      navigate("/welcome");
     }
 
     tg.LocationManager.init(() => {
       console.log("LocationManager initialized.");
+      if (tg?.LocationManager?.isAccessGranted == false) {
+        navigate("/welcome");
+      }
       tg.LocationManager.getLocation((location: any) => {
         if (
           location &&
