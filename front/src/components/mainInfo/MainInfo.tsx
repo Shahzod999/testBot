@@ -5,16 +5,15 @@ import { GoBookmarkFill } from "react-icons/go";
 import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
 import BottomSheet from "../Actions/BottomSheet";
-import DistanceCalculator from "../../hooks/DistanceCalculator";
 import { useFavoriteApiMutation } from "../../app/api/companySlice";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
-import { selectedUserLocation } from "../../app/features/userLocationSlice";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "./WorkTime";
 import NearestMetroHolder from "./NearestMetroHolder";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
 import Taxi from "./Taxi/Taxi";
+import { ReactSVG } from "react-svg";
 interface ActionsState {
   text: string;
   img: string;
@@ -25,10 +24,8 @@ interface ActionsState {
 const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(companyInfo?.is_favorite);
-  const userCoordinates = useAppSelector(selectedUserLocation);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
-
   const isDarkMode = useAppSelector(selectedIsDarkMode);
 
   const toggleBookMark = () => {
@@ -99,10 +96,14 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
 
-
   return (
     <>
       <div className="mainInfo">
+        <div className="newYear">
+          <div className="newYear__lightsMain">
+            <img src="./NewYear/lightsMain.png" alt="" />
+          </div>
+        </div>
         <div className="mainInfo__logo">
           <div className="mainInfo__logo__img">
             <img
@@ -138,15 +139,20 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <div></div>
           </div>
           <div className="mainInfo__openHours__right">
-            <span>Расстояние</span>
-            {userCoordinates ? (
-              <DistanceCalculator
-                tragetLocation={companyInfo?.location?.coordinates}
-                userCoordinates={userCoordinates}
-              />
-            ) : (
-              <span>loading...</span>
-            )}
+            <div className="mainInfo__openHours__right-distance">
+              Расстояние - {companyInfo.distance.distance || "loading..."}
+            </div>
+            <div className="mainInfo__openHours__right-duration">
+              <div className="mainInfo__openHours__right-duration-box">
+                <ReactSVG src="./walkPerson.svg" />
+                <span>{companyInfo.distance.duration}</span>
+              </div>
+              •
+              <div className="mainInfo__openHours__right-duration-box">
+                <ReactSVG src="./car.fill.svg" />
+                <span>{companyInfo.distance.duration}</span>
+              </div>
+            </div>
           </div>
         </div>
 

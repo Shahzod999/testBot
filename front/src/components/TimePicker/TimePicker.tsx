@@ -15,7 +15,7 @@ const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
   const hourRef = useRef<HTMLDivElement>(null);
   const minuteRef = useRef<HTMLDivElement>(null);
 
-  const scrollTimeout = useRef<any | null>(null);
+  const scrollTimeout = useRef<number | null>(null);
 
   const handleScrollEnd = (
     ref: React.RefObject<HTMLDivElement>,

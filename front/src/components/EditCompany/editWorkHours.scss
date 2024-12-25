@@ -1,10 +1,6 @@
 .timepickerHolder {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--secondary-bg-color);
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,23 +14,28 @@
     }
 
     &__box {
+        width: 100%;
         border-radius: 10px;
-        background-color: #dddddd62;
-        padding: 20px;
-        min-width: 65%;
 
+        &__wrap {
+            padding: 0 20px;
 
+            >span {
+                font-family: var(--second-family);
+                font-weight: 400;
+                font-size: 23px;
+                letter-spacing: 0.03em;
+                color: rgba(60, 60, 67, 0.6);
+            }
 
-        &__normal {
-            transition: 0.5s ease-in-out;
-        }
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-        &__active {}
-
-        &__disable {
-            transform: scale(0.95);
-            filter: contrast(0.5);
-            pointer-events: none;
+            &__normal {
+                flex: 1;
+                transition: 0.5s ease-in-out;
+            }
         }
 
         &__current {
@@ -67,25 +68,39 @@
 
         &__buttons {
             display: flex;
+            justify-content: space-between;
             gap: 17px;
-            align-items: center;
 
 
 
             button {
-                width: 100%;
-                padding: 20px 0;
-                border-radius: 10px;
-                background-color: rgb(255, 255, 255);
+                border-radius: 12px;
+                padding: 8px 12px;
+                flex: 1;
                 border: none;
-                font-weight: bolder;
-                text-transform: uppercase;
-                color: black;
-                cursor: pointer;
             }
 
-            .cancel {
-                background-color: rgb(147, 147, 147);
+            .toAllDays {
+                font-family: var(--font-family);
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 112%;
+                letter-spacing: -0.02em;
+                text-align: center;
+                color: var(--text-color);
+                background: rgba(116, 116, 128, 0.08);
+            }
+
+            .enterTime {
+                font-family: var(--font-family);
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 112%;
+                letter-spacing: -0.02em;
+                text-align: center;
+                color: white;
+                background: var(--link-color);
+                text-transform: uppercase;
             }
         }
 
@@ -101,12 +116,34 @@
     color: white;
     font-size: 16px;
 
+    &__title {
+
+        h4 {
+            font-family: var(--second-family);
+            font-weight: 700;
+            font-size: 22px;
+            line-height: 127%;
+            letter-spacing: 0.02em;
+            color: var(--text-color);
+        }
+
+
+        span {
+            font-family: var(--font-family);
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 138%;
+            letter-spacing: -0.01em;
+            color: var(--link-color);
+        }
+    }
+
 
     .switch {
         position: relative;
         display: inline-block;
-        width: 42px;
-        height: 26px;
+        height: 32px;
+        width: 50px;
 
         input {
             opacity: 0;
@@ -128,9 +165,9 @@
             &::before {
                 position: absolute;
                 content: "";
-                height: 20px;
-                width: 20px;
-                left: 3px;
+                height: 80%;
+                width: 50%;
+                left: 4px;
                 bottom: 3px;
                 background-color: white;
                 border-radius: 50%;
@@ -139,7 +176,7 @@
         }
 
         input:checked+span {
-            background-color: #34c759;
+            background-color: var(--link-color);
 
             &::before {
                 transform: translateX(16px);

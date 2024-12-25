@@ -9,8 +9,10 @@ const EditPage = () => {
   const navigate = useNavigate();
   const [activeAction, setActiveAction] = useState<string | null>("edit");
   const companyInfo = useAppSelector(selectedCompany);
-  
-  const [changedTotalTime, setChangedTotalTime] = useState(companyInfo?.working_hours);
+
+  const [changedTotalTime, setChangedTotalTime] = useState(
+    companyInfo?.working_hours,
+  );
 
   const closeBottomSheet = useCallback(() => {
     document.body.style.overflow = "";
@@ -32,12 +34,9 @@ const EditPage = () => {
 
     return () => {
       tg.BackButton.hide();
-      tg.BackButton.offClick(()=>{});
+      tg.BackButton.offClick(() => {});
     };
   }, [navigate]);
-
-
-  console.log(changedTotalTime,'chatnged');
 
   if (!companyInfo) return;
   return (

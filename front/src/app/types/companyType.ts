@@ -67,13 +67,13 @@ export interface CompanyState {
 }
 
 export interface WorkingHours {
-  Thursday?: string[];
-  Friday?: string[];
-  Saturday?: string[];
-  Sunday?: string[];
-  Monday?: string[];
-  Tuesday?: string[];
-  Wednesday?: string[];
+  Thursday: string[];
+  Friday: string[];
+  Saturday: string[];
+  Sunday: string[];
+  Monday: string[];
+  Tuesday: string[];
+  Wednesday: string[];
 }
 
 export interface PhotosSample {
@@ -225,23 +225,22 @@ export interface LastLocation {
 ///3
 ///
 export interface TaxiType {
-  status: string
-  message: string
-  data: Data
+  status: string;
+  message: string;
+  data: Data;
 }
 
 export interface Data {
-  currency: string
-  options: Option[]
-  estimatedTime: number
+  currency: string;
+  options: Option[];
+  estimatedTime: number;
 }
 
 export interface Option {
-  className: string
-  classText: string
-  price: number
-  minPrice: number
-  priceText: string
-  waitingTime: number
+  className: string;
+  classText: string;
+  price: number;
+  minPrice: number;
+  priceText: string;
+  waitingTime: number;
 }
-

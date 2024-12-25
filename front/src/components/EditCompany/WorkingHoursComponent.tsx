@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { CompanyState } from "../../app/types/companyType";
+import { CompanyState, WorkingHours } from "../../app/types/companyType";
 import BottomSheet from "../Actions/BottomSheet";
 import CommonButton from "../Actions/CommonButton";
 import EditWorkHours from "./EditWorkHours";
+import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 
 interface EditCompanyProps {
   activeAction: string | null;
   companyInfo: CompanyState;
   closeBottomSheet: () => void;
-  setChangedTotalTime: (value: any) => void;
+  setChangedTotalTime: (value: WorkingHours) => void;
 }
 
 const WorkingHoursComponent = ({
@@ -17,12 +18,14 @@ const WorkingHoursComponent = ({
   companyInfo,
   setChangedTotalTime,
 }: EditCompanyProps) => {
-  const [totalTime, setTotalTime] = useState({});
+  const [totalTime, setTotalTime] = useState(companyInfo?.working_hours);
 
   const handleSubmit = () => {
     closeBottomSheet();
     setChangedTotalTime({ ...companyInfo?.working_hours, ...totalTime });
   };
+
+  console.log(totalTime);
 
   return (
     <BottomSheet
@@ -34,12 +37,14 @@ const WorkingHoursComponent = ({
             Рабочие часы
           </span>
         </div>
+
         <label className="actions pressEffefct" htmlFor="chooseTime">
           <span className="actions__icons closedButtonInput">
             <input type="checkbox" name="" id="chooseTime" />
           </span>
           <span className="actions__text closedButtontext">Выбранные часы</span>
         </label>
+
         <label className="actions pressEffefct" id="24Hours">
           <span className="actions__icons closedButtonInput">
             <input type="checkbox" name="" id="24Hours" />
@@ -47,10 +52,10 @@ const WorkingHoursComponent = ({
           <span className="actions__text closedButtontext">24 часа</span>
         </label>
 
-        {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
+        {Object.entries(totalTime).map(([day, hours]) => (
           <EditWorkHours
             day={day}
-            hours={hours}
+            hours={convertTo24HourFormat(hours)}
             key={day}
             setTotalTime={setTotalTime}
           />

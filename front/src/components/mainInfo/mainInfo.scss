@@ -5,6 +5,7 @@
   background-color: var(--secondary-bg-color);
   color: var(--text-color);
   margin-bottom: 2px;
+  overflow: hidden;
 
   &__logo {
     display: flex;
@@ -138,9 +139,35 @@
       text-align: center;
       flex: 4;
 
-      span {
+      &-distance {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
         font-size: 13px;
         color: var(--hint-color);
+      }
+
+      &-duration {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        &-box {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          svg {
+            width: 15px;
+            height: 15px;
+
+          }
+
+          div {
+            display: flex;
+          }
+        }
       }
     }
   }
@@ -221,6 +248,7 @@
 
     &__info {
       flex-direction: column-reverse !important;
+
       &__smallInfo {
         font-family: var(--second-family);
         font-weight: 400;

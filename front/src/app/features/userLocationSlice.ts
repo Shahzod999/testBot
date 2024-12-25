@@ -7,7 +7,10 @@ interface locationState {
 }
 
 const initialState: { location: locationState } = {
-  location: { lat: 0, lon: 0 },
+  location: {
+    lat: 0 || import.meta.env.VITE_LAT,
+    lon: 0 || import.meta.env.VITE_LON,
+  },
 };
 
 export const userLocationSlice = createSlice({

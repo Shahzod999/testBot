@@ -10,11 +10,16 @@ const convertTo24HourFormat = (timeRange: string | string[]): string => {
   const [start, end] = timeRange.split("–").map((time) => time.trim());
 
   const to24Hour = (time: string): string => {
-    const [hourPart, period] = time.split(/[: ]/);
-    let [h, m = "00"] = hourPart.split(":").map(Number);
-    if (period === "PM" && h < 12) h += 12;
-    if (period === "AM" && h === 12) h = 0;
-    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+    const [timePart, period] = time.split(" ");
+    let [hour, minute = "00"] = timePart.split(":").map(Number);
+
+    if (period === "PM" && hour < 12) hour += 12;
+    if (period === "AM" && hour === 12) hour = 0;
+
+    return `${String(hour).padStart(2, "0")}:${String(minute).padStart(
+      2,
+      "0",
+    )}`;
   };
 
   return `${to24Hour(start)}–${to24Hour(end)}`;

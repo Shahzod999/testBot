@@ -1,3 +1,4 @@
+import { setCompany } from "../features/companyStateSlice";
 import {
   ErrorComment,
   SendingComment,
@@ -19,6 +20,16 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         url: `/delivery/bot/company/${id}`,
         params: { lat, long },
       }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data?.data) {
+            dispatch(setCompany(data.data));
+          }
+        } catch (error) {
+          console.error("Failed to fetch taxi info:", error);
+        }
+      },
     }),
     sendCommentByCompany: builder.mutation<
       SuccessComment | ErrorComment,

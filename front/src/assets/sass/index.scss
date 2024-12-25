@@ -310,4 +310,14 @@ button:disabled {
 
   }
 
+  &__lightsMain {
+    position: absolute;
+    right: -50px;
+    width: 500px;
+    top: -74px;
+    filter: drop-shadow(2px 4px 6px rgb(255, 254, 245));
+    transform: rotate(4deg);
+    pointer-events: none;
+  }
+
 }

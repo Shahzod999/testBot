@@ -52,11 +52,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
           />
         </div>
         <div className="comment__title__user">
-          <h3>
-            {comment?.user?.telegram_name.length > 3
-              ? comment?.user?.telegram_name
-              : comment?.user?.telegram_username}
-          </h3>
+          <h3>{comment?.user?.telegram_name}</h3>
           <div className="comment__title__user__raiting">
             <div className="raiting__set">
               <RaitingStars count={comment?.rating} />

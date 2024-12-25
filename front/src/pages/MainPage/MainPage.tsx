@@ -2,7 +2,7 @@ import "./mainPage.scss";
 import { useEffect, useState } from "react";
 import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { setCompany, setDarkMode } from "../../app/features/companyStateSlice";
+import { setDarkMode } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
 import {
   selectedCompanyId,
@@ -37,8 +37,6 @@ const MainPage = () => {
   const navigate = useNavigate();
   const companyId = useAppSelector(selectedCompanyId);
   const telegramId = useAppSelector(selectedUserTelegramId);
-  
-
 
   const dispatch = useAppDispatch();
   const [loc, setLoc] = useState({ lat: 0, lon: 0 });
@@ -103,17 +101,11 @@ const MainPage = () => {
     }
   }, [dispatch, companyId]);
 
-  const { data, isLoading, isError } = useGetCompanyByIdQuery({
+  const { isLoading, isError } = useGetCompanyByIdQuery({
     id: tg?.initDataUnsafe?.start_param || companyId,
-    lat: loc.lat,
-    long: loc.lon,
+    lat: loc.lat || import.meta.env.VITE_LAT,
+    long: loc.lon || import.meta.env.VITE_LON,
   });
-
-  useEffect(() => {
-    if (data?.data) {
-      dispatch(setCompany(data.data));
-    }
-  }, [data, dispatch]);
 
   if (isLoading || isError) return <Skeleton />;
   return (

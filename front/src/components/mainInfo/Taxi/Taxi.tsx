@@ -28,9 +28,6 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
     },
   });
 
-
-
-
   const yandexUrl = `https://3.redirect.appmetrica.yandex.com/route?start-lat=${location.lat}&start-lon=${location.lon}&end-lat=${companyInfo.latitude}&end-lon=${companyInfo.longitude}&tariffClass=econom&ref=https://truegiswebapp.uz/&appmetrica_tracking_id=1178268795219780156`;
 
   const uklonAndroid =

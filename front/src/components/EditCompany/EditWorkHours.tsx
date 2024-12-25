@@ -1,8 +1,10 @@
 import { useState } from "react";
-import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import { ContactsActions } from "../contacts/ContactsActions";
 import TimePicker from "../TimePicker/TimePicker";
 import "./editWorkHours.scss";
+import BottomSheet from "../Actions/BottomSheet";
+import { WorkingHours } from "../../app/types/companyType";
+import convertTo12HourFormat from "../../hooks/convertingTo12HoursFormat";
 
 interface EditWorkHoursProps {
   day: string;
@@ -12,113 +14,72 @@ interface EditWorkHoursProps {
 
 const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
   const [time, setTime] = useState(false);
-  const [cur, setCur] = useState<"open" | "close" | "">("");
+  const [offDay, setOffDay] = useState(hours !== "Закрыто");
 
-  const parseInitialTime = (hours: string) => {
-    if (hours === "Closed") {
-      return ["00:00", "00:00"]; // Если закрыто, возвращаем 00:00–00:00
-    }
-    if (hours === "Open 24 hours") {
-      return ["00:00", "23:59"]; // Если 24 часа, возвращаем диапазон на весь день
-    }
-    const convertedTime = convertTo24HourFormat(hours);
-    if (!convertedTime.includes("–")) {
-      return ["00:00", "00:00"]; // Если формат некорректный, возвращаем закрыто
-    }
-    return convertedTime.split("–"); // Обрабатываем стандартный формат
-  };
+  const editedHours = hours.split("–");
 
-  const initialTime = parseInitialTime(hours);
-
-  const [originalTime, setOriginalTime] = useState(initialTime);
-
-  const [currentTime, setCurrentTime] = useState({
-    openTime: {
-      hour: initialTime[0]?.split(":")[0] || "00",
-      minute: initialTime[0]?.split(":")[1] || "00",
-    },
-    closeTime: {
-      hour: initialTime[1]?.split(":")[0] || "00",
-      minute: initialTime[1]?.split(":")[1] || "00",
-    },
+  const [workingHour, setWorkingHour] = useState({
+    hour: parseInt(editedHours[0]?.split(":")[0] || "0", 10),
+    minute: parseInt(editedHours[0]?.split(":")[1] || "0", 10),
   });
 
-  const [pickerActive, setPickerActive] = useState(false);
-  const [workingHour, setWorkingHour] = useState<{
-    hour: number;
-    minute: number;
-  }>({
-    hour: 0,
-    minute: 0,
+  const [closingWorkingHour, setClosingWorkingHour] = useState({
+    hour: parseInt(editedHours[1]?.split(":")[0] || "0", 10),
+    minute: parseInt(editedHours[1]?.split(":")[1] || "0", 10),
   });
 
-  const handleSend = () => {
-    const formattedHour = workingHour.hour.toString().padStart(2, "0");
-    const formattedMinute = workingHour.minute.toString().padStart(2, "0");
+  const formatTime = (hour: number, minute: number) =>
+    `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
 
-    const updatedCurrentTime = {
-      ...currentTime,
-      [cur === "open" ? "openTime" : "closeTime"]: {
-        hour: formattedHour,
-        minute: formattedMinute,
-      },
-    };
-
-    setCurrentTime(updatedCurrentTime);
-    setPickerActive(false);
-  };
+  const updatedTime = `${formatTime(
+    workingHour.hour,
+    workingHour.minute,
+  )}-${formatTime(closingWorkingHour.hour, closingWorkingHour.minute)}`;
 
   const handleSave = () => {
-    const updatedTime = `${currentTime.openTime.hour}:${currentTime.openTime.minute}-${currentTime.closeTime.hour}:${currentTime.closeTime.minute}`;
-
-    setTotalTime((prevTotalTime: any) => ({
-      ...prevTotalTime,
-      [day]: [updatedTime],
-    }));
-
-    setOriginalTime([
-      `${currentTime.openTime.hour}:${currentTime.openTime.minute}`,
-      `${currentTime.closeTime.hour}:${currentTime.closeTime.minute}`,
-    ]);
-
+    if (!offDay) {
+      setTotalTime((prev: WorkingHours) => ({ ...prev, [day]: ["Closed"] }));
+    } else {
+      const fotmated = convertTo12HourFormat(updatedTime);
+      setTotalTime((prev: WorkingHours) => ({ ...prev, [day]: [fotmated] }));
+    }
     setTime(false);
   };
 
-  const handleCancel = () => {
-    setCurrentTime({
-      openTime: {
-        hour: originalTime[0]?.split(":")[0] || "00",
-        minute: originalTime[0]?.split(":")[1] || "00",
-      },
-      closeTime: {
-        hour: originalTime[1]?.split(":")[0] || "00",
-        minute: originalTime[1]?.split(":")[1] || "00",
-      },
-    });
-    setTime(false);
-    setPickerActive(false);
-  };
+  const handleToAllDays = () => {
+    if (!offDay) {
+      setTotalTime((prev: WorkingHours) => {
+        const updatedTimeForAllDays = Object.keys(prev).reduce(
+          (acc, currentDay) => {
+            acc[currentDay as keyof WorkingHours] = ["Closed"];
+            return acc;
+          },
+          {} as WorkingHours,
+        );
+        return { ...prev, ...updatedTimeForAllDays };
+      });
+    } else {
+      const fotmated = convertTo12HourFormat(updatedTime);
+      setTotalTime((prev: WorkingHours) => {
+        const updatedTimeForAllDays = Object.keys(prev).reduce(
+          (acc, currentDay) => {
+            acc[currentDay as keyof WorkingHours] = [fotmated];
+            return acc;
+          },
+          {} as WorkingHours,
+        );
+        return { ...prev, ...updatedTimeForAllDays };
+      });
+    }
 
-  const handleTimeChange = (m: "open" | "close") => {
-    setPickerActive(true);
-    setCur(m);
-    setWorkingHour({
-      hour: parseInt(
-        currentTime[m === "open" ? "openTime" : "closeTime"].hour,
-        10,
-      ),
-      minute: parseInt(
-        currentTime[m === "open" ? "openTime" : "closeTime"].minute,
-        10,
-      ),
-    });
+    setTime(false);
   };
 
   return (
     <>
       <div onClick={() => setTime(true)}>
         <ContactsActions
-          text={`${currentTime.openTime.hour}:${currentTime.openTime.minute}-${currentTime.closeTime.hour}:${currentTime.closeTime.minute}`}
+          text={hours}
           mainText={day}
           style={"editWorkHour"}
           isDisabled={hours === "Closed"}
@@ -126,66 +87,58 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
         />
       </div>
 
-      {time && (
-        <div className="timepickerHolder" onClick={() => setTime(false)}>
+      <BottomSheet isOpen={time} onClose={() => setTime(false)}>
+        <div className="timepickerHolder">
           <div
             className="timepickerHolder__box"
             onClick={(e) => e.stopPropagation()}>
             <div className="switch-container">
-              <span>Круглосуточно</span>
+              <div className="switch-container__title">
+                <h4>Понд</h4>
+                <span>Рабочий день</span>
+              </div>
+
               <label className="switch">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={offDay}
+                  onChange={() => setOffDay(!offDay)}
+                />
                 <span />
               </label>
             </div>
 
-            <div className="timepickerHolder__box__current">
-              <div
-                className="timepickerHolder__box__current__info"
-                onClick={() => handleTimeChange("open")}>
-                <strong>Открытие</strong>
-                <span className="timepickerHolder__box__current__info__time">
-                  {currentTime.openTime.hour}:{currentTime.openTime.minute}
-                </span>
+            <div className="timepickerHolder__box__wrap">
+              <span>C</span>
+              <div className="timepickerHolder__box__wrap__normal">
+                <TimePicker
+                  workingHour={workingHour}
+                  setWorkingHour={setWorkingHour}
+                />
               </div>
 
-              <span className="timepickerHolder-devider"></span>
-
-              <div
-                className="timepickerHolder__box__current__info"
-                onClick={() => handleTimeChange("close")}>
-                <strong>Закрытие</strong>
-
-                <span className="timepickerHolder__box__current__info__time">
-                  {currentTime.closeTime.hour}:{currentTime.closeTime.minute}
-                </span>
+              <span>До</span>
+              <div className="timepickerHolder__box__wrap__normal">
+                <TimePicker
+                  workingHour={closingWorkingHour}
+                  setWorkingHour={setClosingWorkingHour}
+                />
               </div>
-            </div>
-
-            <div
-              className={`timepickerHolder__box__normal timepickerHolder__box__${
-                pickerActive ? "active" : "disable"
-              }`}>
-              <TimePicker
-                workingHour={workingHour}
-                setWorkingHour={setWorkingHour}
-              />
             </div>
 
             <div className="timepickerHolder__box__buttons">
-              <button className="cancel" onClick={handleCancel}>
-                Отменить
+              <button className="toAllDays" onClick={handleToAllDays}>
+                Применить <br />
+                на все дни
               </button>
 
-              {pickerActive ? (
-                <button onClick={handleSend}>Изменить</button>
-              ) : (
-                <button onClick={handleSave}>Сохранить</button>
-              )}
+              <button onClick={handleSave} className="enterTime">
+                Сохранить
+              </button>
             </div>
           </div>
         </div>
-      )}
+      </BottomSheet>
     </>
   );
 };
