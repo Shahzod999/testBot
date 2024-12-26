@@ -13,6 +13,18 @@ interface EditWorkHoursProps {
 }
 
 const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
+  const daysMap: Record<string, string> = {
+    Sunday: "Воскресенье",
+    Monday: "Понедельник",
+    Tuesday: "Вторника",
+    Wednesday: "Среда",
+    Thursday: "Четверг",
+    Friday: "Пятница",
+    Saturday: "Суббота",
+  };
+
+  const translatedDay = daysMap[day] || day;
+
   const [time, setTime] = useState(false);
   const [offDay, setOffDay] = useState(hours !== "Закрыто");
 
@@ -80,7 +92,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
       <div onClick={() => setTime(true)}>
         <ContactsActions
           text={hours}
-          mainText={day}
+          mainText={translatedDay}
           style={"editWorkHour"}
           isDisabled={hours === "Closed"}
           arrowRight={true}

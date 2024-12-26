@@ -25,6 +25,7 @@
     &__text {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         font-family: var(--font-family);
         font-weight: 400;
         font-size: 17px;
@@ -32,6 +33,17 @@
         letter-spacing: -0.02em;
         color: var(--text-color);
         gap: 5px;
+
+        &-icon {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+        }
+
+        span {
+            white-space: nowrap;
+        }
 
         path {
             fill: var(--tg-theme-text-color, #000);

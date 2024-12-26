@@ -50,7 +50,7 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <RaitingStars count={count} handleStarClick={handleStarClick} />
         </div>
 
-        <div className="newYear">
+        {/* <div className="newYear">
           <div className="newYear__three">
             <img src="./NewYear/three.png" alt="" />
           </div>
@@ -60,7 +60,7 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <div className="newYear__lights">
             <img src="./NewYear/lights.png" alt="" />
           </div>
-        </div>
+        </div> */}
       </div>
 
       <AddComment openComment={openComment} toggleComment={toggleComment} />

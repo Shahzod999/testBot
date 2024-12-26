@@ -38,6 +38,10 @@ const EditPage = () => {
     };
   }, [navigate]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   if (!companyInfo) return;
   return (
     <>

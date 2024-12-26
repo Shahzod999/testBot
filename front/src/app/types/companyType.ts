@@ -64,6 +64,7 @@ export interface CompanyState {
   requester_name: string;
   requester_phone_number: string;
   requester_position: string;
+  online_menu_link?: string;
 }
 
 export interface WorkingHours {

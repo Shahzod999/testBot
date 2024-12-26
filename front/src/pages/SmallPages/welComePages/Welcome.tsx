@@ -16,7 +16,7 @@ const Welcome = () => {
   const swiperRef = useRef<any>(null);
 
   const handleLink = () => {
-    let swiper = swiperRef.current.swiper;
+    const swiper = swiperRef.current.swiper;
     const currentSlideIndex = swiper.realIndex;
 
     swiper.slideNext();

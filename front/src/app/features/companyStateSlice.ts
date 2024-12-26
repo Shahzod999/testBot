@@ -5,13 +5,19 @@ import { RootState } from "../store";
 interface companyStateState {
   value: CompanyState | null;
   isDarkMode: boolean;
-  distance: number;
+  distance: {
+    distance: string;
+    duration: string;
+  };
 }
 
 const initialState: companyStateState = {
   value: null,
   isDarkMode: false,
-  distance: 0,
+  distance: {
+    distance: "",
+    duration: "",
+  },
 };
 
 export const companyStateSlice = createSlice({
@@ -38,5 +44,5 @@ export const { setCompany, clearCompany, setDarkMode, setDistance } =
 export const selectedCompany = (state: RootState) => state.company.value;
 export const selectedIsDarkMode = (state: RootState) =>
   state.company.isDarkMode;
-export const selectedDistance = (state: RootState) => state.company.distance
+export const selectedDistance = (state: RootState) => state.company.distance;
 export default companyStateSlice.reducer;

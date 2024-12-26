@@ -1,4 +1,4 @@
-import { setCompany } from "../features/companyStateSlice";
+import { setCompany, setDistance } from "../features/companyStateSlice";
 import {
   ErrorComment,
   SendingComment,
@@ -25,6 +25,7 @@ export const companyApiSlice = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           if (data?.data) {
             dispatch(setCompany(data.data));
+            dispatch(setDistance(data.data.distance));
           }
         } catch (error) {
           console.error("Failed to fetch taxi info:", error);

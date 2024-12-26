@@ -158,10 +158,15 @@
           align-items: center;
           gap: 5px;
 
+
           svg {
             width: 15px;
             height: 15px;
+            fill: var(--tg-theme-text-color, #000);
 
+            path {
+              fill: var(--tg-theme-text-color, #000);
+            }
           }
 
           div {
@@ -191,6 +196,22 @@
     justify-content: center;
     gap: 3px;
     margin: 12px 0;
+
+    div {
+      display: flex;
+
+    }
+
+
+    svg {
+      fill: var(--tg-theme-button-text-color, #fff);
+      stroke: var(--tg-theme-button-text-color, #fff);
+    }
+
+    path {
+      fill: var(--tg-theme-button-text-color, #fff);
+      stroke: var(--tg-theme-button-text-color, #fff);
+    }
 
     img {
       padding-bottom: 4px;

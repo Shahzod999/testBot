@@ -14,6 +14,7 @@ import NearestMetroHolder from "./NearestMetroHolder";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
 import Taxi from "./Taxi/Taxi";
 import { ReactSVG } from "react-svg";
+import { useNavigate } from "react-router-dom";
 interface ActionsState {
   text: string;
   img: string;
@@ -27,6 +28,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
+  const navigate = useNavigate();
 
   const toggleBookMark = () => {
     try {
@@ -90,8 +92,12 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   }, [activeAction]);
 
   const handleOrder = () => {
-    if (companyInfo.is_accept_orders) {
-      console.log("nice");
+    if (companyInfo?.is_accept_orders) {
+      return console.log("nice");
+    }
+
+    if (companyInfo?.online_menu_link) {
+      return navigate(companyInfo?.online_menu_link);
     }
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
@@ -163,9 +169,10 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <div className="newYear__button">
               <img src="./NewYear/open.png" alt="" />
             </div>
-            {companyInfo.is_accept_orders ? (
+            {!companyInfo?.is_accept_orders ||
+            !companyInfo?.online_menu_link ? (
               <>
-                <img src="./bag.svg" alt="" />
+                <ReactSVG src="./bag.svg" />
                 Заказать
               </>
             ) : (
