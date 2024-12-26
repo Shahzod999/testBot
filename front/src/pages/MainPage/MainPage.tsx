@@ -15,7 +15,7 @@ import { TelegramTypes } from "../../app/types/telegramTypes";
 import { setuserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
 import Toast from "../../components/Toast/Toast";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -34,6 +34,7 @@ declare global {
 const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const companyId = useAppSelector(selectedCompanyId);
   const telegramId = useAppSelector(selectedUserTelegramId);
@@ -100,6 +101,18 @@ const MainPage = () => {
       );
     }
   }, [dispatch, companyId]);
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => navigate("/"));
+    }
+
+    return () => {
+      tg.BackButton.hide();
+      tg.BackButton.offClick(() => {});
+    };
+  }, [pathname, navigate]);
 
   const { isLoading, isError } = useGetCompanyByIdQuery({
     id: tg?.initDataUnsafe?.start_param || companyId,

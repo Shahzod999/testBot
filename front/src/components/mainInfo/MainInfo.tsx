@@ -14,7 +14,6 @@ import NearestMetroHolder from "./NearestMetroHolder";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
 import Taxi from "./Taxi/Taxi";
 import { ReactSVG } from "react-svg";
-import { useNavigate } from "react-router-dom";
 interface ActionsState {
   text: string;
   img: string;
@@ -28,7 +27,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
-  const navigate = useNavigate();
 
   const toggleBookMark = () => {
     try {
@@ -92,13 +90,28 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   }, [activeAction]);
 
   const handleOrder = () => {
+    const tg = window.Telegram.WebApp;
     if (companyInfo?.is_accept_orders) {
-      return console.log("nice");
+      console.log("nice");
+      return;
+    }
+    if (companyInfo?.online_menu_link) {
+      // Показать кнопку BackButton
+      tg.BackButton.show();
+      // Обработчик нажатия на BackButton
+
+      // Переход по ссылке
+      window.location.href = companyInfo.online_menu_link;
+      return;
     }
 
-    if (companyInfo?.online_menu_link) {
-      return navigate(companyInfo?.online_menu_link);
-    }
+    tg.BackButton.onClick(() => {
+      console.log("Back button clicked");
+      tg.BackButton.hide();
+      tg.BackButton.offClick(() => {});
+      window.history.back();
+    });
+
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
 
@@ -146,17 +159,17 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
           <div className="mainInfo__openHours__right">
             <div className="mainInfo__openHours__right-distance">
-              Расстояние - {companyInfo.distance.distance || "loading..."}
+              Расстояние - {companyInfo?.distance?.distance || "loading..."}
             </div>
             <div className="mainInfo__openHours__right-duration">
               <div className="mainInfo__openHours__right-duration-box">
                 <ReactSVG src="./walkPerson.svg" />
-                <span>{companyInfo.distance.duration}</span>
+                <span>{companyInfo?.distance?.duration}</span>
               </div>
               •
               <div className="mainInfo__openHours__right-duration-box">
                 <ReactSVG src="./car.fill.svg" />
-                <span>{companyInfo.distance.duration}</span>
+                <span>{companyInfo?.distance?.duration}</span>
               </div>
             </div>
           </div>
@@ -169,8 +182,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <div className="newYear__button">
               <img src="./NewYear/open.png" alt="" />
             </div>
-            {!companyInfo?.is_accept_orders ||
-            !companyInfo?.online_menu_link ? (
+            {companyInfo?.is_accept_orders || companyInfo?.online_menu_link ? (
               <>
                 <ReactSVG src="./bag.svg" />
                 Заказать

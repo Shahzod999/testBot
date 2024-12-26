@@ -26,17 +26,20 @@ const EditPage = () => {
     setActiveAction(key);
   }, []);
 
-  useEffect(() => {
-    const tg = window.Telegram.WebApp;
 
-    tg.BackButton.show();
-    tg.BackButton.onClick(() => navigate("/"));
+  // useEffect(() => {
+  //   const tg = window.Telegram.WebApp;
 
-    return () => {
-      tg.BackButton.hide();
-      tg.BackButton.offClick(() => {});
-    };
-  }, [navigate]);
+  //   tg.BackButton.show();
+  //   tg.BackButton.onClick(() => navigate("/"));
+
+  //   return () => {
+  //     tg.BackButton.hide();
+  //     tg.BackButton.offClick(() => {});
+  //   };
+  // }, [navigate]);
+
+
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

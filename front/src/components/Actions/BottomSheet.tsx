@@ -37,20 +37,29 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
     setIsDragging(false);
   };
 
+  const tg = window.Telegram.WebApp;
+
   useEffect(() => {
     if (isOpen) {
-      window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(onClose);
-    } else {
+      tg.BackButton.show();
+      tg.BackButton.onClick(handleClose);
+    }
+    else {
       window.Telegram.WebApp.BackButton.hide();
       window.Telegram.WebApp.BackButton.offClick(() => {});
     }
 
-    return () => {
-      window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(() => {});
-    };
-  }, [isOpen, onClose]);
+    // return () => {
+    //   window.Telegram.WebApp.BackButton.hide();
+    //   window.Telegram.WebApp.BackButton.offClick(() => {});
+    // };
+  }, [isOpen]);
+
+  const handleClose = () => {
+    onClose();
+    // tg.BackButton.hide();
+    // tg.BackButton.offClick(() => {});
+  };
 
   return (
     <>
@@ -67,7 +76,7 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}>
         <div className="bottom-sheet__content">
-          <div className="bottom-sheet__close" onClick={onClose}>
+          <div className="bottom-sheet__close" onClick={handleClose}>
             <div></div>
           </div>
           {children}

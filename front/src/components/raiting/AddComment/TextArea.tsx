@@ -5,30 +5,30 @@ interface TextProps {
 }
 
 const TextArea = ({ text, setText, count }: TextProps) => {
-  const maxLength = 50;
+  const maxLength = 120;
 
   const getProgressState = () => {
     const length = text.trim().length;
 
     if (length === 0) return { state: "low", width: 0 };
-    if (length < 10)
+    if (length < 30)
       return {
         state: "low",
         width: (length / maxLength) * 100,
       };
-    if (length < 30)
+    if (length < 70)
       return {
         state: "medium",
         width: (length / maxLength) * 100,
       };
-    if (length < 50)
+    if (length < 115)
       return {
         state: "nice",
         width: (length / maxLength) * 100,
       };
     return {
       state: "good",
-      width: 100,
+      width: (length / maxLength) * 100,
     };
   };
 

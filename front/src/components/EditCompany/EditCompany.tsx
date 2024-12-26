@@ -80,7 +80,7 @@ const EditCompany = ({
   const handleEditTotalCompany = useCallback((key: string, value: string) => {
     const keys = key.split(".");
     setNewCompanyInfo((prevCompanyInfo) => {
-      let updatedInfo = deepCopy(prevCompanyInfo);
+      const updatedInfo = deepCopy(prevCompanyInfo);
       keys.reduce((obj, keyPart, index) => {
         if (index === keys.length - 1) {
           obj[keyPart] = value;
@@ -128,8 +128,8 @@ const EditCompany = ({
         ...newCompanyInfo,
         logoThumbnail,
         photos_sample: uploadedPhotos,
-        ...(changedTotalTime ? { working_hours: changedTotalTime } : {})
-      };      
+        ...(changedTotalTime ? { working_hours: changedTotalTime } : {}),
+      };
 
       if (!newCompanyInfo.requester_name) {
         return dispatch(infoToast("Заполните поля"));
@@ -157,8 +157,6 @@ const EditCompany = ({
     }
     console.log(newCompanyInfo);
   };
-
-  
 
   //t.me изменить
 
