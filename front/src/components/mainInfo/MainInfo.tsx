@@ -112,8 +112,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
 
-  console.log(companyInfo);
-
   return (
     <>
       <div className="mainInfo">
@@ -166,11 +164,17 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               Расстояние - {companyInfo?.distance?.distance || "loading..."}
             </div>
             <div className="mainInfo__openHours__right-duration">
-              <div className="mainInfo__openHours__right-duration-box">
-                <ReactSVG src="./walkPerson.svg" />
-                <span>{companyInfo?.distance?.walking_duration}</span>
-              </div>
-              •
+              {parseFloat(companyInfo?.distance?.distance) > 2 &&
+                !companyInfo?.distance?.distance.split(" ").includes("km") && (
+                  <>
+                    <div className="mainInfo__openHours__right-duration-box">
+                      <ReactSVG src="./walkPerson.svg" />
+                      <span>{companyInfo?.distance?.walking_duration}</span>
+                    </div>
+                    •
+                  </>
+                )}
+
               <div className="mainInfo__openHours__right-duration-box">
                 <ReactSVG src="./car.fill.svg" />
                 <span>{companyInfo?.distance?.duration}</span>

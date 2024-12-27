@@ -5,6 +5,8 @@ import "./editWorkHours.scss";
 import BottomSheet from "../Actions/BottomSheet";
 import { WorkingHours } from "../../app/types/companyType";
 import convertTo12HourFormat from "../../hooks/convertingTo12HoursFormat";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { popBackButtonHandler, pushBackButtonHandler } from "../../app/features/backButtonState";
 
 interface EditWorkHoursProps {
   day: string;
@@ -13,6 +15,7 @@ interface EditWorkHoursProps {
 }
 
 const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
+  const dispatch = useAppDispatch();
   const daysMap: Record<string, string> = {
     Sunday: "Воскресенье",
     Monday: "Понедельник",
@@ -56,6 +59,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
       setTotalTime((prev: WorkingHours) => ({ ...prev, [day]: [fotmated] }));
     }
     setTime(false);
+    dispatch(popBackButtonHandler());
   };
 
   const handleToAllDays = () => {
@@ -85,11 +89,25 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
     }
 
     setTime(false);
+    dispatch(popBackButtonHandler());
+  };
+  const tg = window.Telegram.WebApp;
+
+  const openTime = () => {
+    tg.BackButton.onClick(closeTime);
+    dispatch(pushBackButtonHandler(closeTime)); // Добавляем обработчик в стек
+    setTime(true);
+  };
+
+  const closeTime = () => {
+    tg.BackButton.show();
+    setTime(false);
+    dispatch(popBackButtonHandler());
   };
 
   return (
     <>
-      <div onClick={() => setTime(true)}>
+      <div onClick={openTime}>
         <ContactsActions
           text={hours}
           mainText={translatedDay}
@@ -99,14 +117,14 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
         />
       </div>
 
-      <BottomSheet isOpen={time} onClose={() => setTime(false)}>
+      <BottomSheet isOpen={time} onClose={closeTime}>
         <div className="timepickerHolder">
           <div
             className="timepickerHolder__box"
             onClick={(e) => e.stopPropagation()}>
             <div className="switch-container">
               <div className="switch-container__title">
-                <h4>Понд</h4>
+                <h4>{translatedDay}</h4>
                 <span>Рабочий день</span>
               </div>
 

@@ -3,8 +3,7 @@ import { PhotosSample } from "../../app/types/companyType";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import "./header.scss";
-
-import { Pagination } from "swiper/modules";
+import { Pagination, Zoom } from "swiper/modules";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 
 interface HeaderProps {
@@ -14,23 +13,21 @@ interface HeaderProps {
 const Header = ({ img }: HeaderProps) => {
   const [openImg, setOpenImg] = useState(false);
 
-
   useEffect(() => {
+    const handleBackButtonClick = () => setOpenImg(false);
     if (openImg) {
       window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(() => setOpenImg(false));
+      window.Telegram.WebApp.BackButton.onClick(handleBackButtonClick);
     } else {
       window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(() => {});
+      window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     }
 
     return () => {
       window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(() => {});
+      window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     };
   }, [openImg]);
-
-  console.log(openImg);
 
   if (!img || img.length === 0) {
     return (
@@ -46,7 +43,7 @@ const Header = ({ img }: HeaderProps) => {
       onClick={() => setOpenImg(!openImg)}
       className={`${openImg ? "fullScreenImg" : ""}`}>
       <Swiper
-        modules={[Pagination]}
+        modules={[Pagination, Zoom]}
         className="mySwiper"
         pagination={{
           clickable: true,
@@ -54,18 +51,15 @@ const Header = ({ img }: HeaderProps) => {
         zoom={{ maxRatio: 3 }}>
         {img?.map((item) => (
           <SwiperSlide key={item.photo_id}>
-            {openImg ? (
+            <div className="swiper-zoom-container">
               <img
-                src={getValidatedUrl(item.photo_url_large)}
-                alt="LargePhoto photo"
+                src={getValidatedUrl(
+                  openImg ? item.photo_url_large : item.photo_url,
+                )}
+                alt="Slide image"
+                className={openImg ? "" : "headerSwiper"}
               />
-            ) : (
-              <img
-                src={getValidatedUrl(item.photo_url_large)}
-                alt="photoUrl photo"
-                className="headerSwiper"
-              />
-            )}
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { selectedCompany } from "../../app/features/companyStateSlice";
 import EditCompany from "../../components/EditCompany/EditCompany";
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import WorkingHoursComponent from "../../components/EditCompany/WorkingHoursComponent";
 import { useNavigate } from "react-router-dom";
+import {
+  popBackButtonHandler,
+  pushBackButtonHandler,
+} from "../../app/features/backButtonState";
 
 const EditPage = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const companyInfo = useAppSelector(selectedCompany);
@@ -17,27 +22,35 @@ const EditPage = () => {
   const closeBottomSheet = useCallback(() => {
     document.body.style.overflow = "";
     setActiveAction(null);
-  }, []);
+    dispatch(popBackButtonHandler());
+  }, [dispatch]);
 
-  const handleActionClick = useCallback((key: string | null) => {
-    if (key) {
-      document.body.style.overflow = "hidden";
-    }
-    setActiveAction(key);
-  }, []);
+  const handleActionClick = useCallback(
+    (key: string | null) => {
+      if (key) {
+        document.body.style.overflow = "hidden";
+        dispatch(pushBackButtonHandler(closeBottomSheet));
+      }
+      setActiveAction(key);
+    },
+    [dispatch, closeBottomSheet],
+  );
+
 
   const handleBackButtonClick = useCallback(() => {
     if (activeAction) {
-      setActiveAction(null);
+      closeBottomSheet(); // Закрываем BottomSheet
     } else {
-      navigate("/");
+      navigate("/"); // Навигация назад, если нет активного действия
     }
-  }, [navigate, activeAction]);
+  }, [navigate, activeAction, closeBottomSheet]);
+
+
 
   useEffect(() => {
+    // Добавляем обработчик BackButton в Telegram
     const tg = window.Telegram.WebApp;
     tg.BackButton.show();
-    tg.BackButton.offClick(handleBackButtonClick);
     tg.BackButton.onClick(handleBackButtonClick);
 
     return () => {

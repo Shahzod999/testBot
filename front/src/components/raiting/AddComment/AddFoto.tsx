@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PhotosSample } from "../../../app/types/companyType";
 import Cross from "./Cross";
 import { ReactSVG } from "react-svg";
@@ -35,12 +35,6 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
     }
   };
 
-  useEffect(() => {
-    if (!imgOpen) {
-      window.Telegram.WebApp.BackButton.hide(); // Гарантируем, что кнопка скрыта
-    }
-  }, [imgOpen]);
-
   const removeImage = (index: number) => {
     setimagesArray((prev) => prev.filter((_, i) => i !== index));
   };
@@ -76,14 +70,15 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
         ) : (
           <>
             {imagesArray.map((image, index) => (
-              <div
-                className="addFoto__imagesArray__img"
-                key={index}
-                onClick={() => toggleImgOpen(index)}>
+              <div className="addFoto__imagesArray__img" key={index}>
                 <div className="addFoto__imagesArray__img__cross">
                   <Cross toggleComment={() => removeImage(index)} />
                 </div>
-                <img src={image.photo_url} alt={`preview-${index}`} />
+                <img
+                  src={image.photo_url}
+                  alt={`preview-${index}`}
+                  onClick={() => toggleImgOpen(index)}
+                />
               </div>
             ))}
           </>

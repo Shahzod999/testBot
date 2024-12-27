@@ -20,21 +20,21 @@ const FullScreenImgSwiper = ({
   local,
 }: FullScreenImgSwiperProps) => {
   useEffect(() => {
+    const handleBackButtonClick = () => setImgOpen(false);
     if (imgOpen) {
       window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(() => {
-        setImgOpen(false);
-      });
-    } else {
+      window.Telegram.WebApp.BackButton.onClick(handleBackButtonClick);
+    } 
+    else {
       window.Telegram.WebApp.BackButton.hide();
     }
     return () => {
-      window.Telegram.WebApp.BackButton.offClick(() => {});
+      window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     };
   }, [imgOpen]);
 
   return (
-    <div className="fullScreenImg">
+    <div className="fullScreenImg" >
       <Swiper
         modules={[Pagination, Zoom]}
         className="mySwiper"
@@ -45,7 +45,7 @@ const FullScreenImgSwiper = ({
         initialSlide={indexImg}>
         {images?.map((item, i) => (
           <SwiperSlide key={i}>
-            <div className="swiper-zoom-container">
+            <div className="swiper-zoom-container" onClick={() => setImgOpen(!imgOpen)}>
               {local ? (
                 <img
                   src={item}

@@ -1,6 +1,11 @@
 import React, { memo, useEffect, useState } from "react";
 import "./bottomSheet.scss";
 import CompanyLink from "../CompanyLink/CompanyLink";
+import {
+  popBackButtonHandler,
+  pushBackButtonHandler,
+} from "../../app/features/backButtonState";
+import { useAppDispatch } from "../../hooks/reduxHooks";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -9,6 +14,7 @@ interface BottomSheetProps {
 }
 
 const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
+  const dispatch = useAppDispatch();
   const [startY, setStartY] = useState<number | null>(null);
   const [currentY, setCurrentY] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -29,7 +35,7 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
 
   const handleTouchEnd = () => {
     if (startY !== null && currentY !== null && currentY - startY > 100) {
-      onClose();
+      handleClose();
     }
 
     setStartY(null);
@@ -37,23 +43,25 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
     setIsDragging(false);
   };
 
-  useEffect(() => {
-    const tg = window.Telegram.WebApp;
-    if (isOpen) {
-      tg.BackButton.show();
-      tg.BackButton.onClick(handleClose);
-    }
 
-    return () => {
-      tg.BackButton.offClick(handleClose);
-    };
-  }, [isOpen, onClose]);
 
   const handleClose = () => {
     onClose();
-    window.Telegram.WebApp.BackButton.hide();
-    window.Telegram.WebApp.BackButton.offClick(handleClose);
+
+    dispatch(popBackButtonHandler());
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(pushBackButtonHandler(handleClose));
+    } else {
+      dispatch(popBackButtonHandler());
+    }
+
+    return () => {
+      dispatch(popBackButtonHandler());
+    };
+  }, [isOpen, dispatch]);
 
   return (
     <>

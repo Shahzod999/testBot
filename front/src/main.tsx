@@ -9,6 +9,7 @@ import EditPage from "./pages/Edit/EditPage.tsx";
 import NotFoundPage from "./pages/SmallPages/404/NotFoundPage.tsx";
 import Welcome from "./pages/SmallPages/welComePages/Welcome.tsx";
 import Snowfall from "react-snowfall";
+import BackButtonManager from "./hooks/BackButtonManager.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ createRoot(document.getElementById("root")!).render(
         opacity: 0.5,
       }}
     />
-
+    <BackButtonManager />
     <RouterProvider router={router} />
   </Provider>,
 );
