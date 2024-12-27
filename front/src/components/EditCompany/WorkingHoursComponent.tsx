@@ -25,8 +25,6 @@ const WorkingHoursComponent = ({
     setChangedTotalTime({ ...companyInfo?.working_hours, ...totalTime });
   };
 
-  console.log(totalTime);
-
   return (
     <BottomSheet
       isOpen={activeAction === "workHours"}

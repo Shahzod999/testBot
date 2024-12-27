@@ -8,7 +8,6 @@ interface nearestMetroProps {
 }
 
 const NearestMetroHolder = ({ metro, from }: nearestMetroProps) => {
-  console.log(metro, "sss");
 
   return (
     <div className="nearestMetro">

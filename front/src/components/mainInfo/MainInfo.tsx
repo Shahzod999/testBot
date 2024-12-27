@@ -91,29 +91,28 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const handleOrder = () => {
     const tg = window.Telegram.WebApp;
+
     if (companyInfo?.is_accept_orders) {
       console.log("nice");
       return;
     }
     if (companyInfo?.online_menu_link) {
-      // Показать кнопку BackButton
       tg.BackButton.show();
-      // Обработчик нажатия на BackButton
+      tg.BackButton.onClick(() => {
+        console.log("BackButton clicked: returning to app");
+        tg.BackButton.hide();
+        window.history.back(); // Вернуться назад
+      });
 
-      // Переход по ссылке
+      // Открываем меню
       window.location.href = companyInfo.online_menu_link;
       return;
     }
 
-    tg.BackButton.onClick(() => {
-      console.log("Back button clicked");
-      tg.BackButton.hide();
-      tg.BackButton.offClick(() => {});
-      window.history.back();
-    });
-
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
+
+  console.log(companyInfo);
 
   return (
     <>
@@ -123,11 +122,16 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <img src="./NewYear/lightsMain.png" alt="" />
           </div>
         </div>
+
         <div className="mainInfo__logo">
           <div className="mainInfo__logo__img">
             <img
               src={
-                companyInfo.logoThumbnail || isDarkMode
+                companyInfo.logoThumbnail
+                  ? companyInfo.logoThumbnail.startsWith("http")
+                    ? companyInfo.logoThumbnail
+                    : `https://dev.admin13.uz${companyInfo.logoThumbnail}`
+                  : isDarkMode
                   ? companyInfo.logo_icon_dark
                   : companyInfo.logo_icon_light
               }
@@ -164,7 +168,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <div className="mainInfo__openHours__right-duration">
               <div className="mainInfo__openHours__right-duration-box">
                 <ReactSVG src="./walkPerson.svg" />
-                <span>{companyInfo?.distance?.duration}</span>
+                <span>{companyInfo?.distance?.walking_duration}</span>
               </div>
               •
               <div className="mainInfo__openHours__right-duration-box">
@@ -182,13 +186,15 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <div className="newYear__button">
               <img src="./NewYear/open.png" alt="" />
             </div>
-            {companyInfo?.is_accept_orders || companyInfo?.online_menu_link ? (
+            {companyInfo?.is_accept_orders ? (
               <>
                 <ReactSVG src="./bag.svg" />
                 Заказать
               </>
+            ) : companyInfo?.online_menu_link ? (
+              <>Перейти</>
             ) : (
-              "Позвонить"
+              <>Позвонить</>
             )}
           </button>
         </div>

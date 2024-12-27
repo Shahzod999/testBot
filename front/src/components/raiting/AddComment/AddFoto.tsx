@@ -69,7 +69,6 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
               imgOpen={imgOpen}
               setImgOpen={setImgOpen}
               images={imagesArray.map((item) => item.photo_url)}
-              toggleImgOpen={toggleImgOpen}
               indexImg={indexImg}
               local
             />

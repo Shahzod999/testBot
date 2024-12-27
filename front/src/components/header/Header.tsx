@@ -13,23 +13,26 @@ interface HeaderProps {
 const Header = ({ img }: HeaderProps) => {
   const [openImg, setOpenImg] = useState(false);
 
+  const getValidatedUrl = (url: string) =>
+    url.startsWith("http") ? url : `https://dev.admin13.uz${url}`;
+
   useEffect(() => {
     if (openImg) {
       window.Telegram.WebApp.BackButton.show();
       window.Telegram.WebApp.BackButton.onClick(() => setOpenImg(false));
     } else {
       window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(()=>{});
+      window.Telegram.WebApp.BackButton.offClick(() => {});
     }
 
     return () => {
       window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(()=>{});
+      window.Telegram.WebApp.BackButton.offClick(() => {});
     };
   }, [openImg]);
-  
 
-  
+  console.log(openImg);
+
   if (!img || img.length === 0) {
     return (
       <header
@@ -48,14 +51,18 @@ const Header = ({ img }: HeaderProps) => {
         className="mySwiper"
         pagination={{
           clickable: true,
-        }}>
+        }}
+        zoom={{ maxRatio: 3 }}>
         {img?.map((item) => (
           <SwiperSlide key={item.photo_id}>
             {openImg ? (
-              <img src={item.photo_url_large} alt="LargePhoto photo" />
+              <img
+                src={getValidatedUrl(item.photo_url_large)}
+                alt="LargePhoto photo"
+              />
             ) : (
               <img
-                src={item.photo_url}
+                src={getValidatedUrl(item.photo_url_large)}
                 alt="photoUrl photo"
                 className="headerSwiper"
               />

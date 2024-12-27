@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const EditPage = () => {
   const navigate = useNavigate();
-  const [activeAction, setActiveAction] = useState<string | null>("edit");
+  const [activeAction, setActiveAction] = useState<string | null>(null);
   const companyInfo = useAppSelector(selectedCompany);
 
   const [changedTotalTime, setChangedTotalTime] = useState(
@@ -26,20 +26,24 @@ const EditPage = () => {
     setActiveAction(key);
   }, []);
 
+  const handleBackButtonClick = useCallback(() => {
+    if (activeAction) {
+      setActiveAction(null);
+    } else {
+      navigate("/");
+    }
+  }, [navigate, activeAction]);
 
-  // useEffect(() => {
-  //   const tg = window.Telegram.WebApp;
+  useEffect(() => {
+    const tg = window.Telegram.WebApp;
+    tg.BackButton.show();
+    tg.BackButton.offClick(handleBackButtonClick);
+    tg.BackButton.onClick(handleBackButtonClick);
 
-  //   tg.BackButton.show();
-  //   tg.BackButton.onClick(() => navigate("/"));
-
-  //   return () => {
-  //     tg.BackButton.hide();
-  //     tg.BackButton.offClick(() => {});
-  //   };
-  // }, [navigate]);
-
-
+    return () => {
+      tg.BackButton.offClick(handleBackButtonClick);
+    };
+  }, [handleBackButtonClick]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

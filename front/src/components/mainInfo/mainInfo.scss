@@ -101,6 +101,8 @@
     text-align: center;
     padding-top: 7px;
     color: var(--text-color);
+    overflow: hidden;
+
 
     border-top: 0.5px solid #d1d1d6;
 
@@ -151,12 +153,13 @@
       &-duration {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
 
         &-box {
           display: flex;
           align-items: center;
-          gap: 5px;
+          gap: 3px;
+          white-space: nowrap;
 
 
           svg {

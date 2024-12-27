@@ -76,7 +76,6 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
           imgOpen={imgOpen}
           setImgOpen={setImgOpen}
           images={comment?.images}
-          toggleImgOpen={toggleImgOpen}
           indexImg={indexImg}
         />
       ) : (

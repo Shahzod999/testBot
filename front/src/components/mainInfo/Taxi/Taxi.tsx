@@ -28,7 +28,6 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
       long: companyInfo.longitude,
     },
   });
-  console.log(data, "222ƒ");
 
   const yandexUrl = `https://3.redirect.appmetrica.yandex.com/route?start-lat=${location.lat}&start-lon=${location.lon}&end-lat=${companyInfo.latitude}&end-lon=${companyInfo.longitude}&tariffClass=econom&ref=https://truegiswebapp.uz/&appmetrica_tracking_id=1178268795219780156`;
 
@@ -44,7 +43,6 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
     "https://play.google.com/store/apps/details?id=com.uznewmax.mytaxi";
   const myTaxiIos =
     "https://apps.apple.com/ru/app/mytaxi-%D1%82%D0%B0%D0%BA%D1%81%D0%B8-%D0%B8-%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0/id865012817";
-  console.log(data);
 
   return (
     <div className="mainInfoTaxi">

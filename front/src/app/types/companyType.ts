@@ -145,6 +145,7 @@ export interface MobileApps {
 export interface Distance {
   distance: string;
   duration: string;
+  walking_duration: string;
 }
 
 export interface NearestMetro {

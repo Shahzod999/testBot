@@ -8,7 +8,6 @@ interface FullScreenImgSwiperProps {
   imgOpen: boolean;
   setImgOpen: (open: boolean) => void;
   images: string[];
-  toggleImgOpen: (i: number) => void;
   indexImg: number;
   local?: boolean;
 }
@@ -17,12 +16,9 @@ const FullScreenImgSwiper = ({
   imgOpen,
   setImgOpen,
   images,
-  toggleImgOpen,
   indexImg,
   local,
 }: FullScreenImgSwiperProps) => {
-
-
   useEffect(() => {
     if (imgOpen) {
       window.Telegram.WebApp.BackButton.show();
@@ -37,10 +33,8 @@ const FullScreenImgSwiper = ({
     };
   }, [imgOpen]);
 
-  
-
   return (
-    <div className="fullScreenImg" onClick={() => toggleImgOpen(0)}>
+    <div className="fullScreenImg">
       <Swiper
         modules={[Pagination, Zoom]}
         className="mySwiper"

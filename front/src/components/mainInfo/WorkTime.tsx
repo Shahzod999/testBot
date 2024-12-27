@@ -4,6 +4,9 @@ import { useWorkingHours } from "../../hooks/useWorkingHours";
 const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
   const { isOpen, hours, willOpenAt } = useWorkingHours(working_hours);
 
+  console.log(willOpenAt);
+  
+
   return (
     <div className="mainInfo__openHours__left">
       {isOpen ? (
