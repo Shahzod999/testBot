@@ -5,6 +5,7 @@ import "swiper/swiper-bundle.css";
 import "./header.scss";
 
 import { Pagination } from "swiper/modules";
+import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 
 interface HeaderProps {
   img: PhotosSample[];
@@ -13,8 +14,6 @@ interface HeaderProps {
 const Header = ({ img }: HeaderProps) => {
   const [openImg, setOpenImg] = useState(false);
 
-  const getValidatedUrl = (url: string) =>
-    url.startsWith("http") ? url : `https://dev.admin13.uz${url}`;
 
   useEffect(() => {
     if (openImg) {

@@ -22,6 +22,7 @@ import {
   infoToast,
   succesToast,
 } from "../../app/features/toastSlice";
+import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 
 interface EditCompanyProps {
   companyInfo: CompanyState;
@@ -99,25 +100,30 @@ const EditCompany = ({
     formData.append("file", file);
     formData.append("page", "truegis");
     const response = await uploadImage(formData).unwrap();
-    return response.thumbnail;
+    console.log(response, "yaaayyyu");
+
+    return response;
   };
 
   const handleSubmit = async () => {
     try {
+      let logo = newCompanyInfo.logo;
       let logoThumbnail = newCompanyInfo.logoThumbnail;
 
       if (logoImg instanceof File) {
-        logoThumbnail = await handleImageUpload(logoImg);
+        const logoResponse = await handleImageUpload(logoImg);
+        logo = logoResponse.image;
+        logoThumbnail = logoResponse.thumbnail;
       }
 
       const uploadedPhotos = await Promise.all(
         imagesArrayNew.map(async (image) => {
           if (image.file) {
-            const uploadedUrl = await handleImageUpload(image.file);
+            const { image: photoUrlLarge, thumbnail: photoUrl } =
+              await handleImageUpload(image.file);
             return {
-              photo_id: uploadedUrl,
-              photo_url: uploadedUrl,
-              photo_url_large: uploadedUrl,
+              photo_url: photoUrl,
+              photo_url_large: photoUrlLarge,
             };
           }
           return image;
@@ -126,6 +132,7 @@ const EditCompany = ({
 
       const requestData = {
         ...newCompanyInfo,
+        logo,
         logoThumbnail,
         photos_sample: uploadedPhotos,
         ...(changedTotalTime ? { working_hours: changedTotalTime } : {}),
@@ -159,6 +166,7 @@ const EditCompany = ({
   };
 
   //t.me изменить
+  console.log(logoImg, "22");
 
   return (
     <div className="edit">
@@ -303,7 +311,7 @@ const EditCompany = ({
               src={
                 logoImg instanceof File
                   ? URL.createObjectURL(logoImg)
-                  : logoImg || "./imgDefault.png"
+                  : getValidatedUrl(logoImg) || "./imgDefault.png"
               }
               alt=""
             />
