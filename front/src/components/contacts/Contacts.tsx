@@ -11,6 +11,7 @@ import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "../mainInfo/WorkTime";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import { Link } from "react-router-dom";
+import useDayTranslator from "../../hooks/translateDay";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -22,6 +23,8 @@ const getAvailableSocialMedia = (
 };
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const translateDay = useDayTranslator();
+
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
   const actions = useMemo(
@@ -175,7 +178,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <div key={day}>
               <ContactsActions
                 text={convertTo24HourFormat(hours)}
-                mainText={day}
+                mainText={translateDay(day)}
                 style={"editWorkHour"}
                 isDisabled={hours == "Closed"}
               />
@@ -230,68 +233,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </CommonButton>
         </div>
       </BottomSheet>
-
-      {/* <BottomSheet
-        isOpen={activeAction === "category"}
-        onClose={closeBottomSheet}>
-        <div className="contacts__actions">
-          <div className="contacts__actions__closeButtons">
-            <span className="contacts__actions__closeButtons__title">
-              Категория
-            </span>
-          </div>
-          <h3 className="contacts__actions__title">Категория</h3>
-          <p className="contacts__actions__warning">Максимум з категории</p>
-
-          <label className="actions pressEffefct" htmlFor="rest">
-            <span className="actions__text closedButtontext">Ресторан</span>
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="rest" />
-            </span>
-          </label>
-          <label className="actions pressEffefct" id="cafe">
-            <span className="actions__text closedButtontext">Кафе</span>
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="cafe" />
-            </span>
-          </label>
-          <label className="actions pressEffefct" htmlFor="cofe">
-            <span className="actions__text closedButtontext">Кофейня</span>
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="cofe" />
-            </span>
-          </label>
-          <label className="actions pressEffefct" htmlFor="bar">
-            <span className="actions__text closedButtontext">Бар</span>
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="bar" />
-            </span>
-          </label>
-          <label className="actions pressEffefct" id="movie">
-            <span className="actions__text closedButtontext">Кинотеатр</span>
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="movie" />
-            </span>
-          </label>
-          <label className="actions pressEffefct" htmlFor="museum">
-            <span className="actions__text closedButtontext">Музей</span>
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="museum" />
-            </span>
-          </label>
-          <label className="actions pressEffefct" htmlFor="nightBar">
-            <span className="actions__text closedButtontext">Ночной клуб</span>
-            <span className="actions__icons closedButtonInput">
-              <input type="checkbox" name="" id="nightBar" />
-            </span>
-          </label>
-
-          <CommonButton createdFunction={() => handleActionClick("edit")}>
-            <span>Сохранить</span>
-          </CommonButton>
-        </div>
-      </BottomSheet> */}
-
       <BottomSheet
         isOpen={activeAction === "person"}
         onClose={closeBottomSheet}>

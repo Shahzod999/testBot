@@ -6,6 +6,12 @@ import useTimeAgo from "../../../hooks/useTimeAgo";
 import "swiper/swiper-bundle.css";
 import ReplyComment from "./ReplyComment";
 import FullScreenImgSwiper from "../../FullScreenImgSwiper/FullScreenImgSwiper";
+import {
+  popBackButtonHandler,
+  pushBackButtonHandler,
+} from "../../../app/features/backButtonState";
+import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 
 const Comment = ({ comment }: { comment: SingleComment }) => {
   const [open, setOpen] = useState(false);
@@ -14,6 +20,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   const timeAgo = useTimeAgo(comment?.created_at);
   const textRef = useRef<HTMLParagraphElement>(null);
   const [indexImg, setIndexImg] = useState(0);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (textRef.current) {
@@ -24,10 +31,20 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   }, [comment?.message]);
 
   useEffect(() => {
-    if (!imgOpen) {
-      window.Telegram.WebApp.BackButton.hide(); // Гарантируем, что кнопка скрыта
+    const handleBackButton = () => setImgOpen(false);
+
+    if (imgOpen) {
+      dispatch(pushBackButtonHandler(handleBackButton));
+    } else {
+      dispatch(popBackButtonHandler());
     }
-  }, [imgOpen]);
+
+    return () => {
+      if (imgOpen) {
+        dispatch(popBackButtonHandler());
+      }
+    };
+  }, [imgOpen, dispatch]);
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -38,6 +55,8 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setImgOpen(!imgOpen);
   };
 
+  console.log(comment.user.telegram_profile_photo?.image, "4555");
+
   return (
     <div className="comment">
       <div className="comment__title">
@@ -45,7 +64,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
           <img
             src={
               comment.user.telegram_profile_photo?.image
-                ? `https://dev.admin13.uz${comment.user.telegram_profile_photo.image}`
+                ? getValidatedUrl(comment.user.telegram_profile_photo?.image)
                 : "./defaultCommentImg.png"
             }
             alt=""
@@ -85,7 +104,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
               className="comment__images__img"
               key={i}
               onClick={() => toggleImgOpen(i)}>
-              <img src={`https://dev.admin13.uz${item}`} alt="" />
+              <img src={getValidatedUrl(item)} alt="" />
             </div>
           ))}
         </div>

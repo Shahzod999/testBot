@@ -68,6 +68,8 @@ const EditCompany = ({
     }
   }, [companyInfo, isDarkmode]);
 
+  console.log(imagesArrayNew, "999");
+
   const deepCopy = (obj: any): any => {
     if (typeof obj !== "object" || obj === null) return obj;
     if (Array.isArray(obj)) return obj.map(deepCopy);
@@ -122,7 +124,8 @@ const EditCompany = ({
             const { image: photoUrlLarge, thumbnail: photoUrl } =
               await handleImageUpload(image.file);
             return {
-              photo_url: photoUrl,
+              photo_url_thumbnail: photoUrl,
+              photo_url: photoUrlLarge,
               photo_url_large: photoUrlLarge,
             };
           }
@@ -207,19 +210,6 @@ const EditCompany = ({
             arrowRight={true}
           />
         </div>
-        {/* <div onClick={() => handleActionClick("category")}>
-          <EditAction
-            smallInfo="Категория"
-            text={newCompanyInfo.subtypes
-              .map((item) => {
-                return item;
-              })
-              .join(", ")}
-            icon="./type.svg"
-            isDisabled={!newCompanyInfo?.subtypes}
-            arrowRight={true}
-          />
-        </div> */}
 
         <h3 className="contacts__actions__title second__title">Контакты</h3>
         <EditAction
@@ -380,13 +370,6 @@ const EditCompany = ({
             handleEditTotalCompany("requester_position", e.target.value)
           }
         />
-
-        {/* <h3 className="contacts__actions__title second__title">
-          Оставьте комментарий
-        </h3>
-        <div className="contacts__actions__textArea">
-          <textarea rows={5} placeholder="Что ещё нужно изменить?"></textarea>
-        </div> */}
 
         {error && <div className="errorText">{error}</div>}
       </div>

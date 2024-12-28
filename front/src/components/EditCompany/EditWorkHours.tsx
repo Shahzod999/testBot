@@ -6,7 +6,11 @@ import BottomSheet from "../Actions/BottomSheet";
 import { WorkingHours } from "../../app/types/companyType";
 import convertTo12HourFormat from "../../hooks/convertingTo12HoursFormat";
 import { useAppDispatch } from "../../hooks/reduxHooks";
-import { popBackButtonHandler, pushBackButtonHandler } from "../../app/features/backButtonState";
+import {
+  popBackButtonHandler,
+  pushBackButtonHandler,
+} from "../../app/features/backButtonState";
+import useDayTranslator from "../../hooks/translateDay";
 
 interface EditWorkHoursProps {
   day: string;
@@ -16,17 +20,8 @@ interface EditWorkHoursProps {
 
 const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
   const dispatch = useAppDispatch();
-  const daysMap: Record<string, string> = {
-    Sunday: "Воскресенье",
-    Monday: "Понедельник",
-    Tuesday: "Вторника",
-    Wednesday: "Среда",
-    Thursday: "Четверг",
-    Friday: "Пятница",
-    Saturday: "Суббота",
-  };
-
-  const translatedDay = daysMap[day] || day;
+  const translateDay = useDayTranslator();
+  const translatedToday = translateDay(day);
 
   const [time, setTime] = useState(false);
   const [offDay, setOffDay] = useState(hours !== "Закрыто");
@@ -110,7 +105,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
       <div onClick={openTime}>
         <ContactsActions
           text={hours}
-          mainText={translatedDay}
+          mainText={translatedToday}
           style={"editWorkHour"}
           isDisabled={hours === "Closed"}
           arrowRight={true}
@@ -124,7 +119,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
             onClick={(e) => e.stopPropagation()}>
             <div className="switch-container">
               <div className="switch-container__title">
-                <h4>{translatedDay}</h4>
+                <h4>{translatedToday}</h4>
                 <span>Рабочий день</span>
               </div>
 

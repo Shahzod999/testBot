@@ -30,9 +30,7 @@ const ReplyComment = ({ reply }: ReplyCommentProps) => {
       <div className="comment__title">
         <div className="comment__title__img">
           <img
-            src={
-              "https://dev.admin13.uz/images/truegis-default-images/default-avatar.png"
-            }
+            src="https://dev.admin13.uz/images/truegis-default-images/default-avatar.png"
             alt=""
           />
         </div>

@@ -6,7 +6,7 @@ import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
 import BottomSheet from "../Actions/BottomSheet";
 import { useFavoriteApiMutation } from "../../app/api/companySlice";
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "./WorkTime";
@@ -14,6 +14,11 @@ import NearestMetroHolder from "./NearestMetroHolder";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
 import Taxi from "./Taxi/Taxi";
 import { ReactSVG } from "react-svg";
+import {
+  popBackButtonHandler,
+  pushBackButtonHandler,
+} from "../../app/features/backButtonState";
+import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 interface ActionsState {
   text: string;
   img: string;
@@ -26,12 +31,13 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [bookMark, setBookMark] = useState(companyInfo?.is_favorite);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
+  const dispatch = useAppDispatch();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
 
-  const toggleBookMark = () => {
+  const toggleBookMark = async () => {
     try {
-      const res = favoriteApi(companyId).unwrap();
-      setBookMark(!bookMark);
+      const res = await favoriteApi(companyId).unwrap();
+      setBookMark((prev) => !prev);
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -70,47 +76,51 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     [companyInfo],
   );
 
-  const handleActions = useCallback((item: ActionsState) => {
-    if (item.link) {
-      return (window.location.href = item.link);
-    }
-    setActiveAction(item.key);
-  }, []);
+  const handleActions = useCallback(
+    (item: ActionsState) => {
+      if (item.link) {
+        return (window.location.href = item.link);
+      }
+      setActiveAction(item.key);
+    },
+    [setActiveAction],
+  );
 
   const closeBottomSheet = useCallback(() => {
     setActiveAction(null);
   }, []);
 
-  useEffect(() => {
-    if (activeAction) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [activeAction]);
-
   const handleOrder = () => {
-    const tg = window.Telegram.WebApp;
-
     if (companyInfo?.is_accept_orders) {
       console.log("nice");
       return;
     }
     if (companyInfo?.online_menu_link) {
-      tg.BackButton.show();
-      tg.BackButton.onClick(() => {
-        console.log("BackButton clicked: returning to app");
-        tg.BackButton.hide();
-        window.history.back(); // Вернуться назад
-      });
-
-      // Открываем меню
+      dispatch(
+        pushBackButtonHandler(() => {
+          console.log("Returning to app");
+          dispatch(popBackButtonHandler());
+        }),
+      );
       window.location.href = companyInfo.online_menu_link;
-      return;
     }
 
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
   };
+
+  useEffect(() => {
+    if (activeAction) {
+      document.body.style.overflow = "hidden";
+      dispatch(
+        pushBackButtonHandler(() => {
+          setActiveAction(null);
+        }),
+      );
+    } else {
+      document.body.style.overflow = "";
+      dispatch(popBackButtonHandler());
+    }
+  }, [activeAction, dispatch]);
 
   return (
     <>
@@ -126,9 +136,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <img
               src={
                 companyInfo.logoThumbnail
-                  ? companyInfo.logoThumbnail.startsWith("http")
-                    ? companyInfo.logoThumbnail
-                    : `https://dev.admin13.uz${companyInfo.logoThumbnail}`
+                  ? getValidatedUrl(companyInfo.logoThumbnail)
                   : isDarkMode
                   ? companyInfo.logo_icon_dark
                   : companyInfo.logo_icon_light

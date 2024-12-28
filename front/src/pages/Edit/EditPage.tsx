@@ -12,9 +12,9 @@ import {
 const EditPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [activeAction, setActiveAction] = useState<string | null>(null);
   const companyInfo = useAppSelector(selectedCompany);
 
+  const [activeAction, setActiveAction] = useState<string | null>(null);
   const [changedTotalTime, setChangedTotalTime] = useState(
     companyInfo?.working_hours,
   );
@@ -39,16 +39,15 @@ const EditPage = () => {
 
   const handleBackButtonClick = useCallback(() => {
     if (activeAction) {
-      closeBottomSheet(); // Закрываем BottomSheet
+      closeBottomSheet();
     } else {
-      navigate("/"); // Навигация назад, если нет активного действия
+      navigate("/"); 
     }
   }, [navigate, activeAction, closeBottomSheet]);
 
 
 
   useEffect(() => {
-    // Добавляем обработчик BackButton в Telegram
     const tg = window.Telegram.WebApp;
     tg.BackButton.show();
     tg.BackButton.onClick(handleBackButtonClick);

@@ -5,6 +5,11 @@ import "swiper/swiper-bundle.css";
 import "./header.scss";
 import { Pagination, Zoom } from "swiper/modules";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import {
+  popBackButtonHandler,
+  pushBackButtonHandler,
+} from "../../app/features/backButtonState";
 
 interface HeaderProps {
   img: PhotosSample[];
@@ -12,22 +17,23 @@ interface HeaderProps {
 
 const Header = ({ img }: HeaderProps) => {
   const [openImg, setOpenImg] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleBackButtonClick = () => setOpenImg(false);
+
     if (openImg) {
-      window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(handleBackButtonClick);
+      dispatch(pushBackButtonHandler(handleBackButtonClick));
     } else {
-      window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
+      dispatch(popBackButtonHandler());
     }
 
     return () => {
-      window.Telegram.WebApp.BackButton.hide();
-      window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
+      if (openImg) {
+        dispatch(popBackButtonHandler());
+      }
     };
-  }, [openImg]);
+  }, [openImg, dispatch]);
 
   if (!img || img.length === 0) {
     return (
@@ -49,13 +55,11 @@ const Header = ({ img }: HeaderProps) => {
           clickable: true,
         }}
         zoom={{ maxRatio: 3 }}>
-        {img?.map((item) => (
-          <SwiperSlide key={item.photo_id}>
+        {img?.map((item, index) => (
+          <SwiperSlide key={item.photo_id || index}>
             <div className="swiper-zoom-container">
               <img
-                src={getValidatedUrl(
-                  openImg ? item.photo_url_large : item.photo_url,
-                )}
+                src={getValidatedUrl(item.photo_url_large)}
                 alt="Slide image"
                 className={openImg ? "" : "headerSwiper"}
               />

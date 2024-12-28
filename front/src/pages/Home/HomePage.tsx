@@ -7,7 +7,9 @@ import Raiting from "../../components/raiting/Raiting";
 import { useAppSelector } from "../../hooks/reduxHooks";
 
 const HomePage = () => {
-  const companyInfo = useAppSelector(selectedCompany);  
+  const companyInfo = useAppSelector(selectedCompany);
+
+  console.log(companyInfo, "infoo");
 
   if (!companyInfo) return;
   return (

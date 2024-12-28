@@ -3,6 +3,7 @@ import { PhotosSample } from "../../../app/types/companyType";
 import Cross from "./Cross";
 import { ReactSVG } from "react-svg";
 import FullScreenImgSwiper from "../../FullScreenImgSwiper/FullScreenImgSwiper";
+import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 
 interface AddFotoProps {
   imagesArray: (PhotosSample & { file?: File })[];
@@ -44,6 +45,8 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
     setImgOpen(!imgOpen);
   };
 
+  console.log(imagesArray);
+
   return (
     <div className="addFoto">
       <h2>Добавить фотографию</h2>
@@ -64,7 +67,6 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
               setImgOpen={setImgOpen}
               images={imagesArray.map((item) => item.photo_url)}
               indexImg={indexImg}
-              local
             />
           </>
         ) : (
@@ -75,7 +77,7 @@ const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
                   <Cross toggleComment={() => removeImage(index)} />
                 </div>
                 <img
-                  src={image.photo_url}
+                  src={getValidatedUrl(image.photo_url)}
                   alt={`preview-${index}`}
                   onClick={() => toggleImgOpen(index)}
                 />
