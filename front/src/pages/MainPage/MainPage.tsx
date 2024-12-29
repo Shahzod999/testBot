@@ -52,7 +52,7 @@ const MainPage = () => {
   }, [telegramId, dispatch]);
 
   useEffect(() => {
-    const requiredVersion = "7.0";
+    const requiredVersion = "8.0";
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
@@ -93,7 +93,7 @@ const MainPage = () => {
     dispatch(setDarkMode(mode));
 
     if (
-      currentVersion > requiredVersion &&
+      currentVersion >= requiredVersion &&
       (tg.platform == "ios" || tg.platform == "android")
     ) {
       tg.requestFullscreen();

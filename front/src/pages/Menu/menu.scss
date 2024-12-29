@@ -1,0 +1,172 @@
+.menuWrapper {
+    background: var(--secondary-bg-color);
+    border-radius: 20px;
+    padding-bottom: var(--tg-safe-area-inset-bottom);
+    padding-left: var(--tg-safe-area-inset-left);
+    padding-right: var(--tg-safe-area-inset-right);
+    padding-top: var(--tg-safe-area-inset-top);
+}
+
+.menu {
+    padding: 16px;
+
+    &__title {
+        font-family: var(--font-family);
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 137%;
+        letter-spacing: -0.03em;
+        text-align: center;
+        color: var(--text-color);
+        padding-top: 20px;
+        padding-bottom: 12px;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        padding-bottom: 30px;
+
+        &__title {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+
+            h2 {
+                font-family: var(--second-family);
+                font-weight: 700;
+                font-size: 28px;
+                letter-spacing: 0.01em;
+                color: var(--text-color);
+            }
+
+            &__raiting {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                span {
+                    font-family: var(--font-family);
+                    font-weight: 400;
+                    font-size: 15px;
+                    line-height: 133%;
+                    letter-spacing: -0.02em;
+                    color: var(--hint-color);
+                }
+
+                .active {
+                    fill: var(--link-color) !important;
+                }
+            }
+        }
+
+        .symbol {
+            background-color: rgba(116, 116, 128, 0.08);
+            padding: 10px;
+            border-radius: 50%;
+
+            div {
+                display: flex;
+            }
+        }
+    }
+
+    .category {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+        overflow: scroll;
+
+        &__text {
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 138%;
+            letter-spacing: -0.01em;
+            text-align: center;
+            color: rgba(60, 60, 67, 0.6);
+            border-radius: 10px;
+            padding: 7px 10px;
+            width: 93px;
+            height: 32px;
+            background: rgba(116, 116, 128, 0.08);
+
+            &__active {
+                color: var(--secondary-bg-color);
+                background: var(--link-color);
+            }
+        }
+
+    }
+
+    &__categoryName {
+        text-align: left;
+        font-family: var(--second-family);
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 127%;
+        letter-spacing: 0.02em;
+        color: var(--text-color);
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    &__food {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: auto;
+        gap: 8px;
+
+        &__box {
+            min-width: 170px;
+            // width: min-content;
+            padding: 4px;
+            border-radius: 16px;
+            box-shadow: 0 0px 2px 0 rgba(51, 51, 51, 0.08);
+            background: rgba(116, 116, 128, 0.08);
+
+            &__img {
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 16px;
+
+                }
+            }
+
+            &__text {
+                padding: 5px;
+
+                strong {
+                    font-family: var(--font-family);
+                    font-weight: 600;
+                    font-size: 13px;
+                    line-height: 138%;
+                    letter-spacing: -0.01em;
+                    color: #292c30;
+                }
+
+                p {
+                    font-family: var(--font-family);
+                    font-weight: 400;
+                    font-size: 13px;
+                    line-height: 123%;
+                    letter-spacing: -0.01em;
+                    color: #292c30;
+                }
+
+                span {
+                    font-family: var(--font-family);
+                    font-weight: 400;
+                    font-size: 13px;
+                    line-height: 138%;
+                    letter-spacing: -0.01em;
+                    color: rgba(60, 60, 67, 0.6);
+                }
+            }
+        }
+    }
+}

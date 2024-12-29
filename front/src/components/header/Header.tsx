@@ -85,7 +85,7 @@ const Header = ({ img }: HeaderProps) => {
           crossFade: true,
         }}
         autoplay={{
-          delay: 3000,
+          delay: 8000,
           disableOnInteraction: false,
         }}
         zoom={{ maxRatio: 3 }}

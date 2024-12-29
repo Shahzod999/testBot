@@ -11,6 +11,7 @@ import Welcome from "./pages/SmallPages/welComePages/Welcome.tsx";
 import Snowfall from "react-snowfall";
 import BackButtonManager from "./hooks/BackButtonManager.tsx";
 import Confetti from "./pages/SmallPages/welComePages/Confetti.tsx";
+import Menu from "./pages/Menu/Menu.tsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         element: <EditPage />,
       },
       {
+        path: "menu",
+        element: <Menu />,
+      },
+      {
         path: "welcome",
         element: <Welcome />,
       },
@@ -41,8 +46,12 @@ createRoot(document.getElementById("root")!).render(
         position: "fixed",
         width: "100vw",
         height: "100vh",
-        opacity: 0.5,
       }}
+      snowflakeCount={50}
+      speed={[1, 2]}
+      opacity={[0.5, 1]}
+      radius={[0.5, 2]}
+      wind={[0, 1]}
     />
     <BackButtonManager />
     <Confetti />

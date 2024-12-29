@@ -19,7 +19,6 @@ import {
   pushBackButtonHandler,
 } from "../../app/features/backButtonState";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
-import Gallery from "./Gallery/Gallery";
 interface ActionsState {
   text: string;
   img: string;

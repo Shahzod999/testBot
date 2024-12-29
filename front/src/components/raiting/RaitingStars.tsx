@@ -6,6 +6,7 @@ interface RaitingProps {
 }
 
 const RaitingStars = ({ count, handleStarClick }: RaitingProps) => {
+
   const starClick = (index: number) => {
     handleStarClick?.(index);
     handleHaptic();
@@ -15,6 +16,7 @@ const RaitingStars = ({ count, handleStarClick }: RaitingProps) => {
     window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
     window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
   };
+  
   return (
     <strong>
       {[...Array(5)].map((_, index) => (
