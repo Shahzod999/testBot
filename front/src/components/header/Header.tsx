@@ -55,6 +55,18 @@ const Header = ({ img }: HeaderProps) => {
       onClick={() => setOpenImg(!openImg)}
       className={`${openImg ? "fullScreenImg" : ""}`}>
       <Swiper
+        onSlideChange={(swiper) => {
+          const bullets = document.querySelectorAll(
+            ".swiper-pagination-bullet",
+          );
+          bullets.forEach((bullet, index) => {
+            if (index < swiper.realIndex) {
+              bullet.classList.add("passed");
+            } else {
+              bullet.classList.remove("passed");
+            }
+          });
+        }}
         pagination={{
           el: ".swiper-pagination",
           clickable: true,
