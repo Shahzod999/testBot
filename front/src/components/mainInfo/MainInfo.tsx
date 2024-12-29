@@ -19,6 +19,7 @@ import {
   pushBackButtonHandler,
 } from "../../app/features/backButtonState";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
+import Gallery from "./Gallery/Gallery";
 interface ActionsState {
   text: string;
   img: string;
@@ -34,6 +35,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const dispatch = useAppDispatch();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
 
+  const handleHaptic = () => {
+    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+  };
+
   const toggleBookMark = async () => {
     try {
       const res = await favoriteApi(companyId).unwrap();
@@ -41,6 +47,8 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       console.log(res);
     } catch (error) {
       console.log(error);
+    } finally {
+      handleHaptic();
     }
   };
 
@@ -96,11 +104,12 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       return;
     }
     if (companyInfo?.online_menu_link) {
+      const closeButton = () => {
+        dispatch(popBackButtonHandler());
+      };
+
       dispatch(
-        pushBackButtonHandler(() => {
-          console.log("Returning to app");
-          dispatch(popBackButtonHandler());
-        }),
+        pushBackButtonHandler({ id: "MainInfo", callback: closeButton }),
       );
       window.location.href = companyInfo.online_menu_link;
     }
@@ -111,9 +120,14 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   useEffect(() => {
     if (activeAction) {
       document.body.style.overflow = "hidden";
+      const closeActive = () => {
+        setActiveAction(null);
+      };
+
       dispatch(
-        pushBackButtonHandler(() => {
-          setActiveAction(null);
+        pushBackButtonHandler({
+          id: "MainInfoCloseActive",
+          callback: closeActive,
         }),
       );
     } else {

@@ -11,14 +11,38 @@ interface AddFotoProps {
     React.SetStateAction<(PhotosSample & { file?: File })[]>
   >;
   id: string;
+  maxLength?: boolean;
 }
 
-const AddFoto = ({ imagesArray, setimagesArray, id }: AddFotoProps) => {
+const AddFoto = ({
+  imagesArray,
+  setimagesArray,
+  id,
+  maxLength,
+}: AddFotoProps) => {
   const [imgOpen, setImgOpen] = useState(false);
   const [indexImg, setIndexImg] = useState(0);
 
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+
+    if (!files) return;
+
+    if (maxLength) {
+      const filesArray = Array.from(files);
+      if (filesArray.length >= 4 || imagesArray.length >= 4) {
+        if (window.Telegram.WebApp.showAlert) {
+          window.Telegram.WebApp.showAlert(
+            "Вы можете выбрать не более 4 фотографий.",
+          );
+        } else {
+          alert("Вы можете выбрать не более 4 фотографий.");
+        }
+        e.target.value = ""; // Очищаем input! Это ключевой момент
+        return;
+      }
+    }
+
     if (files) {
       const newImages = Array.from(files).map((file) => ({
         photo_id: "", // У новых изображений можно оставить ID пустым

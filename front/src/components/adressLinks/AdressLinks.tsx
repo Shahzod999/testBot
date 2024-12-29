@@ -6,6 +6,7 @@ import { errorToast, succesToast } from "../../app/features/toastSlice";
 
 const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const dispatch = useAppDispatch();
+
   const handleCopyAdress = (copy: string) => {
     const textToCopy = copy; // Это может быть любая строка или значение
     navigator.clipboard
@@ -13,11 +14,18 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
       .then(() => {
         dispatch(succesToast("Copy"));
         console.log("Текст скопирован в буфер обмена");
+        handleHaptic();
       })
       .catch((error) => {
         dispatch(errorToast("Error"));
         console.error("Не удалось скопировать текст: ", error);
+        handleHaptic();
       });
+  };
+
+  const handleHaptic = () => {
+    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
   };
 
   return (

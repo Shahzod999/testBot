@@ -12,6 +12,7 @@ import WorkTime from "../mainInfo/WorkTime";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import { Link } from "react-router-dom";
 import useDayTranslator from "../../hooks/translateDay";
+import useSortedWorkingHours from "../../hooks/sortingDays";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -24,8 +25,11 @@ const getAvailableSocialMedia = (
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const translateDay = useDayTranslator();
+  const sortedWorkingHours = useSortedWorkingHours(companyInfo.working_hours);
 
   const [activeAction, setActiveAction] = useState<string | null>(null);
+
+  console.log(companyInfo, "new");
 
   const actions = useMemo(
     () => [
@@ -61,6 +65,13 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         text: companyInfo?.website?.replace("https://", "") || "Нет Сайта",
         isDisabled: !companyInfo.website,
         icon: "australia.svg",
+        // key: "map",
+        phone: companyInfo?.website ? companyInfo.website : null,
+      },
+      {
+        text: "Нет Сайта",
+        isDisabled: true,
+        icon: "email.svg",
         // key: "map",
         phone: companyInfo?.website ? companyInfo.website : null,
       },
@@ -174,7 +185,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         isOpen={activeAction === "workingHours"}
         onClose={closeBottomSheet}>
         <div className="contacts__actions">
-          {Object.entries(companyInfo.working_hours).map(([day, hours]) => (
+          {Object.entries(sortedWorkingHours).map(([day, hours]) => (
             <div key={day}>
               <ContactsActions
                 text={convertTo24HourFormat(hours)}

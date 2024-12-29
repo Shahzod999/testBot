@@ -29,7 +29,7 @@ const EditPage = () => {
     (key: string | null) => {
       if (key) {
         document.body.style.overflow = "hidden";
-        dispatch(pushBackButtonHandler(closeBottomSheet));
+        dispatch(pushBackButtonHandler({ id: "EditPage", callback: closeBottomSheet }));
       }
       setActiveAction(key);
     },

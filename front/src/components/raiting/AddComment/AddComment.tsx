@@ -110,6 +110,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
             imagesArray={imagesArray}
             setimagesArray={setimagesArray}
             id="addComments"
+            maxLength
           />
           <SendButton
             text="Ваша оценка и отзыв будут видны всем"

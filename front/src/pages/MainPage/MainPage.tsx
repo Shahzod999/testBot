@@ -92,7 +92,10 @@ const MainPage = () => {
     dispatch(setPlatform(tg.platform));
     dispatch(setDarkMode(mode));
 
-    if (currentVersion > requiredVersion) {
+    if (
+      currentVersion > requiredVersion &&
+      (tg.platform == "ios" || tg.platform == "android")
+    ) {
       tg.requestFullscreen();
     } else {
       console.log(

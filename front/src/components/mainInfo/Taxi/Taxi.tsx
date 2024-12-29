@@ -46,6 +46,9 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
     "https://play.google.com/store/apps/details?id=com.fasten.rider";
   const fastenIos =
     "https://apps.apple.com/si/app/fasten-safarlar-va-yetkazish/id6578446117";
+
+  // const myTaxiCommon = "https://my-taxi.onelink.me/sda5/s0pn2a00";
+
   const myTaxiAndroid =
     "https://play.google.com/store/apps/details?id=com.uznewmax.mytaxi";
   const myTaxiIos =

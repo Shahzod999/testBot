@@ -9,13 +9,26 @@ import "./welcome.scss";
 import CommonButton from "../../../components/Actions/CommonButton";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { setConfitti } from "../../../app/features/RaitingStarsSlice";
 
 const Welcome = () => {
+  const dispatch = useAppDispatch();
   const [text, setText] = useState("Дальше");
   const navigate = useNavigate();
   const swiperRef = useRef<any>(null);
 
+  const handleNavigate = () => {
+    navigate("/");
+    setTimeout(() => {
+      dispatch(setConfitti());
+    }, 200);
+  };
+
   const handleLink = () => {
+    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+
     const swiper = swiperRef.current.swiper;
     const currentSlideIndex = swiper.realIndex;
 
@@ -25,13 +38,13 @@ const Welcome = () => {
       setText("Начать");
     }
     if (currentSlideIndex === 2) {
-      navigate("/");
+      handleNavigate();
     }
   };
 
   return (
     <div className="notFoundPage">
-      <div className="notFoundPage__icon" onClick={() => navigate("/")}>
+      <div className="notFoundPage__icon" onClick={handleNavigate}>
         <span>Пропустить</span>
       </div>
       <div className="notFoundPage__sticker">

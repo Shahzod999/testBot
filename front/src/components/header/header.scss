@@ -1,7 +1,6 @@
 header {
   height: 200px;
   overflow: hidden;
-  // background: var(--secondary-bg-color);
   margin-bottom: 2px;
 
   img {
@@ -12,7 +11,41 @@ header {
     border-radius: 20px;
   }
 
-  .headerSwiper {
-    // border-radius: 20px;
+  .custom-progressbar {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    display: flex;
+    gap: 4px;
+    z-index: 999;
+
+    .progress-segment {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0%;
+        background: white;
+        transition: width 5s linear;
+      }
+
+      &.active::after {
+        width: 100%;
+      }
+
+      &.completed {
+        background: white;
+      }
+    }
   }
 }

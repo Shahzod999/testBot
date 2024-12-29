@@ -90,7 +90,9 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
 
   const openTime = () => {
     tg.BackButton.onClick(closeTime);
-    dispatch(pushBackButtonHandler(closeTime)); // Добавляем обработчик в стек
+    dispatch(
+      pushBackButtonHandler({ id: "editWorkHours", callback: closeTime }),
+    ); // Добавляем обработчик в стек
     setTime(true);
   };
 
@@ -100,6 +102,15 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
     dispatch(popBackButtonHandler());
   };
 
+  const handleSetOffDay = () => {
+    handleHaptic();
+    setOffDay(!offDay);
+  };
+
+  const handleHaptic = () => {
+    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+  };
   return (
     <>
       <div onClick={openTime}>
@@ -127,7 +138,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
                 <input
                   type="checkbox"
                   checked={offDay}
-                  onChange={() => setOffDay(!offDay)}
+                  onChange={handleSetOffDay}
                 />
                 <span />
               </label>

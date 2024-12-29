@@ -4,7 +4,7 @@ export interface CompanyState {
   google_id: string;
   place_id: string;
   google_mid: string;
-  phone_number: any;
+  phone_number: string;
   name: string;
   description: any;
   latitude: number;
@@ -14,7 +14,7 @@ export interface CompanyState {
   rating: number;
   timezone: string;
   working_hours: WorkingHours;
-  website: any;
+  website: string;
   verified: boolean;
   place_link: string;
   cid: string;
@@ -33,17 +33,18 @@ export interface CompanyState {
   about: About;
   address: string;
   order_link: any;
+  online_menu_link: string;
   price_level: any;
   district: string;
   street_address: string;
   city: string;
-  zipcode: any;
+  zipcode: string;
   state: string;
   country: string;
   owner_telegram_id: any;
   location: Location;
   logo: string;
-  logoThumbnail: any;
+  logoThumbnail: string;
   order_type: any;
   is_accept_orders: boolean;
   is_partner: boolean;
@@ -54,6 +55,7 @@ export interface CompanyState {
   deleted: boolean;
   created_at: number;
   created_by: any;
+  updated_at: number;
   logo_icon_light: string;
   logo_icon_dark: string;
   payment: any;
@@ -61,20 +63,22 @@ export interface CompanyState {
   distance: Distance;
   nearest_metro: NearestMetro;
   company_nearest_metro: CompanyNearestMetro;
+  comments: Comment[];
+  truegis_rating: number;
+  truegis_rating_count: number;
   requester_name: string;
   requester_phone_number: string;
   requester_position: string;
-  online_menu_link?: string;
 }
 
 export interface WorkingHours {
-  Thursday: string[];
-  Friday: string[];
-  Saturday: string[];
-  Sunday: string[];
-  Monday: string[];
-  Tuesday: string[];
-  Wednesday: string[];
+  Thursday?: string[];
+  Friday?: string[];
+  Saturday?: string[];
+  Sunday?: string[];
+  Monday?: string[];
+  Tuesday?: string[];
+  Wednesday?: string[];
 }
 
 export interface PhotosSample {

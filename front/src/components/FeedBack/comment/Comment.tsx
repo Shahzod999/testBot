@@ -34,7 +34,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     const handleBackButton = () => setImgOpen(false);
 
     if (imgOpen) {
-      dispatch(pushBackButtonHandler(handleBackButton));
+      dispatch(pushBackButtonHandler({ id: "Comment", callback: handleBackButton }));
     } else {
       dispatch(popBackButtonHandler());
     }
@@ -54,8 +54,6 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setIndexImg(i);
     setImgOpen(!imgOpen);
   };
-
-  console.log(comment.user.telegram_profile_photo?.image, "4555");
 
   return (
     <div className="comment">

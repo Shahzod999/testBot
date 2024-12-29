@@ -29,7 +29,12 @@ const FullScreenImgSwiper = ({
     const handleBackButtonClick = () => setImgOpen(false);
 
     if (imgOpen) {
-      dispatch(pushBackButtonHandler(handleBackButtonClick));
+      dispatch(
+        pushBackButtonHandler({
+          id: "fullScreenImg",
+          callback: handleBackButtonClick,
+        }),
+      );
     }
 
     return () => {
@@ -48,7 +53,8 @@ const FullScreenImgSwiper = ({
           clickable: true,
         }}
         zoom={{ maxRatio: 3 }}
-        initialSlide={indexImg}>
+        initialSlide={indexImg}
+        loop>
         {images?.map((item, i) => (
           <SwiperSlide key={i}>
             <div
@@ -58,7 +64,9 @@ const FullScreenImgSwiper = ({
                 src={getValidatedUrl(item)}
                 alt="LargePhoto photo"
                 className="comment__FullImage"
+                loading="lazy"
               />
+              <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             </div>
           </SwiperSlide>
         ))}

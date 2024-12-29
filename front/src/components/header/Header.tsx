@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { PhotosSample } from "../../app/types/companyType";
 import { Swiper, SwiperSlide } from "swiper/react";
+
 import "swiper/swiper-bundle.css";
 import "./header.scss";
-import { Pagination, Zoom } from "swiper/modules";
+import { Autoplay, Pagination, Zoom } from "swiper/modules";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import {
@@ -23,7 +24,12 @@ const Header = ({ img }: HeaderProps) => {
     const handleBackButtonClick = () => setOpenImg(false);
 
     if (openImg) {
-      dispatch(pushBackButtonHandler(handleBackButtonClick));
+      dispatch(
+        pushBackButtonHandler({
+          id: "Header",
+          callback: handleBackButtonClick,
+        }),
+      );
     } else {
       dispatch(popBackButtonHandler());
     }
@@ -49,12 +55,20 @@ const Header = ({ img }: HeaderProps) => {
       onClick={() => setOpenImg(!openImg)}
       className={`${openImg ? "fullScreenImg" : ""}`}>
       <Swiper
-        modules={[Pagination, Zoom]}
-        className="mySwiper"
         pagination={{
+          el: ".swiper-pagination",
           clickable: true,
+          type: "progressbar",
         }}
-        zoom={{ maxRatio: 3 }}>
+        autoplay={{
+          delay: 8000,
+          disableOnInteraction: false,
+        }}
+        zoom={{ maxRatio: 3 }}
+        modules={[Pagination, Zoom, Autoplay]}
+        className="mySwiper"
+        watchSlidesProgress
+        loop>
         {img?.map((item, index) => (
           <SwiperSlide key={item.photo_id || index}>
             <div className="swiper-zoom-container">
@@ -62,7 +76,9 @@ const Header = ({ img }: HeaderProps) => {
                 src={getValidatedUrl(item.photo_url_large)}
                 alt="Slide image"
                 className={openImg ? "" : "headerSwiper"}
+                loading="lazy"
               />
+              <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             </div>
           </SwiperSlide>
         ))}

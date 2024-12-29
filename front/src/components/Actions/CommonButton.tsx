@@ -7,9 +7,22 @@ interface CommonButtonProps {
   disabled?: boolean;
 }
 
-const CommonButton = ({ children, createdFunction, disabled }: CommonButtonProps) => {
+const CommonButton = ({
+  children,
+  createdFunction,
+  disabled,
+}: CommonButtonProps) => {
+  
+  const handleHaptic = () => {
+    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+    if (createdFunction) {
+      createdFunction();
+    }
+  };
+
   return (
-    <button className="commonButton" onClick={createdFunction} disabled={disabled}>
+    <button className="commonButton" onClick={handleHaptic} disabled={disabled}>
       {children}
     </button>
   );

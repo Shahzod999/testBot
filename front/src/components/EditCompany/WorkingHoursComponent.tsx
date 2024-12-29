@@ -4,6 +4,7 @@ import BottomSheet from "../Actions/BottomSheet";
 import CommonButton from "../Actions/CommonButton";
 import EditWorkHours from "./EditWorkHours";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
+import useSortedWorkingHours from "../../hooks/sortingDays";
 
 interface EditCompanyProps {
   activeAction: string | null;
@@ -18,11 +19,18 @@ const WorkingHoursComponent = ({
   companyInfo,
   setChangedTotalTime,
 }: EditCompanyProps) => {
-  const [totalTime, setTotalTime] = useState(companyInfo?.working_hours);
+  const sortedWorkingHours = useSortedWorkingHours(companyInfo?.working_hours);
+  const [totalTime, setTotalTime] = useState(sortedWorkingHours);
 
   const handleSubmit = () => {
+    handleTime();
     closeBottomSheet();
     setChangedTotalTime({ ...companyInfo?.working_hours, ...totalTime });
+  };
+
+  const handleTime = () => {
+    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
   };
 
   return (
@@ -36,14 +44,20 @@ const WorkingHoursComponent = ({
           </span>
         </div>
 
-        <label className="actions pressEffefct" htmlFor="chooseTime">
+        <label
+          className="actions pressEffefct"
+          htmlFor="chooseTime"
+          onClick={handleTime}>
           <span className="actions__icons closedButtonInput">
             <input type="checkbox" name="" id="chooseTime" />
           </span>
           <span className="actions__text closedButtontext">Выбранные часы</span>
         </label>
 
-        <label className="actions pressEffefct" id="24Hours">
+        <label
+          className="actions pressEffefct"
+          id="24Hours"
+          onClick={handleTime}>
           <span className="actions__icons closedButtonInput">
             <input type="checkbox" name="" id="24Hours" />
           </span>

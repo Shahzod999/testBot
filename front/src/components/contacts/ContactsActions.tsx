@@ -22,6 +22,11 @@ export const ContactsActions = ({
   timeComponent,
 }: ContactProps) => {
   const handleClick = () => {
+    if (isDisabled) {
+      window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+      window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+    }
+
     if (phone) {
       window.open(phone);
     }

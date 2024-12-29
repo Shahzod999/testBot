@@ -1,20 +1,31 @@
 import { useEffect } from "react";
-import { selectBackButtonStack } from "../app/features/backButtonState";
-import { useAppSelector } from "./reduxHooks";
+import {
+  executeBackButtonHandler,
+  selectBackButtonStack,
+} from "../app/features/backButtonState";
+import { useAppDispatch, useAppSelector } from "./reduxHooks";
 
 const BackButtonManager = () => {
+  const dispatch = useAppDispatch();
   const stack = useAppSelector(selectBackButtonStack);
 
   useEffect(() => {
     if (stack.length > 0) {
-      window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(() => {
-        const handler = stack[stack.length - 1]; // Получаем последний обработчик
-        if (handler) handler(); // Вызываем его
-      });
+      const tg = window.Telegram.WebApp;
+
+      const handleTelegramBackButton = () => {
+        dispatch(executeBackButtonHandler());
+      };
+
+      tg.BackButton.show();
+      tg.BackButton.onClick(handleTelegramBackButton);
     } else {
       window.Telegram.WebApp.BackButton.hide();
     }
+
+    return () => {
+      window.Telegram.WebApp.BackButton.offClick(() => {});
+    };
   }, [stack]);
 
   return null;

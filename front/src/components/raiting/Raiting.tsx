@@ -26,6 +26,12 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const handleStarClick = (index: number) => {
     dispatch(setCountRaiting(index + 1));
+    handleHaptic();
+  };
+
+  const handleHaptic = () => {
+    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
+    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
   };
 
   const handleOrder = () => {
@@ -49,18 +55,6 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <div className="raiting__set" onClick={toggleComment}>
           <RaitingStars count={count} handleStarClick={handleStarClick} />
         </div>
-
-        {/* <div className="newYear">
-          <div className="newYear__three">
-            <img src="./NewYear/three.png" alt="" />
-          </div>
-        </div>
-
-        <div className="newYear">
-          <div className="newYear__lights">
-            <img src="./NewYear/lights.png" alt="" />
-          </div>
-        </div> */}
       </div>
 
       <AddComment openComment={openComment} toggleComment={toggleComment} />
