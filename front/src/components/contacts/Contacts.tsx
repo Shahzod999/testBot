@@ -69,7 +69,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         phone: companyInfo?.website ? companyInfo.website : null,
       },
       {
-        text: "Нет Сайта",
+        text: "Нет Почты",
         isDisabled: true,
         icon: "email.svg",
         // key: "map",
