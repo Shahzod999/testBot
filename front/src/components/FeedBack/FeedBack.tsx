@@ -10,7 +10,10 @@ const FeedBack = () => {
   const [end, setEnd] = useState(true);
   const [limit, setLimit] = useState(3);
   const companyId = useAppSelector(selectedCompanyId);
-  const { data } = useGetCommentsbyCompanyQuery({ id: companyId, limit });
+  const { data, isFetching } = useGetCommentsbyCompanyQuery({
+    id: companyId,
+    limit,
+  });
 
   const limitHandler = () => {
     if (data?.pagination?.pages <= 1) {
@@ -43,7 +46,7 @@ const FeedBack = () => {
 
       {end ? (
         <span className="feedBack__more" onClick={limitHandler}>
-          Читать далее
+          {isFetching ? "Загрузка..." : "Читать далее"}
         </span>
       ) : (
         <span className="feedBack__more" onClick={closeComments}>

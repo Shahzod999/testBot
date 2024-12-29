@@ -9,7 +9,7 @@ const useTimeAgo = (dateString: number) => {
   const diffDays = Math.floor(diffHours / 24);
 
   if (diffDays > 0) {
-    return `${diffDays} дней назад`;
+    return `${diffDays} д назад`;
   } else if (diffHours > 0) {
     return `${diffHours} часов назад`;
   } else if (diffMinutes > 0) {

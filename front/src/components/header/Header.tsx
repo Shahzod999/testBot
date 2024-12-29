@@ -58,10 +58,22 @@ const Header = ({ img }: HeaderProps) => {
         pagination={{
           el: ".swiper-pagination",
           clickable: true,
-          type: "progressbar",
+          type: "bullets",
+          renderBullet: (_, className) => {
+            return `
+              <span class="${className}">
+                <i></i>
+                <b></b>
+              </span>
+            `;
+          },
+        }}
+        effect="fade"
+        fadeEffect={{
+          crossFade: true,
         }}
         autoplay={{
-          delay: 8000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         zoom={{ maxRatio: 3 }}
@@ -82,6 +94,7 @@ const Header = ({ img }: HeaderProps) => {
             </div>
           </SwiperSlide>
         ))}
+        <div className="swiper-pagination"></div>
       </Swiper>
     </header>
   );

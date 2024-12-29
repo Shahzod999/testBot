@@ -34,7 +34,9 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     const handleBackButton = () => setImgOpen(false);
 
     if (imgOpen) {
-      dispatch(pushBackButtonHandler({ id: "Comment", callback: handleBackButton }));
+      dispatch(
+        pushBackButtonHandler({ id: "Comment", callback: handleBackButton }),
+      );
     } else {
       dispatch(popBackButtonHandler());
     }
@@ -102,7 +104,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
               className="comment__images__img"
               key={i}
               onClick={() => toggleImgOpen(i)}>
-              <img src={getValidatedUrl(item)} alt="" />
+              <img src={getValidatedUrl(item)} alt="" loading="lazy" />
             </div>
           ))}
         </div>

@@ -40,11 +40,37 @@ $picker-background: #373737;
     font-size: $font-size;
     color: var(--hint-color);
     scroll-snap-align: center;
+    filter: opacity(0.5);
 
     &.selected {
       font-weight: bold;
-      font-size: $font-size-selected;
+      // font-size: $font-size-selected;
       color: var(--text-color);
+      transition: 0.2s ease-in-out;
+      filter: opacity(1);
+      transform: scale(1.25);
+
+      &+* {
+        filter: opacity(0.8);
+        transform: scale(1.2) rotateX(20deg);
+
+        &+* {
+          filter: opacity(0.5);
+          transform: scale(1) rotateX(30deg);
+        }
+      }
+
+
+    }
+
+    &:has(+ *.selected) {
+      filter: opacity(0.8);
+      transform: scale(1.2) rotateX(20deg);
+    }
+
+    &:has(+ * + *.selected) {
+      filter: opacity(0.5);
+      transform: scale(1) rotateX(30deg);
     }
   }
 
