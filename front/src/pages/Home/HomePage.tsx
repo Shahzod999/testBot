@@ -11,6 +11,8 @@ const FeedBack = lazy(() => import("../../components/FeedBack/FeedBack"));
 const HomePage = () => {
   const companyInfo = useAppSelector(selectedCompany);
 
+  console.log(companyInfo, "222");
+
   if (!companyInfo) return;
   return (
     <div>

@@ -52,7 +52,7 @@ const FullScreenImgSwiper = ({
         pagination={{
           clickable: true,
         }}
-        zoom={{ maxRatio: 3 }}
+        zoom={{ maxRatio: 3, minRatio: 1 }}
         initialSlide={indexImg}
         loop>
         {images?.map((item, i) => (

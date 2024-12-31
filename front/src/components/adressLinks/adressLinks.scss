@@ -12,6 +12,10 @@
 
     span {
         color: var(--hint-color);
+
+        div {
+            display: flex;
+        }
     }
 
     strong {

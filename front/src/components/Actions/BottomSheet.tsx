@@ -55,9 +55,7 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
 
   useEffect(() => {
     if (isOpen) {
-      dispatch(
-        pushBackButtonHandler({ id: "bottomSheet", callback: handleClose }),
-      );
+      dispatch(pushBackButtonHandler({ id: "bottomSheet", callback: onClose }));
     } else {
       dispatch(popBackButtonHandler());
     }

@@ -8,7 +8,7 @@ interface BackButtonState {
 const initialState: BackButtonState = {
   stack: [], // Изначально стек пуст
 };
-
+// Глобальная карта для хранения обратных вызовов
 const callbackMap = new Map<string, () => void>();
 
 export const backButtonSlice = createSlice({

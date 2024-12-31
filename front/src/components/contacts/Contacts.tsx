@@ -69,11 +69,11 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         phone: companyInfo?.website ? companyInfo.website : null,
       },
       {
-        text: "Нет Почты",
-        isDisabled: true,
+        text: companyInfo?.email || "Почта не доступна",
+        isDisabled: !companyInfo?.email,
         icon: "email.svg",
         // key: "map",
-        phone: companyInfo?.website ? companyInfo.website : null,
+        phone: companyInfo?.email ? `mailto:${companyInfo.email}` : null,
       },
       {
         timeComponent: <WorkTime working_hours={companyInfo.working_hours} />,

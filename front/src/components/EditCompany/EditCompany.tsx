@@ -210,7 +210,8 @@ const EditCompany = ({
             arrowRight={true}
           />
         </div>
-
+      </div>
+      <div className="contacts__actions editActions">
         <h3 className="contacts__actions__title second__title">Контакты</h3>
         <EditAction
           smallInfo="Ссылка на Telegram"
@@ -290,7 +291,9 @@ const EditCompany = ({
             objectKeys={`mobile_apps.${platform}`}
           />
         ))}
+      </div>
 
+      <div className="contacts__actions editActions">
         <h3 className="contacts__actions__title second__title">
           Фото профиля заведения
         </h3>
@@ -329,7 +332,8 @@ const EditCompany = ({
           setimagesArray={setimagesArrayNew}
           id="addContacts"
         />
-
+      </div>
+      <div className="contacts__actions editActions">
         <h3 className="contacts__actions__title second__title">
           Ваше имя
           <span>*</span>
@@ -372,15 +376,15 @@ const EditCompany = ({
         />
 
         {error && <div className="errorText">{error}</div>}
-      </div>
 
-      <div className="sendButton">
-        <p>"Проверка информаций займёт 3 рабочих дня"</p>
-        <CommonButton
-          createdFunction={handleSubmit}
-          disabled={updateLoading || uploadLoading}>
-          <span>Отправить</span>
-        </CommonButton>
+        <div className="sendButton">
+          <p>"Проверка информаций займёт 3 рабочих дня"</p>
+          <CommonButton
+            createdFunction={handleSubmit}
+            disabled={updateLoading || uploadLoading}>
+            <span>Отправить</span>
+          </CommonButton>
+        </div>
       </div>
     </div>
   );

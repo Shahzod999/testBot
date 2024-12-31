@@ -8,7 +8,7 @@ import searchUtya from "../../../../public/searchUtya.json";
 import "./welcome.scss";
 import CommonButton from "../../../components/Actions/CommonButton";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { setConfitti } from "../../../app/features/RaitingStarsSlice";
 
@@ -29,9 +29,10 @@ const Welcome = () => {
     window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
     window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
 
-    const swiper = swiperRef.current.swiper;
-    const currentSlideIndex = swiper.realIndex;
+    const swiper = swiperRef.current?.swiper;
+    if (!swiper) return;
 
+    const currentSlideIndex = swiper.realIndex;
     swiper.slideNext();
 
     if (currentSlideIndex === 1) {
@@ -41,6 +42,19 @@ const Welcome = () => {
       handleNavigate();
     }
   };
+
+  useEffect(() => {
+    const swiper = swiperRef.current?.swiper;
+    if (!swiper) return;
+
+    const updateText = () => {
+      const currentSlideIndex = swiper.realIndex;
+      if (currentSlideIndex === 2) setText("Начать");
+    };
+
+    swiper.on("slideChange", updateText);
+    return () => swiper.off("slideChange", updateText);
+  }, []);
 
   return (
     <div className="notFoundPage">

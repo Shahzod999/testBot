@@ -88,7 +88,7 @@ const Header = ({ img }: HeaderProps) => {
           delay: 8000,
           disableOnInteraction: false,
         }}
-        zoom={{ maxRatio: 3 }}
+        zoom={{ maxRatio: 3, minRatio: 1 }}
         modules={[Pagination, Zoom, Autoplay]}
         className="mySwiper"
         watchSlidesProgress

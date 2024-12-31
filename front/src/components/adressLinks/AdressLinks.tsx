@@ -2,25 +2,44 @@ import { ReactSVG } from "react-svg";
 import { CompanyState } from "../../app/types/companyType";
 import "./adressLinks.scss";
 import { useAppDispatch } from "../../hooks/reduxHooks";
-import { errorToast, succesToast } from "../../app/features/toastSlice";
+import { errorToast } from "../../app/features/toastSlice";
+import { useState } from "react";
 
 const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const [copyed, setCopyed] = useState<string | null>(null);
+  const [copyAdress, setCopyAdress] = useState<string | null>(null);
   const dispatch = useAppDispatch();
 
-  const handleCopyAdress = (copy: string) => {
-    const textToCopy = copy; // Это может быть любая строка или значение
+  const handleCopyAdress = (copy: string, type: string) => {
+    const textToCopy = copy;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
-        dispatch(succesToast("Copy"));
         console.log("Текст скопирован в буфер обмена");
         handleHaptic();
+        handleCopy("Текст скопирован", type);
       })
       .catch((error) => {
         dispatch(errorToast("Error"));
         console.error("Не удалось скопировать текст: ", error);
         handleHaptic();
+        handleCopy("Не удалось скопировать", type);
       });
+  };
+
+  const handleCopy = (text: string, type: string) => {
+    if (type == "adress") {
+      setCopyAdress(text);
+    } else {
+      setCopyed(text);
+    }
+
+    const timer = setTimeout(() => {
+      setCopyed(null);
+      setCopyAdress(null);
+    }, 3000);
+
+    return timer;
   };
 
   const handleHaptic = () => {
@@ -66,19 +85,34 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
       <div
         className="socialMedia__adress"
-        onClick={() => handleCopyAdress(`${companyInfo.full_address}`)}>
+        onClick={() =>
+          handleCopyAdress(`${companyInfo.full_address}`, "adress")
+        }>
         <ReactSVG src="./locationNavig.svg" />
-        <p className="socialMedia__adress__text">{companyInfo.full_address}</p>
+
+        <p className="socialMedia__adress__text">
+          {copyAdress || companyInfo.full_address}
+        </p>
       </div>
 
       <div
         className="coordinates"
         onClick={() =>
-          handleCopyAdress(`${companyInfo.latitude},${companyInfo.longitude}`)
+          handleCopyAdress(
+            `${companyInfo.latitude},${companyInfo.longitude}`,
+            "latlon",
+          )
         }>
         <span>Координаты:</span>
-        <strong>{companyInfo.latitude.toFixed(4)},</strong>
-        <strong>{companyInfo.longitude.toFixed(4)}</strong>
+
+        {copyed ? (
+          <strong>{copyed}</strong>
+        ) : (
+          <>
+            <strong>{companyInfo.latitude.toFixed(4)},</strong>
+            <strong>{companyInfo.longitude.toFixed(4)}</strong>
+          </>
+        )}
         <span>
           <ReactSVG src="./copy.svg" />
         </span>
