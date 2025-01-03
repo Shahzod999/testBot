@@ -12,6 +12,8 @@ import Snowfall from "react-snowfall";
 import BackButtonManager from "./hooks/BackButtonManager.tsx";
 import Confetti from "./pages/SmallPages/welComePages/Confetti.tsx";
 import Menu from "./pages/Menu/Menu.tsx";
+import SingleMenu from "./pages/Menu/SingleMenu/SingleMenu.tsx";
+import TotalMenu from "./pages/Menu/TotalMenu/TotalMenu.tsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,16 @@ const router = createBrowserRouter([
       {
         path: "menu",
         element: <Menu />,
+        children: [
+          {
+            path: "",
+            element: <TotalMenu />,
+          },
+          {
+            path: ":id",
+            element: <SingleMenu />,
+          },
+        ],
       },
       {
         path: "welcome",

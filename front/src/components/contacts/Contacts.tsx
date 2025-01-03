@@ -29,8 +29,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
-  console.log(companyInfo, "new");
-
   const actions = useMemo(
     () => [
       {

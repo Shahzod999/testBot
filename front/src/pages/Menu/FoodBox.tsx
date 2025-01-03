@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 const FoodBox = ({ food }: any) => {
   const { price, text, weight, img } = food;
 
   return (
-    <div className="menu__food__box">
+    <Link to="1" className="menu__food__box">
       <div className="menu__food__box__img">
         <img src={img} alt="" />
       </div>
@@ -11,7 +13,7 @@ const FoodBox = ({ food }: any) => {
         <p>{text}</p>
         <span>{weight}</span>
       </div>
-    </div>
+    </Link>
   );
 };
 

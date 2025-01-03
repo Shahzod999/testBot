@@ -7,8 +7,12 @@
     padding-top: var(--tg-safe-area-inset-top);
 }
 
+
 .menu {
     padding: 16px;
+    padding-bottom: 25px;
+    border: solid;
+    border-radius: 10px;
 
     &__title {
         font-family: var(--font-family);
@@ -125,6 +129,12 @@
             border-radius: 16px;
             box-shadow: 0 0px 2px 0 rgba(51, 51, 51, 0.08);
             background: rgba(116, 116, 128, 0.08);
+            transition: 0.2s ease-in-out;
+
+            &:active,
+            &:hover {
+                transform: scale(1.05);
+            }
 
             &__img {
 

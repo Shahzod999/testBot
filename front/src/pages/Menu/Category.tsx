@@ -15,12 +15,13 @@ const Category = ({
 
   return (
     <div className="category">
-      {category.map((item) => (
+      {category.map((item, index) => (
         <span
           className={`category__text ${
             activeCategory == item ? "category__text__active" : ""
           }`}
-          onClick={() => handleCategory(item)}>
+          onClick={() => handleCategory(item)}
+          key={index}>
           {item}
         </span>
       ))}
