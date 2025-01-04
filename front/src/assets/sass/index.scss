@@ -122,6 +122,10 @@ a {
   color: var(--destructive-color) !important;
 }
 
+.warninText {
+  color: var(--warning-color) !important;
+}
+
 .commonCross {
   display: grid;
   place-items: center;

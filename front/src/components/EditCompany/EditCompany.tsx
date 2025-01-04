@@ -365,15 +365,23 @@ const EditCompany = ({
           Кем вы являетесь?
           <span>*</span>
         </h3>
+
         <input
           type="text"
           placeholder="Ваша должность в этом заведении"
           className="contacts__actions__positionInput"
+          list="positions"
           required
           onChange={(e) =>
             handleEditTotalCompany("requester_position", e.target.value)
           }
         />
+        <datalist id="positions">
+          <option value="Управляющий" />
+          <option value="Персонал" />
+          <option value="Администратор" />
+          <option value="Пользователь"/>
+        </datalist>
 
         {error && <div className="errorText">{error}</div>}
 

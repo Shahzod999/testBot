@@ -35,9 +35,10 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
         isOpen: true,
         hours: "Открыто 24 часа",
         willOpenAt: null,
+        closingIn: null,
       };
     }
-    
+
     if (todayHours !== "Closed") {
       const [start, end] = convertTo24HourFormat(todayHours)
         .split("–")
@@ -54,10 +55,27 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
           willOpenAt: `сегодня в ${
             convertTo24HourFormat(todayHours).split("–")[0]
           }`,
+          closingIn: null,
         };
       } else if (currentMinutes >= start && currentMinutes < end) {
         // Сегодня заведение открыто
-        return { isOpen: true, hours: convertTo24HourFormat(todayHours), willOpenAt: null };
+        const minutesToClose = end - currentMinutes;
+
+        if (minutesToClose <= 30) {
+          return {
+            isOpen: true,
+            hours: convertTo24HourFormat(todayHours),
+            willOpenAt: null,
+            closingIn: `${minutesToClose} минут`,
+          };
+        }
+
+        return {
+          isOpen: true,
+          hours: convertTo24HourFormat(todayHours),
+          willOpenAt: null,
+          closingIn: null,
+        };
       }
     }
 
@@ -66,17 +84,34 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
       const nextDayIndex = (todayIndex + offset) % 7;
       const nextOpeningTime = getOpeningTime(nextDayIndex);
 
+      const daysMap: Record<string, string> = {
+        Sunday: "Воскресенье",
+        Monday: "Понедельник",
+        Tuesday: "Вторник",
+        Wednesday: "Среда",
+        Thursday: "Четверг",
+        Friday: "Пятница",
+        Saturday: "Суббота",
+      };
+
       if (nextOpeningTime) {
-        const nextDayName = offset === 1 ? "завтра" : daysOfWeek[nextDayIndex];
+        const nextDayName =
+          offset === 1 ? "завтра" : daysMap[daysOfWeek[nextDayIndex]];
         return {
           isOpen: false,
           hours: "Закрыто",
           willOpenAt: `${nextDayName} в ${nextOpeningTime}`,
+          closingIn: null,
         };
       }
     }
 
     // Если заведение не работает всю неделю
-    return { isOpen: false, hours: "Закрыто", willOpenAt: null };
+    return {
+      isOpen: false,
+      hours: "Закрыто",
+      willOpenAt: null,
+      closingIn: null,
+    };
   }, [workingHours]);
 };
