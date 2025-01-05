@@ -38,6 +38,8 @@
         }
 
         &__title {
+            margin-bottom: 20px;
+
             &__pading {
                 padding: 16px;
             }
@@ -63,7 +65,6 @@
                 color: var(--text-color);
             }
 
-            margin-bottom: 20px;
         }
 
         &__category {
