@@ -16,7 +16,7 @@
   --warning-color: #ff9500;
   --success-color: #34c759;
   --gray-color: #8e8e93;
-  --separator-color: #c8c7cb;
+  --separator-color: var(--tg-theme-section-separator-color, #c8c7cb);
   --grey-40: rgba(0, 0, 0, 0.7);
   /////
   --font-family: "SF Pro Text", sans-serif;
@@ -275,16 +275,6 @@ button:disabled {
 /// npm uninstall react-snowfall
 .newYear {
   position: relative;
-
-  &__button {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: -30%;
-    right: -5%;
-    pointer-events: none;
-
-  }
 
   img {
     width: 100%;

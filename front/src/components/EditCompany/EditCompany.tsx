@@ -68,8 +68,6 @@ const EditCompany = ({
     }
   }, [companyInfo, isDarkmode]);
 
-  console.log(imagesArrayNew, "999");
-
   const deepCopy = (obj: any): any => {
     if (typeof obj !== "object" || obj === null) return obj;
     if (Array.isArray(obj)) return obj.map(deepCopy);
@@ -169,7 +167,6 @@ const EditCompany = ({
   };
 
   //t.me изменить
-  console.log(logoImg, "22");
 
   return (
     <div className="edit">

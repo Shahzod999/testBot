@@ -43,7 +43,6 @@
       font-size: 34px;
       line-height: 121%;
       letter-spacing: 0.01em;
-      // color: #000;
       color: var(--text-color);
 
       display: flex;
@@ -81,7 +80,6 @@
       flex: 1;
       display: flex;
       align-items: center;
-      // justify-content: flex-end;
       gap: 5px;
       -webkit-tap-highlight-color: transparent;
 
@@ -156,7 +154,6 @@
       font-size: 16px;
       line-height: 131%;
       letter-spacing: -0.02em;
-      // color: #000;
       color: var(--text-color);
 
       padding-bottom: 5px;
@@ -269,7 +266,6 @@
     font-size: 20px;
     line-height: 120%;
     letter-spacing: 0.02em;
-    // color: #000;
     color: var(--text-color);
 
     margin: 16px 0;
@@ -338,7 +334,6 @@
         font-size: 13px;
         line-height: 138%;
         letter-spacing: -0.01em;
-        // color: #000;
         color: var(--text-color);
       }
     }
@@ -346,15 +341,6 @@
 }
 
 .sendButton {
-  // position: fixed;
-  // bottom: 0;
-  // left: 0;
-  // right: 0;
-  // text-align: center;
-  // padding: 16px;
-  // box-shadow: 0 -4px 12px 0 rgba(0, 0, 0, 0.05);
-  // // background: #fff;
-  // border-radius: 16px 16px 0 0;
 
   p {
     font-weight: 400;

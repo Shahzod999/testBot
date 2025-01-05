@@ -33,7 +33,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
       // Если заведение работает круглосуточно
       return {
         isOpen: true,
-        hours: "Открыто 24 часа",
+        hours: "Круглосуточно",
         willOpenAt: null,
         closingIn: null,
       };
@@ -100,7 +100,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
         return {
           isOpen: false,
           hours: "Закрыто",
-          willOpenAt: `${nextDayName} в ${nextOpeningTime}`,
+          willOpenAt: `${nextDayName} ${nextOpeningTime}`,
           closingIn: null,
         };
       }

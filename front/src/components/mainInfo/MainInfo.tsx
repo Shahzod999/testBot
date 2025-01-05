@@ -208,9 +208,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <button
             className="mainInfo__orderbutton pressEffefct"
             onClick={handleOrder}>
-            <div className="newYear__button">
-              <img src="./NewYear/open.png" alt="" />
-            </div>
             {companyInfo?.is_accept_orders ? (
               <>
                 <ReactSVG src="./bag.svg" />

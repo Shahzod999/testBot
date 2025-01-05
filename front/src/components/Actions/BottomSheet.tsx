@@ -4,9 +4,8 @@ import CompanyLink from "../CompanyLink/CompanyLink";
 import {
   popBackButtonHandler,
   pushBackButtonHandler,
-  selectBackButtonStack,
 } from "../../app/features/backButtonState";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch } from "../../hooks/reduxHooks";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -43,9 +42,6 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
     setCurrentY(null);
     setIsDragging(false);
   };
-
-  const del = useAppSelector(selectBackButtonStack);
-  console.log(del, "aaa");
 
   const handleClose = () => {
     onClose();

@@ -69,8 +69,6 @@ const AddFoto = ({
     setImgOpen(!imgOpen);
   };
 
-  console.log(imagesArray);
-
   return (
     <div className="addFoto">
       <h2>Добавить фотографию</h2>

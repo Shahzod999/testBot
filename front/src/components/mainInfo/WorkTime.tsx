@@ -5,6 +5,9 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
   const { isOpen, hours, willOpenAt, closingIn } =
     useWorkingHours(working_hours);
 
+    console.log(willOpenAt);
+    
+
   return (
     <div className="mainInfo__openHours__left">
       {isOpen ? (
