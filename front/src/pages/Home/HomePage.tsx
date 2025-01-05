@@ -4,14 +4,18 @@ import Header from "../../components/header/Header";
 import MainInfo from "../../components/mainInfo/MainInfo";
 import Raiting from "../../components/raiting/Raiting";
 import { useAppSelector } from "../../hooks/reduxHooks";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 
 const FeedBack = lazy(() => import("../../components/FeedBack/FeedBack"));
 
 const HomePage = () => {
   const companyInfo = useAppSelector(selectedCompany);
 
-  console.log(companyInfo, "222");
+  useEffect(() => {
+    const tg = window.Telegram.WebApp;
+
+    tg.BackButton.hide();
+  }, []);
 
   if (!companyInfo) return;
   return (

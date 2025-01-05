@@ -1,16 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { selectedCompany } from "../../app/features/companyStateSlice";
 import EditCompany from "../../components/EditCompany/EditCompany";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import WorkingHoursComponent from "../../components/EditCompany/WorkingHoursComponent";
 import { useNavigate } from "react-router-dom";
-import {
-  popBackButtonHandler,
-  pushBackButtonHandler,
-} from "../../app/features/backButtonState";
 
 const EditPage = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const companyInfo = useAppSelector(selectedCompany);
 
@@ -22,33 +17,26 @@ const EditPage = () => {
   const closeBottomSheet = useCallback(() => {
     document.body.style.overflow = "";
     setActiveAction(null);
-    dispatch(popBackButtonHandler());
-  }, [dispatch]);
+  }, []);
 
-  const handleActionClick = useCallback(
-    (key: string | null) => {
-      if (key) {
-        document.body.style.overflow = "hidden";
-        dispatch(pushBackButtonHandler({ id: "EditPage", callback: closeBottomSheet }));
-      }
+  const handleActionClick = useCallback((key: string | null) => {
+    if (key) {
+      document.body.style.overflow = "hidden";
       setActiveAction(key);
-    },
-    [dispatch, closeBottomSheet],
-  );
-
+    }
+  }, []);
 
   const handleBackButtonClick = useCallback(() => {
     if (activeAction) {
       closeBottomSheet();
     } else {
-      navigate("/"); 
+      navigate(-1);
     }
   }, [navigate, activeAction, closeBottomSheet]);
 
-
-
   useEffect(() => {
     const tg = window.Telegram.WebApp;
+
     tg.BackButton.show();
     tg.BackButton.onClick(handleBackButtonClick);
 

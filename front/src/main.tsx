@@ -9,7 +9,6 @@ import EditPage from "./pages/Edit/EditPage.tsx";
 import NotFoundPage from "./pages/SmallPages/404/NotFoundPage.tsx";
 import Welcome from "./pages/SmallPages/welComePages/Welcome.tsx";
 import Snowfall from "react-snowfall";
-import BackButtonManager from "./hooks/BackButtonManager.tsx";
 import Confetti from "./pages/SmallPages/welComePages/Confetti.tsx";
 import Menu from "./pages/Menu/Menu.tsx";
 import SingleMenu from "./pages/Menu/SingleMenu/SingleMenu.tsx";
@@ -30,7 +29,7 @@ const router = createBrowserRouter([
         element: <EditPage />,
       },
       {
-        path: "menu",
+        path: "/menu",
         element: <Menu />,
         children: [
           {
@@ -65,7 +64,6 @@ createRoot(document.getElementById("root")!).render(
       radius={[0.5, 2]}
       wind={[0, 1]}
     />
-    <BackButtonManager />
     <Confetti />
     <RouterProvider router={router} />
   </Provider>,

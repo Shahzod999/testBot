@@ -6,11 +6,7 @@ import useTimeAgo from "../../../hooks/useTimeAgo";
 import "swiper/swiper-bundle.css";
 import ReplyComment from "./ReplyComment";
 import FullScreenImgSwiper from "../../FullScreenImgSwiper/FullScreenImgSwiper";
-import {
-  popBackButtonHandler,
-  pushBackButtonHandler,
-} from "../../../app/features/backButtonState";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
+
 import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 
 const Comment = ({ comment }: { comment: SingleComment }) => {
@@ -20,7 +16,6 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   const timeAgo = useTimeAgo(comment?.created_at);
   const textRef = useRef<HTMLParagraphElement>(null);
   const [indexImg, setIndexImg] = useState(0);
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (textRef.current) {
@@ -29,24 +24,6 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
       setIsOverflowing(isOverflow);
     }
   }, [comment?.message]);
-
-  useEffect(() => {
-    const handleBackButton = () => setImgOpen(false);
-
-    if (imgOpen) {
-      dispatch(
-        pushBackButtonHandler({ id: "Comment", callback: handleBackButton }),
-      );
-    } else {
-      dispatch(popBackButtonHandler());
-    }
-
-    return () => {
-      if (imgOpen) {
-        dispatch(popBackButtonHandler());
-      }
-    };
-  }, [imgOpen, dispatch]);
 
   const toggleOpen = () => {
     setOpen(!open);

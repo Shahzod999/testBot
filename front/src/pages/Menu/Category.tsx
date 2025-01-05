@@ -1,7 +1,9 @@
+import { CategoryType } from "../../app/types/menuType";
+
 interface CategoryProps {
-  category: string[];
-  activeCategory: string;
-  setActiveCategory: (i: string) => void;
+  category: CategoryType[];
+  activeCategory: CategoryType;
+  setActiveCategory: (i: CategoryType) => void;
 }
 
 const Category = ({
@@ -9,20 +11,20 @@ const Category = ({
   activeCategory,
   setActiveCategory,
 }: CategoryProps) => {
-  const handleCategory = (i: string) => {
+  const handleCategory = (i: CategoryType) => {
     setActiveCategory(i);
   };
 
   return (
     <div className="category">
-      {category.map((item, index) => (
+      {category?.map((item, index) => (
         <span
           className={`category__text ${
-            activeCategory == item ? "category__text__active" : ""
+            activeCategory?.name == item.name ? "category__text__active" : ""
           }`}
           onClick={() => handleCategory(item)}
           key={index}>
-          {item}
+          {item.name}
         </span>
       ))}
     </div>

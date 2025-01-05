@@ -1,13 +1,7 @@
-import { useEffect } from "react";
 import "./fullScreenImgSwiper.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Pagination, Zoom } from "swiper/modules";
-import { useAppDispatch } from "../../hooks/reduxHooks";
-import {
-  popBackButtonHandler,
-  pushBackButtonHandler,
-} from "../../app/features/backButtonState";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 
 interface FullScreenImgSwiperProps {
@@ -23,27 +17,7 @@ const FullScreenImgSwiper = ({
   images,
   indexImg,
 }: FullScreenImgSwiperProps) => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const handleBackButtonClick = () => setImgOpen(false);
-
-    if (imgOpen) {
-      dispatch(
-        pushBackButtonHandler({
-          id: "fullScreenImg",
-          callback: handleBackButtonClick,
-        }),
-      );
-    }
-
-    return () => {
-      if (imgOpen) {
-        dispatch(popBackButtonHandler());
-      }
-    };
-  }, [imgOpen, dispatch]);
-
+  
   return (
     <div className="fullScreenImg">
       <Swiper

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { selectedCompany } from "../../../app/features/companyStateSlice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import RaitingStars from "../RaitingStars";
@@ -88,6 +88,19 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
       dispatch(errorToast(er.data?.message || "Ошибка при отправке"));
     }
   };
+  const tg = window.Telegram.WebApp;
+
+  useEffect(() => {
+    if (openComment) {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => {
+        toggleComment();
+        tg.BackButton.offClick(toggleComment);
+      });
+    } else if (!openComment) {
+      tg.BackButton.hide();
+    }
+  }, [openComment, toggleComment]);
 
   return (
     <BottomSheet isOpen={openComment} onClose={toggleComment}>

@@ -6,7 +6,6 @@ import countRaitingStateSlice from "./features/RaitingStarsSlice";
 import getCompanyIdSlcie from "./features/getCompanyIdSlice";
 import toastReducer from "./features/toastSlice";
 import userLocationSlice from "./features/userLocationSlice";
-import backButtonSlice from "./features/backButtonState";
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +15,6 @@ export const store = configureStore({
     companyId: getCompanyIdSlcie,
     toast: toastReducer,
     userLocation: userLocationSlice,
-    backbutton: backButtonSlice,
   },
 
   middleware: (getDefaultMiddleware) =>

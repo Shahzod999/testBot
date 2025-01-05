@@ -28,10 +28,10 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
     dispatch(setCountRaiting(index + 1));
     handleHaptic();
   };
-
+  const tg = window.Telegram.WebApp;
   const handleHaptic = () => {
-    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+    tg.HapticFeedback.impactOccurred("light");
+    tg.HapticFeedback.notificationOccurred("success");
   };
 
   const handleOrder = () => {

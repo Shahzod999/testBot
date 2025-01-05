@@ -70,6 +70,7 @@ export interface CompanyState {
   requester_phone_number: string;
   requester_position: string;
   email: any;
+  has_menu: boolean;
 }
 
 export interface WorkingHours {

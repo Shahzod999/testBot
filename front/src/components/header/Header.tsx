@@ -6,45 +6,35 @@ import "swiper/swiper-bundle.css";
 import "./header.scss";
 import { Autoplay, Pagination, Zoom } from "swiper/modules";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
-import { useAppDispatch } from "../../hooks/reduxHooks";
-import {
-  popBackButtonHandler,
-  pushBackButtonHandler,
-} from "../../app/features/backButtonState";
 
 interface HeaderProps {
   img: PhotosSample[];
 }
 
 const Header = ({ img }: HeaderProps) => {
+  const tg = window.Telegram.WebApp;
   const [openImg, setOpenImg] = useState(false);
-  const dispatch = useAppDispatch();
+
+  const handleClose = () => {
+    setOpenImg(!openImg);
+  };
 
   useEffect(() => {
-    const handleBackButtonClick = () => setOpenImg(false);
-
     if (openImg) {
-      dispatch(
-        pushBackButtonHandler({
-          id: "Header",
-          callback: handleBackButtonClick,
-        }),
-      );
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => {
+        handleClose();
+        tg.BackButton.offClick(handleClose);
+      });
     } else {
-      dispatch(popBackButtonHandler());
+      tg.BackButton.hide();
     }
-
-    return () => {
-      if (openImg) {
-        dispatch(popBackButtonHandler());
-      }
-    };
-  }, [openImg, dispatch]);
+  }, [setOpenImg, handleClose]);
 
   if (!img || img.length === 0) {
     return (
       <header
-        onClick={() => setOpenImg(!openImg)}
+        onClick={handleClose}
         className={`${openImg ? "fullScreenImg" : ""}`}>
         <img src="./defaultMain.jpg" />
       </header>
@@ -52,7 +42,7 @@ const Header = ({ img }: HeaderProps) => {
   }
   return (
     <header
-      onClick={() => setOpenImg(!openImg)}
+      onClick={handleClose}
       className={`${openImg ? "fullScreenImg" : ""}`}>
       <Swiper
         onSlideChange={(swiper) => {

@@ -14,11 +14,8 @@ import NearestMetroHolder from "./NearestMetroHolder";
 import { selectedIsDarkMode } from "../../app/features/companyStateSlice";
 import Taxi from "./Taxi/Taxi";
 import { ReactSVG } from "react-svg";
-import {
-  popBackButtonHandler,
-  pushBackButtonHandler,
-} from "../../app/features/backButtonState";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
+import { useNavigate } from "react-router-dom";
 interface ActionsState {
   text: string;
   img: string;
@@ -32,6 +29,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
 
   const handleHaptic = () => {
@@ -83,6 +81,8 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     [companyInfo],
   );
 
+  const tg = window.Telegram.WebApp;
+
   const handleActions = useCallback(
     (item: ActionsState) => {
       if (item.link) {
@@ -98,19 +98,13 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   }, []);
 
   const handleOrder = () => {
-    if (companyInfo?.is_accept_orders) {
-      console.log("nice");
+    if (companyInfo?.has_menu) {
+      navigate("/menu");
       return;
     }
     if (companyInfo?.online_menu_link) {
-      const closeButton = () => {
-        dispatch(popBackButtonHandler());
-      };
-
-      dispatch(
-        pushBackButtonHandler({ id: "MainInfo", callback: closeButton }),
-      );
       window.location.href = companyInfo.online_menu_link;
+      return;
     }
 
     window.open(`tel:${companyInfo.phone_number}`, "_blank");
@@ -118,20 +112,14 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   useEffect(() => {
     if (activeAction) {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => {
+        closeBottomSheet();
+        tg.BackButton.offClick(closeBottomSheet);
+      });
       document.body.style.overflow = "hidden";
-      const closeActive = () => {
-        setActiveAction(null);
-      };
-
-      dispatch(
-        pushBackButtonHandler({
-          id: "MainInfoCloseActive",
-          callback: closeActive,
-        }),
-      );
     } else {
       document.body.style.overflow = "";
-      dispatch(popBackButtonHandler());
     }
   }, [activeAction, dispatch]);
 
@@ -208,13 +196,13 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <button
             className="mainInfo__orderbutton pressEffefct"
             onClick={handleOrder}>
-            {companyInfo?.is_accept_orders ? (
+            {companyInfo?.has_menu ? (
               <>
                 <ReactSVG src="./bag.svg" />
-                Заказать
+                Посмотреть меню
               </>
             ) : companyInfo?.online_menu_link ? (
-              <>Перейти</>
+              <>Посмотреть меню</>
             ) : (
               <>Позвонить</>
             )}

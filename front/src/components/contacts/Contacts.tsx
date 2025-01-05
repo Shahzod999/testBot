@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { ContactsActions } from "./ContactsActions";
 import "./contacts.scss";
 import { CompanyState } from "../../app/types/companyType";
@@ -10,9 +10,10 @@ import notFound from "../../../public/notFound.json";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "../mainInfo/WorkTime";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useDayTranslator from "../../hooks/translateDay";
 import useSortedWorkingHours from "../../hooks/sortingDays";
+import { useAppDispatch } from "../../hooks/reduxHooks";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -24,6 +25,8 @@ const getAvailableSocialMedia = (
 };
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const translateDay = useDayTranslator();
   const sortedWorkingHours = useSortedWorkingHours(companyInfo.working_hours);
 
@@ -95,6 +98,8 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     [companyInfo],
   );
 
+  const tg = window.Telegram.WebApp;
+
   const handleActionClick = useCallback((key: string | null) => {
     if (key) {
       document.body.style.overflow = "hidden";
@@ -107,16 +112,34 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     setActiveAction(null);
   }, []);
 
+  const navigateToEdit = () => {
+    navigate("edit");
+  };
+
+  useEffect(() => {
+    if (activeAction) {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => {
+        closeBottomSheet();
+        tg.BackButton.offClick(closeBottomSheet);
+      });
+    } else {
+      tg.BackButton.hide();
+    }
+  }, [activeAction, dispatch, closeBottomSheet]);
+
   if (!companyInfo) return null;
   return (
     <>
       <div className="contacts">
         <div className="contacts__header">
           <h2>Контакты</h2>
-          <Link to="edit" className="pressEffefct contacts__header__button">
+          <span
+            onClick={navigateToEdit}
+            className="pressEffefct contacts__header__button">
             <ReactSVG src="./edit.svg" />
             Редактировать
-          </Link>
+          </span>
         </div>
         <div className="contacts__actions">
           {actions.map(

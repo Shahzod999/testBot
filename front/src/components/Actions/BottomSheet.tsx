@@ -1,11 +1,6 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import "./bottomSheet.scss";
 import CompanyLink from "../CompanyLink/CompanyLink";
-import {
-  popBackButtonHandler,
-  pushBackButtonHandler,
-} from "../../app/features/backButtonState";
-import { useAppDispatch } from "../../hooks/reduxHooks";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -14,7 +9,6 @@ interface BottomSheetProps {
 }
 
 const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
-  const dispatch = useAppDispatch();
   const [startY, setStartY] = useState<number | null>(null);
   const [currentY, setCurrentY] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -45,21 +39,7 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
 
   const handleClose = () => {
     onClose();
-
-    dispatch(popBackButtonHandler());
   };
-
-  useEffect(() => {
-    if (isOpen) {
-      dispatch(pushBackButtonHandler({ id: "bottomSheet", callback: onClose }));
-    } else {
-      dispatch(popBackButtonHandler());
-    }
-
-    return () => {
-      dispatch(popBackButtonHandler());
-    };
-  }, [isOpen, dispatch]);
 
   return (
     <>

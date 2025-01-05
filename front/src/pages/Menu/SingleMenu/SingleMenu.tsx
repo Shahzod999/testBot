@@ -1,30 +1,35 @@
 import { useParams } from "react-router-dom";
 import "./singleMenu.scss";
+import { useGetSingleProdQuery } from "../../../app/api/menuSlice";
+import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
+import FoodBox from "../FoodBox/FoodBox";
 
 const SingleMenu = () => {
   const { id } = useParams();
-  console.log(id);
+  const { data } = useGetSingleProdQuery(id);
 
+  const singleProd = data?.data;
+
+  if (!singleProd) return null;
   return (
     <div className="singleMenu">
       <div className="singleMenu__img">
-        <img src="./defaultMain.jpg" alt="" />
+        <img src={getValidatedUrl(singleProd.image)} alt="productImg" />
       </div>
       <div className="singleMenu__main">
         <div className="singleMenu__main__title">
           <div className="singleMenu__main__title__pading">
-            <h2>Сендвич - круассан с говяжьей ветчиной</h2>
-            <p>
-              Круассан с говяжей ветчиной, тонко нарезанными помидорами и свежим
-              салатным листом.
-            </p>
+            <h2>{singleProd.name}</h2>
+            <p>{singleProd.description}</p>
           </div>
 
-          <strong>28 000 сум</strong>
+          <strong>
+            {singleProd.price} {singleProd.currency}
+          </strong>
           <div className="singleMenu__main__devider"></div>
         </div>
 
-        <div className="singleMenu__main__category">
+        {/* <div className="singleMenu__main__category">
           <span>Картофель</span>
           <p>Картошка фри</p>
           <div className="singleMenu__main__devider"></div>
@@ -38,17 +43,16 @@ const SingleMenu = () => {
           <div className="singleMenu__main__devider"></div>
           <p>Fresh Malina</p>
           <div className="singleMenu__main__devider"></div>
-        </div>
+        </div> */}
       </div>
 
       <div className="singleMenu__similarProd">
         <h2>Похожие продукты</h2>
-        {/* <div className="singleMenu__similarProd__box">
-          <FoodBox food={food} />
-          <FoodBox food={food} />
-          <FoodBox food={food} />
-          <FoodBox food={food} />
-        </div> */}
+        <div className="singleMenu__similarProd__box">
+          {singleProd.similar_products.map((food) => (
+            <FoodBox food={food} key={food._id} />
+          ))}
+        </div>
       </div>
     </div>
   );
