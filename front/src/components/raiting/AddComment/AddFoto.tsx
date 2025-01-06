@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PhotosSample } from "../../../app/types/companyType";
 import Cross from "./Cross";
 import { ReactSVG } from "react-svg";
@@ -69,17 +69,17 @@ const AddFoto = ({
     setImgOpen(!imgOpen);
   };
 
-  const tg = window.Telegram.WebApp;
+  // const tg = window.Telegram.WebApp;
 
-  useEffect(() => {
-    if (imgOpen) {
-      tg.BackButton.show();
-      tg.BackButton.onClick(() => {
-        toggleImgOpen(0);
-        tg.BackButton.offClick(() => toggleImgOpen(0));
-      });
-    }
-  }, [imgOpen, toggleImgOpen]);
+  // useEffect(() => {
+  //   if (imgOpen) {
+  //     tg.BackButton.show();
+  //     tg.BackButton.onClick(() => {
+  //       toggleImgOpen(0);
+  //       tg.BackButton.offClick(() => toggleImgOpen(0));
+  //     });
+  //   }
+  // }, [imgOpen, toggleImgOpen]);
 
   return (
     <div className="addFoto">

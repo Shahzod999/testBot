@@ -98,12 +98,16 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   }, []);
 
   const handleOrder = () => {
+    if (companyInfo._id == "673a8bf64ddf83aebaa1c970") {
+      window.open("https://lfcapital.uz/ru/open-account/", "_blank");
+      return;
+    }
     if (companyInfo?.has_menu) {
       navigate("/menu");
       return;
     }
     if (companyInfo?.online_menu_link) {
-      window.location.href = companyInfo.online_menu_link;
+      window.open(companyInfo.online_menu_link, "_blank");
       return;
     }
 
@@ -118,6 +122,9 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         tg.BackButton.offClick(closeBottomSheet);
       });
       document.body.style.overflow = "hidden";
+    } else if (!activeAction) {
+      tg.BackButton.hide();
+      document.body.style.overflow = "";
     } else {
       document.body.style.overflow = "";
     }
@@ -196,7 +203,9 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <button
             className="mainInfo__orderbutton pressEffefct"
             onClick={handleOrder}>
-            {companyInfo?.has_menu ? (
+            {companyInfo._id == "673a8bf64ddf83aebaa1c970" ? (
+              <>Счет</>
+            ) : companyInfo?.has_menu ? (
               <>
                 <ReactSVG src="./bag.svg" />
                 Посмотреть меню

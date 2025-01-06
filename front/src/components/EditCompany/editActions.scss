@@ -2,7 +2,6 @@
     padding-bottom: var(--tg-safe-area-inset-bottom);
     padding-left: var(--tg-safe-area-inset-left);
     padding-right: var(--tg-safe-area-inset-right);
-    padding-top: var(--tg-safe-area-inset-top);
 
     // padding-top: 30px;
 
@@ -10,6 +9,10 @@
         max-height: unset;
         overflow: auto;
         gap: 4px;
+
+        &__closeButtons {
+            padding-top: var(--tg-safe-area-inset-top);
+        }
     }
 
     .sendButton {
@@ -27,6 +30,7 @@
 
 .editActions {
     padding: 16px;
+
     background: var(--secondary-bg-color);
     border-radius: 20px;
     margin-bottom: 2px;

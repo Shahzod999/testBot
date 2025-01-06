@@ -10,7 +10,7 @@ import notFound from "../../../public/notFound.json";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "../mainInfo/WorkTime";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useDayTranslator from "../../hooks/translateDay";
 import useSortedWorkingHours from "../../hooks/sortingDays";
 import { useAppDispatch } from "../../hooks/reduxHooks";
@@ -25,7 +25,6 @@ const getAvailableSocialMedia = (
 };
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const translateDay = useDayTranslator();
   const sortedWorkingHours = useSortedWorkingHours(companyInfo.working_hours);
@@ -112,10 +111,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     setActiveAction(null);
   }, []);
 
-  const navigateToEdit = () => {
-    navigate("edit");
-  };
-
   useEffect(() => {
     if (activeAction) {
       tg.BackButton.show();
@@ -134,12 +129,10 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <div className="contacts">
         <div className="contacts__header">
           <h2>Контакты</h2>
-          <span
-            onClick={navigateToEdit}
-            className="pressEffefct contacts__header__button">
+          <Link to="/edit" className="pressEffefct contacts__header__button">
             <ReactSVG src="./edit.svg" />
             Редактировать
-          </span>
+          </Link>
         </div>
         <div className="contacts__actions">
           {actions.map(

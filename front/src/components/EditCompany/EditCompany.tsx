@@ -272,6 +272,15 @@ const EditCompany = ({
           objectKeys="website"
         />
 
+        <EditAction
+          smallInfo="Email"
+          text={newCompanyInfo?.email || "example@gmail.com"}
+          icon="./email.svg"
+          editable
+          handleEditTotalCompany={handleEditTotalCompany}
+          objectKeys="email"
+        />
+
         {Object.keys(newCompanyInfo.mobile_apps).map((platform) => (
           <EditAction
             key={platform}
@@ -377,7 +386,7 @@ const EditCompany = ({
           <option value="Управляющий" />
           <option value="Персонал" />
           <option value="Администратор" />
-          <option value="Пользователь"/>
+          <option value="Пользователь" />
         </datalist>
 
         {error && <div className="errorText">{error}</div>}

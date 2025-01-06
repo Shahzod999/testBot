@@ -75,7 +75,6 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
         return { ...prev, ...updatedTimeForAllDays };
       });
     }
-
     setTime(false);
   };
 

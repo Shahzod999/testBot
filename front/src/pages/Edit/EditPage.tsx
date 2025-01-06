@@ -30,7 +30,7 @@ const EditPage = () => {
     if (activeAction) {
       closeBottomSheet();
     } else {
-      navigate(-1);
+      navigate("/");
     }
   }, [navigate, activeAction, closeBottomSheet]);
 

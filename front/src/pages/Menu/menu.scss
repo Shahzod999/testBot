@@ -5,13 +5,13 @@
     padding-left: var(--tg-safe-area-inset-left);
     padding-right: var(--tg-safe-area-inset-right);
     padding-top: var(--tg-safe-area-inset-top);
+    min-height: 90vh;
 }
 
 
 .menu {
     padding: 16px;
     padding-bottom: 25px;
-    border: solid;
     border-radius: 10px;
 
     &__title {
@@ -132,7 +132,6 @@
         gap: 8px;
 
         &__box {
-            min-width: 170px;
             padding: 4px;
             border-radius: 16px;
             box-shadow: 0 0px 2px 0 rgba(51, 51, 51, 0.08);
@@ -164,7 +163,7 @@
                     font-size: 13px;
                     line-height: 138%;
                     letter-spacing: -0.01em;
-                    color: #292c30;
+                    color: var(--text-color);
                 }
 
                 p {
@@ -173,7 +172,7 @@
                     font-size: 13px;
                     line-height: 123%;
                     letter-spacing: -0.01em;
-                    color: #292c30;
+                    color: var(--text-color);
                 }
 
                 span {
@@ -182,7 +181,7 @@
                     font-size: 13px;
                     line-height: 138%;
                     letter-spacing: -0.01em;
-                    color: rgba(60, 60, 67, 0.6);
+                    color: var(--hint-color)
                 }
             }
         }
