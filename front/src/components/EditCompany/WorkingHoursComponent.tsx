@@ -33,6 +33,8 @@ const WorkingHoursComponent = ({
     window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
   };
 
+  
+
   return (
     <BottomSheet
       isOpen={activeAction === "workHours"}

@@ -95,6 +95,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
     window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
     window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
   };
+
   return (
     <>
       <div onClick={openTime}>

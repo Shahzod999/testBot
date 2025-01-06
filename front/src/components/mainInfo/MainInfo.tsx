@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import "./mainInfo.scss";
 import { GoBookmark } from "react-icons/go";
 import { GoBookmarkFill } from "react-icons/go";
@@ -6,7 +6,7 @@ import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
 import BottomSheet from "../Actions/BottomSheet";
 import { useFavoriteApiMutation } from "../../app/api/companySlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 import AdressLinks from "../adressLinks/AdressLinks";
 import WorkTime from "./WorkTime";
@@ -28,7 +28,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [bookMark, setBookMark] = useState(companyInfo?.is_favorite);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
 
@@ -81,8 +80,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     [companyInfo],
   );
 
-  const tg = window.Telegram.WebApp;
-
   const handleActions = useCallback(
     (item: ActionsState) => {
       if (item.link) {
@@ -97,9 +94,12 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     setActiveAction(null);
   }, []);
 
-  const handleOrder = () => {
+  const handleOrder = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
     if (companyInfo._id == "673a8bf64ddf83aebaa1c970") {
-      window.open("https://lfcapital.uz/ru/open-account/", "_blank");
+      window.open("https://lfcapital.uz/ru/open-account/");
       return;
     }
     if (companyInfo?.has_menu) {
@@ -107,28 +107,13 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       return;
     }
     if (companyInfo?.online_menu_link) {
-      window.open(companyInfo.online_menu_link, "_blank");
+      window.open(companyInfo.online_menu_link);
       return;
     }
-
-    window.open(`tel:${companyInfo.phone_number}`, "_blank");
-  };
-
-  useEffect(() => {
-    if (activeAction) {
-      tg.BackButton.show();
-      tg.BackButton.onClick(() => {
-        closeBottomSheet();
-        tg.BackButton.offClick(closeBottomSheet);
-      });
-      document.body.style.overflow = "hidden";
-    } else if (!activeAction) {
-      tg.BackButton.hide();
-      document.body.style.overflow = "";
-    } else {
-      document.body.style.overflow = "";
+    if (companyInfo?.phone_number) {
+      window.open(`tel:${companyInfo.phone_number}`, "_blank");
     }
-  }, [activeAction, dispatch]);
+  };
 
   return (
     <>
@@ -199,24 +184,23 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
         </div>
 
-        <div className="newYear">
-          <button
-            className="mainInfo__orderbutton pressEffefct"
-            onClick={handleOrder}>
-            {companyInfo._id == "673a8bf64ddf83aebaa1c970" ? (
-              <>Счет</>
-            ) : companyInfo?.has_menu ? (
-              <>
-                <ReactSVG src="./bag.svg" />
-                Посмотреть меню
-              </>
-            ) : companyInfo?.online_menu_link ? (
-              <>Посмотреть меню</>
-            ) : (
-              <>Позвонить</>
-            )}
-          </button>
-        </div>
+        <button
+          className="mainInfo__orderbutton pressEffefct"
+          onClick={(e) => handleOrder(e)}
+          disabled={!companyInfo}>
+          {companyInfo._id == "673a8bf64ddf83aebaa1c970" ? (
+            <>Открыть счёт</>
+          ) : companyInfo?.has_menu ? (
+            <>
+              <ReactSVG src="./bag.svg" />
+              Посмотреть меню
+            </>
+          ) : companyInfo?.online_menu_link ? (
+            <>Посмотреть меню</>
+          ) : (
+            <>Позвонить</>
+          )}
+        </button>
 
         <div className="actionButtons">
           {actions.map((item) => (

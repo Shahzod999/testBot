@@ -1,6 +1,7 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import "./bottomSheet.scss";
 import CompanyLink from "../CompanyLink/CompanyLink";
+import { useLocation } from "react-router-dom";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -40,6 +41,28 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
   const handleClose = () => {
     onClose();
   };
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const tg = window.Telegram.WebApp;
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      tg.BackButton.show();
+      const handleBackClick = () => {
+        onClose();
+      };
+      tg.BackButton.onClick(handleBackClick);
+      return () => {
+        tg.BackButton.offClick(handleBackClick);
+      };
+    } else {
+      if (pathname == "/") {
+        tg.BackButton.hide();
+      }
+      document.body.style.overflow = "";
+    }
+  }, [isOpen]);
 
   return (
     <>

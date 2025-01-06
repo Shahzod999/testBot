@@ -22,10 +22,15 @@ const Header = ({ img }: HeaderProps) => {
   useEffect(() => {
     if (openImg) {
       tg.BackButton.show();
-      tg.BackButton.onClick(() => {
+      
+      const handleBackClick = () => {
         handleClose();
-        tg.BackButton.offClick(handleClose);
-      });
+      };
+
+      tg.BackButton.onClick(handleBackClick);
+      return () => {
+        tg.BackButton.offClick(handleBackClick);
+      };
     } else {
       tg.BackButton.hide();
     }

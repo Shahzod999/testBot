@@ -26,22 +26,24 @@ const EditPage = () => {
     }
   }, []);
 
-  const handleBackButtonClick = useCallback(() => {
+  const handleBackButtonClick = () => {
     if (activeAction) {
       closeBottomSheet();
     } else {
-      navigate("/");
+      navigate(-1);
     }
-  }, [navigate, activeAction, closeBottomSheet]);
+  };
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
-
     tg.BackButton.show();
-    tg.BackButton.onClick(handleBackButtonClick);
+    const handleBackClick = () => {
+      handleBackButtonClick();
+    };
+    tg.BackButton.onClick(handleBackClick);
 
     return () => {
-      tg.BackButton.offClick(handleBackButtonClick);
+      tg.BackButton.offClick(handleBackClick);
     };
   }, [handleBackButtonClick]);
 

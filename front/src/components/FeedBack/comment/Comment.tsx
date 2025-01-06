@@ -34,6 +34,27 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
     setImgOpen(!imgOpen);
   };
 
+  const tg = window.Telegram.WebApp;
+
+  useEffect(() => {
+    if (imgOpen) {
+      tg.BackButton.show();
+
+      const handleBackClick = () => {
+        setImgOpen(false);
+        tg.BackButton.hide();
+      };
+
+      tg.BackButton.onClick(handleBackClick);
+
+      return () => {
+        tg.BackButton.offClick(handleBackClick);
+      };
+    } else if (!imgOpen) {
+      tg.BackButton.hide();
+    }
+  }, [imgOpen]);
+
   return (
     <div className="comment">
       <div className="comment__title">

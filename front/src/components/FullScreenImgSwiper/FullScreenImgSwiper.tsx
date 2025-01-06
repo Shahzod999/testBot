@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Pagination, Zoom } from "swiper/modules";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
-import { useEffect } from "react";
 
 interface FullScreenImgSwiperProps {
   imgOpen: boolean;
@@ -18,18 +17,6 @@ const FullScreenImgSwiper = ({
   images,
   indexImg,
 }: FullScreenImgSwiperProps) => {
-  const tg = window.Telegram.WebApp;
-
-  useEffect(() => {
-    if (imgOpen) {
-      tg.BackButton.show();
-      tg.BackButton.onClick(() => {
-        setImgOpen(false);
-        tg.BackButton.hide();
-      });
-    }
-  }, [imgOpen]);
-
   return (
     <div className="fullScreenImg">
       <Swiper
@@ -45,7 +32,7 @@ const FullScreenImgSwiper = ({
           <SwiperSlide key={i}>
             <div
               className="swiper-zoom-container"
-              onClick={() => setImgOpen(true)}>
+              onClick={() => setImgOpen(!imgOpen)}>
               <img
                 src={getValidatedUrl(item)}
                 alt="LargePhoto photo"

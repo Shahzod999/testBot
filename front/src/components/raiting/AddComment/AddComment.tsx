@@ -93,14 +93,22 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   useEffect(() => {
     if (openComment) {
       tg.BackButton.show();
-      tg.BackButton.onClick(() => {
+
+      const handleBackClick = () => {
         toggleComment();
-        tg.BackButton.offClick(toggleComment);
-      });
+      };
+      tg.BackButton.onClick(handleBackClick);
+
+      return () => {
+        tg.BackButton.offClick(handleBackClick);
+      };
     } else if (!openComment) {
       tg.BackButton.hide();
     }
   }, [openComment, toggleComment]);
+
+  console.log(openComment,'true');
+  
 
   return (
     <BottomSheet isOpen={openComment} onClose={toggleComment}>
