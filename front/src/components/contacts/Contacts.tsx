@@ -54,7 +54,6 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         text: companyInfo?.phone_number || "Нет Номера",
         icon: "phone.svg",
         isDisabled: !companyInfo?.phone_number,
-        // key: "phone",
         phone: companyInfo?.phone_number
           ? `tel:${companyInfo.phone_number}`
           : null,
@@ -63,15 +62,14 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         text: companyInfo?.website?.replace("https://", "") || "Нет Сайта",
         isDisabled: !companyInfo.website,
         icon: "australia.svg",
-        // key: "map",
         phone: companyInfo?.website ? companyInfo.website : null,
       },
       {
         text: companyInfo?.email || "Почта не доступна",
         isDisabled: !companyInfo?.email,
         icon: "email.svg",
-        // key: "map",
-        phone: companyInfo?.email ? `mailto:${companyInfo.email}` : null,
+        key: "email",
+        // phone: companyInfo?.email ? `mailto:${companyInfo.email}` : null,
       },
       {
         timeComponent: <WorkTime working_hours={companyInfo.working_hours} />,
@@ -248,6 +246,18 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <div className="socialMedia">
           <h3>Вакансии</h3>
           <Lottie animationData={notFound} />
+        </div>
+      </BottomSheet>
+      <BottomSheet isOpen={activeAction === "email"} onClose={closeBottomSheet}>
+        <div className="contacts__actions">
+          <button className="actions">
+            <span className="actions__text ">
+              <span className="actions__text__letters ">
+                {companyInfo?.email || "Почта не доступна"}
+              </span>
+            </span>
+            <ReactSVG src="./copy.svg" />
+          </button>
         </div>
       </BottomSheet>
     </>

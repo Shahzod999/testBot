@@ -28,7 +28,11 @@ const FeedBack = () => {
     window.location.href = "#feedBack";
   };
 
-  if (!data?.pagination?.total) return;
+  const total = data?.pagination?.total;
+
+  console.log(total < 3);
+
+  if (!total) return;
 
   return (
     <div className="feedBack" id="feedBack">
@@ -44,14 +48,18 @@ const FeedBack = () => {
         ))}
       </div>
 
-      {end ? (
-        <span className="feedBack__more" onClick={limitHandler}>
-          {isFetching ? "Загрузка..." : "Читать далее"}
-        </span>
-      ) : (
-        <span className="feedBack__more" onClick={closeComments}>
-          Свернуть
-        </span>
+      {total > 3 && (
+        <>
+          {end ? (
+            <span className="feedBack__more" onClick={limitHandler}>
+              {isFetching ? "Загрузка..." : "Читать далее"}
+            </span>
+          ) : (
+            <span className="feedBack__more" onClick={closeComments}>
+              Свернуть
+            </span>
+          )}
+        </>
       )}
     </div>
   );

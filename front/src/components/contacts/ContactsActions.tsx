@@ -55,7 +55,12 @@ export const ContactsActions = ({
       ) : (
         <span
           className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
-          <span className="actions__text__letters">{text}</span>
+          <span
+            className={`actions__text__letters ${
+              isDisabled ? "noAwailibleText" : ""
+            }`}>
+            {text}
+          </span>
         </span>
       )}
       {arrowRight && (
