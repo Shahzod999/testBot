@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { ActionProps } from "../mainInfo/ActionButtons";
 import { ReactSVG } from "react-svg";
+import { hapticVibration } from "../../hooks/hapticVibration";
 
 interface ContactProps extends ActionProps {
   isDisabled?: boolean;
@@ -23,8 +24,7 @@ export const ContactsActions = ({
 }: ContactProps) => {
   const handleClick = () => {
     if (isDisabled) {
-      window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-      window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+      hapticVibration("success", "light");
     }
 
     if (phone) {

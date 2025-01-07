@@ -3,6 +3,8 @@ import { selectedDistance } from "../../../app/features/companyStateSlice";
 import { selectedPlatform } from "../../../app/features/getCompanyIdSlice";
 import { selectedUserLocation } from "../../../app/features/userLocationSlice";
 import { CompanyState } from "../../../app/types/companyType";
+import { openLinkNavigate } from "../../../hooks/openLinkNavigate";
+
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import BottomSheet from "../../Actions/BottomSheet";
 import EditAction from "../../contacts/EditAction";
@@ -42,24 +44,21 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
     "https://play.google.com/store/apps/details?id=ua.com.uklontaxi";
   const uklonIos =
     "https://apps.apple.com/ru/app/uklon-more-than-a-taxi/id654646098";
+
   const fastenAndroid =
     "https://play.google.com/store/apps/details?id=com.fasten.rider";
   const fastenIos =
     "https://apps.apple.com/si/app/fasten-safarlar-va-yetkazish/id6578446117";
 
-  // const myTaxiCommon = "https://my-taxi.onelink.me/sda5/s0pn2a00";
+  const universalLinkMyTaxi = "https://my-taxi.onelink.me/sda5/s0pn2a00";
 
-  const myTaxiAndroid =
-    "https://play.google.com/store/apps/details?id=com.uznewmax.mytaxi";
-  const myTaxiIos =
-    "https://apps.apple.com/ru/app/mytaxi-%D1%82%D0%B0%D0%BA%D1%81%D0%B8-%D0%B8-%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0/id865012817";
 
   return (
     <div className="mainInfoTaxi">
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <h3 className="contacts__actions__centerTitle">Такси</h3>
-          <a href={yandexUrl} target="_blank" rel="noopener noreferrer">
+          <span onClick={() => openLinkNavigate(yandexUrl)}>
             <EditAction
               smallInfo={
                 isLoading || isFetching
@@ -76,7 +75,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
               icon="./yandexGo.svg"
               arrowRight={true}
             />
-          </a>
+          </span>
 
           <a
             href={platform == "android" ? fastenAndroid : fastenIos}
@@ -90,17 +89,14 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
             />
           </a>
 
-          <a
-            href={platform == "android" ? myTaxiAndroid : myTaxiIos}
-            target="_blank"
-            rel="noopener noreferrer">
+          <span onClick={() => openLinkNavigate(universalLinkMyTaxi)}>
             <EditAction
               smallInfo="узнать подробнее в приложении"
               text="My taxi"
               icon="./mytaxi.svg"
               arrowRight={true}
             />
-          </a>
+          </span>
 
           <a
             href={platform == "android" ? uklonAndroid : uklonIos}

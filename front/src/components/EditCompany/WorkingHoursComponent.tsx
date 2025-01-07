@@ -5,6 +5,7 @@ import CommonButton from "../Actions/CommonButton";
 import EditWorkHours from "./EditWorkHours";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import useSortedWorkingHours from "../../hooks/sortingDays";
+import { hapticVibration } from "../../hooks/hapticVibration";
 
 interface EditCompanyProps {
   activeAction: string | null;
@@ -29,11 +30,8 @@ const WorkingHoursComponent = ({
   };
 
   const handleTime = () => {
-    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+    hapticVibration("success", "light");
   };
-
-  
 
   return (
     <BottomSheet

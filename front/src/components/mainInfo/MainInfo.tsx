@@ -16,6 +16,7 @@ import Taxi from "./Taxi/Taxi";
 import { ReactSVG } from "react-svg";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 import { useNavigate } from "react-router-dom";
+import { hapticVibration } from "../../hooks/hapticVibration";
 interface ActionsState {
   text: string;
   img: string;
@@ -31,11 +32,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const navigate = useNavigate();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
 
-  const handleHaptic = () => {
-    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
-  };
-
   const toggleBookMark = async () => {
     try {
       const res = await favoriteApi(companyId).unwrap();
@@ -44,7 +40,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     } catch (error) {
       console.log(error);
     } finally {
-      handleHaptic();
+      hapticVibration("success", "light");
     }
   };
 

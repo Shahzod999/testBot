@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { setConfitti } from "../../../app/features/RaitingStarsSlice";
+import { hapticVibration } from "../../../hooks/hapticVibration";
 
 const Welcome = () => {
   const dispatch = useAppDispatch();
@@ -26,8 +27,7 @@ const Welcome = () => {
   };
 
   const handleLink = () => {
-    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+    hapticVibration("success", "light");
 
     const swiper = swiperRef.current?.swiper;
     if (!swiper) return;
@@ -72,22 +72,22 @@ const Welcome = () => {
           <SwiperSlide>
             <WelcomeBox
               img={searchUtya}
-              title="O’zingizga eng yaqin bo’lgan joylarni bir zumda toping!"
-              text="Restoranlar, kafelar va qahvaxonalarni telegramdan chiqmasdan toping va do’stlaringiz bilan ulashing!"
+              title="Мгновенно находите ближайшие к вам места!"
+              text="Находите рестораны, кафе и кофейни, не выходя из Telegram, и делитесь ими с друзьями!"
             />
           </SwiperSlide>
           <SwiperSlide>
             <WelcomeBox
               img={welcomeSecond}
-              title="Joylardagi aksiyalarni kuzatib boring va foydalaning"
-              text="Joy ma’lumotlaridan “Aksiyalar” bo’limiga o’ting va aksiyalardan unumli foydalaning"
+              title="Следите и воспользуйтесь акциями в местах"
+              text="Перейдите в раздел «Акции» из информации о локации и воспользуйтесь акциями."
             />
           </SwiperSlide>
           <SwiperSlide>
             <WelcomeBox
               img={baristaUtya}
-              title="O’zingizga eng yaqin bo’lgan joylarni bir zumda toping!"
-              text="Restoranlar, kafelar va qahvaxonalarni telegramdan chiqmasdan toping va do’stlaringiz bilan ulashing!"
+              title="Мгновенно находите ближайшие к вам места!"
+              text="Находите рестораны, кафе и кофейни, не выходя из Telegram, и делитесь ими с друзьями!"
             />
           </SwiperSlide>
         </Swiper>

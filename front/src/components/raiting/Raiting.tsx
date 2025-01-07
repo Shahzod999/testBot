@@ -9,6 +9,7 @@ import {
   setCountRaiting,
 } from "../../app/features/RaitingStarsSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { hapticVibration } from "../../hooks/hapticVibration";
 
 const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const dispatch = useAppDispatch();
@@ -26,12 +27,7 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const handleStarClick = (index: number) => {
     dispatch(setCountRaiting(index + 1));
-    handleHaptic();
-  };
-  const tg = window.Telegram.WebApp;
-  const handleHaptic = () => {
-    tg.HapticFeedback.impactOccurred("light");
-    tg.HapticFeedback.notificationOccurred("success");
+    hapticVibration("success", "light");
   };
 
   const handleOrder = () => {

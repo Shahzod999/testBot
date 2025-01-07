@@ -66,7 +66,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
             isOpen: true,
             hours: convertTo24HourFormat(todayHours),
             willOpenAt: null,
-            closingIn: `${minutesToClose} минут`,
+            closingIn: `Осталось ${minutesToClose} минут`,
           };
         }
 

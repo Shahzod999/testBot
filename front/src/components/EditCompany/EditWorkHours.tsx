@@ -6,6 +6,7 @@ import BottomSheet from "../Actions/BottomSheet";
 import { WorkingHours } from "../../app/types/companyType";
 import convertTo12HourFormat from "../../hooks/convertingTo12HoursFormat";
 import useDayTranslator from "../../hooks/translateDay";
+import { hapticVibration } from "../../hooks/hapticVibration";
 
 interface EditWorkHoursProps {
   day: string;
@@ -87,13 +88,8 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
   };
 
   const handleSetOffDay = () => {
-    handleHaptic();
+    hapticVibration("success", "light");
     setOffDay(!offDay);
-  };
-
-  const handleHaptic = () => {
-    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
   };
 
   return (

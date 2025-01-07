@@ -1,51 +1,10 @@
 import { ReactSVG } from "react-svg";
 import { CompanyState } from "../../app/types/companyType";
 import "./adressLinks.scss";
-import { useAppDispatch } from "../../hooks/reduxHooks";
-import { errorToast } from "../../app/features/toastSlice";
-import { useState } from "react";
+import { useCopyAddress } from "../../hooks/copyText";
 
 const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
-  const [copyed, setCopyed] = useState<string | null>(null);
-  const [copyAdress, setCopyAdress] = useState<string | null>(null);
-  const dispatch = useAppDispatch();
-
-  const handleCopyAdress = (copy: string, type: string) => {
-    const textToCopy = copy;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        console.log("Текст скопирован в буфер обмена");
-        handleHaptic();
-        handleCopy("Текст скопирован", type);
-      })
-      .catch((error) => {
-        dispatch(errorToast("Error"));
-        console.error("Не удалось скопировать текст: ", error);
-        handleHaptic();
-        handleCopy("Не удалось скопировать", type);
-      });
-  };
-
-  const handleCopy = (text: string, type: string) => {
-    if (type == "adress") {
-      setCopyAdress(text);
-    } else {
-      setCopyed(text);
-    }
-
-    const timer = setTimeout(() => {
-      setCopyed(null);
-      setCopyAdress(null);
-    }, 3000);
-
-    return timer;
-  };
-
-  const handleHaptic = () => {
-    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
-  };
+  const { copyed, copyAdress, handleCopyAdress } = useCopyAddress();
 
   return (
     <div className="socialMedia">

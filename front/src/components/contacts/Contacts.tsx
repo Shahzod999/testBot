@@ -13,8 +13,11 @@ import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import { Link } from "react-router-dom";
 import useDayTranslator from "../../hooks/translateDay";
 import useSortedWorkingHours from "../../hooks/sortingDays";
+import EmailContact from "./Email/EmailContact";
+import SocialMediaComponent from "./SocialMedia/SocialMediaComponent";
 
 const getAvailableSocialMedia = (
+  // берем только ключи
   socialMedia: Record<string, string | any | null>,
 ): string => {
   const names = Object.entries(socialMedia)
@@ -68,7 +71,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         text: companyInfo?.email || "Почта не доступна",
         isDisabled: !companyInfo?.email,
         icon: "email.svg",
-        key: "email",
+        key: companyInfo?.email ? "email" : null,
         // phone: companyInfo?.email ? `mailto:${companyInfo.email}` : null,
       },
       {
@@ -157,25 +160,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <BottomSheet
         isOpen={activeAction === "socialMedia"}
         onClose={closeBottomSheet}>
-        <div className="socialMedia">
-          <h3>Переход на страницы</h3>
-          <div className="socialMedia__icons">
-            {Object.entries(companyInfo.social_media || {})
-              .filter(([_, url]) => url)
-              .map(([name, url]) => (
-                <a
-                  key={name}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <div className="socialMedia__icons__logo">
-                    <ReactSVG src={`./social/${name}.svg`} />
-                  </div>
-                  <span>{name}</span>
-                </a>
-              ))}
-          </div>
-        </div>
+        <SocialMediaComponent social_media={companyInfo?.social_media} />
       </BottomSheet>
       <BottomSheet
         isOpen={activeAction === "workingHours"}
@@ -249,16 +234,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         </div>
       </BottomSheet>
       <BottomSheet isOpen={activeAction === "email"} onClose={closeBottomSheet}>
-        <div className="contacts__actions">
-          <button className="actions">
-            <span className="actions__text ">
-              <span className="actions__text__letters ">
-                {companyInfo?.email || "Почта не доступна"}
-              </span>
-            </span>
-            <ReactSVG src="./copy.svg" />
-          </button>
-        </div>
+        <EmailContact companyInfo={companyInfo} />
       </BottomSheet>
     </>
   );

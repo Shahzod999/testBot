@@ -1,4 +1,5 @@
 import { IoIosStar } from "react-icons/io";
+import { hapticVibration } from "../../hooks/hapticVibration";
 
 interface RaitingProps {
   count: number;
@@ -6,17 +7,11 @@ interface RaitingProps {
 }
 
 const RaitingStars = ({ count, handleStarClick }: RaitingProps) => {
-
   const starClick = (index: number) => {
     handleStarClick?.(index);
-    handleHaptic();
+    hapticVibration("success", "light");
   };
 
-  const handleHaptic = () => {
-    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
-  };
-  
   return (
     <strong>
       {[...Array(5)].map((_, index) => (

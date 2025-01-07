@@ -1,3 +1,4 @@
+import { hapticVibration } from "../../hooks/hapticVibration";
 import "./commonButton.scss";
 import { ReactNode } from "react";
 
@@ -12,10 +13,9 @@ const CommonButton = ({
   createdFunction,
   disabled,
 }: CommonButtonProps) => {
-  
   const handleHaptic = () => {
-    window.Telegram.WebApp.HapticFeedback.impactOccurred("light");
-    window.Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+    hapticVibration("success", "light");
+
     if (createdFunction) {
       createdFunction();
     }
