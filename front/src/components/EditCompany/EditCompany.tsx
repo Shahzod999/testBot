@@ -23,6 +23,8 @@ import {
   succesToast,
 } from "../../app/features/toastSlice";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
+import { useTranslation } from "react-i18next";
+import { toggleLoading } from "../../app/features/bottomSheetSlice";
 
 interface EditCompanyProps {
   companyInfo: CompanyState;
@@ -35,6 +37,7 @@ const EditCompany = ({
   handleActionClick,
   changedTotalTime,
 }: EditCompanyProps) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const companyId = useAppSelector(selectedCompanyId);
   const isDarkmode = useAppSelector(selectedIsDarkMode);
@@ -106,6 +109,7 @@ const EditCompany = ({
   };
 
   const handleSubmit = async () => {
+    dispatch(toggleLoading(true));
     try {
       let logo = newCompanyInfo.logo;
       let logoThumbnail = newCompanyInfo.logoThumbnail;
@@ -140,13 +144,13 @@ const EditCompany = ({
       };
 
       if (!newCompanyInfo.requester_name) {
-        return dispatch(infoToast("Заполните поля"));
+        return dispatch(infoToast(t("requiredFields")));
       }
       if (!newCompanyInfo.requester_phone_number) {
-        return dispatch(infoToast("Заполните поля"));
+        return dispatch(infoToast(t("requiredFields")));
       }
       if (!newCompanyInfo.requester_position) {
-        return dispatch(infoToast("Заполните поля"));
+        return dispatch(infoToast(t("requiredFields")));
       }
 
       console.log("Request payload:", requestData);
@@ -157,11 +161,13 @@ const EditCompany = ({
       }).unwrap();
 
       console.log(res);
-      dispatch(succesToast("Успешно обновлено!"));
+      dispatch(succesToast(t("successfullyUpdated")));
     } catch (error) {
       console.log(error);
-      setError("Ошибка при обновлении данных");
-      dispatch(errorToast("Ошибка при отправке данныхка"));
+      setError(t("updateError"));
+      dispatch(errorToast(t("updateError")));
+    } finally {
+      dispatch(toggleLoading(false));
     }
     console.log(newCompanyInfo);
   };
@@ -171,14 +177,14 @@ const EditCompany = ({
       <div className="contacts__actions editActions">
         <div className="contacts__actions__closeButtons">
           <span className="contacts__actions__closeButtons__title">
-            Редактировать <br />
+            {t("editCompany")} <br />
             {newCompanyInfo.name}
           </span>
         </div>
-        <h3 className="contacts__actions__title">Общая информация</h3>
+        <h3 className="contacts__actions__title">{t("generalInfo")}</h3>
 
         <EditAction
-          smallInfo="Название"
+          smallInfo={t("name")}
           text={newCompanyInfo?.name}
           icon="./phone.svg"
           isDisabled={!newCompanyInfo?.name}
@@ -188,7 +194,7 @@ const EditCompany = ({
         />
 
         <EditAction
-          smallInfo="Адрес"
+          smallInfo={t("address")}
           text={newCompanyInfo?.full_address}
           icon="./map.fill.svg"
           isDisabled={!newCompanyInfo?.full_address}
@@ -198,8 +204,8 @@ const EditCompany = ({
         />
         <div onClick={() => handleActionClick("workHours")}>
           <EditAction
-            smallInfo="Часы работы"
-            text="Смотреть все"
+            smallInfo={t("workingHours")}
+            text={t("viewAll")}
             icon="Exclude.svg"
             isDisabled={!newCompanyInfo?.working_hours}
             arrowRight={true}
@@ -207,9 +213,11 @@ const EditCompany = ({
         </div>
       </div>
       <div className="contacts__actions editActions">
-        <h3 className="contacts__actions__title second__title">Контакты</h3>
+        <h3 className="contacts__actions__title second__title">
+          {t("contacts")}
+        </h3>
         <EditAction
-          smallInfo="Ссылка на Telegram"
+          smallInfo={t("telegramLink")}
           text={
             newCompanyInfo.social_media.telegram?.replace("https://", "") ||
             "@User"
@@ -222,7 +230,7 @@ const EditCompany = ({
           textStartWith="https://t.me/"
         />
         <EditAction
-          smallInfo="Номер WhatsApp"
+          smallInfo={t("whatsAppNumber")}
           text={newCompanyInfo?.social_media?.whatsApp || "+000 000 00 00"}
           icon="./whatsApp.svg"
           editable
@@ -230,7 +238,7 @@ const EditCompany = ({
           objectKeys="social_media.whatsApp"
         />
         <EditAction
-          smallInfo="Ссылка на Instagram "
+          smallInfo={t("instagramLink")}
           text={
             newCompanyInfo?.social_media?.instagram?.replace(
               "https://www.",
@@ -243,7 +251,7 @@ const EditCompany = ({
           objectKeys="social_media.instagram"
         />
         <EditAction
-          smallInfo="Ссылка на Facebook"
+          smallInfo={t("facebookLink")}
           text={
             newCompanyInfo?.social_media?.facebook?.replace("https://", "") ||
             "facebook.com/truegis"
@@ -254,7 +262,7 @@ const EditCompany = ({
           objectKeys="social_media.facebook"
         />
         <EditAction
-          smallInfo="Номер телефона"
+          smallInfo={t("phoneNumber")}
           text={newCompanyInfo?.phone_number || "+998 000 67 43"}
           icon="./phone.svg"
           editable
@@ -262,7 +270,7 @@ const EditCompany = ({
           objectKeys="phone_number"
         />
         <EditAction
-          smallInfo="Сайт "
+          smallInfo={t("website")}
           text={
             newCompanyInfo?.website?.replace("https://", "") || "truegis.com"
           }
@@ -273,7 +281,7 @@ const EditCompany = ({
         />
 
         <EditAction
-          smallInfo="Email"
+          smallInfo={t("email")}
           text={newCompanyInfo?.email || "example@gmail.com"}
           icon="./email.svg"
           editable
@@ -284,9 +292,9 @@ const EditCompany = ({
         {Object.keys(newCompanyInfo.mobile_apps).map((platform) => (
           <EditAction
             key={platform}
-            smallInfo={`Мобильное приложение (${
-              platform === "ios" ? "iOS" : "Android"
-            })`}
+            smallInfo={t("mobileApp", {
+              platform: platform === "ios" ? "iOS" : "Android",
+            })}
             text={
               newCompanyInfo?.mobile_apps[platform as keyof MobileApps] ||
               `https://apps.${platform}.com/app/`
@@ -301,7 +309,7 @@ const EditCompany = ({
 
       <div className="contacts__actions editActions">
         <h3 className="contacts__actions__title second__title">
-          Фото профиля заведения
+          {t("profilePhoto")}
         </h3>
 
         <div className="contacts__actions__fotoLogoEdit">
@@ -318,7 +326,7 @@ const EditCompany = ({
 
           <label htmlFor="addFoto__logo__img">
             <ReactSVG src="./camera.fill.svg" />
-            <span>Добавить фотографию</span>
+            <span>{t("addPhoto")}</span>
           </label>
 
           <input
@@ -341,12 +349,12 @@ const EditCompany = ({
       </div>
       <div className="contacts__actions editActions">
         <h3 className="contacts__actions__title second__title">
-          Ваше имя
+          {t("yourName")}
           <span>*</span>
         </h3>
         <input
           type="text"
-          placeholder="Как ваше имя"
+          placeholder={t("yourName")}
           className="contacts__actions__positionInput"
           required
           onChange={(e) =>
@@ -354,13 +362,13 @@ const EditCompany = ({
           }
         />
         <h3 className="contacts__actions__title second__title">
-          Номер телефона
+          {t("yourPhoneNumber")}
           <span>*</span>
         </h3>
 
         <input
           type="text"
-          placeholder="Ваш номер телефона"
+          placeholder={t("yourPhoneNumber")}
           className="contacts__actions__positionInput"
           required
           onChange={(e) =>
@@ -368,13 +376,13 @@ const EditCompany = ({
           }
         />
         <h3 className="contacts__actions__title second__title">
-          Кем вы являетесь?
+          {t("yourPosition")}
           <span>*</span>
         </h3>
 
         <input
           type="text"
-          placeholder="Ваша должность в этом заведении"
+          placeholder={t("yourPosition")}
           className="contacts__actions__positionInput"
           list="positions"
           required
@@ -383,20 +391,20 @@ const EditCompany = ({
           }
         />
         <datalist id="positions">
-          <option value="Управляющий" />
-          <option value="Персонал" />
-          <option value="Администратор" />
-          <option value="Пользователь" />
+          <option value={t("manager")} />
+          <option value={t("staff")} />
+          <option value={t("administrator")} />
+          <option value={t("user")} />
         </datalist>
 
         {error && <div className="errorText">{error}</div>}
 
         <div className="sendButton">
-          <p>"Проверка информаций займёт 3 рабочих дня"</p>
+          <p>{t("checkInfo")}</p>
           <CommonButton
             createdFunction={handleSubmit}
             disabled={updateLoading || uploadLoading}>
-            <span>Отправить</span>
+            <span>{t("send")}</span>
           </CommonButton>
         </div>
       </div>

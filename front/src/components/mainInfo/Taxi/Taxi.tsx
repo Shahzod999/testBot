@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useGetYandexPriceQuery } from "../../../app/api/companySlice";
 import { selectedDistance } from "../../../app/features/companyStateSlice";
 import { selectedPlatform } from "../../../app/features/getCompanyIdSlice";
@@ -19,6 +20,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
   const platform = useAppSelector(selectedPlatform);
   const location = useAppSelector(selectedUserLocation);
   const distance = useAppSelector(selectedDistance);
+  const { t } = useTranslation();
 
   const isBottomSheetOpen = activeAction === "taxi";
 
@@ -52,24 +54,23 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
 
   const universalLinkMyTaxi = "https://my-taxi.onelink.me/sda5/s0pn2a00";
 
-
   return (
     <div className="mainInfoTaxi">
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
         <div className="contacts__actions">
-          <h3 className="contacts__actions__centerTitle">Такси</h3>
+          <h3 className="contacts__actions__centerTitle">{t("taxi")}</h3>
           <span onClick={() => openLinkNavigate(yandexUrl)}>
             <EditAction
               smallInfo={
                 isLoading || isFetching
-                  ? "...Wait"
+                  ? t("wait")
                   : data?.data.options?.[0]
                   ? `${distance?.distance} • ${(
                       data.data.estimatedTime / 60
-                    ).toFixed(1)} мин • ${data.data.options[0].price} ${
+                    ).toFixed(1)} min • ${data.data.options[0].price} ${
                       data.data.currency
                     }`
-                  : "Недоступно"
+                  : t("unavailable")
               }
               text="Yandex Go"
               icon="./yandexGo.svg"
@@ -82,7 +83,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
             target="_blank"
             rel="noopener noreferrer">
             <EditAction
-              smallInfo="узнать подробнее в приложении"
+              smallInfo={t("learnMoreInApp")}
               text="Fasten"
               icon="./fasten.svg"
               arrowRight={true}
@@ -91,7 +92,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
 
           <span onClick={() => openLinkNavigate(universalLinkMyTaxi)}>
             <EditAction
-              smallInfo="узнать подробнее в приложении"
+              smallInfo={t("learnMoreInApp")}
               text="My taxi"
               icon="./mytaxi.svg"
               arrowRight={true}
@@ -103,7 +104,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
             target="_blank"
             rel="noopener noreferrer">
             <EditAction
-              smallInfo="узнать подробнее в приложении"
+              smallInfo={t("learnMoreInApp")}
               text="Uklon"
               icon="./uklon.svg"
               arrowRight={true}

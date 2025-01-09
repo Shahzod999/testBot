@@ -12,10 +12,12 @@ import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { setConfitti } from "../../../app/features/RaitingStarsSlice";
 import { hapticVibration } from "../../../hooks/hapticVibration";
+import { useTranslation } from "react-i18next";
 
 const Welcome = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const [text, setText] = useState("Дальше");
+  const [text, setText] = useState(t("next"));
   const navigate = useNavigate();
   const swiperRef = useRef<any>(null);
 
@@ -36,7 +38,7 @@ const Welcome = () => {
     swiper.slideNext();
 
     if (currentSlideIndex === 1) {
-      setText("Начать");
+      setText(t("start"));
     }
     if (currentSlideIndex === 2) {
       handleNavigate();
@@ -49,7 +51,7 @@ const Welcome = () => {
 
     const updateText = () => {
       const currentSlideIndex = swiper.realIndex;
-      if (currentSlideIndex === 2) setText("Начать");
+      if (currentSlideIndex === 2) setText(t("start"));
     };
 
     swiper.on("slideChange", updateText);
@@ -59,7 +61,7 @@ const Welcome = () => {
   return (
     <div className="notFoundPage">
       <div className="notFoundPage__icon" onClick={handleNavigate}>
-        <span>Пропустить</span>
+        <span>{t("skip")}</span>
       </div>
       <div className="notFoundPage__sticker">
         <Swiper
@@ -72,22 +74,22 @@ const Welcome = () => {
           <SwiperSlide>
             <WelcomeBox
               img={searchUtya}
-              title="Мгновенно находите ближайшие к вам места!"
-              text="Находите рестораны, кафе и кофейни, не выходя из Telegram, и делитесь ими с друзьями!"
+              title={t("welcomeOne")}
+              text={t("welcomeThree")}
             />
           </SwiperSlide>
           <SwiperSlide>
             <WelcomeBox
               img={welcomeSecond}
-              title="Следите и воспользуйтесь акциями в местах"
-              text="Перейдите в раздел «Акции» из информации о локации и воспользуйтесь акциями."
+              title={t("welcomeTwo")}
+              text={t("welcomeFour")}
             />
           </SwiperSlide>
           <SwiperSlide>
             <WelcomeBox
               img={baristaUtya}
-              title="Мгновенно находите ближайшие к вам места!"
-              text="Находите рестораны, кафе и кофейни, не выходя из Telegram, и делитесь ими с друзьями!"
+              title={t("welcomeOne")}
+              text={t("welcomeThree")}
             />
           </SwiperSlide>
         </Swiper>

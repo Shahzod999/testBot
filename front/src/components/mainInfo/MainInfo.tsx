@@ -17,6 +17,7 @@ import { ReactSVG } from "react-svg";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 import { useNavigate } from "react-router-dom";
 import { hapticVibration } from "../../hooks/hapticVibration";
+import { useTranslation } from "react-i18next";
 interface ActionsState {
   text: string;
   img: string;
@@ -25,6 +26,7 @@ interface ActionsState {
 }
 
 const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const { t } = useTranslation();
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(companyInfo?.is_favorite);
   const companyId = useAppSelector(selectedCompanyId);
@@ -47,14 +49,14 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const actions = useMemo(
     () => [
       {
-        text: "Такси",
+        text: t("taxi"),
         img: "./car.fill.svg",
         key: "taxi",
       },
       ...(companyInfo?.phone_number
         ? [
             {
-              text: "Чат",
+              text: t("taxi"),
               img: "./message.fill.svg",
               key: "chat",
               link: `https://t.me/${companyInfo.phone_number}`,
@@ -62,12 +64,12 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           ]
         : []),
       {
-        text: "Маршрут",
+        text: t("route"),
         img: "./map.fill.svg",
         key: "map",
       },
       {
-        text: "Поделиться",
+        text: t("share"),
         img: "./Icon.svg",
         key: "share",
         link: `https://t.me/share/url?url=t.me/TrueGis_bot/start?startapp=${companyInfo?._id}`,
@@ -144,7 +146,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         </div>
         {companyInfo.description ? (
           <>
-            <p className="mainInfo__shortText">Коротко о заведении</p>
+            <p className="mainInfo__shortText">{t("shortDescription")}</p>
             <p className="mainInfo__mainText">{companyInfo.description}</p>
           </>
         ) : (
@@ -158,11 +160,13 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
           <div className="mainInfo__openHours__right">
             <div className="mainInfo__openHours__right-distance">
-              Расстояние - {companyInfo?.distance?.distance || "loading..."}
+              {t("distance")}: {companyInfo?.distance?.distance || t("loading")}
             </div>
             <div className="mainInfo__openHours__right-duration">
               {parseFloat(companyInfo?.distance?.distance) > 2 &&
-                !companyInfo?.distance?.distance?.split(" ")?.includes("km") && (
+                !companyInfo?.distance?.distance
+                  ?.split(" ")
+                  ?.includes("km") && (
                   <>
                     <div className="mainInfo__openHours__right-duration-box">
                       <ReactSVG src="./walkPerson.svg" />
@@ -185,16 +189,16 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           onClick={(e) => handleOrder(e)}
           disabled={!companyInfo}>
           {companyInfo._id == "673a8bf64ddf83aebaa1c970" ? (
-            <>Открыть счёт</>
+            t("openAccount")
           ) : companyInfo?.has_menu ? (
             <>
               <ReactSVG src="./bag.svg" />
-              Посмотреть меню
+              {t("viewMenu")}
             </>
           ) : companyInfo?.online_menu_link ? (
-            <>Посмотреть меню</>
+            t("viewMenu")
           ) : (
-            <>Позвонить</>
+            t("call")
           )}
         </button>
 
@@ -213,11 +217,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <>
             <NearestMetroHolder
               metro={companyInfo?.nearest_metro}
-              from="Ближайшее метро вам"
+              from={t("nearestMetroToYou")}
             />
             <NearestMetroHolder
               metro={companyInfo?.company_nearest_metro}
-              from="Ближайшее метро к заведению"
+              from={t("nearestMetroToLocation")}
             />
           </>
         )}

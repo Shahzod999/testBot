@@ -4,6 +4,7 @@ import Cross from "./Cross";
 import { ReactSVG } from "react-svg";
 import FullScreenImgSwiper from "../../FullScreenImgSwiper/FullScreenImgSwiper";
 import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
+import { useTranslation } from "react-i18next";
 
 interface AddFotoProps {
   imagesArray: (PhotosSample & { file?: File })[];
@@ -20,6 +21,7 @@ const AddFoto = ({
   id,
   maxLength,
 }: AddFotoProps) => {
+  const { t } = useTranslation();
   const [imgOpen, setImgOpen] = useState(false);
   const [indexImg, setIndexImg] = useState(0);
 
@@ -32,20 +34,18 @@ const AddFoto = ({
       const filesArray = Array.from(files);
       if (filesArray.length >= 4 || imagesArray.length >= 4) {
         if (window.Telegram.WebApp.showAlert) {
-          window.Telegram.WebApp.showAlert(
-            "Вы можете выбрать не более 4 фотографий.",
-          );
+          window.Telegram.WebApp.showAlert(t("addPhotoLimit"));
         } else {
-          alert("Вы можете выбрать не более 4 фотографий.");
+          alert(t("addPhotoLimit"));
         }
-        e.target.value = ""; // Очищаем input! Это ключевой момент
+        e.target.value = "";
         return;
       }
     }
 
     if (files) {
       const newImages = Array.from(files).map((file) => ({
-        photo_id: "", // У новых изображений можно оставить ID пустым
+        photo_id: "",
         photo_url: URL.createObjectURL(file),
         photo_url_large: "",
         video_thumbnail_url: null,
@@ -89,7 +89,7 @@ const AddFoto = ({
 
   return (
     <div className="addFoto">
-      <h2>Добавить фотографию</h2>
+      <h2>{t("addPhoto")}</h2>
 
       <input
         accept="image/*"
@@ -128,7 +128,7 @@ const AddFoto = ({
 
         <label htmlFor={id}>
           <ReactSVG src="./camera.fill.svg" />
-          <span>Добавить фотографию</span>
+          <span>{t("addPhotoLabel")}</span>
         </label>
       </div>
     </div>

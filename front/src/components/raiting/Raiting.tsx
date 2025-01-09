@@ -10,11 +10,13 @@ import {
 } from "../../app/features/RaitingStarsSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { hapticVibration } from "../../hooks/hapticVibration";
+import { useTranslation } from "react-i18next";
 
 const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const dispatch = useAppDispatch();
   const [openComment, setOpenCommet] = useState(false);
   const count = useAppSelector(selectedRaitingCount);
+  const { t } = useTranslation();
 
   const toggleComment = () => {
     if (!openComment) {
@@ -39,7 +41,9 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <div className="raiting">
         <div className="raiting__count">
           <p>
-            На основе {companyInfo.review_count} отзывов людей из{" "}
+            {t("basedOnReviews", {
+              count: companyInfo.review_count,
+            })}
             <span onClick={handleOrder}>Google</span>
           </p>
           <strong>

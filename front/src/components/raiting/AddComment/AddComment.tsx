@@ -22,6 +22,7 @@ import {
 import { ErrorComment } from "../../../app/types/commentType";
 import { PhotosSample } from "../../../app/types/companyType";
 import { toggleLoading } from "../../../app/features/bottomSheetSlice";
+import { useTranslation } from "react-i18next";
 
 interface AddCommentProps {
   openComment: boolean;
@@ -29,6 +30,7 @@ interface AddCommentProps {
 }
 
 const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [imagesArray, setimagesArray] = useState<PhotosSample[]>([]);
   const [textArea, setTextArea] = useState("");
@@ -46,7 +48,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
     e.preventDefault();
 
     if (!textArea || !count) {
-      return dispatch(infoToast("Заполните все поля"));
+      return dispatch(infoToast(t("fillAllFields")));
     }
     dispatch(toggleLoading(true));
 
@@ -66,7 +68,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
       );
 
       if (!uploadedUrls.length) {
-        return dispatch(infoToast("Добавьте хотя бы одно изображение"));
+        return dispatch(infoToast(t("addAtLeastOneImage")));
       }
 
       const sendComment = {
@@ -81,13 +83,13 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
         data: sendComment,
       }).unwrap();
 
-      dispatch(succesToast("Комментарий добавлен"));
+      dispatch(succesToast(t("commentAdded")));
       setTextArea("");
       setimagesArray([]);
       toggleComment();
     } catch (error) {
       const er = error as ErrorComment;
-      dispatch(errorToast(er.data?.message || "Ошибка при отправке"));
+      dispatch(errorToast(er.data?.message || t("errorSendingComment")));
     } finally {
       dispatch(toggleLoading(false));
     }
@@ -116,7 +118,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
       <div className="commentsHolder">
         <form className="addComment" onSubmit={handleSubmit}>
           <div className="addComment__title">
-            <h2>Оставьте отзыв</h2>
+            <h2>{t("leaveReview")}</h2>
           </div>
           <div className="addComment__info">
             <h2>{companyInfo?.name}</h2>
@@ -135,7 +137,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
             maxLength
           />
           <SendButton
-            text="Ваша оценка и отзыв будут видны всем"
+            text={t("yourRatingReviewVisible")}
             disabled={sendCommentLoading || uploading}
           />
         </form>

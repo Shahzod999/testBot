@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 import { WorkingHours } from "../app/types/companyType";
 import convertTo24HourFormat from "./convertTo24HourFormat";
+import { useTranslation } from "react-i18next";
 
 export const useWorkingHours = (workingHours: WorkingHours) => {
+  const { t } = useTranslation();
+
   return useMemo(() => {
     const daysOfWeek: (keyof WorkingHours)[] = [
       "Sunday",
@@ -20,26 +23,26 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
     // Функция получения времени открытия
     const getOpeningTime = (dayIndex: number): string | null => {
       const day = daysOfWeek[dayIndex];
-      const hours = workingHours[day]?.[0] || "Closed";
+      const hours = workingHours[day]?.[0] || t("closed");
 
-      if (hours === "Closed" || hours === "Закрыто") return null;
+      if (hours === t("closed") || hours === "Закрыто") return null;
       return convertTo24HourFormat(hours).split("–")[0]; // Возвращаем время открытия
     };
 
     // Проверяем сегодняшнее расписание
-    const todayHours = workingHours[daysOfWeek[todayIndex]]?.[0] || "Closed";
+    const todayHours = workingHours[daysOfWeek[todayIndex]]?.[0] || t("closed");
 
-    if (todayHours === "Open 24 hours") {
+    if (todayHours === t("open24Hours")) {
       // Если заведение работает круглосуточно
       return {
         isOpen: true,
-        hours: "Круглосуточно",
+        hours: t("open24Hours"),
         willOpenAt: null,
         closingIn: null,
       };
     }
 
-    if (todayHours !== "Closed") {
+    if (todayHours !== t("closed")) {
       const [start, end] = convertTo24HourFormat(todayHours)
         .split("–")
         .map((time) => {
@@ -52,7 +55,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
         return {
           isOpen: false,
           hours: todayHours,
-          willOpenAt: `сегодня в ${
+          willOpenAt: `${t("todayAt")} ${
             convertTo24HourFormat(todayHours).split("–")[0]
           }`,
           closingIn: null,
@@ -66,7 +69,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
             isOpen: true,
             hours: convertTo24HourFormat(todayHours),
             willOpenAt: null,
-            closingIn: `Осталось ${minutesToClose} минут`,
+            closingIn: t("closingInMinutes", { minutes: minutesToClose }),
           };
         }
 
@@ -84,22 +87,22 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
       const nextDayIndex = (todayIndex + offset) % 7;
       const nextOpeningTime = getOpeningTime(nextDayIndex);
 
-      const daysMap: Record<string, string> = {
-        Sunday: "Воскресенье",
-        Monday: "Понедельник",
-        Tuesday: "Вторник",
-        Wednesday: "Среда",
-        Thursday: "Четверг",
-        Friday: "Пятница",
-        Saturday: "Суббота",
+      const daysMap = {
+        Sunday: t("sunday"),
+        Monday: t("monday"),
+        Tuesday: t("tuesday"),
+        Wednesday: t("wednesday"),
+        Thursday: t("thursday"),
+        Friday: t("friday"),
+        Saturday: t("saturday"),
       };
 
       if (nextOpeningTime) {
         const nextDayName =
-          offset === 1 ? "завтра" : daysMap[daysOfWeek[nextDayIndex]];
+          offset === 1 ? t("tomorrowAt") : daysMap[daysOfWeek[nextDayIndex]];
         return {
           isOpen: false,
-          hours: "Закрыто",
+          hours: t("closed"),
           willOpenAt: `${nextDayName} ${nextOpeningTime}`,
           closingIn: null,
         };
@@ -109,7 +112,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
     // Если заведение не работает всю неделю
     return {
       isOpen: false,
-      hours: "Закрыто",
+      hours: t("closed"),
       willOpenAt: null,
       closingIn: null,
     };

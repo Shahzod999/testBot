@@ -15,28 +15,30 @@ import useDayTranslator from "../../hooks/translateDay";
 import useSortedWorkingHours from "../../hooks/sortingDays";
 import EmailContact from "./Email/EmailContact";
 import SocialMediaComponent from "./SocialMedia/SocialMediaComponent";
+import { useTranslation } from "react-i18next";
 
 const getAvailableSocialMedia = (
-  // берем только ключи
   socialMedia: Record<string, string | any | null>,
+  t: Function,
 ): string => {
   const names = Object.entries(socialMedia)
     .filter(([_, url]) => url)
     .map(([name]) => name);
-  return names.length > 0 ? names.join(", ") : "Соцсети не указаны";
+  return names.length > 0 ? names.join(", ") : t("noSocialMedia");
 };
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const translateDay = useDayTranslator();
   const sortedWorkingHours = useSortedWorkingHours(companyInfo.working_hours);
+  const { t } = useTranslation();
 
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
   const actions = useMemo(
     () => [
       {
-        text: "Скачать приложения",
-        secondText: "Мобильное приложение заведении",
+        text: t("downloadApps"),
+        secondText: t("mobileApps"),
         icon: "./Vector.svg",
         isDisabled:
           !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
@@ -44,9 +46,9 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       },
       {
         text:
-          getAvailableSocialMedia(companyInfo.social_media || {}) ||
-          "Нет Сетей",
-        secondText: "Переход на страницы",
+          getAvailableSocialMedia(companyInfo.social_media || {}, t) ||
+          t("noNetworks"),
+        secondText: t("goToPages"),
         icon: "smileCircle.svg",
         isDisabled: !Object.values(companyInfo.social_media || {}).some(
           (url) => url,
@@ -54,7 +56,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         key: "socialMedia",
       },
       {
-        text: companyInfo?.phone_number || "Нет Номера",
+        text: companyInfo?.phone_number || t("noNumber"),
         icon: "phone.svg",
         isDisabled: !companyInfo?.phone_number,
         phone: companyInfo?.phone_number
@@ -62,13 +64,13 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           : null,
       },
       {
-        text: companyInfo?.website?.replace("https://", "") || "Нет Сайта",
+        text: companyInfo?.website?.replace("https://", "") || t("noWebsite"),
         isDisabled: !companyInfo.website,
         icon: "australia.svg",
         phone: companyInfo?.website ? companyInfo.website : null,
       },
       {
-        text: companyInfo?.email || "Почта не доступна",
+        text: companyInfo?.email || t("noEmail"),
         isDisabled: !companyInfo?.email,
         icon: "email.svg",
         key: companyInfo?.email ? "email" : null,
@@ -81,13 +83,13 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         key: "workingHours",
       },
       {
-        text: companyInfo?.address || "Нет Адресса",
+        text: companyInfo?.address || t("noAddress"),
         isDisabled: !companyInfo?.address,
         icon: "location.svg",
         key: "location",
       },
       {
-        text: "Доступные вакансии",
+        text: t("availableVacancies"),
         icon: "person.svg",
         isDisabled: false,
         key: "person",
@@ -113,10 +115,10 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     <>
       <div className="contacts">
         <div className="contacts__header">
-          <h2>Контакты</h2>
+          <h2>{t("contactsTitle")}</h2>
           <Link to="/edit" className="pressEffefct contacts__header__button">
             <ReactSVG src="./edit.svg" />
-            Редактировать
+            {t("edit")}
           </Link>
         </div>
         <div className="contacts__actions">
@@ -140,7 +142,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
       </div>
       <BottomSheet isOpen={activeAction === "apps"} onClose={closeBottomSheet}>
         <div className="socialMedia">
-          <h3>Мобильное приложение заведении</h3>
+          <h3>{t("mobileApps")}</h3>
           <div className="socialMedia__icons">
             <a
               href={companyInfo.mobile_apps?.android}
@@ -180,7 +182,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <button
             className="contacts__actions__closedCompanyButton"
             onClick={() => handleActionClick("closed")}>
-            Заведение закрыто
+            {t("closed")}
           </button>
         </div>
       </BottomSheet>
@@ -193,20 +195,20 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         isOpen={activeAction === "closed"}
         onClose={closeBottomSheet}>
         <div className="contacts__actions">
-          <h3 className="contacts__actions__title">Укажите причину</h3>
-          <p className="contacts__actions__warning">
-            За недостоверное показание у вас отнимается один коин!
-          </p>
+          <h3 className="contacts__actions__title">{t("reasonTitle")}</h3>
+          <p className="contacts__actions__warning">{t("warning")}</p>
 
           <label className="actions pressEffefct" htmlFor="cause">
-            <span className="actions__text closedButtontext">Причина</span>
+            <span className="actions__text closedButtontext">
+              {t("reason")}
+            </span>
             <span className="actions__icons closedButtonInput">
               <input type="checkbox" name="" id="cause" />
             </span>
           </label>
           <label className="actions pressEffefct" id="closedForevew">
             <span className="actions__text closedButtontext">
-              Закрыто навсегда
+              {t("closedForever")}
             </span>
             <span className="actions__icons closedButtonInput">
               <input type="checkbox" name="" id="closedForevew" />
@@ -214,14 +216,14 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </label>
           <label className="actions pressEffefct" htmlFor="worktime">
             <span className="actions__text closedButtontext">
-              Не соответсвует с графиком работы
+              {t("notMatchWorktime")}
             </span>
             <span className="actions__icons closedButtonInput">
               <input type="checkbox" name="" id="worktime" />
             </span>
           </label>
           <CommonButton createdFunction={closeBottomSheet}>
-            <span>Отправить</span>
+            <span>{t("send")}</span>
           </CommonButton>
         </div>
       </BottomSheet>
@@ -229,7 +231,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         isOpen={activeAction === "person"}
         onClose={closeBottomSheet}>
         <div className="socialMedia">
-          <h3>Вакансии</h3>
+          <h3>{t("vacancies")}</h3>
           <Lottie animationData={notFound} />
         </div>
       </BottomSheet>

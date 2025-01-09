@@ -1,15 +1,17 @@
 import { ReactSVG } from "react-svg";
 import { SocialMedia } from "../../../app/types/companyType";
 import { openLinkNavigate } from "../../../hooks/openLinkNavigate";
+import { useTranslation } from "react-i18next";
 
 const SocialMediaComponent = ({
   social_media,
 }: {
   social_media: SocialMedia;
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="socialMedia">
-      <h3>Переход на страницы</h3>
+      <h3>{t("goToPages")}</h3>
       <div className="socialMedia__icons">
         {Object.entries(social_media || {})
           .filter(([_, url]) => url)

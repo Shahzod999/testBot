@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 interface TextProps {
   text: string;
   setText: (e: string) => void;
@@ -5,6 +7,7 @@ interface TextProps {
 }
 
 const TextArea = ({ text, setText, count }: TextProps) => {
+  const { t } = useTranslation();
   const maxLength = 120;
 
   const getProgressState = () => {
@@ -33,20 +36,21 @@ const TextArea = ({ text, setText, count }: TextProps) => {
   };
 
   const message = [
-    "Кажется, вам тут совсем не понравилось. Что пошло не так?",
-    "Не понравилось здесь? Расскажите, что пошло не так?",
-    "Кажется, было средне. Расскажите, чего не хватило?",
-    "Понравилось здесь? Расскажите, что именно порадовало",
-    "Кажется, вы в восторге! Поделитесь, что именно понравилось?",
+    t("messageLow"),
+    t("messageMedium"),
+    t("messageNeutral"),
+    t("messageGood"),
+    t("messageExcellent"),
   ];
 
+  
   const progress = getProgressState();
 
   return (
     <div className="addComment__textArea">
       <textarea
         rows={5}
-        placeholder="Расскажите нам про это место"
+        placeholder={t("placeholder")}
         value={text}
         onChange={(e) => setText(e.target.value)}></textarea>
 
@@ -56,7 +60,9 @@ const TextArea = ({ text, setText, count }: TextProps) => {
             className={`progress-bar ${progress.state}`}
             style={{ width: `${progress.width}%` }}></div>
         </div>
-        <p className="progress-message">Оценка принята. {message[count - 1]}</p>
+        <p className="progress-message">
+          {t("ratingAccepted")} {message[count - 1]}
+        </p>
       </div>
     </div>
   );

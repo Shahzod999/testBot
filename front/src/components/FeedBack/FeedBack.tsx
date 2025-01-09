@@ -5,6 +5,7 @@ import { SingleComment } from "../../app/types/commentType";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import Comment from "./comment/Comment";
 import "./feedBack.scss";
+import { useTranslation } from "react-i18next";
 
 const FeedBack = () => {
   const [end, setEnd] = useState(true);
@@ -14,6 +15,7 @@ const FeedBack = () => {
     id: companyId,
     limit,
   });
+  const { t } = useTranslation();
 
   const limitHandler = () => {
     if (data?.pagination?.pages <= 1) {
@@ -34,7 +36,7 @@ const FeedBack = () => {
 
   return (
     <div className="feedBack" id="feedBack">
-      <h2>Отзывы пользователей TrueGis</h2>
+      <h2>{t("feedbackTitle")}</h2>
       <div className="feedBack__comments__wrapper">
         {data?.data?.map((comment: SingleComment, index: number) => (
           <div
@@ -50,11 +52,11 @@ const FeedBack = () => {
         <>
           {end ? (
             <span className="feedBack__more" onClick={limitHandler}>
-              {isFetching ? "Загрузка..." : "Читать далее"}
+              {isFetching ? t("loading") : t("readMore")}
             </span>
           ) : (
             <span className="feedBack__more" onClick={closeComments}>
-              Свернуть
+              {t("collapse")}
             </span>
           )}
         </>

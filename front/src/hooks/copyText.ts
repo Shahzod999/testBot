@@ -2,8 +2,10 @@ import { useState } from "react";
 import { hapticVibration } from "./hapticVibration";
 import { errorToast } from "../app/features/toastSlice";
 import { useAppDispatch } from "./reduxHooks";
+import { useTranslation } from "react-i18next";
 
 export const useCopyAddress = () => {
+  const { t } = useTranslation();
   const [copyed, setCopyed] = useState<string | null>(null);
   const [copyAdress, setCopyAdress] = useState<string | null>(null);
   const dispatch = useAppDispatch();
@@ -13,15 +15,15 @@ export const useCopyAddress = () => {
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
-        console.log("Текст скопирован в буфер обмена");
+        console.log(t("textCopied"));
         hapticVibration("success", "light");
-        handleCopy("Текст скопирован", type);
+        handleCopy(t("textCopied"), type);
       })
       .catch((error) => {
-        dispatch(errorToast("Error"));
-        console.error("Не удалось скопировать текст: ", error);
+        dispatch(errorToast(t("error")));
+        console.error(t("failedToCopy"), error);
         hapticVibration("success", "light");
-        handleCopy("Не удалось скопировать", type);
+        handleCopy(t("failedToCopy"), type);
       });
   };
 

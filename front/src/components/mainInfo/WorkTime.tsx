@@ -1,9 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { WorkingHours } from "../../app/types/companyType";
 import { useWorkingHours } from "../../hooks/useWorkingHours";
 
 const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
   const { isOpen, hours, willOpenAt, closingIn } =
     useWorkingHours(working_hours);
+  const { t } = useTranslation();
 
   return (
     <div className="mainInfo__openHours__left">
@@ -11,30 +13,30 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
         <>
           {closingIn ? (
             <>
-              <span className="warninText">До закрытия</span>
+              <span className="warninText">{t("closingIn")}</span>
               <p>{closingIn}</p>
             </>
           ) : hours.split("–")[1] ? (
             <>
-              <span>Открыто</span>
-              <p>{`До ${hours.split("–")[1]}`}</p>
+              <span>{t("openUntil")}</span>
+              <p>{`${t("openUntil")} ${hours.split("–")[1]}`}</p>
             </>
           ) : (
             <>
-              <span>Открыто</span>
-              <p>Круглосуточно</p>
+              <span>{t("open24Hours")}</span>
+              <p>{t("open24Hours")}</p>
             </>
           )}
         </>
       ) : willOpenAt ? (
         <>
-          <span className="noAwailibleText">Закрыто</span>
-          <p>{`Откроется ${willOpenAt}`}</p>
+          <span className="noAwailibleText">{t("closed")}</span>
+          <p>{`${t("opensAt")} ${willOpenAt}`}</p>
         </>
       ) : (
         <>
-          <span className="noAwailibleText">Закрыто</span>
-          <p>Сегодня не работает</p>
+          <span className="noAwailibleText">{t("closed")}</span>
+          <p>{t("closedToday")}</p>
         </>
       )}
     </div>
