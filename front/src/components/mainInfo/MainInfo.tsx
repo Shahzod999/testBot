@@ -216,18 +216,19 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           ))}
         </div>
 
-        {companyInfo?.nearest_metro && (
-          <>
-            <NearestMetroHolder
-              metro={companyInfo?.nearest_metro}
-              from={t("nearestMetroToYou")}
-            />
-            <NearestMetroHolder
-              metro={companyInfo?.company_nearest_metro}
-              from={t("nearestMetroToLocation")}
-            />
-          </>
-        )}
+        {companyInfo?.nearest_metro &&
+          parseFloat(companyInfo.distance.distance) < 100 && (
+            <>
+              <NearestMetroHolder
+                metro={companyInfo?.nearest_metro}
+                from={t("nearestMetroToYou")}
+              />
+              <NearestMetroHolder
+                metro={companyInfo?.company_nearest_metro}
+                from={t("nearestMetroToLocation")}
+              />
+            </>
+          )}
       </div>
 
       <Taxi

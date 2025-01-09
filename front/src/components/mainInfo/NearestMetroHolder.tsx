@@ -10,6 +10,7 @@ interface nearestMetroProps {
 const NearestMetroHolder = ({ metro, from }: nearestMetroProps) => {
 
   return (
+    
     <div className="nearestMetro">
       <ReactSVG src="./metro.svg" />
       <div>
