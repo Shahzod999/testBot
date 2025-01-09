@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const useTimeAgo = (dateString: number) => {
+  const { t } = useTranslation();
   const now = new Date();
   const pastDate = new Date(dateString);
   const diffMs = now.getTime() - pastDate.getTime();
@@ -9,13 +12,13 @@ const useTimeAgo = (dateString: number) => {
   const diffDays = Math.floor(diffHours / 24);
 
   if (diffDays > 0) {
-    return `${diffDays} д назад`;
+    return t("daysAgo", { count: diffDays });
   } else if (diffHours > 0) {
-    return `${diffHours} часов назад`;
+    return t("hoursAgo", { count: diffHours });
   } else if (diffMinutes > 0) {
-    return `${diffMinutes} минут назад`;
+    return t("minutesAgo", { count: diffMinutes });
   } else {
-    return "Меньше минуты назад";
+    return t("lessThanMinute");
   }
 };
 

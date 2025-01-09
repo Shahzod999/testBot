@@ -30,8 +30,6 @@ const EditAction = ({
 
   const regex = allowedValues ? new RegExp(allowedValues) : null;
 
-  console.log(regex);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value.replace("@", "");
 

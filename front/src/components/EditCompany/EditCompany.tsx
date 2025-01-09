@@ -51,6 +51,9 @@ const EditCompany = ({
   );
   const [error, setError] = useState("");
 
+  console.log(companyInfo,'sas');
+  
+
   const [updateRequest, { isLoading: updateLoading }] =
     useUpdateRequestMutation();
   const [uploadImage, { isLoading: uploadLoading }] = useUploadImageMutation();

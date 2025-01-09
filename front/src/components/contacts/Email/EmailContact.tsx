@@ -12,7 +12,7 @@ const EmailContact = ({ companyInfo }: { companyInfo: CompanyState }) => {
     handleCopyAdress(email, "email");
   };
   const handleNavigateToEmail = () => {
-    window.open("mailto:${companyInfo.email}");
+    window.open(`mailto:${companyInfo.email}`);
   };
 
   return (

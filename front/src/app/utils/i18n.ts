@@ -128,6 +128,18 @@ const resources = {
       requiredFields: "Fill in the fields",
       successfullyUpdated: "Successfully updated!",
       updateError: "Error updating data",
+
+      //
+
+      pending: "pending",
+      more: "More",
+      truegisTeam: "TrueGis Team",
+      owner: "Owner",
+
+      daysAgo: "{{count}} d ago",
+      hoursAgo: "{{count}} hours ago",
+      minutesAgo: "{{count}} minutes ago",
+      lessThanMinute: "Less than a minute ago",
     },
   },
   ru: {
@@ -257,6 +269,16 @@ const resources = {
       requiredFields: "Заполните поля",
       successfullyUpdated: "Успешно обновлено!",
       updateError: "Ошибка при обновлении данных",
+
+      pending: "в ожидании",
+      more: "Ещё",
+      truegisTeam: "Команда TrueGis",
+      owner: "Владелец",
+
+      daysAgo: "{{count}} д назад",
+      hoursAgo: "{{count}} часов назад",
+      minutesAgo: "{{count}} минут назад",
+      lessThanMinute: "Меньше минуты назад",
     },
   },
   uz: {
@@ -387,6 +409,16 @@ const resources = {
       requiredFields: "Maydonlarni to'ldiring",
       successfullyUpdated: "Muvaffaqiyatli yangilandi!",
       updateError: "Ma'lumotni yangilashda xatolik",
+
+      pending: "kutilmoqda",
+      more: "Ko'proq",
+      truegisTeam: "TrueGis Jamoasi",
+      owner: "Egalik qiluvchi",
+
+      daysAgo: "{{count}} k oldin",
+      hoursAgo: "{{count}} soat oldin",
+      minutesAgo: "{{count}} daqiqa oldin",
+      lessThanMinute: "Bir daqiqadan kam oldin",
     },
   },
   uzCyr: {
@@ -516,6 +548,16 @@ const resources = {
       requiredFields: "Майдонларни тўлдиринг",
       successfullyUpdated: "Муваффақиятли янгиланди!",
       updateError: "Маълумотни янгилашда хатолик",
+
+      pending: "кутилмоқда",
+      more: "Кўпроқ",
+      truegisTeam: "TrueGis Жамоаси",
+      owner: "Эгалик қилувчи",
+      
+      daysAgo: "{{count}} к олдин",
+      hoursAgo: "{{count}} соат олдин",
+      minutesAgo: "{{count}} дақиқа олдин",
+      lessThanMinute: "Бир дақиқадан кам олдин",
     },
   },
 };

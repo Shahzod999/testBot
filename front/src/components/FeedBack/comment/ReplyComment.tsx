@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { Reply } from "../../../app/types/commentType";
 import useTimeAgo from "../../../hooks/useTimeAgo";
 import { ReactSVG } from "react-svg";
+import { useTranslation } from "react-i18next";
 
 interface ReplyCommentProps {
   reply: Reply;
 }
 
 const ReplyComment = ({ reply }: ReplyCommentProps) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const timeAgo = useTimeAgo(reply?.reply_date);
@@ -35,7 +37,7 @@ const ReplyComment = ({ reply }: ReplyCommentProps) => {
           />
         </div>
         <div className="comment__title__user">
-          <h3>{reply.reply_from == "root" ? "TrueGis Team" : "Владелец"}</h3>
+          <h3>{reply.reply_from === "root" ? t("truegisTeam") : t("owner")}</h3>
         </div>
         <span className="comment__title__ago">
           <ReactSVG src="./arrowUturn.svg" />
@@ -49,9 +51,9 @@ const ReplyComment = ({ reply }: ReplyCommentProps) => {
         }`}>
         <p ref={textRef}>{reply?.message}</p>
         {isOverflowing && !open && (
-          <span onClick={toggleOpen}>{open ? "Свернуть" : "Ещё"}</span>
+          <span onClick={toggleOpen}>{t("more")}</span>
         )}
-        {open && <span onClick={toggleOpen}>Свернуть</span>}
+        {open && <span onClick={toggleOpen}>{t("collapse")}</span>}
       </div>
     </div>
   );

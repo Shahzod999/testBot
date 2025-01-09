@@ -8,8 +8,10 @@ import ReplyComment from "./ReplyComment";
 import FullScreenImgSwiper from "../../FullScreenImgSwiper/FullScreenImgSwiper";
 
 import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
+import { useTranslation } from "react-i18next";
 
 const Comment = ({ comment }: { comment: SingleComment }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [imgOpen, setImgOpen] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -81,7 +83,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
           {timeAgo}
           {comment.status == "pending" && (
             <div className="pending">
-              в ожидании
+              {t("pending")}
               <span className="dots"></span>
             </div>
           )}
@@ -114,9 +116,9 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
         }`}>
         <p ref={textRef}>{comment?.message}</p>
         {isOverflowing && !open && (
-          <span onClick={toggleOpen}>{open ? "Свернуть" : "Ещё"}</span>
+          <span onClick={toggleOpen}>{t("more")}</span>
         )}
-        {open && <span onClick={toggleOpen}>Свернуть</span>}
+        {open && <span onClick={toggleOpen}>{t("collapse")}</span>}
       </div>
 
       {comment?.replies?.map((item) => (

@@ -136,7 +136,10 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             />
           </div>
           <div className="mainInfo__logo__name">
-            <h2>{companyInfo.name}</h2>
+            <div className="mainInfo__logo__name__partner">
+              <h2>{companyInfo.name}</h2>
+              {companyInfo.is_partner && <img src="./partner.png" alt="" />}
+            </div>
             <span>{companyInfo.type}</span>
           </div>
 
