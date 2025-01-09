@@ -5,7 +5,7 @@ const convertTo24HourFormat = (timeRange: string | string[]): string => {
 
   if (timeRange === "Closed") return "Закрыто";
   if (timeRange === "Open 24 hours") return "Круглосуточно";
-  if (!timeRange || !timeRange.includes("–")) return "Некорректные данные";
+  if (!timeRange || !timeRange?.includes("–")) return "Некорректные данные";
 
   const [start, end] = timeRange.split("–").map((time) => time.trim());
 

@@ -30,8 +30,6 @@ const FeedBack = () => {
 
   const total = data?.pagination?.total;
 
-  console.log(total < 3);
-
   if (!total) return;
 
   return (

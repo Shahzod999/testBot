@@ -10,6 +10,8 @@ interface ContactProps extends ActionProps {
   editable?: boolean;
   handleEditTotalCompany?: (key: string, value: string) => void;
   objectKeys?: string;
+  allowedValues?: string;
+  textStartWith?: string;
 }
 const EditAction = ({
   text,
@@ -20,14 +22,42 @@ const EditAction = ({
   editable,
   handleEditTotalCompany,
   objectKeys,
+  allowedValues,
+  textStartWith,
 }: ContactProps) => {
   const [localValue, setLocalValue] = useState(text);
+  const [isValid, setIsValid] = useState(true);
+
+  const regex = allowedValues ? new RegExp(allowedValues) : null;
+
+  console.log(regex);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
+    let newValue = e.target.value.replace("@", "");
+
+    if (textStartWith) {
+      if (!newValue.startsWith(textStartWith)) {
+        const partialPrefix = textStartWith.slice(0, newValue.length);
+        if (newValue.startsWith(partialPrefix)) {
+          newValue = textStartWith;
+        } else {
+          newValue = textStartWith + newValue.replace(textStartWith, "");
+        }
+      }
+    }
+
     setLocalValue(newValue);
 
-    if (handleEditTotalCompany) {
+    let valid = true;
+
+    if (regex && !regex.test(newValue.replace(textStartWith || "", ""))) {
+      console.log(newValue.replace(textStartWith || "", ""));
+
+      valid = false;
+    }
+    setIsValid(valid);
+
+    if (valid && handleEditTotalCompany) {
       handleEditTotalCompany(objectKeys || "", newValue);
     }
   };
@@ -45,6 +75,9 @@ const EditAction = ({
           <input type="text" value={localValue} onChange={handleChange} />
         ) : (
           <span className="actions__info__text__main">{localValue}</span>
+        )}
+        {!isValid && (
+          <span className="noAwailibleText">Некорректное значение</span>
         )}
       </div>
 

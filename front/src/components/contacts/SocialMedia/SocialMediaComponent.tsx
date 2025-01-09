@@ -14,8 +14,6 @@ const SocialMediaComponent = ({
         {Object.entries(social_media || {})
           .filter(([_, url]) => url)
           .map(([name, url]) => {
-            console.log(name);
-
             const link =
               name.toLowerCase() === "telegram"
                 ? `https://t.me/${url.replace("@", "")}`
@@ -24,7 +22,7 @@ const SocialMediaComponent = ({
                 : url;
 
             return (
-              <span onClick={() => openLinkNavigate(link)}>
+              <span onClick={() => openLinkNavigate(link)} key={name}>
                 <div className="socialMedia__icons__logo">
                   <ReactSVG src={`./social/${name}.svg`} />
                 </div>

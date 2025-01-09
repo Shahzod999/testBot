@@ -102,6 +102,10 @@ html {
   scroll-behavior: smooth;
 }
 
+#root {
+  position: relative;
+}
+
 .no-scroll {
   overflow: hidden;
 }

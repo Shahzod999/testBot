@@ -13,6 +13,7 @@ import Confetti from "./pages/SmallPages/welComePages/Confetti.tsx";
 import Menu from "./pages/Menu/Menu.tsx";
 import SingleMenu from "./pages/Menu/SingleMenu/SingleMenu.tsx";
 import TotalMenu from "./pages/Menu/TotalMenu/TotalMenu.tsx";
+import LoadingScreen from "./pages/SmallPages/Loading/LoadingScreen.tsx";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,7 @@ createRoot(document.getElementById("root")!).render(
       radius={[0.5, 2]}
       wind={[0, 1]}
     /> */}
+    <LoadingScreen />
     <Confetti />
     <RouterProvider router={router} />
   </Provider>,

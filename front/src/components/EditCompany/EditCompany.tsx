@@ -166,8 +166,6 @@ const EditCompany = ({
     console.log(newCompanyInfo);
   };
 
-  //t.me изменить
-
   return (
     <div className="edit">
       <div className="contacts__actions editActions">
@@ -220,6 +218,8 @@ const EditCompany = ({
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="social_media.telegram"
+          allowedValues="^[a-zA-Z][a-zA-Z0-9_]{4,}$"
+          textStartWith="https://t.me/"
         />
         <EditAction
           smallInfo="Номер WhatsApp"

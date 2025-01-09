@@ -3,10 +3,12 @@ import { RootState } from "../store";
 
 interface BottomSheetState {
   bottomState: boolean;
+  loadingState: boolean;
 }
 
 const initialState: BottomSheetState = {
   bottomState: false,
+  loadingState: false,
 };
 
 export const bottomSheetSlice = createSlice({
@@ -19,12 +21,18 @@ export const bottomSheetSlice = createSlice({
     removeBottomState: (state) => {
       state.bottomState = false;
     },
+    toggleLoading: (state, action) => {
+      state.loadingState = action.payload;
+    },
   },
 });
 
-export const { setBottomState, removeBottomState } = bottomSheetSlice.actions;
+export const { setBottomState, removeBottomState, toggleLoading } =
+  bottomSheetSlice.actions;
 
 export const selectBottomState = (state: RootState) =>
   state.bottomState.bottomState;
+export const selectedLoadingState = (state: RootState) =>
+  state.bottomState.loadingState;
 
 export default bottomSheetSlice.reducer;

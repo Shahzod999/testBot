@@ -21,6 +21,7 @@ import {
 } from "../../../app/features/toastSlice";
 import { ErrorComment } from "../../../app/types/commentType";
 import { PhotosSample } from "../../../app/types/companyType";
+import { toggleLoading } from "../../../app/features/bottomSheetSlice";
 
 interface AddCommentProps {
   openComment: boolean;
@@ -47,6 +48,7 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
     if (!textArea || !count) {
       return dispatch(infoToast("Заполните все поля"));
     }
+    dispatch(toggleLoading(true));
 
     try {
       const uploadedUrls = await Promise.all(
@@ -86,6 +88,8 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
     } catch (error) {
       const er = error as ErrorComment;
       dispatch(errorToast(er.data?.message || "Ошибка при отправке"));
+    } finally {
+      dispatch(toggleLoading(false));
     }
   };
   const tg = window.Telegram.WebApp;
@@ -106,9 +110,6 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
       tg.BackButton.hide();
     }
   }, [openComment, toggleComment]);
-
-  console.log(openComment,'true');
-  
 
   return (
     <BottomSheet isOpen={openComment} onClose={toggleComment}>

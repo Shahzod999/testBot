@@ -162,7 +162,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             </div>
             <div className="mainInfo__openHours__right-duration">
               {parseFloat(companyInfo?.distance?.distance) > 2 &&
-                !companyInfo?.distance?.distance.split(" ").includes("km") && (
+                !companyInfo?.distance?.distance?.split(" ")?.includes("km") && (
                   <>
                     <div className="mainInfo__openHours__right-duration-box">
                       <ReactSVG src="./walkPerson.svg" />
