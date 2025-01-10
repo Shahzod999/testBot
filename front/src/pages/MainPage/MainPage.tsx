@@ -1,6 +1,9 @@
 import "./mainPage.scss";
 import { useEffect, useState } from "react";
-import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
+import {
+  useGetCompanyByIdQuery,
+  useGetUserInfoQuery,
+} from "../../app/api/companySlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { setDarkMode } from "../../app/features/companyStateSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
@@ -37,6 +40,8 @@ const MainPage = () => {
   const navigate = useNavigate();
   const companyId = useAppSelector(selectedCompanyId);
   const telegramId = useAppSelector(selectedUserTelegramId);
+
+  useGetUserInfoQuery({ id: telegramId }, { skip: !telegramId });
 
   const dispatch = useAppDispatch();
   const [loc, setLoc] = useState({ lat: 0, lon: 0 });

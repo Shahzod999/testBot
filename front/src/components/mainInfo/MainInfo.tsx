@@ -56,7 +56,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       ...(companyInfo?.phone_number
         ? [
             {
-              text: t("taxi"),
+              text: t("chat"),
               img: "./message.fill.svg",
               key: "chat",
               link: `https://t.me/${companyInfo.phone_number}`,
