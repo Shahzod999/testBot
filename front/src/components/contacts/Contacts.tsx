@@ -30,6 +30,9 @@ const getAvailableSocialMedia = (
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const translateDay = useDayTranslator();
   const sortedWorkingHours = useSortedWorkingHours(companyInfo.working_hours);
+
+  console.log(sortedWorkingHours,'333');
+  
   const { t } = useTranslation();
 
   const [activeAction, setActiveAction] = useState<string | null>(null);

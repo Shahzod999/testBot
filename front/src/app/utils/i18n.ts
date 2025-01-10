@@ -50,14 +50,15 @@ const resources = {
       vacancies: "Vacancies",
       noSocialMedia: "Social media not specified",
       closingIn: "Closing in",
-      openUntil: "Open until",
+      open: "Open",
+      openUntil: "Open until {{time}}",
       open24Hours: "Open 24 hours",
 
-      opensAt: "Opens at",
+      opensAt: "Opens ",
       closedToday: "Closed today",
 
-      todayAt: "today at",
-      tomorrowAt: "tomorrow at",
+      todayAt: "today ",
+      tomorrowAt: "tomorrow ",
       closingInMinutes: "Closing in {{minutes}} minutes",
       sunday: "Sunday",
       monday: "Monday",
@@ -140,6 +141,23 @@ const resources = {
       hoursAgo: "{{count}} hours ago",
       minutesAgo: "{{count}} minutes ago",
       lessThanMinute: "Less than a minute ago",
+
+      selectedHours: "Selected hours",
+      save: "Save",
+
+      invalidData: "Invalid data",
+
+      workingDay: "Working day",
+      from: "From",
+      to: "To",
+      applyToAllDays: "Apply to all days",
+
+      titleNavig: "Navigators and maps",
+      yandexMaps: "Yandex Maps",
+      gis2: "2GIS",
+      googleMaps: "Google Maps",
+      waze: "Waze",
+      coordinates: "Coordinates",
     },
   },
   ru: {
@@ -191,14 +209,15 @@ const resources = {
       vacancies: "Вакансии",
       noSocialMedia: "Соцсети не указаны",
       closingIn: "До закрытия",
-      openUntil: "Открыто до",
+      open: "Открыто",
+      openUntil: "Открыто до {{time}}",
       open24Hours: "Круглосуточно",
 
-      opensAt: "Откроется в",
+      opensAt: "Откроется ",
       closedToday: "Сегодня не работает",
 
-      todayAt: "сегодня в",
-      tomorrowAt: "завтра в",
+      todayAt: "сегодня ",
+      tomorrowAt: "завтра ",
       closingInMinutes: "Осталось {{minutes}} минут",
       sunday: "Воскресенье",
       monday: "Понедельник",
@@ -279,6 +298,23 @@ const resources = {
       hoursAgo: "{{count}} часов назад",
       minutesAgo: "{{count}} минут назад",
       lessThanMinute: "Меньше минуты назад",
+
+      selectedHours: "Выбранные часы",
+
+      save: "Сохранить",
+
+      invalidData: "Некорректные данные",
+      workingDay: "Рабочий день",
+      from: "C",
+      to: "До",
+      applyToAllDays: "Применить на все дни",
+
+      titleNavig: "Навигаторы и карты",
+      yandexMaps: "Яндекс карты",
+      gis2: "2ГИС",
+      googleMaps: "Google карты",
+      waze: "Waze",
+      coordinates: "Координаты",
     },
   },
   uz: {
@@ -330,14 +366,15 @@ const resources = {
       vacancies: "Bo'sh ish o'rinlari",
       noSocialMedia: "Ijtimoiy tarmoqlar ko'rsatilmagan",
       closingIn: "Yopilishgacha",
-      openUntil: "Ochilgan vaqt: ",
+      open: "Ochiq",
+      openUntil: "Ish vaqt: {{time}} gacha",
       open24Hours: "24 soat ochiq",
 
       opensAt: "Ochiladi: ",
       closedToday: "Bugun ishlamaydi",
 
-      todayAt: "bugun soat",
-      tomorrowAt: "ertaga soat",
+      todayAt: "bugun ",
+      tomorrowAt: "ertaga ",
       closingInMinutes: "{{minutes}} daqiqada yopiladi",
       sunday: "Yakshanba",
       monday: "Dushanba",
@@ -419,6 +456,24 @@ const resources = {
       hoursAgo: "{{count}} soat oldin",
       minutesAgo: "{{count}} daqiqa oldin",
       lessThanMinute: "Bir daqiqadan kam oldin",
+
+      selectedHours: "Tanlangan vaqt",
+
+      save: "Saqlash",
+
+      invalidData: "Noto'g'ri ma'lumotlar",
+
+      workingDay: "Ish kuni",
+      from: "Dan",
+      to: "Gacha",
+      applyToAllDays: "Barcha kunlarga qo'llash",
+
+      titleNavig: "Navigatorlar va xaritalar",
+      yandexMaps: "Yandex",
+      gis2: "2GIS",
+      googleMaps: "Google xarita",
+      waze: "Waze",
+      coordinates: "Koordinatalar",
     },
   },
   uzCyr: {
@@ -470,14 +525,15 @@ const resources = {
       vacancies: "Бўш иш ўринлари",
       noSocialMedia: "Ижтимоий тармоқлар кўрсатилмаган",
       closingIn: "Ёпилишгача",
-      openUntil: "Очилган вақт: ",
+      open: "Очиқ",
+      openUntil: "Иш вақт: {{time}} гача",
       open24Hours: "24 соат очиқ",
 
       opensAt: "Очилади: ",
       closedToday: "Бугун ишламайди",
 
-      todayAt: "бугун соат",
-      tomorrowAt: "эртага соат",
+      todayAt: "бугун ",
+      tomorrowAt: "эртага ",
       closingInMinutes: "{{minutes}} дақиқада ёпилади",
       sunday: "Якшанба",
       monday: "Душанба",
@@ -553,11 +609,29 @@ const resources = {
       more: "Кўпроқ",
       truegisTeam: "TrueGis Жамоаси",
       owner: "Эгалик қилувчи",
-      
+
       daysAgo: "{{count}} к олдин",
       hoursAgo: "{{count}} соат олдин",
       minutesAgo: "{{count}} дақиқа олдин",
       lessThanMinute: "Бир дақиқадан кам олдин",
+
+      selectedHours: "Танланган вақт",
+
+      save: "Сақлаш",
+
+      invalidData: "Нотўғри маълумотлар",
+
+      workingDay: "Иш куни",
+      from: "Дан",
+      to: "Гача",
+      applyToAllDays: "Барча кунларга қўллаш",
+
+      titleNavig: "Навигаторлар ва хариталар",
+      yandexMaps: "Яндекс",
+      gis2: "2ГИС",
+      googleMaps: "Гугл харита",
+      waze: "Waze",
+      coordinates: "Координаталар",
     },
   },
 };

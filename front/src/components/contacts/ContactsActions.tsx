@@ -32,6 +32,9 @@ export const ContactsActions = ({
     }
   };
 
+  console.log(text,"000");
+  
+
   return (
     <button
       onClick={handleClick}

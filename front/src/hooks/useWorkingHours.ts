@@ -25,7 +25,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
       const day = daysOfWeek[dayIndex];
       const hours = workingHours[day]?.[0] || t("closed");
 
-      if (hours === t("closed") || hours === "Закрыто") return null;
+      if (hours === "Closed" || hours === "Closed") return null;
       return convertTo24HourFormat(hours).split("–")[0]; // Возвращаем время открытия
     };
 

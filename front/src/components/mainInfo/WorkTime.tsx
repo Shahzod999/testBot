@@ -7,6 +7,8 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
     useWorkingHours(working_hours);
   const { t } = useTranslation();
 
+  console.log(hours, "22");
+
   return (
     <div className="mainInfo__openHours__left">
       {isOpen ? (
@@ -18,8 +20,8 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
             </>
           ) : hours.split("–")[1] ? (
             <>
-              <span>{t("openUntil")}</span>
-              <p>{`${t("openUntil")} ${hours.split("–")[1]}`}</p>
+              <span>{t("open")}</span>
+              <p>{t("openUntil", { time: hours.split("–")[1] })}</p>
             </>
           ) : (
             <>

@@ -6,6 +6,7 @@ import EditWorkHours from "./EditWorkHours";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import useSortedWorkingHours from "../../hooks/sortingDays";
 import { hapticVibration } from "../../hooks/hapticVibration";
+import { useTranslation } from "react-i18next";
 
 interface EditCompanyProps {
   activeAction: string | null;
@@ -23,6 +24,9 @@ const WorkingHoursComponent = ({
   const sortedWorkingHours = useSortedWorkingHours(companyInfo?.working_hours);
   const [totalTime, setTotalTime] = useState(sortedWorkingHours);
 
+  
+
+  const { t } = useTranslation();
   const handleSubmit = () => {
     handleTime();
     closeBottomSheet();
@@ -40,7 +44,7 @@ const WorkingHoursComponent = ({
       <div className="contacts__actions">
         <div className="contacts__actions__closeButtons">
           <span className="contacts__actions__closeButtons__title">
-            Рабочие часы
+            {t("workingHours")}
           </span>
         </div>
 
@@ -51,7 +55,9 @@ const WorkingHoursComponent = ({
           <span className="actions__icons closedButtonInput">
             <input type="checkbox" name="" id="chooseTime" />
           </span>
-          <span className="actions__text closedButtontext">Выбранные часы</span>
+          <span className="actions__text closedButtontext">
+            {t("selectedHours")}
+          </span>
         </label>
 
         <label
@@ -61,7 +67,9 @@ const WorkingHoursComponent = ({
           <span className="actions__icons closedButtonInput">
             <input type="checkbox" name="" id="24Hours" />
           </span>
-          <span className="actions__text closedButtontext">24 часа</span>
+          <span className="actions__text closedButtontext">
+            {t("open24Hours")}
+          </span>
         </label>
 
         {Object.entries(totalTime).map(([day, hours]) => (
@@ -74,7 +82,7 @@ const WorkingHoursComponent = ({
         ))}
 
         <CommonButton createdFunction={handleSubmit}>
-          <span>Сохранить</span>
+          <span>{t("save")}</span>
         </CommonButton>
       </div>
     </BottomSheet>

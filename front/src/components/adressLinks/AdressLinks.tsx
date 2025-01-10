@@ -2,20 +2,22 @@ import { ReactSVG } from "react-svg";
 import { CompanyState } from "../../app/types/companyType";
 import "./adressLinks.scss";
 import { useCopyAddress } from "../../hooks/copyText";
+import { useTranslation } from "react-i18next";
 
 const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const { t } = useTranslation();
   const { copyed, copyAdress, handleCopyAdress } = useCopyAddress();
 
   return (
     <div className="socialMedia">
-      <h3>Навигаторы и карты</h3>
+      <h3>{t("titleNavig")}</h3>
       <div className="socialMedia__icons">
         <a
           href={`https://yandex.ru/maps/?whatshere[point]=${companyInfo.longitude},${companyInfo.latitude}&z=16`}
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./yandex.svg" />
-          <span>Яндекс карты</span>
+          <span>{t("yandexMaps")}</span>
         </a>
         <a
           href={`https://2gis.uz/search/${encodeURIComponent(
@@ -24,21 +26,21 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./2gis.svg" />
-          <span>2ГИС</span>
+          <span>{t("gis2")}</span>
         </a>
         <a
           href={`https://maps.google.com/?q=${companyInfo.latitude},${companyInfo.longitude}`}
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./googleMaps.svg" />
-          <span>Google карты</span>
+          <span>{t("googleMaps")}</span>
         </a>
         <a
           href={`https://www.waze.com/ru/live-map/?ll=${companyInfo.latitude},${companyInfo.longitude}&navigate=yes`}
           target="_blank"
           rel="noopener noreferrer">
           <ReactSVG src="./waze.svg" />
-          <span>Waze</span>
+          <span>{t("waze")}</span>
         </a>
       </div>
 
@@ -62,7 +64,7 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
             "latlon",
           )
         }>
-        <span>Координаты:</span>
+        <span>{t("coordinates")}</span>
 
         {copyed ? (
           <strong>{copyed}</strong>

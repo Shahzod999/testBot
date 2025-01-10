@@ -8,7 +8,6 @@ import HomePage from "./pages/Home/HomePage.tsx";
 import EditPage from "./pages/Edit/EditPage.tsx";
 import NotFoundPage from "./pages/SmallPages/404/NotFoundPage.tsx";
 import Welcome from "./pages/SmallPages/welComePages/Welcome.tsx";
-// import Snowfall from "react-snowfall";
 import Confetti from "./pages/SmallPages/welComePages/Confetti.tsx";
 import Menu from "./pages/Menu/Menu.tsx";
 import SingleMenu from "./pages/Menu/SingleMenu/SingleMenu.tsx";
@@ -54,18 +53,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-    {/* <Snowfall
-      style={{
-        position: "fixed",
-        width: "100vw",
-        height: "100vh",
-      }}
-      snowflakeCount={50}
-      speed={[1, 2]}
-      opacity={[0.5, 1]}
-      radius={[0.5, 2]}
-      wind={[0, 1]}
-    /> */}
     <LoadingScreen />
     <Confetti />
     <RouterProvider router={router} />

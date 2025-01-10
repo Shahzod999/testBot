@@ -7,6 +7,7 @@ import { WorkingHours } from "../../app/types/companyType";
 import convertTo12HourFormat from "../../hooks/convertingTo12HoursFormat";
 import useDayTranslator from "../../hooks/translateDay";
 import { hapticVibration } from "../../hooks/hapticVibration";
+import { useTranslation } from "react-i18next";
 
 interface EditWorkHoursProps {
   day: string;
@@ -15,11 +16,17 @@ interface EditWorkHoursProps {
 }
 
 const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
+  console.log(hours);
+
+  console.log(hours);
+  const { t } = useTranslation();
   const translateDay = useDayTranslator();
   const translatedToday = translateDay(day);
 
   const [time, setTime] = useState(false);
-  const [offDay, setOffDay] = useState(hours !== "Закрыто");
+
+  const [offDay, setOffDay] = useState(hours !== t("closed"));
+  //тут
 
   const editedHours = hours.split("–");
 
@@ -99,7 +106,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
           text={hours}
           mainText={translatedToday}
           style={"editWorkHour"}
-          isDisabled={hours === "Closed"}
+          isDisabled={hours === t("closed")}
           arrowRight={true}
         />
       </div>
@@ -112,7 +119,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
             <div className="switch-container">
               <div className="switch-container__title">
                 <h4>{translatedToday}</h4>
-                <span>Рабочий день</span>
+                <span>{t("workingDay")}</span>
               </div>
 
               <label className="switch">
@@ -126,7 +133,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
             </div>
 
             <div className="timepickerHolder__box__wrap">
-              <span>C</span>
+              <span>{t("from")}</span>
               <div className="timepickerHolder__box__wrap__normal">
                 <TimePicker
                   workingHour={workingHour}
@@ -134,7 +141,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
                 />
               </div>
 
-              <span>До</span>
+              <span>{t("to")}</span>
               <div className="timepickerHolder__box__wrap__normal">
                 <TimePicker
                   workingHour={closingWorkingHour}
@@ -145,12 +152,11 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
 
             <div className="timepickerHolder__box__buttons">
               <button className="toAllDays" onClick={handleToAllDays}>
-                Применить <br />
-                на все дни
+                {t("applyToAllDays")}
               </button>
 
               <button onClick={handleSave} className="enterTime">
-                Сохранить
+                {t("save")}
               </button>
             </div>
           </div>

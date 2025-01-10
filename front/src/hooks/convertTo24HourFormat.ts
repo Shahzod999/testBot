@@ -1,11 +1,13 @@
+import i18n from "../app/utils/i18n";
+
 const convertTo24HourFormat = (timeRange: string | string[]): string => {
   if (Array.isArray(timeRange)) {
     return timeRange.map(convertTo24HourFormat).join(", ");
   }
 
-  if (timeRange === "Closed") return "Закрыто";
-  if (timeRange === "Open 24 hours") return "Круглосуточно";
-  if (!timeRange || !timeRange?.includes("–")) return "Некорректные данные";
+  if (timeRange === "Closed") return i18n.t("closed");;
+  if (timeRange === "Open 24 hours") return i18n.t("open24Hours");;
+  if (!timeRange || !timeRange?.includes("–")) return i18n.t("invalidData");;
 
   const [start, end] = timeRange.split("–").map((time) => time.trim());
 

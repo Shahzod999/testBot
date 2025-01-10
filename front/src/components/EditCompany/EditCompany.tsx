@@ -50,10 +50,7 @@ const EditCompany = ({
       : companyInfo.logo_icon_light,
   );
   const [error, setError] = useState("");
-
-  console.log(companyInfo,'sas');
   
-
   const [updateRequest, { isLoading: updateLoading }] =
     useUpdateRequestMutation();
   const [uploadImage, { isLoading: uploadLoading }] = useUploadImageMutation();

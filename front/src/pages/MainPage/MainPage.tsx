@@ -34,7 +34,7 @@ declare global {
   }
 }
 
-const tg = window.Telegram.WebApp;
+const tg = window?.Telegram?.WebApp;
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -91,6 +91,7 @@ const MainPage = () => {
           console.log("Location access was not granted or is unavailable.");
         }
       });
+      
     });
 
     dispatch(setCompanyId(tg?.initDataUnsafe?.start_param || companyId));
