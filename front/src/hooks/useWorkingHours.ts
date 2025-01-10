@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 export const useWorkingHours = (workingHours: WorkingHours) => {
   const { t } = useTranslation();
 
+  console.log(workingHours);
+
   return useMemo(() => {
     const daysOfWeek: (keyof WorkingHours)[] = [
       "Sunday",
@@ -32,7 +34,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
     // Проверяем сегодняшнее расписание
     const todayHours = workingHours[daysOfWeek[todayIndex]]?.[0] || t("closed");
 
-    if (todayHours === t("open24Hours")) {
+    if (todayHours === "Open 24 hours") {
       // Если заведение работает круглосуточно
       return {
         isOpen: true,

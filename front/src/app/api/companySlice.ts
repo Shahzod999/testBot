@@ -98,7 +98,7 @@ export const companyApiSlice = apiSlice.injectEndpoints({
             dispatch(setUserInfoSlice(data.data));
           }
           const userLang = data.data.lang;
-          if (userLang && i18n.languages.includes(userLang)) {
+          if (userLang) {
             i18n.changeLanguage(userLang);
           } else {
             console.warn(`Invalid or missing language: ${userLang}`);

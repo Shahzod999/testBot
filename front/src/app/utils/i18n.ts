@@ -51,7 +51,7 @@ const resources = {
       noSocialMedia: "Social media not specified",
       closingIn: "Closing in",
       open: "Open",
-      openUntil: "Open until {{time}}",
+      openUntil: "Until {{time}}",
       open24Hours: "Open 24 hours",
 
       opensAt: "Opens ",
@@ -210,7 +210,7 @@ const resources = {
       noSocialMedia: "Соцсети не указаны",
       closingIn: "До закрытия",
       open: "Открыто",
-      openUntil: "Открыто до {{time}}",
+      openUntil: "До {{time}}",
       open24Hours: "Круглосуточно",
 
       opensAt: "Откроется ",
@@ -476,7 +476,7 @@ const resources = {
       coordinates: "Koordinatalar",
     },
   },
-  uzCyr: {
+  cyrl: {
     translation: {
       welcomeOne: "Энг яқин жойларни дарҳол топинг!",
       welcomeTwo: "Акцияларни кузатиб боринг ва фойдаланинг",

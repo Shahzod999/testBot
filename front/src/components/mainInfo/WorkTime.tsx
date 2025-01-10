@@ -8,6 +8,8 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
   const { t } = useTranslation();
 
   console.log(hours, "22");
+  console.log(isOpen);
+  
 
   return (
     <div className="mainInfo__openHours__left">
@@ -25,7 +27,7 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
             </>
           ) : (
             <>
-              <span>{t("open24Hours")}</span>
+              <span>Открыто</span>
               <p>{t("open24Hours")}</p>
             </>
           )}
