@@ -89,6 +89,7 @@
         overflow: scroll;
 
         &__text {
+            white-space: nowrap;
             cursor: pointer;
             font-family: var(--font-family);
             font-weight: 600;
@@ -167,6 +168,13 @@
                 }
 
                 p {
+
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+                    display: -webkit-box;
+
                     font-family: var(--font-family);
                     font-weight: 400;
                     font-size: 13px;

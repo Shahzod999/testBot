@@ -11,8 +11,10 @@ import RaitingStars from "../../../components/raiting/RaitingStars";
 import { MenuType } from "../../../app/types/menuType";
 import "./totalMenu.scss";
 import { ReactSVG } from "react-svg";
+import { useTranslation } from "react-i18next";
 
 const TotalMenu = () => {
+  const { t } = useTranslation();
   const companyInfo = useAppSelector(selectedCompany);
 
   const { data: categoryname } = useGetCategoryQuery({
@@ -53,7 +55,7 @@ const TotalMenu = () => {
             <div className="raiting__set">
               <RaitingStars count={companyInfo.rating} />
             </div>
-            <span>{companyInfo.review_count} отзывов</span>
+            <span>{t("reviews", { count: companyInfo.review_count })}</span>
           </div>
         </div>
 
@@ -69,7 +71,7 @@ const TotalMenu = () => {
       />
 
       <div className="menu__categoryName">
-        <h2>{activeCategory?.name || "Выберите категорию"}</h2>
+        <h2>{activeCategory?.name || t("selectCategory")}</h2>
       </div>
 
       <div className="menu__food">

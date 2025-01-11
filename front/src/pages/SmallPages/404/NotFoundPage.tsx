@@ -3,9 +3,11 @@ import notFound from "../../../../public/404Not.json";
 import "./notFoundPage.scss";
 import CommonButton from "../../../components/Actions/CommonButton";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLink = () => {
     navigate("/");
@@ -19,12 +21,12 @@ const NotFoundPage = () => {
             <Lottie animationData={notFound} />
           </div>
 
-          <h2>Not Found</h2>
+          <h2>{t("notFound")}</h2>
         </div>
       </div>
 
       <div className="notFoundPage__button">
-        <CommonButton createdFunction={handleLink}>Домой</CommonButton>
+        <CommonButton createdFunction={handleLink}>{t("goHome")}</CommonButton>
       </div>
     </div>
   );

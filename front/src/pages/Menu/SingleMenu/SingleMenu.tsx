@@ -3,8 +3,11 @@ import "./singleMenu.scss";
 import { useGetSingleProdQuery } from "../../../app/api/menuSlice";
 import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 import FoodBox from "../FoodBox/FoodBox";
+import { useTranslation } from "react-i18next";
 
 const SingleMenu = () => {
+  const { t } = useTranslation();
+
   const { id } = useParams();
   const { data } = useGetSingleProdQuery(id);
 
@@ -14,7 +17,10 @@ const SingleMenu = () => {
   return (
     <div className="singleMenu">
       <div className="singleMenu__img">
-        <img src={getValidatedUrl(singleProd.image)} alt="productImg" />
+        <img
+          src={getValidatedUrl(singleProd.image)}
+          alt={t("productImageAlt")}
+        />
       </div>
       <div className="singleMenu__main">
         <div className="singleMenu__main__title">
@@ -47,7 +53,7 @@ const SingleMenu = () => {
       </div>
 
       <div className="singleMenu__similarProd">
-        <h2>Похожие продукты</h2>
+        <h2>{t("similarProducts")}</h2>
         <div className="singleMenu__similarProd__box">
           {singleProd.similar_products.map((food) => (
             <FoodBox food={food} key={food._id} />

@@ -158,6 +158,16 @@ const resources = {
       googleMaps: "Google Maps",
       waze: "Waze",
       coordinates: "Coordinates",
+
+      notFound: "Not Found",
+      goHome: "Go Home",
+
+      reviews: "{{count}} reviews",
+      selectCategory: "Select a category",
+      menuTitle: "Menu",
+
+      similarProducts: "Similar products",
+      productImageAlt: "Product image",
     },
   },
   ru: {
@@ -315,6 +325,16 @@ const resources = {
       googleMaps: "Google карты",
       waze: "Waze",
       coordinates: "Координаты",
+
+      notFound: "Не найдено",
+      goHome: "Домой",
+
+      reviews: "{{count}} отзывов",
+      selectCategory: "Выберите категорию",
+      menuTitle: "Меню",
+
+      similarProducts: "Похожие продукты",
+      productImageAlt: "Изображение продукта",
     },
   },
   uz: {
@@ -474,6 +494,16 @@ const resources = {
       googleMaps: "Google xarita",
       waze: "Waze",
       coordinates: "Koordinatalar",
+
+      notFound: "Topilmadi",
+      goHome: "Bosh sahifaga",
+
+      reviews: "{{count}} ta sharh",
+      selectCategory: "Kategoriya tanlang",
+      menuTitle: "Menyu",
+
+      similarProducts: "O‘xshash mahsulotlar",
+      productImageAlt: "Mahsulot rasmi",
     },
   },
   cyrl: {
@@ -632,6 +662,16 @@ const resources = {
       googleMaps: "Гугл харита",
       waze: "Waze",
       coordinates: "Координаталар",
+
+      notFound: "Топилмади",
+      goHome: "Бош саҳифага",
+
+      reviews: "{{count}} та шарҳ",
+      selectCategory: "Категория танланг",
+      menuTitle: "Меню",
+
+      similarProducts: "Ўхшаш маҳсулотлар",
+      productImageAlt: "Маҳсулот расми",
     },
   },
 };
