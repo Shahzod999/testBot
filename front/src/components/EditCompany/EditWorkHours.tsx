@@ -16,9 +16,7 @@ interface EditWorkHoursProps {
 }
 
 const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
-  console.log(hours);
 
-  console.log(hours);
   const { t } = useTranslation();
   const translateDay = useDayTranslator();
   const translatedToday = translateDay(day);

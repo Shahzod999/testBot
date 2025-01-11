@@ -50,7 +50,7 @@ const EditCompany = ({
       : companyInfo.logo_icon_light,
   );
   const [error, setError] = useState("");
-  
+
   const [updateRequest, { isLoading: updateLoading }] =
     useUpdateRequestMutation();
   const [uploadImage, { isLoading: uploadLoading }] = useUploadImageMutation();
@@ -219,55 +219,70 @@ const EditCompany = ({
         <EditAction
           smallInfo={t("telegramLink")}
           text={
-            newCompanyInfo.social_media.telegram?.replace("https://", "") ||
-            "@User"
+            newCompanyInfo.social_media.telegram?.replace(
+              "https://t.me/",
+              "",
+            ) || "@User"
           }
           icon="./telegram.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="social_media.telegram"
-          allowedValues="^[a-zA-Z][a-zA-Z0-9_]{4,}$"
+          allowedValues="^[a-zA-Z][a-zA-Z0-9_]{4,}$" // Telegram username
           textStartWith="https://t.me/"
         />
         <EditAction
           smallInfo={t("whatsAppNumber")}
-          text={newCompanyInfo?.social_media?.whatsApp || "+000 000 00 00"}
+          text={
+            newCompanyInfo?.social_media?.whatsApp?.replace("+", "") ||
+            "000 000 00 00"
+          }
           icon="./whatsApp.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="social_media.whatsApp"
+          allowedValues="^\+?[0-9]{10,15}$"
+          textStartWith="+"
         />
         <EditAction
           smallInfo={t("instagramLink")}
           text={
-            newCompanyInfo?.social_media?.instagram?.replace(
-              "https://www.",
-              "",
-            ) || "instagram.com"
+            newCompanyInfo?.social_media?.instagram
+              ?.split("https://www.instagram.com/")[1] // Убираем начало URL
+              ?.split("?")[0] || "instagram.com" // Берём только первую часть (имя пользователя)
           }
           icon="./instagram.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="social_media.instagram"
+          allowedValues="^[a-zA-Z0-9_.]{1,30}$" // Instagram username
+          textStartWith="https://www.instagram.com/"
         />
         <EditAction
           smallInfo={t("facebookLink")}
           text={
-            newCompanyInfo?.social_media?.facebook?.replace("https://", "") ||
-            "facebook.com/truegis"
+            newCompanyInfo?.social_media?.facebook?.replace(
+              /https:\/\/www\.facebook\.com\/([^/?]+\/?[^/?]*)?.*/,
+              "$1",
+            ) || "facebook.com/truegis"
           }
           icon="./facebook.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="social_media.facebook"
+          textStartWith="https://www.facebook.com/"
         />
         <EditAction
           smallInfo={t("phoneNumber")}
-          text={newCompanyInfo?.phone_number || "+998 000 67 43"}
+          text={
+            newCompanyInfo?.phone_number?.replace("+", "") || "998 000 67 43"
+          }
           icon="./phone.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="phone_number"
+          allowedValues="^\+?[0-9]{10,15}$"
+          textStartWith="+"
         />
         <EditAction
           smallInfo={t("website")}
@@ -278,6 +293,7 @@ const EditCompany = ({
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="website"
+          textStartWith="https://"
         />
 
         <EditAction
@@ -287,6 +303,7 @@ const EditCompany = ({
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="email"
+          allowedValues="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Email формат
         />
 
         {Object.keys(newCompanyInfo.mobile_apps).map((platform) => (

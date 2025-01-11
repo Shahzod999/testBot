@@ -11,7 +11,7 @@ interface ContactProps extends ActionProps {
   handleEditTotalCompany?: (key: string, value: string) => void;
   objectKeys?: string;
   allowedValues?: string;
-  textStartWith?: string;
+  textStartWith?: string | null;
 }
 const EditAction = ({
   text,
@@ -25,38 +25,27 @@ const EditAction = ({
   allowedValues,
   textStartWith,
 }: ContactProps) => {
+  console.log(text);
+  
   const [localValue, setLocalValue] = useState(text);
   const [isValid, setIsValid] = useState(true);
 
   const regex = allowedValues ? new RegExp(allowedValues) : null;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let newValue = e.target.value.replace("@", "");
-
-    if (textStartWith) {
-      if (!newValue.startsWith(textStartWith)) {
-        const partialPrefix = textStartWith.slice(0, newValue.length);
-        if (newValue.startsWith(partialPrefix)) {
-          newValue = textStartWith;
-        } else {
-          newValue = textStartWith + newValue.replace(textStartWith, "");
-        }
-      }
-    }
+    let newValue = e.target.value.trim();
 
     setLocalValue(newValue);
 
     let valid = true;
 
     if (regex && !regex.test(newValue.replace(textStartWith || "", ""))) {
-      console.log(newValue.replace(textStartWith || "", ""));
-
       valid = false;
     }
     setIsValid(valid);
 
     if (valid && handleEditTotalCompany) {
-      handleEditTotalCompany(objectKeys || "", newValue);
+      handleEditTotalCompany(objectKeys || "", textStartWith + newValue);
     }
   };
   return (
@@ -70,7 +59,10 @@ const EditAction = ({
       <div className="actions__info">
         <span className="actions__info__smallInfo">{smallInfo}</span>
         {editable ? (
-          <input type="text" value={localValue} onChange={handleChange} />
+          <div className="actions__info__smallInfo__text">
+            <span>{textStartWith}</span>
+            <input type="text" value={localValue} onChange={handleChange} />
+          </div>
         ) : (
           <span className="actions__info__text__main">{localValue}</span>
         )}

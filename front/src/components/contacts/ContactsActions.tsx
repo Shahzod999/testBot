@@ -32,7 +32,6 @@ export const ContactsActions = ({
     }
   };
 
-  console.log(text,"000");
   
 
   return (

@@ -34,6 +34,21 @@
       text-overflow: ellipsis;
       width: 100%;
       overflow: hidden;
+
+      &__text {
+        display: flex;
+        align-items: center;
+
+        text-align: start;
+
+        input {
+          width: 100%;
+        }
+
+        span {
+          color: var(--hint-color);
+        }
+      }
     }
 
     &__text__main {
