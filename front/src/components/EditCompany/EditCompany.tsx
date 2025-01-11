@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import EditAction from "../contacts/EditAction";
 import AddFoto from "../raiting/AddComment/AddFoto";
 import { ReactSVG } from "react-svg";
@@ -169,7 +169,16 @@ const EditCompany = ({
     } finally {
       dispatch(toggleLoading(false));
     }
-    console.log(newCompanyInfo);
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const input = e.target;
+    input.value = input.value.replace(/[^0-9+]/g, ""); // Удаляем все, кроме цифр и '+'
+
+    const regex = /^\+?[0-9]{0,15}$/; // Проверяем формат
+    if (regex.test(input.value)) {
+      handleEditTotalCompany("requester_phone_number", input.value);
+    }
   };
 
   return (
@@ -220,9 +229,9 @@ const EditCompany = ({
           smallInfo={t("telegramLink")}
           text={
             newCompanyInfo.social_media.telegram?.replace(
-              "https://t.me/",
+              /(https?:\/\/)?t\.me\/|@/g,
               "",
-            ) || "@User"
+            ) || ""
           }
           icon="./telegram.svg"
           editable
@@ -249,7 +258,7 @@ const EditCompany = ({
           text={
             newCompanyInfo?.social_media?.instagram
               ?.split("https://www.instagram.com/")[1] // Убираем начало URL
-              ?.split("?")[0] || "instagram.com" // Берём только первую часть (имя пользователя)
+              ?.split("?")[0] || "" // Берём только первую часть (имя пользователя)
           }
           icon="./instagram.svg"
           editable
@@ -262,9 +271,9 @@ const EditCompany = ({
           smallInfo={t("facebookLink")}
           text={
             newCompanyInfo?.social_media?.facebook?.replace(
-              /https:\/\/www\.facebook\.com\/([^/?]+\/?[^/?]*)?.*/,
-              "$1",
-            ) || "facebook.com/truegis"
+              /https?:\/\/(www\.)?facebook\.com\/([^/?#]+).*/,
+              "$2",
+            ) || ""
           }
           icon="./facebook.svg"
           editable
@@ -274,9 +283,7 @@ const EditCompany = ({
         />
         <EditAction
           smallInfo={t("phoneNumber")}
-          text={
-            newCompanyInfo?.phone_number?.replace("+", "") || "998 000 67 43"
-          }
+          text={newCompanyInfo?.phone_number?.replace("+", "") || ""}
           icon="./phone.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
@@ -286,9 +293,7 @@ const EditCompany = ({
         />
         <EditAction
           smallInfo={t("website")}
-          text={
-            newCompanyInfo?.website?.replace("https://", "") || "truegis.com"
-          }
+          text={newCompanyInfo?.website?.replace("https://", "") || ""}
           icon="./australia.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
@@ -298,7 +303,7 @@ const EditCompany = ({
 
         <EditAction
           smallInfo={t("email")}
-          text={newCompanyInfo?.email || "example@gmail.com"}
+          text={newCompanyInfo?.email || ""}
           icon="./email.svg"
           editable
           handleEditTotalCompany={handleEditTotalCompany}
@@ -388,9 +393,7 @@ const EditCompany = ({
           placeholder={t("yourPhoneNumber")}
           className="contacts__actions__positionInput"
           required
-          onChange={(e) =>
-            handleEditTotalCompany("requester_phone_number", e.target.value)
-          }
+          onInput={handleInputChange}
         />
         <h3 className="contacts__actions__title second__title">
           {t("yourPosition")}

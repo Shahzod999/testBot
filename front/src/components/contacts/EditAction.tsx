@@ -25,8 +25,6 @@ const EditAction = ({
   allowedValues,
   textStartWith,
 }: ContactProps) => {
-  console.log(text);
-  
   const [localValue, setLocalValue] = useState(text);
   const [isValid, setIsValid] = useState(true);
 
@@ -59,10 +57,10 @@ const EditAction = ({
       <div className="actions__info">
         <span className="actions__info__smallInfo">{smallInfo}</span>
         {editable ? (
-          <div className="actions__info__smallInfo__text">
+          <label className="actions__info__smallInfo__text">
             <span>{textStartWith}</span>
             <input type="text" value={localValue} onChange={handleChange} />
-          </div>
+          </label>
         ) : (
           <span className="actions__info__text__main">{localValue}</span>
         )}
