@@ -1,7 +1,9 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import "./mainInfo.scss";
 import { GoBookmark } from "react-icons/go";
 import { GoBookmarkFill } from "react-icons/go";
+import { MdAddHome } from "react-icons/md";
+import { MdOutlineAddHome } from "react-icons/md";
 import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
 import BottomSheet from "../Actions/BottomSheet";
@@ -29,6 +31,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(companyInfo?.is_favorite);
+  const [addedHome, setAddedHome] = useState<boolean | null>(null);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
   const navigate = useNavigate();
@@ -43,6 +46,40 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       console.log(error);
     } finally {
       hapticVibration("success", "light");
+    }
+  };
+
+  useEffect(() => {
+    const tg = (window as any).Telegram?.WebApp;
+
+    const supportedPlatforms = ["android", "ios"];
+    if (tg?.platform && supportedPlatforms.includes(tg.platform)) {
+      if (tg?.checkHomeScreenStatus) {
+        tg.checkHomeScreenStatus((status: string) => {
+          setAddedHome(status === "added");
+        });
+      }
+      const handleHomeScreenAdded = () => {
+        setAddedHome(true);
+      };
+
+      tg?.onEvent?.("homeScreenAdded", handleHomeScreenAdded);
+
+      return () => {
+        tg?.offEvent?.("homeScreenAdded", handleHomeScreenAdded);
+      };
+    } else {
+      setAddedHome(null);
+    }
+  }, []);
+
+  const handleAddToHome = () => {
+    const tg = (window as any).Telegram?.WebApp;
+
+    if (tg?.addToHomeScreen) {
+      tg.addToHomeScreen();
+    } else {
+      alert("Добавление на главный экран недоступно.");
     }
   };
 
@@ -116,12 +153,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   return (
     <>
       <div className="mainInfo">
-        {/* <div className="newYear">
-          <div className="newYear__lightsMain">
-            <img src="./NewYear/lightsMain.png" alt="" />
-          </div>
-        </div> */}
-
         <div className="mainInfo__logo">
           <div className="mainInfo__logo__img">
             <img
@@ -143,6 +174,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <span>{companyInfo.type}</span>
           </div>
 
+          {addedHome !== null && (
+            <span onClick={handleAddToHome} className="mainInfo__logo__home">
+              {addedHome ? <MdAddHome /> : <MdOutlineAddHome />}
+            </span>
+          )}
           <span onClick={toggleBookMark} className="mainInfo__logo__bookMark">
             {bookMark ? <GoBookmarkFill /> : <GoBookmark />}
           </span>

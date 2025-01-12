@@ -80,6 +80,21 @@
         }
       }
     }
+
+    &__home {
+      display: flex;
+      cursor: pointer;
+      font-size: 23px;
+      -webkit-tap-highlight-color: transparent;
+
+      svg {
+        fill: var(--tg-theme-text-color, #3c3c43);
+
+        path {
+          stroke: var(--tg-theme-text-color, #3c3c43);
+        }
+      }
+    }
   }
 
   &__shortText {

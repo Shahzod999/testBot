@@ -26,6 +26,10 @@ interface TelegramTotalTypes extends TelegramTypes {
   close: () => void;
   expand: () => void;
   requestFullscreen: () => void;
+  addToHomeScreen: () => void;
+  checkHomeScreenStatus(
+    callback: (status: "unsupported" | "unknown" | "added" | "missed") => void,
+  ): void;
 }
 declare global {
   interface Window {
