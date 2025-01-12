@@ -70,8 +70,8 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <strong>{copyed}</strong>
         ) : (
           <>
-            <strong>{companyInfo.latitude.toFixed(4)},</strong>
-            <strong>{companyInfo.longitude.toFixed(4)}</strong>
+            <strong>{companyInfo?.latitude?.toFixed(4)},</strong>
+            <strong>{companyInfo?.longitude?.toFixed(4)}</strong>
           </>
         )}
         <span>

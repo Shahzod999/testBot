@@ -25,14 +25,14 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
     // Функция получения времени открытия
     const getOpeningTime = (dayIndex: number): string | null => {
       const day = daysOfWeek[dayIndex];
-      const hours = workingHours[day]?.[0] || t("closed");
+      const hours = workingHours?.[day]?.[0] || t("closed");
 
       if (hours === "Closed" || hours === "Closed") return null;
       return convertTo24HourFormat(hours).split("–")[0]; // Возвращаем время открытия
     };
 
     // Проверяем сегодняшнее расписание
-    const todayHours = workingHours[daysOfWeek[todayIndex]]?.[0] || t("closed");
+    const todayHours = workingHours?.[daysOfWeek[todayIndex]]?.[0] || t("closed");
 
     if (todayHours === "Open 24 hours") {
       // Если заведение работает круглосуточно

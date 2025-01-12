@@ -8,7 +8,7 @@ interface getCompanyState {
 }
 
 const initialState: getCompanyState = {
-  companyId: import.meta.env.VITE_COMPANYID,
+  companyId: "",
   userTelegramId: "",
   platform: "",
 };

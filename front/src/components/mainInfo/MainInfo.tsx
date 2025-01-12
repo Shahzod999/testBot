@@ -78,6 +78,25 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
     if (tg?.addToHomeScreen) {
       tg.addToHomeScreen();
+
+      const storage = tg?.CloudStorage;
+      if (storage) {
+        storage.setItem(
+          "companyId",
+          JSON.stringify({ addedToHome: true, companyId }),
+          (error: any, success: boolean) => {
+            if (error) {
+              console.error("Ошибка при сохранении в CloudStorage:", error);
+            } else if (success) {
+              console.log(
+                `Компания ${companyId} успешно сохранена в CloudStorage.`,
+              );
+            }
+          },
+        );
+      } else {
+        console.warn("CloudStorage API недоступен.");
+      }
     } else {
       alert("Добавление на главный экран недоступно.");
     }

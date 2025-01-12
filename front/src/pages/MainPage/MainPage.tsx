@@ -69,7 +69,9 @@ const MainPage = () => {
     const currentVersion = tg.version;
     tg.ready();
     tg.expand();
+
     const mode = tg.colorScheme == "dark";
+    dispatch(setDarkMode(mode));
 
     if (tg?.LocationManager?.isAccessGranted) {
       navigate("/welcome");
@@ -101,9 +103,36 @@ const MainPage = () => {
       });
     });
 
-    dispatch(setCompanyId(tg?.initDataUnsafe?.start_param || companyId));
+    const initCompanyId =
+      tg?.initDataUnsafe?.start_param || import.meta.env.VITE_COMPANYID;
+
+    if (initCompanyId) {
+      dispatch(setCompanyId(initCompanyId));
+    } else {
+      const storage = tg?.CloudStorage;
+      if (storage) {
+        storage.getItem("companyId", (error: any, value: string | null) => {
+          if (error) {
+            const defaultCompanyId = import.meta.env.VITE_COMPANYID;
+            dispatch(setCompanyId(defaultCompanyId));
+          } else if (value) {
+            const data = JSON.parse(value);
+            if (data?.companyId) {
+              dispatch(setCompanyId(data.companyId));
+            }
+          } else {
+            const defaultCompanyId = import.meta.env.VITE_COMPANYID;
+            dispatch(setCompanyId(defaultCompanyId));
+          }
+        });
+      } else {
+        const defaultCompanyId = import.meta.env.VITE_COMPANYID;
+        dispatch(setCompanyId(defaultCompanyId));
+      }
+    }
+
+    // dispatch(setCompanyId(tg?.initDataUnsafe?.start_param || companyId));
     dispatch(setPlatform(tg.platform));
-    dispatch(setDarkMode(mode));
 
     if (
       currentVersion >= requiredVersion &&
@@ -117,11 +146,14 @@ const MainPage = () => {
     }
   }, [dispatch, companyId]);
 
-  const { isLoading, isError } = useGetCompanyByIdQuery({
-    id: tg?.initDataUnsafe?.start_param || companyId,
-    lat: loc.lat || import.meta.env.VITE_LAT,
-    long: loc.lon || import.meta.env.VITE_LON,
-  });
+  const { isLoading, isError } = useGetCompanyByIdQuery(
+    {
+      id: companyId,
+      lat: loc.lat || import.meta.env.VITE_LAT,
+      long: loc.lon || import.meta.env.VITE_LON,
+    },
+    { skip: !companyId },
+  );
 
   if (isLoading || isError) return <Skeleton />;
   return (
