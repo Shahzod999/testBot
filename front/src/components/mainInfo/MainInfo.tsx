@@ -116,11 +116,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   return (
     <>
       <div className="mainInfo">
-        <div className="newYear">
+        {/* <div className="newYear">
           <div className="newYear__lightsMain">
             <img src="./NewYear/lightsMain.png" alt="" />
           </div>
-        </div>
+        </div> */}
 
         <div className="mainInfo__logo">
           <div className="mainInfo__logo__img">

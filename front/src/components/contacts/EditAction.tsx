@@ -2,6 +2,7 @@ import { ReactSVG } from "react-svg";
 import { ActionProps } from "../mainInfo/ActionButtons";
 import "./editAction.scss";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ContactProps extends ActionProps {
   isDisabled?: boolean;
@@ -25,6 +26,7 @@ const EditAction = ({
   allowedValues,
   textStartWith,
 }: ContactProps) => {
+  const { t } = useTranslation();
   const [localValue, setLocalValue] = useState(text);
   const [isValid, setIsValid] = useState(true);
 
@@ -65,7 +67,7 @@ const EditAction = ({
           <span className="actions__info__text__main">{localValue}</span>
         )}
         {!isValid && (
-          <span className="noAwailibleText">Некорректное значение</span>
+          <span className="noAwailibleText">{t("invalidValue")}</span>
         )}
       </div>
 

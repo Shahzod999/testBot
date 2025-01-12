@@ -7,9 +7,13 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
     useWorkingHours(working_hours);
   const { t } = useTranslation();
 
-  console.log(hours, "22");
-  console.log(isOpen);
-  
+  if (!working_hours || Object.keys(working_hours).length === 0) {
+    return (
+      <div className="mainInfo__openHours__left">
+        <p>{t("workTimeNotSpecified")}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mainInfo__openHours__left">

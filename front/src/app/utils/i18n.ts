@@ -168,6 +168,8 @@ const resources = {
 
       similarProducts: "Similar products",
       productImageAlt: "Product image",
+      invalidValue: "Invalid value",
+      workTimeNotSpecified: "Working hours not specified",
     },
   },
   ru: {
@@ -335,6 +337,8 @@ const resources = {
 
       similarProducts: "Похожие продукты",
       productImageAlt: "Изображение продукта",
+      invalidValue: "Некорректное значение",
+      workTimeNotSpecified: "Время работы не указано",
     },
   },
   uz: {
@@ -504,6 +508,8 @@ const resources = {
 
       similarProducts: "O‘xshash mahsulotlar",
       productImageAlt: "Mahsulot rasmi",
+      invalidValue: "Noto‘g‘ri qiymat",
+      workTimeNotSpecified: "Ish vaqti ko‘rsatilmagan",
     },
   },
   cyrl: {
@@ -672,6 +678,8 @@ const resources = {
 
       similarProducts: "Ўхшаш маҳсулотлар",
       productImageAlt: "Маҳсулот расми",
+      invalidValue: "Нотўғри қиймат",
+      workTimeNotSpecified: "Иш вақти кўрсатилмаган",
     },
   },
 };
