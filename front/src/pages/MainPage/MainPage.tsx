@@ -19,6 +19,7 @@ import { setuserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
 import Toast from "../../components/Toast/Toast";
 import { Outlet, useNavigate } from "react-router-dom";
+import eruda from "eruda";
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -53,6 +54,9 @@ const MainPage = () => {
       if (userId) {
         dispatch(setUserTelegramId(userId));
       }
+    }
+    if (telegramId == "44197361") {
+      eruda.init();
     }
   }, [telegramId, dispatch]);
 
@@ -91,7 +95,6 @@ const MainPage = () => {
           console.log("Location access was not granted or is unavailable.");
         }
       });
-      
     });
 
     dispatch(setCompanyId(tg?.initDataUnsafe?.start_param || companyId));

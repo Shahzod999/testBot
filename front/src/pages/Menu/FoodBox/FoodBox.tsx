@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
+import FoodBoxSkeleton from "../MenuSkeleton/FoodBoxSkeleton";
 
-const FoodBox = ({ food }: any) => {
+const FoodBox = ({ food, isFetching }: any) => {
   const { _id, price, currency, description, weight, image } = food;
+
+  if (isFetching) return <FoodBoxSkeleton />;
 
   return (
     <Link to={`/menu/${_id}`} className="menu__food__box">

@@ -4,15 +4,17 @@ import { useGetSingleProdQuery } from "../../../app/api/menuSlice";
 import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 import FoodBox from "../FoodBox/FoodBox";
 import { useTranslation } from "react-i18next";
+import SingleMenuSkeleton from "../MenuSkeleton/SingleMenuSkeleton";
 
 const SingleMenu = () => {
   const { t } = useTranslation();
 
   const { id } = useParams();
-  const { data } = useGetSingleProdQuery(id);
+  const { data, isLoading } = useGetSingleProdQuery(id);
 
   const singleProd = data?.data;
 
+  if (isLoading) return <SingleMenuSkeleton />;
   if (!singleProd) return null;
   return (
     <div className="singleMenu">

@@ -1,0 +1,60 @@
+.food-box-skeleton {
+    padding: 8px;
+    border-radius: 16px;
+    background: rgba(116, 116, 128, 0.08);
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    &__img {
+        .skeleton--image {
+            width: 100%;
+            height: 132px;
+            border-radius: 16px;
+            background: linear-gradient(90deg,
+                    #e0e0e0 25%,
+                    #f0f0f0 50%,
+                    #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: pulse 1.5s infinite;
+        }
+    }
+
+    &__text {
+        margin-top: 8px;
+
+        .skeleton {
+            background: linear-gradient(90deg,
+                    #e0e0e0 25%,
+                    #f0f0f0 50%,
+                    #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: pulse 1.5s infinite;
+            border-radius: 4px;
+
+            &--price {
+                margin-bottom: 6px;
+            }
+
+            &--description {
+                margin-bottom: 6px;
+            }
+
+            &--weight {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            background-position: 200% 0;
+        }
+
+        100% {
+            background-position: -200% 0;
+        }
+    }
+}

@@ -12,6 +12,7 @@ import { MenuType } from "../../../app/types/menuType";
 import "./totalMenu.scss";
 import { ReactSVG } from "react-svg";
 import { useTranslation } from "react-i18next";
+import MenuSkeleton from "../MenuSkeleton/MenuSkeleton";
 
 const TotalMenu = () => {
   const { t } = useTranslation();
@@ -31,13 +32,19 @@ const TotalMenu = () => {
     setActiveCategory(category[0]);
   }
 
-  const { data: menuData } = useGetMenuQuery(
+  const {
+    data: menuData,
+    isLoading,
+    isFetching,
+  } = useGetMenuQuery(
     {
       company_id: companyInfo?._id,
       category_id: activeCategory?._id,
     },
     { skip: !activeCategory },
   );
+
+  if (isLoading) return <MenuSkeleton />;
 
   if (!companyInfo || !categoryname) return null;
 
@@ -76,7 +83,7 @@ const TotalMenu = () => {
 
       <div className="menu__food">
         {menuData?.data?.map((food: MenuType) => (
-          <FoodBox food={food} key={food._id} />
+          <FoodBox food={food} key={food._id} isFetching={isFetching}/>
         ))}
       </div>
     </div>

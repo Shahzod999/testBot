@@ -1,0 +1,93 @@
+.menu-skeleton {
+    padding: 16px;
+
+    &__title {
+        margin-bottom: 16px;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+
+        &__title {
+            flex: 1;
+
+            .skeleton--text {
+                margin-bottom: 8px;
+            }
+
+            .menu-skeleton__header__rating {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+    }
+
+    &__categories {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+
+        .skeleton--category {
+            border-radius: 10px;
+        }
+    }
+
+    &__category-name {
+        margin-bottom: 16px;
+    }
+
+    &__food {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+
+        &__item {
+            .skeleton--image {
+                border-radius: 16px;
+            }
+
+            .skeleton--text {
+                border-radius: 4px;
+            }
+        }
+    }
+
+    .skeleton {
+        background: linear-gradient(90deg,
+                #e0e0e0 25%,
+                #f0f0f0 50%,
+                #e0e0e0 75%);
+        background-size: 200% 100%;
+        animation: pulse 1.5s infinite;
+
+        &--text {
+            border-radius: 4px;
+        }
+
+        &--circle {
+            border-radius: 50%;
+        }
+
+        &--star {
+            border-radius: 2px;
+        }
+
+        &--image {
+            border-radius: 12px;
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            background-position: 200% 0;
+        }
+
+        100% {
+            background-position: -200% 0;
+        }
+    }
+}
