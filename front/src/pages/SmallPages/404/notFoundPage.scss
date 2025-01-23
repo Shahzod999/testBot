@@ -8,22 +8,23 @@
     color: var(--text-color);
     background-color: var(--secondary-bg-color);
 
-    &__icon {
-        width: 100%;
-        text-align: right;
-        padding: 0 30px;
+    // &__icon {
+    //     width: 100%;
+    //     text-align: right;
+    //     padding: 0 30px;
 
 
-        span {
-            font-family: var(--font-family);
-            font-weight: 600;
-            font-size: 17px;
-            line-height: 129%;
-            letter-spacing: -0.02em;
-            text-align: right;
-            color: var(--link-color);
-        }
-    }
+    //     span {
+    //         font-family: var(--font-family);
+    //         font-weight: 600;
+    //         font-size: 17px;
+    //         line-height: 129%;
+    //         letter-spacing: -0.02em;
+    //         text-align: right;
+    //         color: var(--link-color);
+    //     }
+    // }
+    // удалил скип в велком
 
 
     h2 {

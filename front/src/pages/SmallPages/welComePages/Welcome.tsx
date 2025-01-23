@@ -60,9 +60,6 @@ const Welcome = () => {
 
   return (
     <div className="notFoundPage">
-      <div className="notFoundPage__icon" onClick={handleNavigate}>
-        <span>{t("skip")}</span>
-      </div>
       <div className="notFoundPage__sticker">
         <Swiper
           modules={[Pagination]}
