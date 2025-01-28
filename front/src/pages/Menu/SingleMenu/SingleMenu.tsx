@@ -11,13 +11,13 @@ const SingleMenu = () => {
   const { t } = useTranslation();
 
   const { id } = useParams();
-  const { data, isLoading } = useGetSingleProdQuery(id);
+  const { data, isLoading, isFetching } = useGetSingleProdQuery(id);
 
   const singleProd = data?.data;
 
    useEffect(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
-    }, [isLoading]);
+    }, [isLoading, isFetching]);
 
   if (isLoading) return <SingleMenuSkeleton />;
   if (!singleProd) return null;
