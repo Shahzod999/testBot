@@ -5,6 +5,7 @@ import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 import FoodBox from "../FoodBox/FoodBox";
 import { useTranslation } from "react-i18next";
 import SingleMenuSkeleton from "../MenuSkeleton/SingleMenuSkeleton";
+import { useEffect } from "react";
 
 const SingleMenu = () => {
   const { t } = useTranslation();
@@ -13,6 +14,10 @@ const SingleMenu = () => {
   const { data, isLoading } = useGetSingleProdQuery(id);
 
   const singleProd = data?.data;
+
+   useEffect(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, [isLoading]);
 
   if (isLoading) return <SingleMenuSkeleton />;
   if (!singleProd) return null;
