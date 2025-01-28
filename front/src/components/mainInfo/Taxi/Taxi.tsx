@@ -54,6 +54,9 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
 
   const universalLinkMyTaxi = "https://my-taxi.onelink.me/sda5/s0pn2a00";
 
+
+  console.log(data);
+  
   return (
     <div className="mainInfoTaxi">
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
@@ -64,7 +67,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
               smallInfo={
                 isLoading || isFetching
                   ? t("wait")
-                  : data?.data.options?.[0]
+                  : data?.data?.options?.[0]
                   ? `${distance?.distance} • ${(
                       data.data.estimatedTime / 60
                     ).toFixed(1)} min • ${data.data.options[0].price} ${

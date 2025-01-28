@@ -44,6 +44,9 @@ const TotalMenu = () => {
     { skip: !activeCategory },
   );
 
+
+  console.log(menuData);
+  
   if (isLoading) return <MenuSkeleton />;
 
   if (!companyInfo || !categoryname) return null;

@@ -3,7 +3,9 @@ import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 import FoodBoxSkeleton from "../MenuSkeleton/FoodBoxSkeleton";
 
 const FoodBox = ({ food, isFetching }: any) => {
-  const { _id, price, currency, description, weight, image } = food;
+  const { _id, name, price, currency, description, weight, image } = food;
+
+  console.log(name);
 
   if (isFetching) return <FoodBoxSkeleton />;
 
@@ -13,6 +15,7 @@ const FoodBox = ({ food, isFetching }: any) => {
         <img src={getValidatedUrl(image)} alt="" />
       </div>
       <div className="menu__food__box__text">
+        <h4>{name}</h4>
         <strong>
           {price} {currency}
         </strong>
