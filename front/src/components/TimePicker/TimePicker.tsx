@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo, useCallback } from "react";
 import "./TimePicker.scss";
+import { hapticVibration } from "../../hooks/hapticVibration";
 
 interface TimePickerProps {
   workingHour: { hour: number; minute: number };
@@ -9,69 +10,80 @@ interface TimePickerProps {
 }
 
 const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
-  const hours = Array.from({ length: 24 }, (_, i) => i);
-  const minutes = Array.from({ length: 60 }, (_, i) => i);
+  const hours = useMemo(() => Array.from({ length: 24 }, (_, i) => i), []);
+  const minutes = useMemo(() => Array.from({ length: 60 }, (_, i) => i), []);
 
   const hourRef = useRef<HTMLDivElement>(null);
   const minuteRef = useRef<HTMLDivElement>(null);
-
   const scrollTimeout = useRef<number | null>(null);
 
-  const handleScrollEnd = (
-    ref: React.RefObject<HTMLDivElement>,
-    items: number[],
-    key: "hour" | "minute",
-  ) => {
-    if (ref.current) {
-      const itemHeight = 40;
+  const itemHeight = 40; // Высота элемента списка
+
+  const handleScrollEnd = useCallback(
+    (
+      ref: React.RefObject<HTMLDivElement>,
+      items: number[],
+      key: "hour" | "minute",
+    ) => {
+      if (!ref.current) return;
+
       const scrollTop = ref.current.scrollTop;
       const index = Math.round(scrollTop / itemHeight);
 
-      const formattedValue = items[index].toString().padStart(2, "0");
-
       setWorkingHour((prev) => ({
         ...prev,
-        [key]: formattedValue,
+        [key]: items[index],
       }));
 
-      ref.current.scrollTo({
-        top: index * itemHeight,
-        behavior: "smooth",
+      requestAnimationFrame(() => {
+        ref.current!.scrollTo({
+          top: index * itemHeight,
+          behavior: "smooth",
+        });
       });
-    }
-  };
+    },
+    [setWorkingHour],
+  );
 
-  const handleScroll = (
-    items: number[],
-    key: "hour" | "minute",
-    ref: React.RefObject<HTMLDivElement>,
-  ) => {
-    if (scrollTimeout.current) {
-      clearTimeout(scrollTimeout.current);
-    }
+  const handleScroll = useCallback(
+    (
+      items: number[],
+      key: "hour" | "minute",
+      ref: React.RefObject<HTMLDivElement>,
+    ) => {
+      if (!ref.current) return;
 
-    scrollTimeout.current = setTimeout(() => {
-      handleScrollEnd(ref, items, key);
-    }, 150);
-  };
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
 
-  const scrollToValue = (
-    ref: React.RefObject<HTMLDivElement>,
-    value: number,
-  ) => {
-    const itemHeight = 40;
-    if (ref.current) {
-      ref.current.scrollTo({
-        top: value * itemHeight,
-        behavior: "smooth",
-      });
-    }
-  };
+      scrollTimeout.current = window.setTimeout(() => {
+        handleScrollEnd(ref, items, key);
+      }, 100);
+
+      hapticVibration("success", "light");
+    },
+    [handleScrollEnd],
+  );
+
+  const scrollToValue = useCallback(
+    (ref: React.RefObject<HTMLDivElement>, value: number) => {
+      if (ref.current) {
+        ref.current.scrollTo({
+          top: value * itemHeight,
+          behavior: "instant",
+        });
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
-    scrollToValue(hourRef, workingHour.hour);
-    scrollToValue(minuteRef, workingHour.minute);
-  }, [workingHour]);
+    if (hourRef.current && minuteRef.current) {
+      scrollToValue(hourRef, workingHour.hour);
+      scrollToValue(minuteRef, workingHour.minute);
+    }
+  }, [scrollToValue, workingHour]);
 
   return (
     <div className="timepicker">
@@ -85,7 +97,7 @@ const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
             <div
               key={hour}
               className={`picker-item ${
-                hour == workingHour.hour ? "selected" : ""
+                hour === workingHour.hour ? "selected" : ""
               }`}>
               {hour.toString().padStart(2, "0")}
             </div>
@@ -93,6 +105,7 @@ const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
         </div>
         <div className="picker-padding" />
       </div>
+      :
       <div
         className="picker"
         ref={minuteRef}
@@ -103,7 +116,7 @@ const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
             <div
               key={minute}
               className={`picker-item ${
-                minute == workingHour.minute ? "selected" : ""
+                minute === workingHour.minute ? "selected" : ""
               }`}>
               {minute.toString().padStart(2, "0")}
             </div>

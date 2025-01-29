@@ -37,6 +37,9 @@ const WorkingHoursComponent = ({
     hapticVibration("success", "light");
   };
 
+
+  console.log(totalTime);
+  
   return (
     <BottomSheet
       isOpen={activeAction === "workHours"}

@@ -31,7 +31,7 @@ $picker-background: #373737;
   .picker-list {
     text-align: center;
   }
-
+// 
   .picker-item {
     height: $item-height;
     display: flex;
@@ -46,32 +46,32 @@ $picker-background: #373737;
       font-weight: bold;
       // font-size: $font-size-selected;
       color: var(--text-color);
-      transition: 0.2s ease-in-out;
+      transition: 0.05s ease-in-out;
       filter: opacity(1);
       transform: scale(1.25);
 
-      &+* {
-        filter: opacity(0.8);
-        transform: scale(1.2) rotateX(20deg);
+      // &+* {
+      //   filter: opacity(0.8);
+      //   transform: scale(1.2) rotateX(20deg);
 
-        &+* {
-          filter: opacity(0.5);
-          transform: scale(1) rotateX(30deg);
-        }
-      }
+      //   &+* {
+      //     filter: opacity(0.5);
+      //     transform: scale(1) rotateX(30deg);
+      //   }
+      // }
 
 
     }
 
-    &:has(+ *.selected) {
-      filter: opacity(0.8);
-      transform: scale(1.2) rotateX(20deg);
-    }
+    // &:has(+ *.selected) {
+    //   filter: opacity(0.8);
+    //   transform: scale(1.2) rotateX(20deg);
+    // }
 
-    &:has(+ * + *.selected) {
-      filter: opacity(0.5);
-      transform: scale(1) rotateX(30deg);
-    }
+    // &:has(+ * + *.selected) {
+    //   filter: opacity(0.5);
+    //   transform: scale(1) rotateX(30deg);
+    // }
   }
 
   .picker-padding {
