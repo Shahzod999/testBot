@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useMemo, useCallback } from "react";
 import "./TimePicker.scss";
-import { hapticVibration } from "../../hooks/hapticVibration";
 
 interface TimePickerProps {
   workingHour: { hour: number; minute: number };
@@ -60,8 +59,6 @@ const TimePicker = ({ workingHour, setWorkingHour }: TimePickerProps) => {
       scrollTimeout.current = window.setTimeout(() => {
         handleScrollEnd(ref, items, key);
       }, 100);
-
-      hapticVibration("success", "light");
     },
     [handleScrollEnd],
   );
