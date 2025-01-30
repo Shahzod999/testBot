@@ -7,7 +7,7 @@ import { TimePickerProps } from "./TimePicker.type";
 
 function TimePicker({
   value: initialValue, // сюда мы устанавливаем начальное значение времени классная штука например 18:50
-  cellHeight = 30, // высота важна для корректной работы
+  cellHeight = 50, // высота важна для корректной работы
   onChange = () => {},
   onSave = () => {},
   onCancel = () => {},

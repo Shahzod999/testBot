@@ -150,7 +150,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
                   setWorkingHour={setClosingWorkingHour}
                 /> */}
                 <TimePicker
-                  value={editedHours[1]}
+                  value={"00:00"}
                   onChange={handleCloseTimeChange}
                 />
               </div>

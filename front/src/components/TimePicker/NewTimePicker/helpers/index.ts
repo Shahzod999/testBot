@@ -24,6 +24,15 @@ export const initialNumbersValue = (
     },
   ];
 
+
+  if (value === 0) {
+    initialValue24hourFormat[0].selected = true;
+  } else if (value === 1) {
+    initialValue24hourFormat[1].selected = true;
+  }
+
+
+  
   const arrayOfSelectedValue: arrayOfSelectedValueProps =
     initialValue24hourFormat;
   let count = 0;

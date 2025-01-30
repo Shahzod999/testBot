@@ -37,7 +37,6 @@ function MinuteWheel({
         )?.[0]?.translatedValue,
       ),
   );
-
   const [startCapture, setStartCapture] = useState(false);
   const [showFinalTranslate, setShowFinalTranslate] = useState(false);
   // start and end times
