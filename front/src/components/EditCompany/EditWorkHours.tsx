@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ContactsActions } from "../contacts/ContactsActions";
-import TimePicker from "../TimePicker/TimePicker";
+// import TimePicker from "../TimePicker/TimePicker";
 import "./editWorkHours.scss";
 import BottomSheet from "../Actions/BottomSheet";
 import { WorkingHours } from "../../app/types/companyType";
@@ -8,6 +8,7 @@ import convertTo12HourFormat from "../../hooks/convertingTo12HoursFormat";
 import useDayTranslator from "../../hooks/translateDay";
 import { hapticVibration } from "../../hooks/hapticVibration";
 import { useTranslation } from "react-i18next";
+import TimePicker from "../TimePicker/NewTimePicker/prog/TimePicker";
 
 interface EditWorkHoursProps {
   day: string;
@@ -16,7 +17,6 @@ interface EditWorkHoursProps {
 }
 
 const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
-
   const { t } = useTranslation();
   const translateDay = useDayTranslator();
   const translatedToday = translateDay(day);
@@ -28,23 +28,13 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
 
   const editedHours = hours.split("–");
 
-  const [workingHour, setWorkingHour] = useState({
-    hour: parseInt(editedHours[0]?.split(":")[0] || "0", 10),
-    minute: parseInt(editedHours[0]?.split(":")[1] || "0", 10),
-  });
+  const [workingHour, setWorkingHour] = useState(editedHours[0]);
+  const [closingWorkingHour, setClosingWorkingHour] = useState(editedHours[1]);
 
-  const [closingWorkingHour, setClosingWorkingHour] = useState({
-    hour: parseInt(editedHours[1]?.split(":")[0] || "0", 10),
-    minute: parseInt(editedHours[1]?.split(":")[1] || "0", 10),
-  });
+  // const formatTime = (hour: number, minute: number) =>
+  //   `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
 
-  const formatTime = (hour: number, minute: number) =>
-    `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
-
-  const updatedTime = `${formatTime(
-    workingHour.hour,
-    workingHour.minute,
-  )}-${formatTime(closingWorkingHour.hour, closingWorkingHour.minute)}`;
+  const updatedTime = `${workingHour}-${closingWorkingHour}`;
 
   const handleSave = () => {
     if (!offDay) {
@@ -97,6 +87,16 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
     setOffDay(!offDay);
   };
 
+  const handleTimeChange = (time: string) => {
+    setWorkingHour(time);
+  };
+  const handleCloseTimeChange = (time: string) => {
+    setClosingWorkingHour(time);
+  };
+
+  console.log(hours, "ssss");
+  console.log(updatedTime);
+
   return (
     <>
       <div onClick={openTime}>
@@ -133,17 +133,25 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
             <div className="timepickerHolder__box__wrap">
               <span>{t("from")}</span>
               <div className="timepickerHolder__box__wrap__normal">
-                <TimePicker
+                {/* <TimePicker
                   workingHour={workingHour}
                   setWorkingHour={setWorkingHour}
+                /> */}
+                <TimePicker
+                  value={editedHours[0]}
+                  onChange={handleTimeChange}
                 />
               </div>
 
               <span>{t("to")}</span>
               <div className="timepickerHolder__box__wrap__normal">
-                <TimePicker
+                {/* <TimePicker
                   workingHour={closingWorkingHour}
                   setWorkingHour={setClosingWorkingHour}
+                /> */}
+                <TimePicker
+                  value={editedHours[1]}
+                  onChange={handleCloseTimeChange}
                 />
               </div>
             </div>
