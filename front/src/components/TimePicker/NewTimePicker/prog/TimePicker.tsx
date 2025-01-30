@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import "../styles/react-wheel-time-picker.css";
+import "../styles/react-wheel-time-picker.scss";
 import TimePickerSelection from "./TimePickerSelection";
 import TimePickerWrapper from "./TimePickerWrapper";
 import { TimePickerProps } from "./TimePicker.type";

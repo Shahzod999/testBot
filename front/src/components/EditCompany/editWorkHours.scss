@@ -25,7 +25,8 @@
                 font-weight: 400;
                 font-size: 17px;
                 letter-spacing: 0.03em;
-                color: rgba(60, 60, 67, 0.6);
+                color: var(--hint-color);
+                z-index: 999;
             }
 
             display: flex;

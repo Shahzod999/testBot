@@ -66,7 +66,6 @@ function TimePickerSelection({
           style={{
             // top: `${height * 2 + 20}px`,
             height: `${height}px`,
-            backgroundColor: "#d3d3d333",
           }}
         />
         <HourWheel {...params} />

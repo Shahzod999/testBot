@@ -9,6 +9,7 @@ input {
   background: transparent;
   cursor: pointer;
 }
+
 input:focus {
   outline: none;
 }
@@ -30,6 +31,7 @@ input:focus {
     transform: translateY(150px);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
@@ -85,6 +87,7 @@ input:focus {
   left: 0;
   right: 0;
   z-index: 1;
+  background-color: #e6e6e6;
 }
 
 .react-wheel-time-picker-top-shadow {
@@ -112,6 +115,7 @@ input:focus {
   user-select: none;
   transition: all 100ms linear;
 }
+
 .react-wheel-time-picker-cell-minute {
   width: 100%;
   text-align: center;
@@ -121,6 +125,7 @@ input:focus {
   user-select: none;
   transition: all 100ms linear;
 }
+
 .react-wheel-time-picker-cell-hour-format {
   width: 100%;
   text-align: center;
@@ -179,9 +184,9 @@ input:focus {
   padding: 0 10px;
 }
 
-.react-wheel-time-picker-cell-inner-hour:hover,
-.react-wheel-time-picker-cell-inner-minute:hover,
-.react-wheel-time-picker-cell-inner-hour-format:hover {
+.react-wheel-time-picker-cell-inner-hour:active,
+.react-wheel-time-picker-cell-inner-minute:active,
+.react-wheel-time-picker-cell-inner-hour-format:active {
   background-color: rgba(211, 211, 211, 0.827);
   color: white;
 }
@@ -230,6 +235,7 @@ input:focus {
   left: 0;
   right: 0;
 }
+
 .label {
   color: #888;
 }
