@@ -8,6 +8,7 @@ interface ContactProps extends ActionProps {
   isDisabled?: boolean;
   smallInfo?: string;
   arrowRight?: boolean;
+  arrowDown?: boolean;
   editable?: boolean;
   handleEditTotalCompany?: (key: string, value: string) => void;
   objectKeys?: string;
@@ -30,6 +31,7 @@ const EditAction = ({
   isDisabled,
   smallInfo,
   arrowRight,
+  arrowDown,
   editable,
   handleEditTotalCompany,
   objectKeys,
@@ -89,6 +91,13 @@ const EditAction = ({
 
       {arrowRight && (
         <ReactSVG src="./arrowRight.svg" className="actions__arrowRight" />
+      )}
+
+      {arrowDown && (
+        <ReactSVG
+          src="./arrows/arrowDown.svg"
+          className="actions__arrowRight"
+        />
       )}
     </button>
   );

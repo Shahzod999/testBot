@@ -277,7 +277,7 @@ const resources = {
       generalInfo: "Общая информация",
       name: "Название",
       address: "Адрес",
-      workingHours: "Часы работы",
+      workingHours: "Время работы",
       viewAll: "Смотреть все",
       contacts: "Контакты",
       telegramLink: "Ссылка на Telegram",
