@@ -12,50 +12,72 @@ function HourWheel({
   height,
   value,
   setValue,
-
   isDarkMode,
 }: {
   height: number;
   value: string | null | undefined;
   setValue: React.Dispatch<React.SetStateAction<string | null>>;
-
   isDarkMode?: boolean;
 }) {
   const hourLength = 24;
+
+  // Генерация списка часов с отмеченным выбранным значением
   const [hours, setHours] = useState(
     initialNumbersValue(height, hourLength, parseInt(value!.slice(0, 2))),
   );
+
+  // Ссылка на div, который смещаем по Y
   const mainListRef = useRef<HTMLDivElement>(null);
-  const [cursorPosition, setCursorPosition] = useState<number | null>(null);
+
+  // Для расчёта дистанции перетаскивания
+  const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [firstCursorPosition, setFirstCursorPosition] = useState<number>(0);
-  const [currentTranslatedValue, setCurrentTranslatedValue] = useState(
-    parseInt(
-      initialNumbersValue(
-        height,
-        hourLength,
-        parseInt(value!.slice(0, 2)),
-      ).filter(
-        (item) => item.number === value!.slice(0, 2) && item.selected === true,
-      )[0]?.translatedValue ?? "00",
-    ),
-  );
+
+  // Текущий сдвиг translateY
+  const [currentTranslatedValue, setCurrentTranslatedValue] = useState(() => {
+    // Ищем выбранный элемент из initialNumbersValue
+    const arr = initialNumbersValue(
+      height,
+      hourLength,
+      parseInt(value!.slice(0, 2)),
+    );
+    const found = arr.find(
+      (item) =>
+        item.number === value!.slice(0, 2) && item.selected === true,
+    );
+    return found ? parseInt(found.translatedValue) : 0;
+  });
+
+  // Флаг «идёт ли сейчас перетаскивание»
   const [startCapture, setStartCapture] = useState(false);
+  // Флаг «завершили ли жест и надо сделать финальное смещение»
   const [showFinalTranslate, setShowFinalTranslate] = useState(false);
-  // start and end times
+
+  // Время начала и конца тапа/перетаскивания
   const [dragStartTime, setDragStartTime] = useState<number>(0);
   const [dragEndTime, setDragEndTime] = useState<number>(0);
-  // drag duration
+
+  // Храним длительность чисто для отладки
   const [, setDragDuration] = useState<number | null>(null);
-  // drag type fast or slow
-  const [dragType, setDragType] = useState<string | null>(null);
-  // drag direction
-  const [dragDirection, setDragDirection] = useState<string | null>(null);
-  // selected number
+
+  // Тип прокрутки: «fast» (инерционная) или «slow» (просто округлить)
+  const [dragType, setDragType] = useState<"" | "fast" | "slow">("");
+
+  // Направление (down/up) — если это нужно для вашей логики
+  const [dragDirection, setDragDirection] = useState<"down" | "up" | null>(
+    null,
+  );
+
+  console.log(dragDirection);
+  
+  // Выбранный час (если надо где-то хранить числом)
   const [, setSelectedNumber] = useState<number | undefined>(undefined);
 
-  const handleMouseDown = (
-    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
-  ) => {
+  /* ****************************************************************************
+      HANDLERS:  MOUSE / TOUCH START
+  **************************************************************************** */
+
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     setShowFinalTranslate(false);
     setFirstCursorPosition(e.clientY);
     setStartCapture(true);
@@ -69,42 +91,11 @@ function HourWheel({
     setDragStartTime(performance.now());
   };
 
-  const handleMouseUp = () => {
-    setStartCapture(false);
-    setCurrentTranslatedValue((prev) => prev + cursorPosition!);
-    setShowFinalTranslate(true);
-    setDragEndTime(performance.now());
-    if (performance.now() - dragStartTime <= 100) {
-      setDragType("fast");
-    } else {
-      setDragType("slow");
-    }
-    if (cursorPosition! < 0) {
-      setDragDirection("down");
-    } else {
-      setDragDirection("up");
-    }
-  };
+  /* ****************************************************************************
+      HANDLERS:  MOUSE / TOUCH MOVE
+  **************************************************************************** */
 
-  const handleMouseLeave = () => {
-    setStartCapture(false);
-    setCurrentTranslatedValue((prev) => prev + cursorPosition!);
-    setShowFinalTranslate(true);
-    setDragEndTime(performance.now());
-    if (performance.now() - dragStartTime <= 100) {
-      setDragType("fast");
-    } else {
-      setDragType("slow");
-    }
-
-    if (cursorPosition! < 0) {
-      setDragDirection("down");
-    } else {
-      setDragDirection("up");
-    }
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (startCapture) {
       setCursorPosition(e.clientY - firstCursorPosition);
     } else {
@@ -120,71 +111,139 @@ function HourWheel({
     }
   };
 
-  // preview translation
+  /* ****************************************************************************
+      HANDLERS:  MOUSE / TOUCH END (OR LEAVE)
+  **************************************************************************** */
+
+  const endDrag = () => {
+    setStartCapture(false);
+    setDragEndTime(performance.now());
+    setShowFinalTranslate(true);
+
+    // Сдвигаем текущий перевод на cursorPosition (то, что пользователь «протащил»)
+    setCurrentTranslatedValue((prev) => prev + cursorPosition);
+
+    const dragTime = performance.now() - dragStartTime;
+    // Определяем «быстрая» ли прокрутка
+    if (dragTime <= 150) {
+      setDragType("fast");
+    } else {
+      setDragType("slow");
+    }
+
+    // Определяем направление
+    if (cursorPosition < 0) {
+      setDragDirection("down");
+    } else {
+      setDragDirection("up");
+    }
+  };
+
+  const handleMouseUp = () => {
+    endDrag();
+  };
+
+  const handleMouseLeave = () => {
+    if (startCapture) {
+      endDrag();
+    }
+  };
+
+  const handleTouchEnd = () => {
+    endDrag();
+  };
+
+  /* ****************************************************************************
+      PREVIEW TRANSLATION WHILE DRAGGING
+  **************************************************************************** */
+
   useEffect(() => {
-    if (startCapture && mainListRef.current !== undefined) {
-      mainListRef.current!.style!.transform = `translateY(${
-        currentTranslatedValue + cursorPosition!
+    if (startCapture && mainListRef.current) {
+      // Пока user двигает пальцем — предварительный сдвиг (без анимации)
+      mainListRef.current.style.transform = `translateY(${
+        currentTranslatedValue + cursorPosition
       }px)`;
     }
   }, [cursorPosition, currentTranslatedValue, startCapture]);
 
-  // final translation here
+  /* ****************************************************************************
+      FINAL TRANSLATION (MOMENTUM OR SIMPLE ROUNDING)
+  **************************************************************************** */
+
   useEffect(() => {
-    if (showFinalTranslate && mainListRef.current !== undefined) {
-      setDragDuration(dragEndTime - dragStartTime);
-      if (dragEndTime - dragStartTime <= 100 && cursorPosition !== 0) {
-        let currentValue;
-        if (dragDirection === "down") {
-          currentValue =
-            currentTranslatedValue -
-            (120 / (dragEndTime - dragStartTime)) * 100;
-        } else if (dragDirection === "up") {
-          currentValue =
-            currentTranslatedValue +
-            (120 / (dragEndTime - dragStartTime)) * 100;
-        }
-        let finalValue = Math.round(currentValue! / height) * height;
+    if (!showFinalTranslate || !mainListRef.current) return;
 
-        if (finalValue < height * -21) finalValue = height * -21;
-        if (finalValue > height * 2) finalValue = height * 2;
+    const dragTime = dragEndTime - dragStartTime;
+    setDragDuration(dragTime);
 
-        mainListRef.current!.style.transform = `translateY(${finalValue}px)`;
-        setCurrentTranslatedValue(finalValue);
-      }
-      if (dragEndTime - dragStartTime > 100 && cursorPosition !== 0) {
-        let finalValue = Math.round(currentTranslatedValue / height) * height;
+    if (dragType === "fast") {
+      // ----- Инерция -----
+      // velocity = distance / time
+      const distance = cursorPosition; // cursorPosition уже может быть 0, если вы обнулили...
+      const time = dragTime || 1;
+      const velocity = distance / time;
 
-        if (finalValue < height * -21) finalValue = height * -21;
-        if (finalValue > height * 2) finalValue = height * 2;
+      // Коэффициент «силы» инерции, подберите на вкус
+      const factor = 300;
 
-        mainListRef.current!.style.transform = `translateY(${finalValue}px)`;
-        setCurrentTranslatedValue(finalValue);
-      }
-      setCursorPosition(0);
+      let nextValue = currentTranslatedValue + velocity * factor;
+
+      // Округление до ближайшего шага = height
+      let finalValue = Math.round(nextValue / height) * height;
+
+      // Лимиты (24 часа => -21*height.. +2*height)
+      if (finalValue < height * -21) finalValue = height * -21;
+      if (finalValue > height * 2) finalValue = height * 2;
+
+      mainListRef.current.style.transform = `translateY(${finalValue}px)`;
+      setCurrentTranslatedValue(finalValue);
+    } else if (dragType === "slow") {
+      // ----- Просто округлить -----
+      let finalValue = Math.round(currentTranslatedValue / height) * height;
+
+      if (finalValue < height * -21) finalValue = height * -21;
+      if (finalValue > height * 2) finalValue = height * 2;
+
+      mainListRef.current.style.transform = `translateY(${finalValue}px)`;
+      setCurrentTranslatedValue(finalValue);
     }
+
+    // Сброс
+    setCursorPosition(0);
   }, [
     showFinalTranslate,
     currentTranslatedValue,
     cursorPosition,
-    dragDirection,
+    dragType,
     dragEndTime,
     dragStartTime,
     height,
   ]);
 
-  // return to default position after drag end (handleTransitionEnd)
+  /* ****************************************************************************
+      ON TRANSITION END → ВЫБИРАЕМ ЧАС
+  **************************************************************************** */
+
   const handleTransitionEnd = () => {
-    returnSelectedValue(height, hourLength).map((item) => {
+    // Ищем, какой элемент соответствует currentTranslatedValue
+    const arr = returnSelectedValue(height, hourLength);
+    arr.forEach((item) => {
       if (parseInt(item.translatedValue) === currentTranslatedValue) {
         setSelectedNumber(item.arrayNumber);
-        setValue((prev) => `${item.number}:${prev!.slice(3, 6)}`);
+
+        // Формируем новое время HH:MM
+        setValue((prev) => {
+          const oldMM = prev?.slice(3, 5) || "00"; // минуты из старого value
+          return `${item.number}:${oldMM}`;
+        });
+
+        // Обновляем стейт: подсвечиваем selected
         setHours(() => {
           const newValue = initialNumbersValue(height, hourLength).map(
             (hour) => {
               if (
-                hour.number == item.number &&
-                +hour.translatedValue == currentTranslatedValue
+                hour.number === item.number &&
+                +hour.translatedValue === currentTranslatedValue
               ) {
                 return {
                   ...hour,
@@ -200,53 +259,77 @@ function HourWheel({
     });
   };
 
-  // handle click to select number
-  const handleClickToSelect = (e: MouseEvent) => {
-    const target = e.target as HTMLButtonElement;
-    if (cursorPosition === 0) {
-      setCurrentTranslatedValue(parseInt(target.dataset.translatedValue!));
+  /* ****************************************************************************
+      CLICK TO SELECT (если пользователь кликает по элементу)
+  **************************************************************************** */
+
+  const handleClickToSelect = (e: MouseEvent<HTMLDivElement>) => {
+    if (cursorPosition !== 0) return; // если идёт перетаскивание, игнорим
+
+    const target = e.target as HTMLButtonElement | HTMLDivElement;
+    const valueFromData = parseInt(target.dataset.translatedValue ?? "0");
+
+    setCurrentTranslatedValue(valueFromData);
+
+    // Запускаем "slow"-анимацию, чтобы колесо плавно встало на позицию
+    setShowFinalTranslate(true);
+    setDragType("slow");
+    setDragEndTime(performance.now());
+  };
+
+  /* ****************************************************************************
+      SCROLL WHEEL (делает +/- 1 шаг)
+  **************************************************************************** */
+
+  const handleWheelScroll = (e: WheelEvent<HTMLDivElement>) => {
+    if (e.deltaY > 0) {
+      // колесо вниз
+      if (currentTranslatedValue < height * 2) {
+        setCurrentTranslatedValue((prev) => prev + height);
+      }
+    } else {
+      // колесо вверх
+      if (currentTranslatedValue > height * -21) {
+        setCurrentTranslatedValue((prev) => prev - height);
+      }
     }
   };
+
+  /* ****************************************************************************
+      CSS КЛАССЫ ДЛЯ ПЕРЕХОДОВ FAST / SLOW
+  **************************************************************************** */
 
   const isFastCondition = showFinalTranslate && dragType === "fast";
   const isSlowCondition = showFinalTranslate && dragType === "slow";
 
-  /** ***************************   handle wheel scroll ************************* */
-
-  const handleWheelScroll = (e: WheelEvent) => {
-    if (e.deltaY > 0) {
-      if (currentTranslatedValue < height * 2) {
-        setCurrentTranslatedValue((prev) => prev + height);
-      }
-    } else if (currentTranslatedValue > height * -21) {
-      setCurrentTranslatedValue((prev) => prev - height);
-    }
-  };
-
   return (
     <div
-      className="react-wheel-time-picker-hour "
-      onMouseDown={(e) => handleMouseDown(e)}
+      className="react-wheel-time-picker-hour"
+      style={{ height: height * 5 }}
+      onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ height: height * 5 }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       onWheel={handleWheelScroll}
-      onTouchStart={(e) => handleTouchStart(e)}
-      onTouchMove={(e) => handleTouchMove(e)}
-      onTouchEnd={handleMouseUp}>
+    >
       <div
-        ref={mainListRef!}
-        className={`${
-          isFastCondition === true && "react-wheel-time-picker-fast"
-        } ${isSlowCondition === true && "react-wheel-time-picker-slow"}`}
+        ref={mainListRef}
+        className={`
+          ${isFastCondition ? "react-wheel-time-picker-fast" : ""}
+          ${isSlowCondition ? "react-wheel-time-picker-slow" : ""}
+        `}
         onTransitionEnd={handleTransitionEnd}
-        style={{ transform: `translateY(${currentTranslatedValue}px)` }}>
+        style={{ transform: `translateY(${currentTranslatedValue}px)` }}
+      >
         {hours.map((hourObj, index) => (
           <div
             key={index}
             className="react-wheel-time-picker-cell-hour"
-            style={{ height: `${height}px` }}>
+            style={{ height: `${height}px` }}
+          >
             <div
               style={{
                 color: isDarkMode
@@ -256,17 +339,18 @@ function HourWheel({
                   : "#6a6a6b",
                 fontSize: hourObj.selected ? 18 : 14,
               }}
-              className={`react-wheel-time-picker-cell-inner-hour${
-                hourObj.selected
+              className={
+                "react-wheel-time-picker-cell-inner-hour" +
+                (hourObj.selected
                   ? " react-wheel-time-picker-cell-inner-selected"
-                  : ""
-              }${
-                hourObj?.hidden
+                  : "") +
+                (hourObj.hidden
                   ? " react-wheel-time-picker-cell-inner-hidden"
-                  : ""
-              }`}
+                  : "")
+              }
               onClick={handleClickToSelect}
-              data-translated-value={hourObj.translatedValue}>
+              data-translated-value={hourObj.translatedValue}
+            >
               {hourObj.number}
             </div>
           </div>

@@ -132,7 +132,16 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
 
             <div className="timepickerHolder__box__wrap">
               <span>{t("from")}</span>
-              <div className="timepickerHolder__box__wrap__normal">
+              <div
+                className="timepickerHolder__box__wrap__normal"
+                onMouseDown={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseMove={(e) => e.stopPropagation()}
+                onMouseLeave={(e) => e.stopPropagation()}
+                onWheel={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}>
                 {/* <TimePicker
                   workingHour={workingHour}
                   setWorkingHour={setWorkingHour}
@@ -144,15 +153,21 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
               </div>
 
               <span>{t("to")}</span>
-              <div className="timepickerHolder__box__wrap__normal">
+              <div
+                className="timepickerHolder__box__wrap__normal"
+                onMouseDown={(e) => e.stopPropagation()}
+                onMouseUp={(e) => e.stopPropagation()}
+                onMouseMove={(e) => e.stopPropagation()}
+                onMouseLeave={(e) => e.stopPropagation()}
+                onWheel={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}>
                 {/* <TimePicker
                   workingHour={closingWorkingHour}
                   setWorkingHour={setClosingWorkingHour}
                 /> */}
-                <TimePicker
-                  value={"00:00"}
-                  onChange={handleCloseTimeChange}
-                />
+                <TimePicker value={"00:00"} onChange={handleCloseTimeChange} />
               </div>
             </div>
 
