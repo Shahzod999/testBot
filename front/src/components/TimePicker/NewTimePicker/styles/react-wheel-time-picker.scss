@@ -87,7 +87,7 @@ input:focus {
   left: 0;
   right: 0;
   z-index: 1;
-  background-color: #e6e6e6;
+  background-color: #e6e6e640;
 }
 
 .react-wheel-time-picker-top-shadow {
@@ -113,7 +113,7 @@ input:focus {
   justify-content: end;
   align-items: center;
   user-select: none;
-  transition: all 100ms linear;
+  transition: all 50ms linear;
 }
 
 .react-wheel-time-picker-cell-minute {
@@ -123,7 +123,7 @@ input:focus {
   justify-content: start;
   align-items: center;
   user-select: none;
-  transition: all 100ms linear;
+  transition: all 50ms linear;
 }
 
 .react-wheel-time-picker-cell-hour-format {
@@ -133,13 +133,13 @@ input:focus {
   justify-content: end;
   align-items: center;
   user-select: none;
-  transition: all 100ms linear;
+  transition: all 50ms linear;
 }
 
 .react-wheel-time-picker-cell-inner-hour {
   width: fit-content;
   height: 100%;
-  transition: all 100ms linear;
+  transition: all 50ms linear;
   cursor: pointer;
   border-radius: 7px;
   line-height: 35px;
@@ -155,7 +155,7 @@ input:focus {
 .react-wheel-time-picker-cell-inner-hour-format {
   width: fit-content;
   height: 100%;
-  transition: all 100ms linear;
+  transition: all 50ms linear;
   cursor: pointer;
   border-radius: 7px;
   line-height: 35px;
@@ -171,7 +171,7 @@ input:focus {
 .react-wheel-time-picker-cell-inner-minute {
   width: fit-content;
   height: 100%;
-  transition: all 100ms linear;
+  transition: all 50ms linear;
   cursor: pointer;
   border-radius: 7px;
   line-height: 35px;
@@ -263,5 +263,5 @@ input:focus {
 }
 
 .react-wheel-time-picker-hour-format-transition {
-  transition: transform 100ms ease-out;
+  transition: transform 50ms ease-out;
 }

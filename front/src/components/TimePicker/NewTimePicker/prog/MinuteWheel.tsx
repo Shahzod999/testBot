@@ -255,7 +255,7 @@ function MinuteWheel({
                   color: isDarkMode
                     ? "#f7f7f7"
                     : hourObj.selected
-                    ? "#000"
+                    ? "var(--text-color)"
                     : "#6a6a6b",
                   fontSize: hourObj.selected ? 18 : 14,
                 }}

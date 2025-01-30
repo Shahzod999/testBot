@@ -64,7 +64,6 @@ function TimePickerSelection({
         <div
           className="react-wheel-time-picker-selected-overlay"
           style={{
-            // top: `${height * 2 + 20}px`,
             height: `${height}px`,
           }}
         />
