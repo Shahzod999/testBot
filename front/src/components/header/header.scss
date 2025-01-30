@@ -2,10 +2,12 @@ $bgColor: rgba(255, 255, 255, 0.9);
 $secondBgColor: rgba(0, 0, 0, 0.3);
 
 header {
-  position: relative;
+  position: sticky;
+  top: 0;
   height: 200px;
   overflow: hidden;
   margin-bottom: 2px;
+  z-index: 0;
 
   img {
     width: 100%;

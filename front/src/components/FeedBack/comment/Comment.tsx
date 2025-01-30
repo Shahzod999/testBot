@@ -14,18 +14,9 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [imgOpen, setImgOpen] = useState(false);
-  const [isOverflowing, setIsOverflowing] = useState(false);
   const timeAgo = useTimeAgo(comment?.created_at);
   const textRef = useRef<HTMLParagraphElement>(null);
   const [indexImg, setIndexImg] = useState(0);
-
-  useEffect(() => {
-    if (textRef.current) {
-      const isOverflow =
-        textRef.current.scrollHeight > textRef.current.offsetHeight;
-      setIsOverflowing(isOverflow);
-    }
-  }, [comment?.message]);
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -115,9 +106,7 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
           open ? "comment__text" : "comment__closeText"
         }`}>
         <p ref={textRef}>{comment?.message}</p>
-        {isOverflowing && !open && (
-          <span onClick={toggleOpen}>{t("more")}</span>
-        )}
+        {!open && <span onClick={toggleOpen}>{t("more")}</span>}
         {open && <span onClick={toggleOpen}>{t("collapse")}</span>}
       </div>
 

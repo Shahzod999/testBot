@@ -1,4 +1,3 @@
-import "./mainPage.scss";
 import { useEffect, useState } from "react";
 import {
   useGetCompanyByIdQuery,

@@ -54,9 +54,8 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
 
   const universalLinkMyTaxi = "https://my-taxi.onelink.me/sda5/s0pn2a00";
 
-
   console.log(data);
-  
+
   return (
     <div className="mainInfoTaxi">
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
@@ -78,6 +77,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
               text="Yandex Go"
               icon="./yandexGo.svg"
               arrowRight={true}
+              inputmode="none"
             />
           </span>
 
@@ -90,6 +90,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
               text="Fasten"
               icon="./fasten.svg"
               arrowRight={true}
+              inputmode="none"
             />
           </a>
 
@@ -99,6 +100,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
               text="My taxi"
               icon="./mytaxi.svg"
               arrowRight={true}
+              inputmode="none"
             />
           </span>
 
@@ -111,6 +113,7 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
               text="Uklon"
               icon="./uklon.svg"
               arrowRight={true}
+              inputmode="none"
             />
           </a>
         </div>

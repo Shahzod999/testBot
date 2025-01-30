@@ -200,6 +200,7 @@ const EditCompany = ({
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="name"
+          inputmode="text"
         />
 
         <EditAction
@@ -210,6 +211,7 @@ const EditCompany = ({
           editable
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="full_address"
+          inputmode="text"
         />
         <div onClick={() => handleActionClick("workHours")}>
           <EditAction
@@ -218,6 +220,7 @@ const EditCompany = ({
             icon="Exclude.svg"
             isDisabled={!newCompanyInfo?.working_hours}
             arrowRight={true}
+            inputmode="none"
           />
         </div>
       </div>
@@ -239,6 +242,7 @@ const EditCompany = ({
           objectKeys="social_media.telegram"
           allowedValues="^[a-zA-Z][a-zA-Z0-9_]{4,}$" // Telegram username
           textStartWith="https://t.me/"
+          inputmode="url"
         />
         <EditAction
           smallInfo={t("whatsAppNumber")}
@@ -252,6 +256,7 @@ const EditCompany = ({
           objectKeys="social_media.whatsApp"
           allowedValues="^\+?[0-9]{10,15}$"
           textStartWith="+"
+          inputmode="tel"
         />
         <EditAction
           smallInfo={t("instagramLink")}
@@ -266,6 +271,7 @@ const EditCompany = ({
           objectKeys="social_media.instagram"
           allowedValues="^[a-zA-Z0-9_.]{1,30}$" // Instagram username
           textStartWith="https://www.instagram.com/"
+          inputmode="url"
         />
         <EditAction
           smallInfo={t("facebookLink")}
@@ -280,6 +286,7 @@ const EditCompany = ({
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="social_media.facebook"
           textStartWith="https://www.facebook.com/"
+          inputmode="url"
         />
         <EditAction
           smallInfo={t("phoneNumber")}
@@ -290,6 +297,7 @@ const EditCompany = ({
           objectKeys="phone_number"
           allowedValues="^\+?[0-9]{10,15}$"
           textStartWith="+"
+          inputmode="tel"
         />
         <EditAction
           smallInfo={t("website")}
@@ -299,6 +307,7 @@ const EditCompany = ({
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="website"
           textStartWith="https://"
+          inputmode="url"
         />
 
         <EditAction
@@ -309,6 +318,7 @@ const EditCompany = ({
           handleEditTotalCompany={handleEditTotalCompany}
           objectKeys="email"
           allowedValues="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Email формат
+          inputmode="email"
         />
 
         {Object.keys(newCompanyInfo.mobile_apps).map((platform) => (
@@ -325,6 +335,7 @@ const EditCompany = ({
             editable
             handleEditTotalCompany={handleEditTotalCompany}
             objectKeys={`mobile_apps.${platform}`}
+            inputmode="url"
           />
         ))}
       </div>
@@ -391,6 +402,8 @@ const EditCompany = ({
         <input
           type="text"
           placeholder={t("yourPhoneNumber")}
+          inputMode="numeric" // Открывает цифровую клавиатуру на моб.
+          pattern="[0-9]*"
           className="contacts__actions__positionInput"
           required
           onInput={handleInputChange}

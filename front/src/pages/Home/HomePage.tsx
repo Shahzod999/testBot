@@ -5,6 +5,7 @@ import MainInfo from "../../components/mainInfo/MainInfo";
 import Raiting from "../../components/raiting/Raiting";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { Suspense, lazy, useEffect } from "react";
+import "./homePage.scss"
 
 const FeedBack = lazy(() => import("../../components/FeedBack/FeedBack"));
 
@@ -17,18 +18,20 @@ const HomePage = () => {
     tg.BackButton.hide();
   }, []);
 
-  console.log(companyInfo,'ss');
-  
+  console.log(companyInfo, "ss");
+
   if (!companyInfo) return;
   return (
     <div>
       <Header img={companyInfo?.photos_sample || []} />
-      <MainInfo companyInfo={companyInfo} />
-      <Raiting companyInfo={companyInfo} />
-      <Suspense>
-        <FeedBack />
-      </Suspense>
-      <Contacts companyInfo={companyInfo} />
+      <main>
+        <MainInfo companyInfo={companyInfo} />
+        <Raiting companyInfo={companyInfo} />
+        <Suspense>
+          <FeedBack />
+        </Suspense>
+        <Contacts companyInfo={companyInfo} />
+      </main>
     </div>
   );
 };

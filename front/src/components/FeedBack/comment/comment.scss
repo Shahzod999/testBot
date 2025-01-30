@@ -61,7 +61,10 @@
 
   &__box {
     display: flex;
-    align-items: flex-end;
+    transition: all 0.4s ease-in-out;
+    text-align: left;
+    align-items: flex-start;
+
 
     p {
       font-family: var(--font-family);
@@ -70,6 +73,11 @@
       line-height: 131%;
       letter-spacing: -0.02em;
       color: var(--text-color);
+
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 2;
     }
 
     span {
@@ -83,18 +91,23 @@
   }
 
   &__text {
+    height: 100px;
+    overflow: hidden;
+
     span {
       color: var(--hint-color);
     }
   }
 
   &__closeText {
+    height: 40px;
+
     p {
       display: -webkit-box;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 2;
+      // -webkit-box-orient: vertical;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // -webkit-line-clamp: 2;
     }
 
     span {
@@ -102,7 +115,7 @@
     }
   }
 
-  &__FullImage{
+  &__FullImage {
     background-color: var(--tg-theme-secondary-bg-color, #000000);
   }
 

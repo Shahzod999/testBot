@@ -13,6 +13,16 @@ interface ContactProps extends ActionProps {
   objectKeys?: string;
   allowedValues?: string;
   textStartWith?: string | null;
+  inputmode:
+    | "text"
+    | "search"
+    | "none"
+    | "tel"
+    | "url"
+    | "email"
+    | "numeric"
+    | "decimal"
+    | undefined;
 }
 const EditAction = ({
   text,
@@ -25,6 +35,7 @@ const EditAction = ({
   objectKeys,
   allowedValues,
   textStartWith,
+  inputmode,
 }: ContactProps) => {
   const { t } = useTranslation();
   const [localValue, setLocalValue] = useState(text);
@@ -61,7 +72,12 @@ const EditAction = ({
         {editable ? (
           <label className="actions__info__smallInfo__text">
             <span>{textStartWith}</span>
-            <input type="text" value={localValue} onChange={handleChange} />
+            <input
+              type="text"
+              value={localValue}
+              onChange={handleChange}
+              inputMode={inputmode}
+            />
           </label>
         ) : (
           <span className="actions__info__text__main">{localValue}</span>
