@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import { selectedCompany } from "../../../app/features/companyStateSlice";
 import {
@@ -43,10 +43,19 @@ const TotalMenu = () => {
     },
     { skip: !activeCategory },
   );
+  const [isScrolled, setIsScrolled] = useState(false);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   console.log(menuData);
-  
+
   if (isLoading) return <MenuSkeleton />;
 
   if (!companyInfo || !categoryname) return null;
@@ -74,11 +83,17 @@ const TotalMenu = () => {
         </span>
       </div>
 
-      <Category
-        category={category}
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-      />
+      <div className="categorySticky">
+        <h4 className={`stickyTitle${isScrolled ? "__active" : "__closed"}`}>
+          {companyInfo.name}
+        </h4>
+
+        <Category
+          category={category}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+        />
+      </div>
 
       <div className="menu__categoryName">
         <h2>{activeCategory?.name || t("selectCategory")}</h2>
@@ -86,7 +101,7 @@ const TotalMenu = () => {
 
       <div className="menu__food">
         {menuData?.data?.map((food: MenuType) => (
-          <FoodBox food={food} key={food._id} isFetching={isFetching}/>
+          <FoodBox food={food} key={food._id} isFetching={isFetching} />
         ))}
       </div>
     </div>
