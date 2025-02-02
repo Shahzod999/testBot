@@ -4,9 +4,10 @@ interface TextProps {
   text: string;
   setText: (e: string) => void;
   count: number;
+  textAreaRef?: React.RefObject<HTMLTextAreaElement>; // <-- Добавляем ref
 }
 
-const TextArea = ({ text, setText, count }: TextProps) => {
+const TextArea = ({ text, setText, count, textAreaRef }: TextProps) => {
   const { t } = useTranslation();
   const maxLength = 120;
 
@@ -43,12 +44,12 @@ const TextArea = ({ text, setText, count }: TextProps) => {
     t("messageExcellent"),
   ];
 
-  
   const progress = getProgressState();
 
   return (
     <div className="addComment__textArea">
       <textarea
+        ref={textAreaRef}
         rows={5}
         placeholder={t("placeholder")}
         value={text}

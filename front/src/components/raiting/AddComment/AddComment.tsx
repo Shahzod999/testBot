@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { selectedCompany } from "../../../app/features/companyStateSlice";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import RaitingStars from "../RaitingStars";
@@ -39,6 +39,16 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   const [uploadImage, { isLoading: uploading }] = useUploadImageMutation();
   const [sendCommentByCompany, { isLoading: sendCommentLoading }] =
     useSendCommentByCompanyMutation();
+
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null); // <-- Создаем ref
+
+  useEffect(() => {
+    if (openComment) {
+      setTimeout(() => {
+        textAreaRef.current?.focus(); // <-- Устанавливаем фокус после открытия
+      }, 100);
+    }
+  }, [openComment]);
 
   const handleStarClick = (index: number) => {
     dispatch(setCountRaiting(index + 1));
@@ -128,7 +138,12 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
             <RaitingStars count={count} handleStarClick={handleStarClick} />
           </div>
 
-          <TextArea text={textArea} setText={setTextArea} count={count} />
+          <TextArea
+            text={textArea}
+            setText={setTextArea}
+            count={count}
+            textAreaRef={textAreaRef}
+          />
 
           <AddFoto
             imagesArray={imagesArray}

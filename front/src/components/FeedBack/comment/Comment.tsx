@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 const Comment = ({ comment }: { comment: SingleComment }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
   const [imgOpen, setImgOpen] = useState(false);
   const timeAgo = useTimeAgo(comment?.created_at);
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -47,6 +48,14 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
       tg.BackButton.hide();
     }
   }, [imgOpen]);
+
+  useEffect(() => {
+    if (textRef.current) {
+      const isOverflow =
+        textRef.current.scrollHeight > textRef.current.offsetHeight;
+      setIsOverflowing(isOverflow);
+    }
+  }, [comment]);
 
   return (
     <div className="comment">
@@ -106,7 +115,11 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
           open ? "comment__text" : "comment__closeText"
         }`}>
         <p ref={textRef}>{comment?.message}</p>
-        {!open && <span onClick={toggleOpen}>{t("more")}</span>}
+
+        {isOverflowing && !open && (
+          <span onClick={toggleOpen}>{t("more")}</span>
+        )}
+
         {open && <span onClick={toggleOpen}>{t("collapse")}</span>}
       </div>
 
