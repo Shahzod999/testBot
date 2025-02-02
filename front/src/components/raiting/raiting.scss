@@ -258,6 +258,7 @@
 
   .addFoto {
     padding-bottom: 100px;
+    min-height: 25vh;
   }
 }
 
@@ -342,6 +343,7 @@
 }
 
 .sendButton {
+  position: fixed !important;
 
   p {
     font-weight: 400;

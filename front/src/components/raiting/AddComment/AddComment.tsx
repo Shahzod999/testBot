@@ -45,8 +45,11 @@ const AddComment = ({ openComment, toggleComment }: AddCommentProps) => {
   useEffect(() => {
     if (openComment) {
       setTimeout(() => {
-        textAreaRef.current?.focus(); // <-- Устанавливаем фокус после открытия
+        textAreaRef.current?.click();
+        textAreaRef.current?.focus(); // Устанавливаем фокус после открытия
       }, 100);
+    } else {
+      textAreaRef.current?.blur(); // Убираем фокус при закрытии
     }
   }, [openComment]);
 

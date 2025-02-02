@@ -32,7 +32,7 @@ const AddFoto = ({
 
     if (maxLength) {
       const filesArray = Array.from(files);
-      if (filesArray.length >= 4 || imagesArray.length >= 4) {
+      if (filesArray.length > 4 || imagesArray.length >= 4) {
         if (window.Telegram.WebApp.showAlert) {
           window.Telegram.WebApp.showAlert(t("addPhotoLimit"));
         } else {
