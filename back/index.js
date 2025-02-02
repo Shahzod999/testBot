@@ -2,7 +2,7 @@ require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const token = process.env.TELEGRAM_BOT_TOKEN;
 
-const webAppUrl = "https://eternal-positively-marmoset.ngrok-free.app";
+const webAppUrl = "https://ninety-hairs-check.loca.lt/";
 const bot = new TelegramBot(token, { polling: true });
 
 bot.onText(/\/echo (.+)/, (msg, match) => {

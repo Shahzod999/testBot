@@ -8,11 +8,9 @@ import HomePage from "./pages/Home/HomePage.tsx";
 import EditPage from "./pages/Edit/EditPage.tsx";
 import NotFoundPage from "./pages/SmallPages/404/NotFoundPage.tsx";
 import Welcome from "./pages/SmallPages/welComePages/Welcome.tsx";
-import Confetti from "./pages/SmallPages/welComePages/Confetti.tsx";
 import Menu from "./pages/Menu/Menu.tsx";
 import SingleMenu from "./pages/Menu/SingleMenu/SingleMenu.tsx";
 import TotalMenu from "./pages/Menu/TotalMenu/TotalMenu.tsx";
-import LoadingScreen from "./pages/SmallPages/Loading/LoadingScreen.tsx";
 import "./app/utils/i18n.ts";
 
 const router = createBrowserRouter([
@@ -30,7 +28,7 @@ const router = createBrowserRouter([
         element: <EditPage />,
       },
       {
-        path: "/menu",
+        path: "menu",
         element: <Menu />,
         children: [
           {
@@ -47,14 +45,16 @@ const router = createBrowserRouter([
         path: "welcome",
         element: <Welcome />,
       },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-    <LoadingScreen />
-    <Confetti />
     <RouterProvider router={router} />
   </Provider>,
 );
