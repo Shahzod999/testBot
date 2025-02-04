@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Reply } from "../../../app/types/commentType";
 import useTimeAgo from "../../../hooks/useTimeAgo";
 import { ReactSVG } from "react-svg";
@@ -11,17 +11,8 @@ interface ReplyCommentProps {
 const ReplyComment = ({ reply }: ReplyCommentProps) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-  const timeAgo = useTimeAgo(reply?.reply_date);
-  const textRef = useRef<HTMLParagraphElement>(null);
 
-  useEffect(() => {
-    if (textRef.current) {
-      const isOverflow =
-        textRef.current.scrollHeight > textRef.current.offsetHeight;
-      setIsOverflowing(isOverflow);
-    }
-  }, [reply?.message]);
+  const timeAgo = useTimeAgo(reply?.reply_date);
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -47,13 +38,21 @@ const ReplyComment = ({ reply }: ReplyCommentProps) => {
 
       <div
         className={`comment__box ${
-          open ? "comment__text" : "comment__closeText"
+          open ? "comment__box__collapse" : "comment__box__more"
         }`}>
-        <p ref={textRef}>{reply?.message}</p>
-        {isOverflowing && !open && (
-          <span onClick={toggleOpen}>{t("more")}</span>
+        <div className="comment__box__text">
+          <p>{reply?.message.split(" ").splice(0, 9).join(" ")} </p>
+          <p className="comment__box__closingText">
+            {reply?.message.split(" ").splice(9).join(" ")}
+          </p>
+        </div>
+
+        {reply?.message.length > 90 && (
+          <>
+            <span onClick={toggleOpen}>{open ? t("collapse") : t("more")}</span>
+            {!open && <strong> ...</strong>}
+          </>
         )}
-        {open && <span onClick={toggleOpen}>{t("collapse")}</span>}
       </div>
     </div>
   );

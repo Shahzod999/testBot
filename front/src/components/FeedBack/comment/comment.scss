@@ -1,6 +1,5 @@
 .comment {
   border-bottom: 0.5px solid #d1d1d6;
-  padding-bottom: 16px;
   margin-top: 20px;
 
   &__title {
@@ -60,25 +59,29 @@
   }
 
   &__box {
-    display: flex;
-    transition: all 0.4s ease-in-out;
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    transition: height 0.4s ease-in-out;
     text-align: left;
     align-items: flex-start;
+    height: auto;
 
+    &__text {
+      position: relative;
+    }
 
     p {
+      display: inline;
       font-family: var(--font-family);
       font-weight: 400;
       font-size: 16px;
       line-height: 131%;
       letter-spacing: -0.02em;
       color: var(--text-color);
-
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 2;
+      opacity: 1;
+      transition: all ease-in-out 0.5s;
     }
+
 
     span {
       cursor: pointer;
@@ -88,32 +91,32 @@
       letter-spacing: -0.01em;
       text-align: center;
     }
-  }
 
-  &__text {
-    height: 100px;
-    overflow: hidden;
-
-    span {
-      color: var(--hint-color);
-    }
-  }
-
-  &__closeText {
-    height: 40px;
-
-    p {
-      display: -webkit-box;
-      // -webkit-box-orient: vertical;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
-      // -webkit-line-clamp: 2;
+    &__collapse {
+      span {
+        color: var(--hint-color);
+      }
     }
 
-    span {
-      color: var(--link-color);
+    &__more {
+
+      .comment__box__closingText {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        transform: translate(100%);
+        width: 100%;
+      }
+
+      span {
+        color: var(--link-color);
+      }
     }
+
   }
+
+
+
 
   &__FullImage {
     background-color: var(--tg-theme-secondary-bg-color, #000000);
@@ -142,7 +145,20 @@
 }
 
 .replyComment {
-  padding-left: 45px;
+  padding-left: 15px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background-color: var(--hint-color);
+    border-radius: 5px;
+    opacity: 0.5;
+  }
 
   .comment__title__ago {
     display: flex;

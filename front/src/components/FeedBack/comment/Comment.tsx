@@ -1,5 +1,5 @@
 import "./comment.scss";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { SingleComment } from "../../../app/types/commentType";
 import RaitingStars from "../../raiting/RaitingStars";
 import useTimeAgo from "../../../hooks/useTimeAgo";
@@ -13,10 +13,10 @@ import { useTranslation } from "react-i18next";
 const Comment = ({ comment }: { comment: SingleComment }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [isOverflowing, setIsOverflowing] = useState(false);
+
   const [imgOpen, setImgOpen] = useState(false);
   const timeAgo = useTimeAgo(comment?.created_at);
-  const textRef = useRef<HTMLParagraphElement>(null);
+
   const [indexImg, setIndexImg] = useState(0);
 
   const toggleOpen = () => {
@@ -48,14 +48,6 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
       tg.BackButton.hide();
     }
   }, [imgOpen]);
-
-  useEffect(() => {
-    if (textRef.current) {
-      const isOverflow =
-        textRef.current.scrollHeight > textRef.current.offsetHeight;
-      setIsOverflowing(isOverflow);
-    }
-  }, [comment]);
 
   return (
     <div className="comment">
@@ -112,15 +104,21 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
 
       <div
         className={`comment__box ${
-          open ? "comment__text" : "comment__closeText"
+          open ? "comment__box__collapse" : "comment__box__more"
         }`}>
-        <p ref={textRef}>{comment?.message}</p>
+        <div className="comment__box__text">
+          <p>{comment?.message.split(" ").splice(0, 9).join(" ")} </p>
+          <p className="comment__box__closingText">
+            {comment?.message.split(" ").splice(9).join(" ")}
+          </p>
+        </div>
 
-        {isOverflowing && !open && (
-          <span onClick={toggleOpen}>{t("more")}</span>
+        {comment?.message.length > 90 && (
+          <>
+            <span onClick={toggleOpen}>{open ? t("collapse") : t("more")}</span>
+            {!open && <strong> ...</strong>}
+          </>
         )}
-
-        {open && <span onClick={toggleOpen}>{t("collapse")}</span>}
       </div>
 
       {comment?.replies?.map((item) => (
