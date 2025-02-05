@@ -1,5 +1,11 @@
-
 .companyLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+  gap: 8px;
+
+  p {
     text-align: center;
     font-family: var(--second-family);
     font-weight: 400;
@@ -7,10 +13,13 @@
     line-height: 129%;
     letter-spacing: -0.01em;
     color: var(--hint-color);
-    padding: 15px 0;
-
-    span {
-      cursor: pointer;
-      color: var(--link-color);
-    }
   }
+
+
+  span {
+    cursor: pointer;
+    color: var(--link-color);
+  }
+
+
+}

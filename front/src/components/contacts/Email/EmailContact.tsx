@@ -18,7 +18,7 @@ const EmailContact = ({ companyInfo }: { companyInfo: CompanyState }) => {
   return (
     <div className="contacts__actions">
       <button className="actions">
-        <ReactSVG src="./copy.svg" onClick={handleCopyEmail} />
+        <ReactSVG src="./social/copy.svg" onClick={handleCopyEmail} />
         <span className="actions__text" onClick={handleNavigateToEmail}>
           <span className="actions__text__letters ">
             {copyed || companyInfo?.email || t("emailUnavailable")}

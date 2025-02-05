@@ -24,6 +24,7 @@ import EditAction from "../contacts/EditAction";
 import { useWorkTimeStatus } from "../../hooks/useWorkTimeStatus";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import Distance from "./Distance";
+import WorkingHours from "../WorkingHours/WorkingHours";
 interface ActionsState {
   text: string;
   img: string;
@@ -280,11 +281,23 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         </div>
 
         <div>
-          <EditAction
-            smallInfo={t("workingHours")}
-            text={<WorkTime working_hours={companyInfo.working_hours} />}
-            icon="Exclude.svg"
-            inputmode="none"
+          <DropDownMenu
+            toggle={
+              <EditAction
+                smallInfo={t("workingHours")}
+                text={<WorkTime working_hours={companyInfo.working_hours} />}
+                icon="Exclude.svg"
+                inputmode="none"
+              />
+            }
+            menu={
+              <div className="mainInfo__workingHoursDropDown">
+                <WorkingHours
+                  // handleActionClick={handleActionClick}
+                  companyInfo={companyInfo}
+                />
+              </div>
+            }
           />
 
           <DropDownMenu
@@ -292,7 +305,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               <EditAction
                 smallInfo={t("address")}
                 text={companyInfo?.street_address}
-                icon="Exclude.svg"
+                icon="./map.fill.svg"
                 inputmode="none"
               />
             }

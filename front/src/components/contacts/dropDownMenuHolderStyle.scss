@@ -1,0 +1,43 @@
+.dropDownMenuHolderStyle {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__icons {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 16px 0;
+        // padding-left: 22px;
+        position: relative;
+
+        &:not(:last-child)::after {
+            content: "";
+            width: 93%;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            height: 0.5px;
+            border-radius: 10px;
+            background-color: var(--separator-color);
+        }
+
+        &__logo {
+            svg {
+                fill: var(--tg-theme-text-color, #000);
+
+                circle {
+                    stroke: var(--tg-theme-text-color, #000);
+                }
+
+                path {
+                    fill: var(--tg-theme-text-color, #000);
+                }
+            }
+
+            div {
+                display: flex;
+            }
+        }
+    }
+}

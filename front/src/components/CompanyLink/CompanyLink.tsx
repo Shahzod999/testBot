@@ -1,15 +1,19 @@
+import { ReactSVG } from "react-svg";
 import "./companyLink.scss";
 
 const CompanyLink = () => {
-
   const handleOrder = () => {
     window.open("https://cosinus.uz/");
   };
 
   return (
-    <p className="companyLink">
-      Powered by <span onClick={handleOrder}>Cosinus LLC</span> v0.0.1
-    </p>
+    <div className="companyLink">
+      <p>Powered by</p>
+
+      <ReactSVG src="cosinus.svg" className="companyLink__icon" />
+      <span onClick={handleOrder}>Cosinus LLC</span>
+      <p>v0.1.0</p>
+    </div>
   );
 };
 

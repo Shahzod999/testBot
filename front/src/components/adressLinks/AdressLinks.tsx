@@ -75,7 +75,7 @@ const AdressLinks = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </>
         )}
         <span>
-          <ReactSVG src="./copy.svg" />
+          <ReactSVG src="./social/copy.svg" />
         </span>
       </div>
     </div>

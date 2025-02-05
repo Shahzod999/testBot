@@ -1,10 +1,32 @@
 .dropdownMenuHolder {
-  overflow: hidden;
+  // overflow: hidden;
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: "";
+    width: 93%;
+    right: 0;
+    bottom: 1px;
+    position: absolute;
+    height: 0.5px;
+    border-radius: 10px;
+    background-color: var(--separator-color);
+  }
+
+  &.deleteAfter {
+    &::after {
+      display: none;
+    }
+  }
 
   .dropdown__toggle {
     width: 100%;
     display: flex;
     align-items: center;
+
+    &__main {
+      flex: 1;
+    }
 
   }
 
@@ -12,29 +34,38 @@
     transform: rotateX(0deg);
     transition: all 0.5s ease;
 
+    .actions__arrowRight {
+      svg {
+        fill: var(--hint-color);
+
+        path {
+          fill: var(--hint-color);
+        }
+      }
+    }
+
     &--open {
       transform: rotateX(180deg);
     }
   }
 
   .dropdown__menu {
-    background: #ffffff;
-    box-shadow: 1px -10px 2px 1px rgba(0, 0, 0, 0.05) inset;
     border-radius: 5px;
-    padding: 0 15px;
-
+    background-color: var(--secondary-bg-color);
+    box-shadow: 3px 1px 3px 1px #ebebebe0 inset;
     overflow: hidden;
     max-height: 0px;
     transition: all 0.5s ease;
     transform-origin: top;
     opacity: 0;
     transform: translateY(100%);
+    padding-left: 30px;
 
     &--open {
       padding-bottom: 15px;
       opacity: 1;
       transform: translateY(0%);
-      max-height: 500px;
+      max-height: 1000px;
     }
   }
 }
