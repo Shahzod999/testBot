@@ -7,6 +7,10 @@
   padding-left: 16px;
   padding-right: 16px;
 
+  &__totalmenu {
+    max-height: unset !important;
+  }
+
   &__header {
     display: flex;
     padding: 16px;

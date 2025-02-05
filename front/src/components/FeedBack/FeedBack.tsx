@@ -31,7 +31,6 @@ const FeedBack = () => {
   };
 
   const total = data?.pagination?.total;
-  console.log(data);
 
   if (!total) return;
 

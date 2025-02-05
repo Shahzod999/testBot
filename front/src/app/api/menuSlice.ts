@@ -4,11 +4,12 @@ import { apiSlice } from "./apiSlice";
 export const companyApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getMenu: builder.query({
-      query: ({ company_id, category_id }) => ({
-        url: "/delivery/bot/product?page=1&limit=15",
+      query: ({ company_id, category_id, limit = "" }) => ({
+        url: "/delivery/bot/product",
         params: {
           company_id,
           category_id,
+          limit,
         },
       }),
     }),

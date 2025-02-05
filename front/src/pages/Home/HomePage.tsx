@@ -5,7 +5,8 @@ import MainInfo from "../../components/mainInfo/MainInfo";
 import Raiting from "../../components/raiting/Raiting";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { Suspense, lazy, useEffect } from "react";
-import "./homePage.scss"
+import "./homePage.scss";
+import MoreInteres from "../../components/MoreInteres/MoreInteres";
 
 const FeedBack = lazy(() => import("../../components/FeedBack/FeedBack"));
 
@@ -26,6 +27,7 @@ const HomePage = () => {
       <Header img={companyInfo?.photos_sample || []} />
       <main>
         <MainInfo companyInfo={companyInfo} />
+        <MoreInteres companyInfo={companyInfo} />
         <Raiting companyInfo={companyInfo} />
         <Suspense>
           <FeedBack />

@@ -54,8 +54,6 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
 
   const universalLinkMyTaxi = "https://my-taxi.onelink.me/sda5/s0pn2a00";
 
-  console.log(data);
-
   return (
     <div className="mainInfoTaxi">
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>

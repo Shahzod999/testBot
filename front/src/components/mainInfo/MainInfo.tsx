@@ -21,7 +21,6 @@ import { useNavigate } from "react-router-dom";
 import { hapticVibration } from "../../hooks/hapticVibration";
 import { useTranslation } from "react-i18next";
 import EditAction from "../contacts/EditAction";
-import { useWorkTimeStatus } from "../../hooks/useWorkTimeStatus";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import Distance from "./Distance";
 import WorkingHours from "../WorkingHours/WorkingHours";
@@ -174,12 +173,9 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
-  const { status, workingHours } = useWorkTimeStatus(
-    companyInfo?.working_hours,
-  );
 
-  console.log(workingHours, status);
-
+  console.log(companyInfo);
+  
   return (
     <>
       <div className="mainInfo">
@@ -304,7 +300,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             toggle={
               <EditAction
                 smallInfo={t("address")}
-                text={companyInfo?.street_address}
+                text={companyInfo?.full_address}
                 icon="./map.fill.svg"
                 inputmode="none"
               />

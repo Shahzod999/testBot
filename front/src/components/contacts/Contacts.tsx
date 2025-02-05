@@ -101,7 +101,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </Link>
         </div>
 
-        <div className="contacts__actions">
+        <div className="contacts__actions contacts__totalmenu">
           {actions.map(({ text, icon, isDisabled, phone, menu }, index) => (
             <DropDownMenu
               notAwalible={isDisabled || !!phone}
