@@ -25,6 +25,7 @@ import {
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 import { useTranslation } from "react-i18next";
 import { toggleLoading } from "../../app/features/bottomSheetSlice";
+import { ErrorType } from "../../app/types/errorTypes";
 
 interface EditCompanyProps {
   companyInfo: CompanyState;
@@ -162,10 +163,9 @@ const EditCompany = ({
 
       console.log(res);
       dispatch(succesToast(t("successfullyUpdated")));
-    } catch (error) {
-      console.log(error);
-      setError(t("updateError"));
-      dispatch(errorToast(t("updateError")));
+    } catch (error: ErrorType | any) {
+      setError(error?.data?.message || t("updateError"));
+      dispatch(errorToast(error?.data?.message || t("updateError")));
     } finally {
       dispatch(toggleLoading(false));
     }
@@ -213,16 +213,16 @@ const EditCompany = ({
           objectKeys="full_address"
           inputmode="text"
         />
-        <div onClick={() => handleActionClick("workHours")}>
-          <EditAction
-            smallInfo={t("workingHours")}
-            text={t("viewAll")}
-            icon="Exclude.svg"
-            isDisabled={!newCompanyInfo?.working_hours}
-            arrowRight={true}
-            inputmode="none"
-          />
-        </div>
+
+        <EditAction
+          smallInfo={t("workingHours")}
+          text={t("viewAll")}
+          icon="Exclude.svg"
+          isDisabled={!newCompanyInfo?.working_hours}
+          arrowRight={true}
+          inputmode="none"
+          onClick={() => handleActionClick("workHours")}
+        />
       </div>
       <div className="contacts__actions editActions">
         <h3 className="contacts__actions__title second__title">
@@ -402,7 +402,7 @@ const EditCompany = ({
         <input
           type="text"
           placeholder={t("yourPhoneNumber")}
-          inputMode="numeric" // Открывает цифровую клавиатуру на моб.
+          inputMode="numeric" // Откр. цифровую клавиатуру на моб.
           pattern="[0-9]*"
           className="contacts__actions__positionInput"
           required

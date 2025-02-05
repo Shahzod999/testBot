@@ -66,19 +66,23 @@
     align-items: flex-start;
     height: auto;
 
-    &__text {
-      position: relative;
-    }
 
     p {
-      display: inline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      max-height: 42px;
+
+
+
       font-family: var(--font-family);
       font-weight: 400;
       font-size: 16px;
       line-height: 131%;
       letter-spacing: -0.02em;
       color: var(--text-color);
-      opacity: 1;
       transition: all ease-in-out 0.5s;
     }
 
@@ -90,24 +94,21 @@
       line-height: 138%;
       letter-spacing: -0.01em;
       text-align: center;
+      z-index: 1;
     }
 
     &__collapse {
+      p {
+        -webkit-line-clamp: unset;
+        max-height: 1000px;
+      }
+
       span {
         color: var(--hint-color);
       }
     }
 
     &__more {
-
-      .comment__box__closingText {
-        opacity: 0;
-        position: absolute;
-        left: 0;
-        transform: translate(100%);
-        width: 100%;
-      }
-
       span {
         color: var(--link-color);
       }

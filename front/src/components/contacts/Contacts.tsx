@@ -8,7 +8,6 @@ import { ReactSVG } from "react-svg";
 import Lottie from "lottie-react";
 import notFound from "../../../public/notFound.json";
 import AdressLinks from "../adressLinks/AdressLinks";
-import WorkTime from "../mainInfo/WorkTime";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import { Link } from "react-router-dom";
 import useDayTranslator from "../../hooks/translateDay";
@@ -16,6 +15,7 @@ import useSortedWorkingHours from "../../hooks/sortingDays";
 import EmailContact from "./Email/EmailContact";
 import SocialMediaComponent from "./SocialMedia/SocialMediaComponent";
 import { useTranslation } from "react-i18next";
+import { useWorkTimeStatus } from "../../hooks/useWorkTimeStatus";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -30,8 +30,11 @@ const getAvailableSocialMedia = (
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const translateDay = useDayTranslator();
   const sortedWorkingHours = useSortedWorkingHours(companyInfo.working_hours);
+  const { status, workingHours } = useWorkTimeStatus(
+    companyInfo?.working_hours,
+  );
 
-  console.log(sortedWorkingHours, "333");
+  console.log(workingHours, status);
 
   const { t } = useTranslation();
 
@@ -80,7 +83,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         // phone: companyInfo?.email ? `mailto:${companyInfo.email}` : null,
       },
       {
-        timeComponent: <WorkTime working_hours={companyInfo.working_hours} />,
+        text: `${status} ${workingHours}`,
         icon: "Exclude.svg",
         isDisabled: false,
         key: "workingHours",
@@ -125,22 +128,19 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </Link>
         </div>
         <div className="contacts__actions">
-          {actions.map(
-            ({ text, icon, isDisabled, key, phone, timeComponent }, index) => (
-              <div
-                onClick={() => !isDisabled && handleActionClick(key || null)}
-                key={index}>
-                <ContactsActions
-                  text={text}
-                  icon={icon}
-                  isDisabled={isDisabled}
-                  arrowRight={true}
-                  phone={phone}
-                  timeComponent={timeComponent}
-                />
-              </div>
-            ),
-          )}
+          {actions.map(({ text, icon, isDisabled, key, phone }, index) => (
+            <div className="contacts__actions__after"
+              onClick={() => !isDisabled && handleActionClick(key || null)}
+              key={index}>
+              <ContactsActions
+                text={text}
+                icon={icon}
+                isDisabled={isDisabled}
+                arrowRight={true}
+                phone={phone}
+              />
+            </div>
+          ))}
         </div>
       </div>
       <BottomSheet isOpen={activeAction === "apps"} onClose={closeBottomSheet}>

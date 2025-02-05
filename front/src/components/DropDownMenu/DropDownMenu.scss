@@ -1,0 +1,40 @@
+.dropdownMenuHolder {
+  overflow: hidden;
+
+  .dropdown__toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+  }
+
+  .dropdown__icon {
+    transform: rotateX(0deg);
+    transition: all 0.5s ease;
+
+    &--open {
+      transform: rotateX(180deg);
+    }
+  }
+
+  .dropdown__menu {
+    background: #ffffff;
+    box-shadow: 1px -10px 2px 1px rgba(0, 0, 0, 0.05) inset;
+    border-radius: 5px;
+    padding: 0 15px;
+
+    overflow: hidden;
+    max-height: 0px;
+    transition: all 0.5s ease;
+    transform-origin: top;
+    opacity: 0;
+    transform: translateY(100%);
+
+    &--open {
+      padding-bottom: 15px;
+      opacity: 1;
+      transform: translateY(0%);
+      max-height: 500px;
+    }
+  }
+}

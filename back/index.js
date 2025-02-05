@@ -1,9 +1,19 @@
 require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+
 const TelegramBot = require("node-telegram-bot-api");
 const token = process.env.TELEGRAM_BOT_TOKEN;
 
 const webAppUrl = "https://ninety-hairs-check.loca.lt/";
 const bot = new TelegramBot(token, { polling: true });
+
+const app = express();
+const corsOptions = {
+  origin: "*",
+};
+app.use(cors(corsOptions));
+app.use(express.json());
 
 bot.onText(/\/echo (.+)/, (msg, match) => {
   const chatId = msg.chat.id;

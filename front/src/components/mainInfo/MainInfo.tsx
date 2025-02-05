@@ -20,6 +20,10 @@ import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 import { useNavigate } from "react-router-dom";
 import { hapticVibration } from "../../hooks/hapticVibration";
 import { useTranslation } from "react-i18next";
+import EditAction from "../contacts/EditAction";
+import { useWorkTimeStatus } from "../../hooks/useWorkTimeStatus";
+import DropDownMenu from "../DropDownMenu/DropDownMenu";
+import Distance from "./Distance";
 interface ActionsState {
   text: string;
   img: string;
@@ -169,7 +173,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
-  console.log(companyInfo);
+  const { status, workingHours } = useWorkTimeStatus(
+    companyInfo?.working_hours,
+  );
+
+  console.log(workingHours, status);
 
   return (
     <>
@@ -213,36 +221,34 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <p className="mainInfo__shortText"></p>
         )}
 
-        <div className="mainInfo__openHours">
-          <WorkTime working_hours={companyInfo.working_hours} />
-          <div className="mainInfo__openHours__divider">
+        {/* <div className="mainInfo__openHours"> */}
+        {/* <WorkTime working_hours={companyInfo.working_hours} /> */}
+        {/* <div className="mainInfo__openHours__divider">
             <div></div>
+          </div> */}
+        {/* <div className="mainInfo__openHours__right">
+          <div className="mainInfo__openHours__right-distance">
+            {t("distance")}: {companyInfo?.distance?.distance || t("loading")}
           </div>
-          <div className="mainInfo__openHours__right">
-            <div className="mainInfo__openHours__right-distance">
-              {t("distance")}: {companyInfo?.distance?.distance || t("loading")}
-            </div>
-            <div className="mainInfo__openHours__right-duration">
-              {parseFloat(companyInfo?.distance?.distance) > 2 &&
-                !companyInfo?.distance?.distance
-                  ?.split(" ")
-                  ?.includes("km") && (
-                  <>
-                    <div className="mainInfo__openHours__right-duration-box">
-                      <ReactSVG src="./walkPerson.svg" />
-                      <span>{companyInfo?.distance?.walking_duration}</span>
-                    </div>
-                    •
-                  </>
-                )}
+          <div className="mainInfo__openHours__right-duration">
+            {parseFloat(companyInfo?.distance?.distance) > 2 &&
+              !companyInfo?.distance?.distance?.split(" ")?.includes("km") && (
+                <>
+                  <div className="mainInfo__openHours__right-duration-box">
+                    <ReactSVG src="./walkPerson.svg" />
+                    <span>{companyInfo?.distance?.walking_duration}</span>
+                  </div>
+                  •
+                </>
+              )}
 
-              <div className="mainInfo__openHours__right-duration-box">
-                <ReactSVG src="./car.fill.svg" />
-                <span>{companyInfo?.distance?.duration}</span>
-              </div>
+            <div className="mainInfo__openHours__right-duration-box">
+              <ReactSVG src="./car.fill.svg" />
+              <span>{companyInfo?.distance?.duration}</span>
             </div>
           </div>
-        </div>
+        </div> */}
+        {/* </div> */}
 
         <button
           className="mainInfo__orderbutton pressEffefct"
@@ -273,7 +279,44 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           ))}
         </div>
 
-        {companyInfo?.nearest_metro &&
+        <div>
+          <EditAction
+            smallInfo={t("workingHours")}
+            text={<WorkTime working_hours={companyInfo.working_hours} />}
+            icon="Exclude.svg"
+            inputmode="none"
+          />
+
+          <DropDownMenu
+            toggle={
+              <EditAction
+                smallInfo={t("address")}
+                text={companyInfo?.street_address}
+                icon="Exclude.svg"
+                inputmode="none"
+              />
+            }
+            menu={
+              companyInfo?.nearest_metro &&
+              parseFloat(companyInfo.distance.distance) < 100 && (
+                <>
+                  <Distance companyInfo={companyInfo} />
+
+                  <NearestMetroHolder
+                    metro={companyInfo?.nearest_metro}
+                    from={t("nearestMetroToYou")}
+                  />
+                  <NearestMetroHolder
+                    metro={companyInfo?.company_nearest_metro}
+                    from={t("nearestMetroToLocation")}
+                  />
+                </>
+              )
+            }
+          />
+        </div>
+
+        {/* {companyInfo?.nearest_metro &&
           parseFloat(companyInfo.distance.distance) < 100 && (
             <>
               <NearestMetroHolder
@@ -285,7 +328,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
                 from={t("nearestMetroToLocation")}
               />
             </>
-          )}
+          )} */}
       </div>
 
       <Taxi

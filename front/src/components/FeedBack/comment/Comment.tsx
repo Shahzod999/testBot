@@ -106,18 +106,10 @@ const Comment = ({ comment }: { comment: SingleComment }) => {
         className={`comment__box ${
           open ? "comment__box__collapse" : "comment__box__more"
         }`}>
-        <div className="comment__box__text">
-          <p>{comment?.message.split(" ").splice(0, 9).join(" ")} </p>
-          <p className="comment__box__closingText">
-            {comment?.message.split(" ").splice(9).join(" ")}
-          </p>
-        </div>
+        <p>{comment?.message}</p>
 
         {comment?.message.length > 90 && (
-          <>
-            <span onClick={toggleOpen}>{open ? t("collapse") : t("more")}</span>
-            {!open && <strong> ...</strong>}
-          </>
+          <span onClick={toggleOpen}>{open ? t("collapse") : t("more")}</span>
         )}
       </div>
 

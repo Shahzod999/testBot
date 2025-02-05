@@ -18,7 +18,7 @@ import { setuserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
 import Toast from "../../components/Toast/Toast";
 import { Outlet, useNavigate } from "react-router-dom";
-import eruda from "eruda";
+// import eruda from "eruda";
 import LoadingScreen from "../SmallPages/Loading/LoadingScreen";
 import Confetti from "../SmallPages/welComePages/Confetti";
 
@@ -60,9 +60,9 @@ const MainPage = () => {
         dispatch(setUserTelegramId(userId));
       }
     }
-    if (telegramId == "44197361") {
-      eruda.init();
-    }
+    // if (telegramId == "44197361") {
+    //   eruda.init();
+    // }
   }, [telegramId, dispatch]);
 
   useEffect(() => {

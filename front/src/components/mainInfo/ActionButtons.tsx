@@ -1,7 +1,8 @@
+import { ReactNode } from "react";
 import { ReactSVG } from "react-svg";
 
 export interface ActionProps {
-  text: string | string[] | undefined;
+  text: string | string[] | undefined | ReactNode;
   icon?: string;
 }
 

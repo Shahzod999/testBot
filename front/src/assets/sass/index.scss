@@ -95,6 +95,7 @@ body {
 }
 
 html {
+  overflow-x: hidden;
   max-width: 450px;
   min-width: 290px;
   margin: auto;
@@ -126,7 +127,7 @@ a {
   color: var(--destructive-color) !important;
 }
 
-.warninText {
+.warningText {
   color: var(--warning-color) !important;
 }
 

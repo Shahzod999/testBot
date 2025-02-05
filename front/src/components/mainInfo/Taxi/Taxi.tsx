@@ -61,61 +61,58 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <h3 className="contacts__actions__centerTitle">{t("taxi")}</h3>
-          <span onClick={() => openLinkNavigate(yandexUrl)}>
-            <EditAction
-              smallInfo={
-                isLoading || isFetching
-                  ? t("wait")
-                  : data?.data?.options?.[0]
-                  ? `${distance?.distance} • ${(
-                      data.data.estimatedTime / 60
-                    ).toFixed(1)} min • ${data.data.options[0].price} ${
-                      data.data.currency
-                    }`
-                  : t("unavailable")
-              }
-              text="Yandex Go"
-              icon="./yandexGo.svg"
-              arrowRight={true}
-              inputmode="none"
-            />
-          </span>
 
-          <a
-            href={platform == "android" ? fastenAndroid : fastenIos}
-            target="_blank"
-            rel="noopener noreferrer">
-            <EditAction
-              smallInfo={t("learnMoreInApp")}
-              text="Fasten"
-              icon="./fasten.svg"
-              arrowRight={true}
-              inputmode="none"
-            />
-          </a>
+          <EditAction
+            smallInfo={
+              isLoading || isFetching
+                ? t("wait")
+                : data?.data?.options?.[0]
+                ? `${distance?.distance} • ${(
+                    data.data.estimatedTime / 60
+                  ).toFixed(1)} min • ${data.data.options[0].price} ${
+                    data.data.currency
+                  }`
+                : t("unavailable")
+            }
+            text="Yandex Go"
+            icon="./yandexGo.svg"
+            arrowRight={true}
+            inputmode="none"
+            onClick={() => openLinkNavigate(yandexUrl)}
+          />
 
-          <span onClick={() => openLinkNavigate(universalLinkMyTaxi)}>
-            <EditAction
-              smallInfo={t("learnMoreInApp")}
-              text="My taxi"
-              icon="./mytaxi.svg"
-              arrowRight={true}
-              inputmode="none"
-            />
-          </span>
+          <EditAction
+            smallInfo={t("learnMoreInApp")}
+            text="Fasten"
+            icon="./fasten.svg"
+            arrowRight={true}
+            inputmode="none"
+            onClick={() =>
+              openLinkNavigate(
+                platform == "android" ? fastenAndroid : fastenIos,
+              )
+            }
+          />
 
-          <a
-            href={platform == "android" ? uklonAndroid : uklonIos}
-            target="_blank"
-            rel="noopener noreferrer">
-            <EditAction
-              smallInfo={t("learnMoreInApp")}
-              text="Uklon"
-              icon="./uklon.svg"
-              arrowRight={true}
-              inputmode="none"
-            />
-          </a>
+          <EditAction
+            smallInfo={t("learnMoreInApp")}
+            text="My taxi"
+            icon="./mytaxi.svg"
+            arrowRight={true}
+            inputmode="none"
+            onClick={() => openLinkNavigate(universalLinkMyTaxi)}
+          />
+
+          <EditAction
+            smallInfo={t("learnMoreInApp")}
+            text="Uklon"
+            icon="./uklon.svg"
+            arrowRight={true}
+            inputmode="none"
+            onClick={() =>
+              openLinkNavigate(platform == "android" ? uklonAndroid : uklonIos)
+            }
+          />
         </div>
       </BottomSheet>
     </div>

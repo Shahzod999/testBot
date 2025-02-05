@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { ActionProps } from "../mainInfo/ActionButtons";
 import { ReactSVG } from "react-svg";
 import { hapticVibration } from "../../hooks/hapticVibration";
@@ -9,7 +8,6 @@ interface ContactProps extends ActionProps {
   style?: string;
   arrowRight?: boolean;
   phone?: string | null;
-  timeComponent?: ReactNode;
 }
 
 export const ContactsActions = ({
@@ -20,7 +18,6 @@ export const ContactsActions = ({
   style,
   arrowRight,
   phone,
-  timeComponent,
 }: ContactProps) => {
   const handleClick = () => {
     if (isDisabled) {
@@ -31,8 +28,6 @@ export const ContactsActions = ({
       window.open(phone);
     }
   };
-
-  
 
   return (
     <button
@@ -49,22 +44,15 @@ export const ContactsActions = ({
         {mainText ? <>{mainText}</> : <ReactSVG src={icon || ""} />}
       </span>
 
-      {timeComponent ? (
+      <span className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
         <span
-          className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
-          <span className="actions__text__letters">{timeComponent}</span>
+          className={`actions__text__letters ${
+            isDisabled ? "noAwailibleText" : ""
+          }`}>
+          {text}
         </span>
-      ) : (
-        <span
-          className={`actions__text ${isDisabled ? "noAwailibleText" : ""}`}>
-          <span
-            className={`actions__text__letters ${
-              isDisabled ? "noAwailibleText" : ""
-            }`}>
-            {text}
-          </span>
-        </span>
-      )}
+      </span>
+
       {arrowRight && (
         <ReactSVG src="./arrowRight.svg" className="svgController" />
       )}

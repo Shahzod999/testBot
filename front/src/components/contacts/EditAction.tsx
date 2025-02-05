@@ -8,7 +8,6 @@ interface ContactProps extends ActionProps {
   isDisabled?: boolean;
   smallInfo?: string;
   arrowRight?: boolean;
-  arrowDown?: boolean;
   editable?: boolean;
   handleEditTotalCompany?: (key: string, value: string) => void;
   objectKeys?: string;
@@ -24,6 +23,7 @@ interface ContactProps extends ActionProps {
     | "numeric"
     | "decimal"
     | undefined;
+  onClick?: () => void;
 }
 const EditAction = ({
   text,
@@ -31,16 +31,18 @@ const EditAction = ({
   isDisabled,
   smallInfo,
   arrowRight,
-  arrowDown,
   editable,
   handleEditTotalCompany,
   objectKeys,
   allowedValues,
   textStartWith,
   inputmode,
+  onClick,
 }: ContactProps) => {
   const { t } = useTranslation();
-  const [localValue, setLocalValue] = useState(text);
+  const [localValue, setLocalValue] = useState(
+    typeof text === "string" ? text : "",
+  );
   const [isValid, setIsValid] = useState(true);
 
   const regex = allowedValues ? new RegExp(allowedValues) : null;
@@ -65,7 +67,8 @@ const EditAction = ({
     <button
       className={`actions pressEffefct ${
         isDisabled ? "actions--disabled" : ""
-      }`}>
+      }`}
+      onClick={onClick}>
       <span className="actions__icons__edit">
         <ReactSVG src={icon || ""} />
       </span>
@@ -73,7 +76,6 @@ const EditAction = ({
         <span className="actions__info__smallInfo">{smallInfo}</span>
         {editable ? (
           <label className="actions__info__smallInfo__text">
-            <span>{textStartWith}</span>
             <input
               type="text"
               value={localValue}
@@ -82,7 +84,7 @@ const EditAction = ({
             />
           </label>
         ) : (
-          <span className="actions__info__text__main">{localValue}</span>
+          <span className="actions__info__text__main">{text}</span>
         )}
         {!isValid && (
           <span className="noAwailibleText">{t("invalidValue")}</span>
@@ -91,13 +93,6 @@ const EditAction = ({
 
       {arrowRight && (
         <ReactSVG src="./arrowRight.svg" className="actions__arrowRight" />
-      )}
-
-      {arrowDown && (
-        <ReactSVG
-          src="./arrows/arrowDown.svg"
-          className="actions__arrowRight"
-        />
       )}
     </button>
   );

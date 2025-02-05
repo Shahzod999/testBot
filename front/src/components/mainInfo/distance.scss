@@ -1,0 +1,52 @@
+.distance {
+    display: flex;
+    align-items: center;
+    padding: 16px 0px;
+    gap: 10px;
+
+    &-distance {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
+        font-size: 13px;
+        color: var(--hint-color);
+        padding-bottom: 4px;
+    }
+
+    &-duration {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        &-box {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            white-space: nowrap;
+
+
+            svg {
+                width: 15px;
+                height: 15px;
+                fill: var(--tg-theme-text-color, #000);
+
+                path {
+                    fill: var(--tg-theme-text-color, #000);
+                }
+            }
+
+            div {
+                display: flex;
+            }
+        }
+    }
+
+    .mapImg {
+        margin-left: auto;
+        width: 90px;
+        height: 90px;
+        border-radius: 10px;
+        border: solid;
+    }
+}

@@ -112,7 +112,6 @@
     font-size: 16px;
     line-height: 131%;
     letter-spacing: -0.02em;
-    // color: #000;
     color: var(--text-color);
 
     padding-bottom: 16px;
@@ -121,90 +120,25 @@
   &__openHours {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     font-size: 13px;
-    line-height: 138%;
-    letter-spacing: -0.01em;
-    text-align: center;
-    padding-top: 7px;
+
     color: var(--text-color);
     overflow: hidden;
+    gap: 10px;
 
-
-    border-top: 0.5px solid var(--separator-color);
-
-    &__divider {
-      display: flex;
-      justify-content: center;
-      flex: 1;
-
-      div {
-        height: 32px;
-        width: 1px;
-        background-color: var(--separator-color);
-        margin: 10px 0;
-      }
+    .openWork {
+      color: #34c759;
     }
 
-    &__left {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      text-align: center;
-      flex: 4;
-
-      span {
-        font-size: 13px;
-        color: var(--link-color);
-      }
+    span {
+      font-family: var(--font-family);
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 129%;
+      letter-spacing: -0.02em;
     }
 
-    &__right {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
 
-      text-align: center;
-      flex: 4;
-
-      &-distance {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 4px;
-        font-size: 13px;
-        color: var(--hint-color);
-      }
-
-      &-duration {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-
-        &-box {
-          display: flex;
-          align-items: center;
-          gap: 3px;
-          white-space: nowrap;
-
-
-          svg {
-            width: 15px;
-            height: 15px;
-            fill: var(--tg-theme-text-color, #000);
-
-            path {
-              fill: var(--tg-theme-text-color, #000);
-            }
-          }
-
-          div {
-            display: flex;
-          }
-        }
-      }
-    }
   }
 
   &__orderbutton {
@@ -283,14 +217,14 @@
 .mainInfoTaxi {
 
   .actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border: none;
-    background-color: transparent;
-    width: 100%;
-    position: relative;
-    user-select: none;
+    // display: flex;
+    // align-items: center;
+    // gap: 12px;
+    // border: none;
+    // background-color: transparent;
+    // width: 100%;
+    // position: relative;
+    // user-select: none;
 
     &__info {
       flex-direction: column-reverse !important;

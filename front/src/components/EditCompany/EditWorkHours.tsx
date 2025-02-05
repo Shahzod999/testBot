@@ -24,15 +24,11 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
   const [time, setTime] = useState(false);
 
   const [offDay, setOffDay] = useState(hours !== t("closed"));
-  //тут
 
   const editedHours = hours.split("–");
 
   const [workingHour, setWorkingHour] = useState(editedHours[0]);
   const [closingWorkingHour, setClosingWorkingHour] = useState(editedHours[1]);
-
-  // const formatTime = (hour: number, minute: number) =>
-  //   `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
 
   const updatedTime = `${workingHour}-${closingWorkingHour}`;
 
@@ -142,10 +138,6 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
                 onTouchStart={(e) => e.stopPropagation()}
                 onTouchMove={(e) => e.stopPropagation()}
                 onTouchEnd={(e) => e.stopPropagation()}>
-                {/* <TimePicker
-                  workingHour={workingHour}
-                  setWorkingHour={setWorkingHour}
-                /> */}
                 <TimePicker
                   value={editedHours[0]}
                   onChange={handleTimeChange}
@@ -163,10 +155,6 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
                 onTouchStart={(e) => e.stopPropagation()}
                 onTouchMove={(e) => e.stopPropagation()}
                 onTouchEnd={(e) => e.stopPropagation()}>
-                {/* <TimePicker
-                  workingHour={closingWorkingHour}
-                  setWorkingHour={setClosingWorkingHour}
-                /> */}
                 <TimePicker value={"00:00"} onChange={handleCloseTimeChange} />
               </div>
             </div>

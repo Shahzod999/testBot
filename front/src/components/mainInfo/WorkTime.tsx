@@ -9,29 +9,29 @@ const WorkTime = ({ working_hours }: { working_hours: WorkingHours }) => {
 
   if (!working_hours || Object.keys(working_hours).length === 0) {
     return (
-      <div className="mainInfo__openHours__left">
+      <div className="mainInfo__openHours">
         <p>{t("workTimeNotSpecified")}</p>
       </div>
     );
   }
 
   return (
-    <div className="mainInfo__openHours__left">
+    <div className="mainInfo__openHours">
       {isOpen ? (
         <>
           {closingIn ? (
             <>
-              <span className="warninText">{t("closingIn")}</span>
+              <span className="warningText">{t("closingIn")}</span>
               <p>{closingIn}</p>
             </>
           ) : hours.split("–")[1] ? (
             <>
-              <span>{t("open")}</span>
+              <span className="openWork">{t("open")}</span>
               <p>{t("openUntil", { time: hours.split("–")[1] })}</p>
             </>
           ) : (
             <>
-              <span>Открыто</span>
+              <span className="openWork">Открыто</span>
               <p>{t("open24Hours")}</p>
             </>
           )}
