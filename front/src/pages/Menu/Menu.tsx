@@ -14,7 +14,7 @@ const Menu = () => {
     tg.BackButton.show();
     const handleBackClick = () => {
       if (id) {
-        navigate("menu");
+        navigate("/menu");
       } else {
         navigate(-1);
       }
