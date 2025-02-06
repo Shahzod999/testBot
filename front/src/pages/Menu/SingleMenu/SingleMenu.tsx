@@ -15,35 +15,39 @@ const SingleMenu = () => {
 
   const singleProd = data?.data;
 
-   useEffect(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, [isLoading, isFetching]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [isLoading, isFetching]);
 
   if (isLoading) return <SingleMenuSkeleton />;
   if (!singleProd) return null;
   return (
     <div className="singleMenu">
-      <div className="singleMenu__img">
-        <img
-          src={getValidatedUrl(singleProd.image)}
-          alt={t("productImageAlt")}
-        />
-      </div>
-      <div className="singleMenu__main">
-        <div className="singleMenu__main__title">
-          <div className="singleMenu__main__title__pading">
-            <h2>{singleProd.name}</h2>
-            <p>{singleProd.description}</p>
+      {isFetching ? (
+        <SingleMenuSkeleton />
+      ) : (
+        <>
+          <div className="singleMenu__img">
+            <img
+              src={getValidatedUrl(singleProd.image)}
+              alt={t("productImageAlt")}
+            />
           </div>
+          <div className="singleMenu__main">
+            <div className="singleMenu__main__title">
+              <div className="singleMenu__main__title__pading">
+                <h2>{singleProd.name}</h2>
+                <p>{singleProd.description}</p>
+              </div>
 
-          <strong>
-            {singleProd.price} {singleProd.currency}
-          </strong>
-          <div className="singleMenu__main__devider"></div>
-        </div>
-
-       
-      </div>
+              <strong>
+                {singleProd.price} {singleProd.currency}
+              </strong>
+              <div className="singleMenu__main__devider"></div>
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="singleMenu__similarProd">
         <h2>{t("similarProducts")}</h2>

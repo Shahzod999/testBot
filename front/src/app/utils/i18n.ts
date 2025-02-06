@@ -70,7 +70,7 @@ const resources = {
 
       unavailable: "Unavailable",
       wait: "...Wait",
-      learnMoreInApp: "learn more in the app",
+      learnMoreInApp: "soon...",
 
       leaveReview: "Leave a review",
       yourRatingReviewVisible:
@@ -242,7 +242,7 @@ const resources = {
 
       unavailable: "Недоступно",
       wait: "...Подождите",
-      learnMoreInApp: "узнать подробнее в приложении",
+      learnMoreInApp: "скоро...",
 
       leaveReview: "Оставьте отзыв",
       yourRatingReviewVisible: "Ваша оценка и отзыв будут видны всем",
@@ -412,7 +412,7 @@ const resources = {
 
       unavailable: "Mavjud emas",
       wait: "...Kutib turing",
-      learnMoreInApp: "ilovada batafsil bilib oling",
+      learnMoreInApp: "tez orada...",
 
       leaveReview: "Fikr qoldiring",
       yourRatingReviewVisible: "Sizning baho va fikringiz hammaga ko'rinadi",
@@ -584,7 +584,7 @@ const resources = {
 
       unavailable: "Мавжуд эмас",
       wait: "...Кутиб туринг",
-      learnMoreInApp: "иловада батафсил билиб олинг",
+      learnMoreInApp: "Тез орада...",
 
       leaveReview: "Фикр қолдиринг",
       yourRatingReviewVisible: "Сизнинг баҳо ва фикрингиз ҳаммага кўринади",
