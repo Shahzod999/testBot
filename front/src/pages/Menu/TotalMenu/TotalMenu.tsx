@@ -98,8 +98,15 @@ const TotalMenu = () => {
       </div>
 
       <div className="menu__food">
-        {menuData?.data?.map((food: MenuType) => (
-          <FoodBox food={food} key={food._id} isFetching={isFetching} />
+        {menuData?.data?.map((food: MenuType, index: number) => (
+          <div
+            key={food._id}
+            style={{
+              animationDelay: `${index * 0.1}s`,
+            }}
+            className="menu__food-item">
+            <FoodBox food={food} isFetching={isFetching} />
+          </div>
         ))}
       </div>
     </div>
