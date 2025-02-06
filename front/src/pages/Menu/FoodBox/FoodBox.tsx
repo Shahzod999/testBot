@@ -3,7 +3,7 @@ import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 import FoodBoxSkeleton from "../MenuSkeleton/FoodBoxSkeleton";
 
 const FoodBox = ({ food, isFetching }: any) => {
-  const { _id, name, price, currency, description, weight, image } = food;
+  const { _id, name, price, currency, description, image } = food;
 
   console.log(name);
 
