@@ -17,7 +17,7 @@ const SingleMenu = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [isLoading, isFetching]);
+  }, [singleProd]);
 
   if (isLoading) return <SingleMenuSkeleton />;
   if (!singleProd) return null;
