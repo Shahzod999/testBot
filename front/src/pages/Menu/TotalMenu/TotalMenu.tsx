@@ -43,6 +43,8 @@ const TotalMenu = () => {
     },
     { skip: !activeCategory },
   );
+
+  
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
