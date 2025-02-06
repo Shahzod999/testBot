@@ -10,7 +10,7 @@ const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const navigate = useNavigate();
   const { data: menuData, isFetching } = useGetMenuQuery({
     company_id: companyInfo?._id,
-    limit: 5,
+    limit: 4,
   });
 
   const containerRef = useRef<HTMLDivElement>(null);

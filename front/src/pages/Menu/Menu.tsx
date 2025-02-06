@@ -1,16 +1,23 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import "./menu.scss";
 import { useEffect } from "react";
 
 const Menu = () => {
   const { pathname } = useLocation();
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  console.log(id);
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.BackButton.show();
     const handleBackClick = () => {
-      navigate(-1);
+      if (id) {
+        navigate("menu");
+      } else {
+        navigate(-1);
+      }
     };
     tg.BackButton.onClick(handleBackClick);
 

@@ -4,13 +4,13 @@
     padding-bottom: var(--tg-safe-area-inset-bottom);
     padding-left: var(--tg-safe-area-inset-left);
     padding-right: var(--tg-safe-area-inset-right);
-    padding-top: var(--tg-safe-area-inset-top);
     min-height: 90vh;
 }
 
 
 .menu {
     // padding: 16px;
+    padding-top: var(--tg-safe-area-inset-top);
     padding-bottom: 25px;
     border-radius: 10px;
 

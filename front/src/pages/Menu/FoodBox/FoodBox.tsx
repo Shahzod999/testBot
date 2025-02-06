@@ -5,8 +5,6 @@ import FoodBoxSkeleton from "../MenuSkeleton/FoodBoxSkeleton";
 const FoodBox = ({ food, isFetching }: any) => {
   const { _id, name, price, currency, description, image } = food;
 
-  console.log(name);
-
   if (isFetching) return <FoodBoxSkeleton />;
 
   return (

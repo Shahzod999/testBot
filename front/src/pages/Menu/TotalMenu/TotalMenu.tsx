@@ -54,8 +54,6 @@ const TotalMenu = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  console.log(menuData);
-
   if (isLoading) return <MenuSkeleton />;
 
   if (!companyInfo || !categoryname) return null;

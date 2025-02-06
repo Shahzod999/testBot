@@ -42,21 +42,7 @@ const SingleMenu = () => {
           <div className="singleMenu__main__devider"></div>
         </div>
 
-        {/* <div className="singleMenu__main__category">
-          <span>Картофель</span>
-          <p>Картошка фри</p>
-          <div className="singleMenu__main__devider"></div>
-          <p>Картофель по деревенски</p>
-          <div className="singleMenu__main__devider"></div>
-        </div>
-
-        <div className="singleMenu__main__category">
-          <span>Напитки</span>
-          <p>Anor Su</p>
-          <div className="singleMenu__main__devider"></div>
-          <p>Fresh Malina</p>
-          <div className="singleMenu__main__devider"></div>
-        </div> */}
+       
       </div>
 
       <div className="singleMenu__similarProd">
