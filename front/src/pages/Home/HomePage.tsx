@@ -19,8 +19,6 @@ const HomePage = () => {
     tg.BackButton.hide();
   }, []);
 
-  console.log(companyInfo, "ss");
-
   if (!companyInfo) return;
   return (
     <div>

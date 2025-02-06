@@ -173,8 +173,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
-  console.log(companyInfo);
-
   return (
     <>
       <div className="mainInfo">
