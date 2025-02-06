@@ -16,10 +16,10 @@ const FoodBox = ({ food, isFetching }: any) => {
       </div>
       <div className="menu__food__box__text">
         <h4>{name}</h4>
+        <p>{description}</p>
         <strong>
           {price} {currency}
         </strong>
-        <p>{description}</p>
         <span>{weight}</span>
       </div>
     </Link>

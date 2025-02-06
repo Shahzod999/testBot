@@ -17,35 +17,32 @@ const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const moreRef = useRef<HTMLDivElement>(null);
-  const [startX, setStartX] = useState<number | null>(null);
   const [moreWidth, setMoreWidth] = useState(50); // Начальная ширина блока
+  const [textScale, setTextScale] = useState(1); // Масштаб текста
 
-  const THRESHOLD = 150; // Порог для редиректа
+  const THRESHOLD = 150; // Порог для активации увеличения и редиректа
+  const EXPAND_SIZE = 120; // Максимальный размер кнопки перед редиректом
+  const TEXT_MAX_SCALE = 1.5; // Максимальный размер текста
 
-  // Обработчик начала свайпа
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setStartX(e.touches[0].clientX);
-  };
+  const handleScroll = () => {
+    if (!wrapperRef.current || !moreRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = wrapperRef.current;
+    const maxScroll = scrollWidth - clientWidth;
 
-  // Обработчик движения пальцем
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!startX) return;
-    const currentX = e.touches[0].clientX;
-    const diffX = currentX - startX;
+    if (scrollLeft >= maxScroll) {
+      const extraScroll = Math.min(scrollLeft - maxScroll, THRESHOLD);
+      const newWidth = 50 + (extraScroll / THRESHOLD) * (EXPAND_SIZE - 50);
+      const newScale = 1 + (extraScroll / THRESHOLD) * (TEXT_MAX_SCALE - 1);
+      setMoreWidth(newWidth);
+      setTextScale(newScale);
 
-    if (diffX > 0) {
-      setMoreWidth(50 + diffX); // Увеличиваем ширину "more" относительно движения
+      if (extraScroll >= THRESHOLD) {
+        navigate("/menu");
+      }
+    } else {
+      setMoreWidth(50);
+      setTextScale(1);
     }
-
-    if (diffX > THRESHOLD) {
-      navigate("/menu");
-    }
-  };
-
-  // Обработчик завершения свайпа (возвращаем блок к нормальной ширине)
-  const handleTouchEnd = () => {
-    setMoreWidth(50);
-    setStartX(null);
   };
 
   return (
@@ -55,9 +52,7 @@ const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
       <div
         className="moreInteres__wrapper"
         ref={wrapperRef}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}>
+        onScroll={handleScroll}>
         {menuData?.data?.map((food: MenuType) => (
           <FoodBox food={food} key={food._id} isFetching={isFetching} />
         ))}
@@ -65,8 +60,15 @@ const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
         <div
           ref={moreRef}
           className="menu__food__box"
-          style={{ width: `${moreWidth}px` }}>
-          <div className="menu__food__box__more">{t("more")}...</div>
+          style={{
+            width: `${moreWidth}px`,
+            transform: `scale(${textScale})`,
+          }}>
+          <div
+            className="menu__food__box__more"
+            style={{ transform: `scale(${textScale})` }}>
+            {t("more")}...
+          </div>
         </div>
       </div>
     </div>
