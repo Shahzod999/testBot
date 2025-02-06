@@ -9,12 +9,16 @@ const Menu = () => {
 
   console.log(id);
 
+  console.log(pathname);
+
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.BackButton.show();
     const handleBackClick = () => {
       if (id) {
         navigate("/menu");
+      } else if (pathname == "/menu") {
+        navigate("/");
       } else {
         navigate(-1);
       }
