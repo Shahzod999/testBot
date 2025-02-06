@@ -5,6 +5,11 @@
     margin-bottom: 2px;
     overflow: hidden;
 
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-drag: none;
+    // overscroll-behavior: none;
+
     h3 {
         font-family: var(--second-family);
         font-weight: 600;
