@@ -203,13 +203,13 @@
 
       svg {
         fill: var(--tg-theme-text-color, #000);
-        stroke: var(--tg-theme-text-color, #000);
+
+        path {
+          fill: var(--tg-theme-text-color, #000);
+        }
       }
 
-      path {
-        fill: var(--tg-theme-text-color, #000);
-        stroke: var(--tg-theme-text-color, #000);
-      }
+
     }
   }
 
@@ -222,14 +222,7 @@
 .mainInfoTaxi {
 
   .actions {
-    // display: flex;
-    // align-items: center;
-    // gap: 12px;
-    // border: none;
-    // background-color: transparent;
-    // width: 100%;
-    // position: relative;
-    // user-select: none;
+
 
     &__info {
       flex-direction: column-reverse !important;

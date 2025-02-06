@@ -4,6 +4,11 @@
     padding: 16px 0px;
     gap: 10px;
 
+
+    .icon {
+        color: var(--tg-theme-text-color, #000);
+    }
+
     &-distance {
         display: flex;
         align-items: center;

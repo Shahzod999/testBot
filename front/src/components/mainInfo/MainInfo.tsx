@@ -130,7 +130,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       },
       {
         text: t("share"),
-        img: "./Icon.svg",
+        img: "./share.svg",
         key: "share",
         link: `https://t.me/share/url?url=t.me/TrueGis_bot/start?startapp=${companyInfo?._id}`,
       },
@@ -173,9 +173,8 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
-
   console.log(companyInfo);
-  
+
   return (
     <>
       <div className="mainInfo">
@@ -218,35 +217,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
           <p className="mainInfo__shortText"></p>
         )}
 
-        {/* <div className="mainInfo__openHours"> */}
-        {/* <WorkTime working_hours={companyInfo.working_hours} /> */}
-        {/* <div className="mainInfo__openHours__divider">
-            <div></div>
-          </div> */}
-        {/* <div className="mainInfo__openHours__right">
-          <div className="mainInfo__openHours__right-distance">
-            {t("distance")}: {companyInfo?.distance?.distance || t("loading")}
-          </div>
-          <div className="mainInfo__openHours__right-duration">
-            {parseFloat(companyInfo?.distance?.distance) > 2 &&
-              !companyInfo?.distance?.distance?.split(" ")?.includes("km") && (
-                <>
-                  <div className="mainInfo__openHours__right-duration-box">
-                    <ReactSVG src="./walkPerson.svg" />
-                    <span>{companyInfo?.distance?.walking_duration}</span>
-                  </div>
-                  •
-                </>
-              )}
-
-            <div className="mainInfo__openHours__right-duration-box">
-              <ReactSVG src="./car.fill.svg" />
-              <span>{companyInfo?.distance?.duration}</span>
-            </div>
-          </div>
-        </div> */}
-        {/* </div> */}
-
         <button
           className="mainInfo__orderbutton pressEffefct"
           onClick={(e) => handleOrder(e)}
@@ -288,10 +258,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             }
             menu={
               <div className="mainInfo__workingHoursDropDown">
-                <WorkingHours
-                  // handleActionClick={handleActionClick}
-                  companyInfo={companyInfo}
-                />
+                <WorkingHours companyInfo={companyInfo} />
               </div>
             }
           />
@@ -306,38 +273,24 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               />
             }
             menu={
-              companyInfo?.nearest_metro &&
-              parseFloat(companyInfo.distance.distance) < 100 && (
-                <>
-                  <Distance companyInfo={companyInfo} />
-
-                  <NearestMetroHolder
-                    metro={companyInfo?.nearest_metro}
-                    from={t("nearestMetroToYou")}
-                  />
-                  <NearestMetroHolder
-                    metro={companyInfo?.company_nearest_metro}
-                    from={t("nearestMetroToLocation")}
-                  />
-                </>
-              )
+              <>
+                <Distance companyInfo={companyInfo} />
+                {companyInfo?.nearest_metro && (
+                  <>
+                    <NearestMetroHolder
+                      metro={companyInfo?.nearest_metro}
+                      from={t("nearestMetroToYou")}
+                    />
+                    <NearestMetroHolder
+                      metro={companyInfo?.company_nearest_metro}
+                      from={t("nearestMetroToLocation")}
+                    />
+                  </>
+                )}
+              </>
             }
           />
         </div>
-
-        {/* {companyInfo?.nearest_metro &&
-          parseFloat(companyInfo.distance.distance) < 100 && (
-            <>
-              <NearestMetroHolder
-                metro={companyInfo?.nearest_metro}
-                from={t("nearestMetroToYou")}
-              />
-              <NearestMetroHolder
-                metro={companyInfo?.company_nearest_metro}
-                from={t("nearestMetroToLocation")}
-              />
-            </>
-          )} */}
       </div>
 
       <Taxi

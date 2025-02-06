@@ -20,7 +20,6 @@ const FoodBox = ({ food, isFetching }: any) => {
         <strong>
           {price} {currency}
         </strong>
-        <span>{weight}</span>
       </div>
     </Link>
   );
