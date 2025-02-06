@@ -63,7 +63,8 @@ const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
           style={{
             width: `${moreWidth}px`,
             transform: `scale(${textScale})`,
-          }}>
+          }}
+          onClick={() => navigate("/menu")}>
           <div
             className="menu__food__box__more"
             style={{ transform: `scale(${textScale})` }}>
