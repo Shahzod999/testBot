@@ -47,7 +47,7 @@ const resources = {
       closedForever: "Closed forever",
       notMatchWorktime: "Does not match working hours",
       send: "Send",
-      vacancies: "Vacancies",
+
       noSocialMedia: "Social media not specified",
       closingIn: "Closing in",
       open: "Open",
@@ -219,7 +219,7 @@ const resources = {
       closedForever: "Закрыто навсегда",
       notMatchWorktime: "Не соответствует графику работы",
       send: "Отправить",
-      vacancies: "Вакансии",
+
       noSocialMedia: "Соцсети не указаны",
       closingIn: "До закрытия",
       open: "Открыто",
@@ -389,7 +389,7 @@ const resources = {
       closedForever: "Abadiy yopiq",
       notMatchWorktime: "Ish soatlari bilan mos kelmaydi",
       send: "Yuborish",
-      vacancies: "Bo'sh ish o'rinlari",
+
       noSocialMedia: "Ijtimoiy tarmoqlar ko'rsatilmagan",
       closingIn: "Yopilishgacha",
       open: "Ochiq",
@@ -561,7 +561,7 @@ const resources = {
       closedForever: "Абадий ёпиқ",
       notMatchWorktime: "Иш соатлари билан мос келмайди",
       send: "Юбориш",
-      vacancies: "Бўш иш ўринлари",
+
       noSocialMedia: "Ижтимоий тармоқлар кўрсатилмаган",
       closingIn: "Ёпилишгача",
       open: "Очиқ",
