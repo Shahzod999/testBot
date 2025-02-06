@@ -54,6 +54,10 @@ const TotalMenu = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [isLoading, isFetching]);
+
   if (isLoading) return <MenuSkeleton />;
 
   if (!companyInfo || !categoryname) return null;
