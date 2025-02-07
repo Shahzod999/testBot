@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { FocusEvent, ReactNode, useEffect, useRef, useState } from "react";
 import "./DropDownMenu.scss";
 import { ReactSVG } from "react-svg";
 
@@ -9,14 +9,51 @@ interface DropDownMenuProps {
 }
 const DropDownMenu = ({ toggle, menu, notAwalible }: DropDownMenuProps) => {
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  const handleTogle = () => {
+  const handleToggleClick = () => {
     if (notAwalible) return;
-    setOpen(!open);
+    setOpen((prev) => !prev);
   };
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (
+      toggleRef.current &&
+      !toggleRef.current.contains(event.relatedTarget as Node) &&
+      menuRef.current &&
+      !menuRef.current.contains(event.relatedTarget as Node)
+    ) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        toggleRef.current &&
+        !toggleRef.current.contains(event.target as Node) &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className={`dropdownMenuHolder ${open ? "deleteAfter" : ""}`}>
-      <div className="dropdown__toggle" onClick={handleTogle}>
+      <div
+        className="dropdown__toggle"
+        tabIndex={0}
+        ref={toggleRef}
+        onClick={handleToggleClick}
+        onBlur={handleBlur}>
         <div className="dropdown__toggle__main">{toggle}</div>
 
         {!notAwalible && (
@@ -29,7 +66,11 @@ const DropDownMenu = ({ toggle, menu, notAwalible }: DropDownMenuProps) => {
           </span>
         )}
       </div>
-      <div className={`dropdown__menu ${open ? "dropdown__menu--open" : ""}`}>
+      <div
+        ref={menuRef}
+        tabIndex={-1} // для возможности фокусировки внутри меню
+        onBlur={handleBlur}
+        className={`dropdown__menu ${open ? "dropdown__menu--open" : ""}`}>
         {menu}
       </div>
     </div>

@@ -53,8 +53,6 @@
   .dropdown__menu {
     border-radius: 5px;
     background-color: var(--secondary-bg-color);
-    box-shadow: 3px 1px 3px 1px color-mix(in srgb, var(--secondary-bg-color) 95%, black) inset;
-
     overflow: hidden;
     max-height: 0px;
     transition: all 0.5s ease;
