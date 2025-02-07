@@ -48,6 +48,29 @@
         }
     }
 
+    .positions {
+        color: var(--hint-color);
+        background-color: transparent;
+        padding-top: 10px;
 
+        p {
+            padding: 16px 12px;
+            font-size: 15px;
+            cursor: pointer;
+            position: relative;
+
+
+            &:not(:last-child)::after {
+                content: "";
+                width: 100%;
+                right: 0;
+                bottom: 0;
+                position: absolute;
+                height: 0.5px;
+                border-radius: 10px;
+                background-color: var(--separator-color);
+            }
+        }
+    }
 
 }

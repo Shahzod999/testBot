@@ -52,7 +52,8 @@
 
   .dropdown__menu {
     border-radius: 5px;
-    background-color: var(--secondary-bg-color);
+    // background-color: var(--secondary-bg-color);
+    background-color: transparent;
     overflow: hidden;
     max-height: 0px;
     transition: all 0.5s ease;

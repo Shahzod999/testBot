@@ -26,6 +26,7 @@ import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 import { useTranslation } from "react-i18next";
 import { toggleLoading } from "../../app/features/bottomSheetSlice";
 import { ErrorType } from "../../app/types/errorTypes";
+import DropDownMenu from "../DropDownMenu/DropDownMenu";
 
 interface EditCompanyProps {
   companyInfo: CompanyState;
@@ -42,7 +43,7 @@ const EditCompany = ({
   const dispatch = useAppDispatch();
   const companyId = useAppSelector(selectedCompanyId);
   const isDarkmode = useAppSelector(selectedIsDarkMode);
-
+  const [position, setPosition] = useState("");
   const [newCompanyInfo, setNewCompanyInfo] = useState(companyInfo);
   const [imagesArrayNew, setimagesArrayNew] = useState<PhotosSample[]>([]);
   const [logoImg, setLogoImg] = useState<string | File>(
@@ -179,6 +180,11 @@ const EditCompany = ({
     if (regex.test(input.value)) {
       handleEditTotalCompany("requester_phone_number", input.value);
     }
+  };
+
+  const handlePositionChange = (value: string) => {
+    setPosition(value); // Устанавливаем значение в input
+    handleEditTotalCompany("requester_position", value); // Отправляем данные
   };
 
   console.log(newCompanyInfo);
@@ -416,20 +422,37 @@ const EditCompany = ({
         </h3>
 
         <div className="contacts__actions__positionInput">
-          <select
-            onChange={(e) =>
-              handleEditTotalCompany("requester_position", e.target.value)
+          <DropDownMenu
+            toggle={
+              <input
+                type="text"
+                placeholder={t("yourPosition")}
+                // list="positions"
+                value={position}
+                required
+                onChange={(e) => handlePositionChange(e.target.value)}
+              />
             }
-            required>
-            <option value="" disabled>
-              {t("yourPosition")}
-            </option>
-            <option value={t("manager")}>{t("manager")}</option>
-            <option value={t("staff")}>{t("staff")}</option>
-            <option value={t("administrator")}>{t("administrator")}</option>
-            <option value={t("user")}>{t("user")}</option>
-          </select>
+            menu={
+              <div className="positions">
+                <div className="positions">
+                  {["manager", "staff", "administrator", "user"].map((role) => (
+                    <p key={role} onClick={() => handlePositionChange(t(role))}>
+                      {t(role)}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            }
+          />
         </div>
+
+        {/* <datalist id="positions">
+          <option value={t("manager")} />
+          <option value={t("staff")} />
+          <option value={t("administrator")} />
+          <option value={t("user")} />
+        </datalist> */}
 
         {error && <div className="errorText">{error}</div>}
 
