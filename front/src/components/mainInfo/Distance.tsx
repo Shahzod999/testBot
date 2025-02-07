@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { ReactSVG } from "react-svg";
 import { CompanyState } from "../../app/types/companyType";
 import "./distance.scss";
-import GoogleMap from "./GoogleMap";
 
 const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
@@ -50,7 +49,6 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
       </div>
 
       <div className="mapImg" onClick={getLocation}>
-        {/* <GoogleMap /> */}
         <img src="./map.jpg" alt="" />
       </div>
     </div>
