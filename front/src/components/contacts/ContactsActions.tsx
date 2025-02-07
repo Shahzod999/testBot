@@ -8,6 +8,7 @@ interface ContactProps extends ActionProps {
   style?: string;
   arrowRight?: boolean;
   phone?: string | null;
+  onClick?: () => void;
 }
 
 export const ContactsActions = ({
@@ -18,8 +19,11 @@ export const ContactsActions = ({
   style,
   arrowRight,
   phone,
+  onClick,
 }: ContactProps) => {
   const handleClick = () => {
+    onClick?.();
+
     if (isDisabled) {
       hapticVibration("success", "light");
     }

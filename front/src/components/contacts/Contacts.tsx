@@ -107,14 +107,14 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
               notAwalible={isDisabled || !!phone}
               key={index}
               toggle={
-                <div className="contacts__actions__after">
-                  <ContactsActions
-                    text={text}
-                    icon={icon}
-                    isDisabled={isDisabled}
-                    phone={phone}
-                  />
-                </div>
+                // <div className="contacts__actions__after">
+                <ContactsActions
+                  text={text}
+                  icon={icon}
+                  isDisabled={isDisabled}
+                  phone={phone}
+                />
+                // </div>
               }
               menu={menu}
             />

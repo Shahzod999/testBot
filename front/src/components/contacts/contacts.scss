@@ -91,20 +91,20 @@
       color: var(--text-color);
     }
 
-    &__after {
-      position: relative;
+    // &__after {
+    //   position: relative;
 
-      &:not(:last-child)::after {
-        content: "";
-        width: 93%;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        height: 0.5px;
-        border-radius: 10px;
-        background-color: var(--separator-color);
-      }
-    }
+    //   &:not(:last-child)::after {
+    //     content: "";
+    //     width: 93%;
+    //     right: 0;
+    //     bottom: 0;
+    //     position: absolute;
+    //     height: 0.5px;
+    //     border-radius: 10px;
+    //     background-color: var(--separator-color);
+    //   }
+    // }
 
     .actions {
 

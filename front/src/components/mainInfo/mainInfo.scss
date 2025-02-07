@@ -120,11 +120,16 @@
   &__openHours {
     display: flex;
     align-items: center;
-    font-size: 13px;
 
     color: var(--text-color);
     overflow: hidden;
-    gap: 10px;
+    gap: 5px;
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    letter-spacing: -0.03em;
 
     .openWork {
       color: #34c759;
@@ -132,10 +137,14 @@
 
     span {
       font-family: var(--font-family);
-      font-weight: 400;
-      font-size: 17px;
-      line-height: 129%;
-      letter-spacing: -0.02em;
+    }
+
+    p {
+      &::before {
+        content: "-";
+        padding-right: 5px;
+
+      }
     }
 
 

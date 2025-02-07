@@ -1,7 +1,6 @@
 .menuWrapper {
     background: var(--secondary-bg-color);
     border-radius: 20px;
-    padding-bottom: var(--tg-safe-area-inset-bottom);
     padding-left: var(--tg-safe-area-inset-left);
     padding-right: var(--tg-safe-area-inset-right);
     min-height: 90vh;
@@ -266,19 +265,20 @@
 
 @keyframes fadeInUp {
     from {
-      opacity: 0;
-      transform: translateY(20px);
+        opacity: 0;
+        transform: translateY(20px);
     }
+
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
-  .menu__food > div {
+}
+
+.menu__food>div {
     opacity: 0; // Изначально элементы скрыты
     transform: translateY(20px); // Начальное смещение
     animation: fadeInUp 0.5s ease forwards; // Анимация появления
-  }
-  
+}
+
 /* Для большего количества элементов можно использовать SCSS-миксины или JS */

@@ -51,7 +51,7 @@ const resources = {
       noSocialMedia: "Social media not specified",
       closingIn: "Closing in",
       open: "Open",
-      openUntil: "Until {{time}}",
+      openUntil: "until {{time}}",
       open24Hours: "Open 24 hours",
 
       opensAt: "Opens ",
@@ -59,7 +59,7 @@ const resources = {
 
       todayAt: "today ",
       tomorrowAt: "tomorrow ",
-      closingInMinutes: "Closing in {{minutes}} minutes",
+      closingInMinutes: "{{minutes}} minutes",
       sunday: "Sunday",
       monday: "Monday",
       tuesday: "Tuesday",
@@ -221,9 +221,9 @@ const resources = {
       send: "Отправить",
 
       noSocialMedia: "Соцсети не указаны",
-      closingIn: "До закрытия",
+      closingIn: "До закрытия осталось",
       open: "Открыто",
-      openUntil: "До {{time}}",
+      openUntil: "до {{time}}",
       open24Hours: "Круглосуточно",
 
       opensAt: "Откроется ",
@@ -231,7 +231,7 @@ const resources = {
 
       todayAt: "сегодня ",
       tomorrowAt: "завтра ",
-      closingInMinutes: "Осталось {{minutes}} минут",
+      closingInMinutes: "{{minutes}} минут",
       sunday: "Воскресенье",
       monday: "Понедельник",
       tuesday: "Вторник",
@@ -393,7 +393,7 @@ const resources = {
       noSocialMedia: "Ijtimoiy tarmoqlar ko'rsatilmagan",
       closingIn: "Yopilishgacha",
       open: "Ochiq",
-      openUntil: "Ish vaqt: {{time}} gacha",
+      openUntil: "ish vaqt: {{time}} gacha",
       open24Hours: "24 soat ochiq",
 
       opensAt: "Ochiladi: ",
@@ -401,7 +401,7 @@ const resources = {
 
       todayAt: "bugun ",
       tomorrowAt: "ertaga ",
-      closingInMinutes: "{{minutes}} daqiqada yopiladi",
+      closingInMinutes: "{{minutes}} daqiqa",
       sunday: "Yakshanba",
       monday: "Dushanba",
       tuesday: "Seshanba",
@@ -565,7 +565,7 @@ const resources = {
       noSocialMedia: "Ижтимоий тармоқлар кўрсатилмаган",
       closingIn: "Ёпилишгача",
       open: "Очиқ",
-      openUntil: "Иш вақт: {{time}} гача",
+      openUntil: "иш вақт: {{time}} гача",
       open24Hours: "24 соат очиқ",
 
       opensAt: "Очилади: ",
@@ -573,7 +573,7 @@ const resources = {
 
       todayAt: "бугун ",
       tomorrowAt: "эртага ",
-      closingInMinutes: "{{minutes}} дақиқада ёпилади",
+      closingInMinutes: "{{minutes}} дақиқада",
       sunday: "Якшанба",
       monday: "Душанба",
       tuesday: "Сешанба",

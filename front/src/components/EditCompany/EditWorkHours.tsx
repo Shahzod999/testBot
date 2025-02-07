@@ -90,20 +90,18 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
     setClosingWorkingHour(time);
   };
 
-  console.log(hours, "ssss");
-  console.log(updatedTime);
-
   return (
     <>
-      <div onClick={openTime}>
-        <ContactsActions
-          text={hours}
-          mainText={translatedToday}
-          style={"editWorkHour"}
-          isDisabled={hours === t("closed")}
-          arrowRight={true}
-        />
-      </div>
+      {/* <div onClick={openTime}> */}
+      <ContactsActions
+        text={hours}
+        mainText={translatedToday}
+        style={"editWorkHour"}
+        isDisabled={hours === t("closed")}
+        arrowRight={true}
+        onClick={openTime}
+      />
+      {/* </div> */}
 
       <BottomSheet isOpen={time} onClose={closeTime}>
         <div className="timepickerHolder">
