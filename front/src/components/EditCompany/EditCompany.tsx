@@ -181,6 +181,8 @@ const EditCompany = ({
     }
   };
 
+  console.log(newCompanyInfo);
+
   return (
     <div className="edit">
       <div className="contacts__actions editActions">
@@ -413,22 +415,21 @@ const EditCompany = ({
           <span>*</span>
         </h3>
 
-        <input
-          type="text"
-          placeholder={t("yourPosition")}
-          className="contacts__actions__positionInput"
-          list="positions"
-          required
-          onChange={(e) =>
-            handleEditTotalCompany("requester_position", e.target.value)
-          }
-        />
-        <datalist id="positions">
-          <option value={t("manager")} />
-          <option value={t("staff")} />
-          <option value={t("administrator")} />
-          <option value={t("user")} />
-        </datalist>
+        <div className="contacts__actions__positionInput">
+          <select
+            onChange={(e) =>
+              handleEditTotalCompany("requester_position", e.target.value)
+            }
+            required>
+            <option value="" disabled>
+              {t("yourPosition")}
+            </option>
+            <option value={t("manager")}>{t("manager")}</option>
+            <option value={t("staff")}>{t("staff")}</option>
+            <option value={t("administrator")}>{t("administrator")}</option>
+            <option value={t("user")}>{t("user")}</option>
+          </select>
+        </div>
 
         {error && <div className="errorText">{error}</div>}
 

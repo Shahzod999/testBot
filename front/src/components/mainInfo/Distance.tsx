@@ -50,7 +50,8 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
       </div>
 
       <div className="mapImg" onClick={getLocation}>
-        <GoogleMap />
+        {/* <GoogleMap /> */}
+        <img src="./map.jpg" alt="" />
       </div>
     </div>
   );

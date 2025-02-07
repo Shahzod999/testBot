@@ -65,18 +65,16 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
           !companyInfo.mobile_apps?.android && !companyInfo.mobile_apps?.ios,
         menu: <CompanyApps companyInfo={companyInfo} />,
       },
-
       {
         text: companyInfo?.website?.replace("https://", "") || t("noWebsite"),
         isDisabled: !companyInfo.website,
         icon: "australia.svg",
         phone: companyInfo?.website ? companyInfo.website : null,
       },
-
       {
         text: t("availableVacancies"),
         icon: "person.svg",
-        isDisabled: false,
+        isDisabled: true,
         menu: <Vacancies />,
       },
       {
