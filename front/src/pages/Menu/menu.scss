@@ -79,6 +79,8 @@
             background-color: rgba(116, 116, 128, 0.08);
             padding: 10px;
             border-radius: 50%;
+            width: 43px;
+            height: 43px;
 
             div {
                 display: flex;
@@ -108,6 +110,9 @@
             padding: 7px 10px;
             background: rgba(116, 116, 128, 0.08);
             margin: 10px 0;
+
+            transition: all 0.2s ease;
+
 
 
             &__active {
@@ -219,7 +224,7 @@
                     color: var(--text-color);
                 }
 
-                strong {
+                &__price {
                     color: var(--text-color);
                     font-family: var(--font-family);
                     font-weight: 600;
@@ -227,6 +232,26 @@
                     line-height: 129%;
                     letter-spacing: -0.04em;
                 }
+
+                &__discount {
+                    font-family: var(--font-family);
+                    font-weight: 600;
+                    font-size: 15px;
+                    line-height: 133%;
+                    letter-spacing: -0.03em;
+                    color: var(--warning-color);
+                    padding-right: 5px;
+                }
+
+                &__oldPrice {
+                    font-weight: 400;
+                    font-size: 11px;
+                    line-height: 145%;
+                    letter-spacing: -0.04em;
+                    text-decoration: line-through;
+                    color: var(--gray-color);
+                }
+
 
                 p {
                     text-overflow: ellipsis;
@@ -280,5 +305,3 @@
     transform: translateY(20px); // Начальное смещение
     animation: fadeInUp 0.5s ease forwards; // Анимация появления
 }
-
-/* Для большего количества элементов можно использовать SCSS-миксины или JS */

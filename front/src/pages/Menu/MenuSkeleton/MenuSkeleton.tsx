@@ -4,14 +4,14 @@ const MenuSkeleton = () => {
   return (
     <div className="menu-skeleton">
       {/* Заголовок */}
-      <div className="menu-skeleton__title">
+      {/* <div className="menu-skeleton__title">
         <div
           className="skeleton skeleton--text"
           style={{ width: "80%", height: "20px" }}></div>
-      </div>
+      </div> */}
 
       {/* Основная информация */}
-      <div className="menu-skeleton__header">
+      {/* <div className="menu-skeleton__header">
         <div className="menu-skeleton__header__title">
           <div
             className="skeleton skeleton--text"
@@ -30,17 +30,7 @@ const MenuSkeleton = () => {
             className="skeleton skeleton--circle"
             style={{ width: "40px", height: "40px" }}></div>
         </div>
-      </div>
-
-      {/* Категории */}
-      <div className="menu-skeleton__categories">
-        {[...Array(4)].map((_, index) => (
-          <div
-            key={index}
-            className="skeleton skeleton--category"
-            style={{ width: "80px", height: "30px" }}></div>
-        ))}
-      </div>
+      </div> */}
 
       {/* Активная категория */}
       <div className="menu-skeleton__category-name">

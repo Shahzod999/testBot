@@ -7,10 +7,6 @@ const Menu = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  console.log(id);
-
-  console.log(pathname);
-
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.BackButton.show();

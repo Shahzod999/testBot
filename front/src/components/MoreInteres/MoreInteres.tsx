@@ -41,7 +41,7 @@ const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
-  console.log(companyInfo);
+  console.log(menuData);
 
   if (!companyInfo?.has_menu || menuData?.data?.length == 0) return;
   return (

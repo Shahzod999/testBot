@@ -3,7 +3,7 @@ import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 import FoodBoxSkeleton from "../MenuSkeleton/FoodBoxSkeleton";
 
 const FoodBox = ({ food, isFetching }: any) => {
-  const { _id, name, price, currency, description, image } = food;
+  const { _id, name, price, currency, description, image, discount } = food;
 
   if (isFetching) return <FoodBoxSkeleton />;
 
@@ -15,7 +15,15 @@ const FoodBox = ({ food, isFetching }: any) => {
       <div className="menu__food__box__text">
         <h4>{name}</h4>
         <p>{description}</p>
-        <strong>
+        {discount && (
+          <strong className="menu__food__box__text__discount">
+            {price} {currency}
+          </strong>
+        )}
+        <strong
+          className={`menu__food__box__text__price ${
+            discount && "menu__food__box__text__oldPrice"
+          }`}>
           {price} {currency}
         </strong>
       </div>
