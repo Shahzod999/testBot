@@ -231,6 +231,7 @@
                     font-size: 15px;
                     line-height: 129%;
                     letter-spacing: -0.04em;
+                    white-space: nowrap;
                 }
 
                 &__discount {
@@ -241,6 +242,7 @@
                     letter-spacing: -0.03em;
                     color: var(--warning-color);
                     padding-right: 5px;
+                    white-space: nowrap;
                 }
 
                 &__oldPrice {
