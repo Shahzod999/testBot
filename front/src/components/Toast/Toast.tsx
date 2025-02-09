@@ -1,4 +1,4 @@
-import "./Toast.scss";
+import "./toast.scss"
 
 import { useEffect } from "react";
 import { removeToast, selectToastMessage } from "../../app/features/toastSlice";
