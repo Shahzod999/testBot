@@ -4,7 +4,7 @@ import BottomSheet from "../Actions/BottomSheet";
 import CommonButton from "../Actions/CommonButton";
 import EditWorkHours from "./EditWorkHours";
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
-// import useSortedWorkingHours from "../../hooks/sortingDays";
+import useSortedWorkingHours from "../../hooks/sortingDays";
 import { hapticVibration } from "../../hooks/hapticVibration";
 import { useTranslation } from "react-i18next";
 
@@ -21,10 +21,8 @@ const WorkingHoursComponent = ({
   companyInfo,
   setChangedTotalTime,
 }: EditCompanyProps) => {
-  // const sortedWorkingHours = useSortedWorkingHours(companyInfo?.working_hours);
-  const [totalTime, setTotalTime] = useState(companyInfo?.working_hours);
-
-  
+  const sortedWorkingHours = useSortedWorkingHours(companyInfo?.working_hours);
+  const [totalTime, setTotalTime] = useState(sortedWorkingHours);
 
   const { t } = useTranslation();
   const handleSubmit = () => {
@@ -37,9 +35,6 @@ const WorkingHoursComponent = ({
     hapticVibration("success", "light");
   };
 
-
-  console.log(totalTime);
-  
   return (
     <BottomSheet
       isOpen={activeAction === "workHours"}

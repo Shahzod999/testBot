@@ -3,15 +3,13 @@ import useDayTranslator from "../../hooks/translateDay";
 import { ContactsActions } from "../contacts/ContactsActions";
 // import useSortedWorkingHours from "../../hooks/sortingDays";
 import { WorkingHours } from "../../app/types/companyType";
-// import SortDayByToday from "../../hooks/SortDayByToday";
 
 interface WorkingHoursProps {
   working_hours: WorkingHours;
 }
 
 const WorkingHoursList = ({ working_hours }: WorkingHoursProps) => {
-  // const sortedWorkingHours = useSortedWorkingHours(companyInfo?.working_hours);
-  // const sortedDays = SortDayByToday(companyInfo?.working_hours);
+  // const sortedWorkingHours = useSortedWorkingHours(working_hours);
 
   const translateDay = useDayTranslator();
 

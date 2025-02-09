@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { WorkingHours } from "../app/types/companyType";
 
-const useSortedWorkingHours = (workingHours: WorkingHours): WorkingHours => {
+const SortDayByToday = (workingHours: WorkingHours): WorkingHours => {
   return useMemo(() => {
     if (!workingHours) return {};
 
@@ -34,4 +34,4 @@ const useSortedWorkingHours = (workingHours: WorkingHours): WorkingHours => {
   }, [workingHours]);
 };
 
-export default useSortedWorkingHours;
+export default SortDayByToday;
