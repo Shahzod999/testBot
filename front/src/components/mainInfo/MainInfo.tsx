@@ -45,13 +45,13 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const toggleBookMark = async () => {
     setBookMark((prev) => !prev);
+    hapticVibration("success", "light");
+
     try {
       await favoriteApi(companyId).unwrap();
     } catch (error) {
       console.log(error);
       setBookMark((prev) => !prev);
-    } finally {
-      hapticVibration("success", "light");
     }
   };
 
