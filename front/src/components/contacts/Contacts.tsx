@@ -9,10 +9,11 @@ import EmailContact from "./Email/EmailContact";
 import SocialMediaComponent from "./SocialMedia/SocialMediaComponent";
 import { useTranslation } from "react-i18next";
 import { useWorkTimeStatus } from "../../hooks/useWorkTimeStatus";
-import WorkingHours from "../WorkingHours/WorkingHours";
+
 import CompanyApps from "./CompanyApps/CompanyApps";
 import Vacancies from "./Vacancies/Vacancies";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
+import WorkingHoursList from "../WorkingHoursList/WorkingHoursList";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -36,7 +37,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         text: `${status} ${workingHours}`,
         icon: "Exclude.svg",
         isDisabled: false,
-        menu: <WorkingHours companyInfo={companyInfo} />,
+        menu: <WorkingHoursList working_hours={companyInfo?.working_hours} />,
       },
       {
         text: companyInfo?.phone_number || t("noNumber"),

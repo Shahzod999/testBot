@@ -183,11 +183,12 @@ const EditCompany = ({
   };
 
   const handlePositionChange = (value: string) => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     setPosition(value); // Устанавливаем значение в input
     handleEditTotalCompany("requester_position", value); // Отправляем данные
   };
-
-  console.log(newCompanyInfo);
 
   return (
     <div className="edit">
@@ -427,7 +428,6 @@ const EditCompany = ({
               <input
                 type="text"
                 placeholder={t("yourPosition")}
-                // list="positions"
                 value={position}
                 required
                 onChange={(e) => handlePositionChange(e.target.value)}
@@ -446,13 +446,6 @@ const EditCompany = ({
             }
           />
         </div>
-
-        {/* <datalist id="positions">
-          <option value={t("manager")} />
-          <option value={t("staff")} />
-          <option value={t("administrator")} />
-          <option value={t("user")} />
-        </datalist> */}
 
         {error && <div className="errorText">{error}</div>}
 

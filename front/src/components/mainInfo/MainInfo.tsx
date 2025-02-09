@@ -23,7 +23,9 @@ import { useTranslation } from "react-i18next";
 import EditAction from "../contacts/EditAction";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import Distance from "./Distance";
-import WorkingHours from "../WorkingHours/WorkingHours";
+import WorkingHoursList from "../WorkingHoursList/WorkingHoursList";
+import SortDayByToday from "../../hooks/SortDayByToday";
+
 interface ActionsState {
   text: string;
   img: string;
@@ -42,12 +44,12 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const isDarkMode = useAppSelector(selectedIsDarkMode);
 
   const toggleBookMark = async () => {
+    setBookMark((prev) => !prev);
     try {
-      const res = await favoriteApi(companyId).unwrap();
-      setBookMark((prev) => !prev);
-      console.log(res);
+      await favoriteApi(companyId).unwrap();
     } catch (error) {
       console.log(error);
+      setBookMark((prev) => !prev);
     } finally {
       hapticVibration("success", "light");
     }
@@ -173,6 +175,8 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
+  const sortedDays = SortDayByToday(companyInfo?.working_hours);
+
   return (
     <>
       <div className="mainInfo">
@@ -256,7 +260,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             }
             menu={
               <div className="mainInfo__workingHoursDropDown">
-                <WorkingHours companyInfo={companyInfo} />
+                <WorkingHoursList working_hours={sortedDays} />
               </div>
             }
           />

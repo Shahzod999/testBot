@@ -4,6 +4,7 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
+      leaveAComment: "Leave a comment",
       welcomeOne: "Instantly find places closest to you!",
       welcomeTwo: "Follow and use promotions in places",
       welcomeThree:
@@ -175,6 +176,7 @@ const resources = {
   },
   ru: {
     translation: {
+      leaveAComment: "Оставьте комментарий",
       welcomeOne: "Мгновенно находите ближайшие к вам места!",
       welcomeTwo: "Следите и воспользуйтесь акциями в местах",
       welcomeThree:
@@ -345,6 +347,7 @@ const resources = {
   },
   uz: {
     translation: {
+      leaveAComment: "Fikr qoldiring",
       welcomeOne: "Eng yaqin joylarni darhol toping!",
       welcomeTwo: "Aktsiyalarni kuzatib boring va foydalaning",
       welcomeThree:
@@ -517,6 +520,7 @@ const resources = {
   },
   cyrl: {
     translation: {
+      leaveAComment: "Фикр қолдиринг",
       welcomeOne: "Энг яқин жойларни дарҳол топинг!",
       welcomeTwo: "Акцияларни кузатиб боринг ва фойдаланинг",
       welcomeThree:

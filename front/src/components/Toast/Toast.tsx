@@ -1,7 +1,8 @@
+import "./Toast.scss";
+
 import { useEffect } from "react";
 import { removeToast, selectToastMessage } from "../../app/features/toastSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import "./toast.scss";
 
 const Toast = () => {
   const dispatch = useAppDispatch();
@@ -20,14 +21,19 @@ const Toast = () => {
     dispatch(removeToast());
   };
 
-  if (!message) return null; // Если тоста нет, ничего не рендерим
+  console.log(message);
 
+  if (!message) return null;
   return (
-    <div className="toast-wrapper" onClick={handleRemoveToast}>
-      <div className={`toast-container ${message.state}`}>
-        <div className="check__text">
-          <h2>{message.text}</h2>
+    <div className="square">
+      <div className="square__box">
+        <div className="square__box__text">
+          <div className={`toast-container ${message.state}`}></div>
+          <h3>Заявка отправлена</h3>
+          <p>{message.text}</p>
         </div>
+
+        <button onClick={handleRemoveToast}>Понятно</button>
       </div>
     </div>
   );

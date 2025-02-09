@@ -16,11 +16,12 @@ import {
 import { TelegramTypes } from "../../app/types/telegramTypes";
 import { setuserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
-import Toast from "../../components/Toast/Toast";
+
 import { Outlet, useNavigate } from "react-router-dom";
 // import eruda from "eruda";
 import LoadingScreen from "../SmallPages/Loading/LoadingScreen";
 import Confetti from "../SmallPages/welComePages/Confetti";
+import Toast from "../../components/Toast/Toast";
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -159,7 +160,7 @@ const MainPage = () => {
   if (isLoading || isError) return <Skeleton />;
   return (
     <>
-      <Toast />
+      <Toast/>
       <LoadingScreen />
       <Confetti />
       <div className="mainPage">

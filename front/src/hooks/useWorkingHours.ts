@@ -6,8 +6,6 @@ import { useTranslation } from "react-i18next";
 export const useWorkingHours = (workingHours: WorkingHours) => {
   const { t } = useTranslation();
 
-  console.log(workingHours);
-
   return useMemo(() => {
     const daysOfWeek: (keyof WorkingHours)[] = [
       "Sunday",
@@ -20,22 +18,23 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
     ];
     const todayIndex = new Date().getDay();
     const now = new Date();
-    const currentMinutes = now.getHours() * 60 + now.getMinutes(); // Текущее время в минутах
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-    // Функция получения времени открытия
     const getOpeningTime = (dayIndex: number): string | null => {
       const day = daysOfWeek[dayIndex];
       const hours = workingHours?.[day]?.[0] || t("closed");
 
-      if (hours === "Closed" || hours === "Closed") return null;
-      return convertTo24HourFormat(hours).split("–")[0]; // Возвращаем время открытия
+      if (hours === "Closed" || hours === t("closed")) return null;
+      return convertTo24HourFormat(hours).split("–")[0];
     };
 
-    // Проверяем сегодняшнее расписание
-    const todayHours = workingHours?.[daysOfWeek[todayIndex]]?.[0] || t("closed");
+    const todayHours =
+      workingHours?.[daysOfWeek[todayIndex]]?.[0] || t("closed");
+    const yesterdayIndex = (todayIndex - 1 + 7) % 7;
+    const yesterdayHours =
+      workingHours?.[daysOfWeek[yesterdayIndex]]?.[0] || t("closed");
 
     if (todayHours === "Open 24 hours") {
-      // Если заведение работает круглосуточно
       return {
         isOpen: true,
         hours: t("open24Hours"),
@@ -44,16 +43,53 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
       };
     }
 
+    const checkOvernight = (hours: string, isYesterday = false) => {
+      if (hours !== t("closed")) {
+        const [start, end] = convertTo24HourFormat(hours)
+          .split("–")
+          .map((time) => {
+            const [h, m] = time.split(":").map(Number);
+            return h * 60 + m;
+          });
+
+        const isOvernight = end <= start;
+
+        if (isOvernight) {
+          if (
+            (isYesterday && currentMinutes < end) ||
+            (!isYesterday && currentMinutes >= start)
+          ) {
+            const minutesToClose =
+              currentMinutes >= start
+                ? 1440 - currentMinutes + end
+                : end - currentMinutes;
+            return {
+              isOpen: true,
+              hours: convertTo24HourFormat(hours),
+              willOpenAt: null,
+              closingIn:
+                minutesToClose <= 30
+                  ? t("closingInMinutes", { minutes: minutesToClose })
+                  : null,
+            };
+          }
+        }
+      }
+      return null;
+    };
+
+    const overnightStatus =
+      checkOvernight(yesterdayHours, true) || checkOvernight(todayHours);
+    if (overnightStatus) return overnightStatus;
+
     if (todayHours !== t("closed")) {
-      const [start, end] = convertTo24HourFormat(todayHours)
+      const [start] = convertTo24HourFormat(todayHours)
         .split("–")
         .map((time) => {
           const [h, m] = time.split(":").map(Number);
-          return h * 60 + m; // Время в минутах
+          return h * 60 + m;
         });
-
       if (currentMinutes < start) {
-        // Сегодня заведение еще не открылось
         return {
           isOpen: false,
           hours: todayHours,
@@ -62,29 +98,9 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
           }`,
           closingIn: null,
         };
-      } else if (currentMinutes >= start && currentMinutes < end) {
-        // Сегодня заведение открыто
-        const minutesToClose = end - currentMinutes;
-
-        if (minutesToClose <= 30) {
-          return {
-            isOpen: true,
-            hours: convertTo24HourFormat(todayHours),
-            willOpenAt: null,
-            closingIn: t("closingInMinutes", { minutes: minutesToClose }),
-          };
-        }
-
-        return {
-          isOpen: true,
-          hours: convertTo24HourFormat(todayHours),
-          willOpenAt: null,
-          closingIn: null,
-        };
       }
     }
 
-    // Ищем ближайший день открытия
     for (let offset = 1; offset < 7; offset++) {
       const nextDayIndex = (todayIndex + offset) % 7;
       const nextOpeningTime = getOpeningTime(nextDayIndex);
@@ -111,7 +127,6 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
       }
     }
 
-    // Если заведение не работает всю неделю
     return {
       isOpen: false,
       hours: t("closed"),
@@ -120,3 +135,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
     };
   }, [workingHours]);
 };
+
+///////
+///
+///
