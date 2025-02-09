@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import "./mainInfo.scss";
 import { GoBookmark } from "react-icons/go";
 import { GoBookmarkFill } from "react-icons/go";
@@ -37,7 +37,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bookMark, setBookMark] = useState(companyInfo?.is_favorite);
-  // const [addedHome, setAddedHome] = useState<boolean | null>(null);
+  const [addedHome, setAddedHome] = useState<boolean | null>(null);
   const companyId = useAppSelector(selectedCompanyId);
   const [favoriteApi] = useFavoriteApiMutation();
   const navigate = useNavigate();
@@ -55,55 +55,54 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
-  // useEffect(() => {
-  //   const tg = (window as any).Telegram?.WebApp;
+  useEffect(() => {
+    const tg = (window as any).Telegram?.WebApp;
 
-  //   const supportedPlatforms = ["android", "ios"];
-  //   if (tg?.platform && supportedPlatforms.includes(tg.platform)) {
-  //     if (tg?.checkHomeScreenStatus) {
-  //       tg.checkHomeScreenStatus((status: string) => {
-  //         setAddedHome(status === "added");
-  //       });
-  //     }
-  //     const handleHomeScreenAdded = () => {
-  //       setAddedHome(true);
-  //     };
+    const supportedPlatforms = ["android", "ios"];
+    if (tg?.platform && supportedPlatforms.includes(tg.platform)) {
+      if (tg?.checkHomeScreenStatus) {
+        tg.checkHomeScreenStatus((status: string) => {
+          setAddedHome(status === "added");
+        });
+      }
+      const handleHomeScreenAdded = () => {
+        setAddedHome(true);
+      };
 
-  //     tg?.onEvent?.("homeScreenAdded", handleHomeScreenAdded);
+      tg?.onEvent?.("homeScreenAdded", handleHomeScreenAdded);
 
-  //     return () => {
-  //       tg?.offEvent?.("homeScreenAdded", handleHomeScreenAdded);
-  //     };
-  //   } else {
-  //     setAddedHome(null);
-  //   }
-  // }, []);
+      return () => {
+        tg?.offEvent?.("homeScreenAdded", handleHomeScreenAdded);
+      };
+    } else {
+      setAddedHome(null);
+    }
+  }, []);
 
   const handleAddToHome = () => {
     const tg = (window as any).Telegram?.WebApp;
-    const customUrl = `https://t.me/TrueGis_Bot/start?startapp=${companyId}`;
 
     if (tg?.addToHomeScreen) {
-      tg.addToHomeScreen({ url: customUrl });
+      tg.addToHomeScreen();
 
-      // const storage = tg?.CloudStorage;
-      // if (storage) {
-      //   storage.setItem(
-      //     "companyId",
-      //     JSON.stringify({ addedToHome: true, companyId }),
-      //     (error: any, success: boolean) => {
-      //       if (error) {
-      //         console.error("Ошибка при сохранении в CloudStorage:", error);
-      //       } else if (success) {
-      //         console.log(
-      //           `Компания ${companyId} успешно сохранена в CloudStorage.`,
-      //         );
-      //       }
-      //     },
-      //   );
-      // } else {
-      //   console.warn("CloudStorage API недоступен.");
-      // }
+      const storage = tg?.CloudStorage;
+      if (storage) {
+        storage.setItem(
+          "companyId",
+          JSON.stringify({ addedToHome: true, companyId }),
+          (error: any, success: boolean) => {
+            if (error) {
+              console.error("Ошибка при сохранении в CloudStorage:", error);
+            } else if (success) {
+              console.log(
+                `Компания ${companyId} успешно сохранена в CloudStorage.`,
+              );
+            }
+          },
+        );
+      } else {
+        console.warn("CloudStorage API недоступен.");
+      }
     } else {
       alert("Добавление на главный экран недоступно.");
     }
@@ -202,12 +201,11 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <span>{companyInfo.type}</span>
           </div>
 
-          {/* {addedHome !== null && ( */}
-          <span onClick={handleAddToHome} className="mainInfo__logo__home">
-            <MdAddHome /> : <MdOutlineAddHome />
-          </span>
-          {/* )} */}
-          {/* {addedHome ? }*/}
+          {addedHome !== null && (
+            <span onClick={handleAddToHome} className="mainInfo__logo__home">
+              {addedHome ? <MdAddHome /> : <MdOutlineAddHome />}
+            </span>
+          )}
           <span onClick={toggleBookMark} className="mainInfo__logo__bookMark">
             {bookMark ? <GoBookmarkFill /> : <GoBookmark />}
           </span>
