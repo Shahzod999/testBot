@@ -2,8 +2,8 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import "./mainInfo.scss";
 import { GoBookmark } from "react-icons/go";
 import { GoBookmarkFill } from "react-icons/go";
-import { MdAddHome } from "react-icons/md";
-import { MdOutlineAddHome } from "react-icons/md";
+// import { MdAddHome } from "react-icons/md";
+// import { MdOutlineAddHome } from "react-icons/md";
 import { CompanyState } from "../../app/types/companyType";
 import ActionButtons from "./ActionButtons";
 import BottomSheet from "../Actions/BottomSheet";
@@ -25,6 +25,7 @@ import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import Distance from "./Distance";
 import WorkingHoursList from "../WorkingHoursList/WorkingHoursList";
 import SortDayByToday from "../../hooks/SortDayByToday";
+import AddToHomeScreenButton from "./AddToHomeScreenButton";
 
 interface ActionsState {
   text: string;
@@ -42,6 +43,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [favoriteApi] = useFavoriteApiMutation();
   const navigate = useNavigate();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
+  console.log(addedHome);
 
   const toggleBookMark = async () => {
     setBookMark((prev) => !prev);
@@ -79,34 +81,34 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   }, []);
 
-  const handleAddToHome = () => {
-    const tg = (window as any).Telegram?.WebApp;
+  // const handleAddToHome = () => {
+  //   const tg = (window as any).Telegram?.WebApp;
 
-    if (tg?.addToHomeScreen) {
-      tg.addToHomeScreen();
+  //   if (tg?.addToHomeScreen) {
+  //     tg.addToHomeScreen();
 
-      const storage = tg?.CloudStorage;
-      if (storage) {
-        storage.setItem(
-          "companyId",
-          JSON.stringify({ addedToHome: true, companyId }),
-          (error: any, success: boolean) => {
-            if (error) {
-              console.error("Ошибка при сохранении в CloudStorage:", error);
-            } else if (success) {
-              console.log(
-                `Компания ${companyId} успешно сохранена в CloudStorage.`,
-              );
-            }
-          },
-        );
-      } else {
-        console.warn("CloudStorage API недоступен.");
-      }
-    } else {
-      alert("Добавление на главный экран недоступно.");
-    }
-  };
+  //     const storage = tg?.CloudStorage;
+  //     if (storage) {
+  //       storage.setItem(
+  //         "companyId",
+  //         JSON.stringify({ addedToHome: true, companyId }),
+  //         (error: any, success: boolean) => {
+  //           if (error) {
+  //             console.error("Ошибка при сохранении в CloudStorage:", error);
+  //           } else if (success) {
+  //             console.log(
+  //               `Компания ${companyId} успешно сохранена в CloudStorage.`,
+  //             );
+  //           }
+  //         },
+  //       );
+  //     } else {
+  //       console.warn("CloudStorage API недоступен.");
+  //     }
+  //   } else {
+  //     alert("Добавление на главный экран недоступно.");
+  //   }
+  // };
 
   const actions = useMemo(
     () => [
@@ -201,11 +203,13 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <span>{companyInfo.type}</span>
           </div>
 
-          {addedHome !== null && (
+          {/* {addedHome !== null && (
             <span onClick={handleAddToHome} className="mainInfo__logo__home">
               {addedHome ? <MdAddHome /> : <MdOutlineAddHome />}
             </span>
-          )}
+          )} */}
+
+          <AddToHomeScreenButton />
           <span onClick={toggleBookMark} className="mainInfo__logo__bookMark">
             {bookMark ? <GoBookmarkFill /> : <GoBookmark />}
           </span>
