@@ -25,7 +25,6 @@ import DropDownMenu from "../DropDownMenu/DropDownMenu";
 import Distance from "./Distance";
 import WorkingHoursList from "../WorkingHoursList/WorkingHoursList";
 import SortDayByToday from "../../hooks/SortDayByToday";
-import AddToHomeButton from "./AddToHomeButton";
 
 interface ActionsState {
   text: string;
@@ -207,8 +206,6 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
               {addedHome ? <MdAddHome /> : <MdOutlineAddHome />}
             </span>
           )}
-
-          <AddToHomeButton />
           <span onClick={toggleBookMark} className="mainInfo__logo__bookMark">
             {bookMark ? <GoBookmarkFill /> : <GoBookmark />}
           </span>
