@@ -83,7 +83,7 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
     if (overnightStatus) return overnightStatus;
 
     if (todayHours !== t("closed")) {
-      const [start] = convertTo24HourFormat(todayHours)
+      const [start, end] = convertTo24HourFormat(todayHours)
         .split("–")
         .map((time) => {
           const [h, m] = time.split(":").map(Number);
@@ -96,6 +96,25 @@ export const useWorkingHours = (workingHours: WorkingHours) => {
           willOpenAt: `${t("todayAt")} ${
             convertTo24HourFormat(todayHours).split("–")[0]
           }`,
+          closingIn: null,
+        };
+      } else if (currentMinutes >= start && currentMinutes < end) {
+        // Сегодня заведение открыто
+        const minutesToClose = end - currentMinutes;
+
+        if (minutesToClose <= 30) {
+          return {
+            isOpen: true,
+            hours: convertTo24HourFormat(todayHours),
+            willOpenAt: null,
+            closingIn: t("closingInMinutes", { minutes: minutesToClose }),
+          };
+        }
+
+        return {
+          isOpen: true,
+          hours: convertTo24HourFormat(todayHours),
+          willOpenAt: null,
           closingIn: null,
         };
       }
