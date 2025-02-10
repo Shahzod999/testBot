@@ -201,6 +201,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <span>{companyInfo.type}</span>
           </div>
 
+test
           {addedHome !== null && (
             <span onClick={handleAddToHome} className="mainInfo__logo__home">
               {addedHome ? <MdAddHome /> : <MdOutlineAddHome />}
