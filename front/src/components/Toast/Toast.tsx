@@ -1,4 +1,4 @@
-import "./toast.scss"
+import "./toast.scss";
 
 import { useEffect } from "react";
 import { removeToast, selectToastMessage } from "../../app/features/toastSlice";
@@ -29,7 +29,9 @@ const Toast = () => {
       <div className="square__box">
         <div className="square__box__text">
           <div className={`toast-container ${message.state}`}></div>
-          <h3>Заявка отправлена</h3>
+          {message.state == "error" && <h3>Ошибка</h3>}
+          {message.state == "info" && <h3>Внимание</h3>}
+          {message.state == "success" && <h3>Заявка отправлена</h3>}
           <p>{message.text}</p>
         </div>
 
