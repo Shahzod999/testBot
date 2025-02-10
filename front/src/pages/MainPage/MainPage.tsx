@@ -133,7 +133,6 @@ const MainPage = () => {
       }
     }
 
-    // dispatch(setCompanyId(tg?.initDataUnsafe?.start_param || companyId));
     dispatch(setPlatform(tg.platform));
 
     if (
@@ -141,6 +140,7 @@ const MainPage = () => {
       (tg.platform == "ios" || tg.platform == "android")
     ) {
       tg.requestFullscreen();
+      tg.disableVerticalSwipes();
     } else {
       console.log(
         `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,
@@ -160,7 +160,7 @@ const MainPage = () => {
   if (isLoading || isError) return <Skeleton />;
   return (
     <>
-      <Toast/>
+      <Toast />
       <LoadingScreen />
       <Confetti />
       <div className="mainPage">
