@@ -75,15 +75,15 @@ const MainPage = () => {
     const mode = tg.colorScheme == "dark";
     dispatch(setDarkMode(mode));
 
-    if (tg?.LocationManager?.isAccessGranted) {
-      navigate("/welcome");
-    }
+    // if (tg?.LocationManager?.isAccessGranted) {
+    //   navigate("/welcome");
+    // }
 
     tg.LocationManager.init(() => {
       console.log("LocationManager initialized.");
-      // if (tg?.LocationManager?.isAccessGranted == false) {
-      //   navigate("/welcome");
-      // }
+      if (tg?.LocationManager?.isAccessGranted == false) {
+        navigate("/welcome");
+      }
       tg.LocationManager.getLocation((location: any) => {
         if (
           location &&

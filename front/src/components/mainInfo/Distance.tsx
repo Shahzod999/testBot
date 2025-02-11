@@ -2,9 +2,15 @@ import { useTranslation } from "react-i18next";
 import { ReactSVG } from "react-svg";
 import { CompanyState } from "../../app/types/companyType";
 import "./distance.scss";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import {
+  selectedUserLocation,
+  setuserLocation,
+} from "../../app/features/userLocationSlice";
 
 const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   // const getLocation = () => {
   //   if ("geolocation" in navigator) {
@@ -21,6 +27,22 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   //     console.error("Геолокация не поддерживается");
   //   }
   // };
+
+  const location = useAppSelector(selectedUserLocation);
+
+  const handleLocation = () => {
+    const tg = window.Telegram.WebApp;
+    tg.LocationManager.init(() => {
+      tg.LocationManager.getLocation((location: any) => {
+        dispatch(
+          setuserLocation({
+            lat: location.latitude,
+            lon: location.longitude,
+          }),
+        );
+      });
+    });
+  };
 
   return (
     <div className="distance">
@@ -45,6 +67,17 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <ReactSVG src="./car.fill.svg" />
             <span>{companyInfo?.distance?.duration}</span>
           </div>
+          {!location.lat && (
+            <>
+              •
+              <div
+                className="distance-duration-box distance--warning"
+                onClick={handleLocation}>
+                <ReactSVG src="./warning.svg" />
+                <span className="warningText">{t("turnOnlocation")}!</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <a
