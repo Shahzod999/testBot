@@ -4,6 +4,22 @@
     padding: 16px 0px;
     gap: 10px;
 
+    &--warning {
+        display: flex;
+        align-items: center;
+        white-space: wrap;
+        gap: 4px;
+
+        div {
+            display: flex;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+            padding-top: 3px;
+        }
+    }
 
     .icon {
         color: var(--tg-theme-text-color, #000);
@@ -47,13 +63,7 @@
         }
     }
 
-    .distance--warning {
-        svg {
-            width: 20px;
-            height: 20px;
-            padding-top: 3px;
-        }
-    }
+
 
     .mapImg {
         margin-left: auto;

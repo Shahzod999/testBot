@@ -7,6 +7,7 @@ import {
   selectedUserLocation,
   setuserLocation,
 } from "../../app/features/userLocationSlice";
+import { errorToast, succesToast } from "../../app/features/toastSlice";
 
 const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
@@ -32,22 +33,51 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const handleLocation = () => {
     const tg = window.Telegram.WebApp;
+
+    // Проверяем, поддерживается ли LocationManager
+    if (!tg.LocationManager) {
+      dispatch(errorToast(t("locationNotSupported")));
+      return;
+    }
+
     tg.LocationManager.init(() => {
-      tg.LocationManager.getLocation((location: any) => {
-        dispatch(
-          setuserLocation({
-            lat: location.latitude,
-            lon: location.longitude,
-          }),
-        );
+      tg.LocationManager.requestAccess((result: any) => {
+        if (result.status === "denied") {
+          dispatch(errorToast(t("locationPermissionDenied")));
+          return;
+        }
+
+        if (result.status === "granted") {
+          tg.LocationManager.getLocation((location: any) => {
+            if (location) {
+              dispatch(
+                setuserLocation({
+                  lat: location.latitude,
+                  lon: location.longitude,
+                }),
+              );
+              dispatch(succesToast(t("successfullyUpdated")));
+            } else {
+              dispatch(errorToast(t("locationError")));
+            }
+          });
+        } else {
+          dispatch(errorToast(t("unknownLocationError")));
+        }
       });
     });
   };
 
+  if (!location.lat)
+    return (
+      <div className="distance--warning" onClick={handleLocation}>
+        <ReactSVG src="./warning.svg" />
+        <span className="warningText">{t("turnOnlocation")}!</span>
+      </div>
+    );
   return (
     <div className="distance">
       <ReactSVG src="icons/route.svg" />
-
       <div>
         <div className="distance-distance">
           {t("distance")}: {companyInfo?.distance?.distance || t("loading")}
@@ -67,19 +97,9 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
             <ReactSVG src="./car.fill.svg" />
             <span>{companyInfo?.distance?.duration}</span>
           </div>
-          {!location.lat && (
-            <>
-              •
-              <div
-                className="distance-duration-box distance--warning"
-                onClick={handleLocation}>
-                <ReactSVG src="./warning.svg" />
-                <span className="warningText">{t("turnOnlocation")}!</span>
-              </div>
-            </>
-          )}
         </div>
       </div>
+
       <a
         className="mapImg"
         href={`https://maps.google.com/?q=${companyInfo.latitude},${companyInfo.longitude}`}

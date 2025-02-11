@@ -81,7 +81,7 @@ const MainPage = () => {
 
     tg.LocationManager.init(() => {
       console.log("LocationManager initialized.");
-      if (tg?.LocationManager?.isAccessGranted == false) {
+      if (tg?.LocationManager?.isAccessRequested == false) {
         navigate("/welcome");
       }
       tg.LocationManager.getLocation((location: any) => {

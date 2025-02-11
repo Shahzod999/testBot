@@ -4,7 +4,7 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
-      turnOnlocation: "Turn on location",
+      turnOnlocation: "Click to turn on location",
       leaveAComment: "Leave a comment",
       welcomeOne: "Instantly find places closest to you!",
       welcomeTwo: "Follow and use promotions in places",
@@ -177,7 +177,7 @@ const resources = {
   },
   ru: {
     translation: {
-      turnOnlocation: "Включите локацию",
+      turnOnlocation: "Нажмите чтобы включить локацию",
       leaveAComment: "Оставьте комментарий",
       welcomeOne: "Мгновенно находите ближайшие к вам места!",
       welcomeTwo: "Следите и воспользуйтесь акциями в местах",
@@ -349,7 +349,7 @@ const resources = {
   },
   uz: {
     translation: {
-      turnOnlocation: "Joylashuvni yoqing",
+      turnOnlocation: "Bosib, joylashuvni yoqing",
 
       leaveAComment: "Fikr qoldiring",
       welcomeOne: "Eng yaqin joylarni darhol toping!",
@@ -524,7 +524,7 @@ const resources = {
   },
   cyrl: {
     translation: {
-      turnOnlocation: "Жойлашувни ёқинг",
+      turnOnlocation: "Босиб, жойлашувни ёқинг",
       leaveAComment: "Фикр қолдиринг",
       welcomeOne: "Энг яқин жойларни дарҳол топинг!",
       welcomeTwo: "Акцияларни кузатиб боринг ва фойдаланинг",
