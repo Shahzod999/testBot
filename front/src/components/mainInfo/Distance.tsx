@@ -6,21 +6,21 @@ import "./distance.scss";
 const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
 
-  const getLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log("Latitude:", position.coords.latitude);
-          console.log("Longitude:", position.coords.longitude);
-        },
-        (error) => {
-          console.error("Ошибка получения геолокации:", error);
-        },
-      );
-    } else {
-      console.error("Геолокация не поддерживается");
-    }
-  };
+  // const getLocation = () => {
+  //   if ("geolocation" in navigator) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         console.log("Latitude:", position.coords.latitude);
+  //         console.log("Longitude:", position.coords.longitude);
+  //       },
+  //       (error) => {
+  //         console.error("Ошибка получения геолокации:", error);
+  //       },
+  //     );
+  //   } else {
+  //     console.error("Геолокация не поддерживается");
+  //   }
+  // };
 
   return (
     <div className="distance">
@@ -47,10 +47,13 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
           </div>
         </div>
       </div>
-
-      <div className="mapImg" onClick={getLocation}>
+      <a
+        className="mapImg"
+        href={`https://maps.google.com/?q=${companyInfo.latitude},${companyInfo.longitude}`}
+        target="_blank"
+        rel="noopener noreferrer">
         <img src="./map.jpg" alt="" />
-      </div>
+      </a>
     </div>
   );
 };

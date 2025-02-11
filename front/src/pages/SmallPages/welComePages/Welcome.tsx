@@ -3,18 +3,23 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Pagination } from "swiper/modules";
 import welcomeSecond from "../../../../public/welcomeSecond.json";
+import openDoorUtya from "../../../../public/utya/openDoor.json";
 import baristaUtya from "../../../../public/baristaUtya.json";
-import searchUtya from "../../../../public/searchUtya.json";
+// import searchUtya from "../../../../public/searchUtya.json";
 import "./welcome.scss";
 import CommonButton from "../../../components/Actions/CommonButton";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { setConfitti } from "../../../app/features/RaitingStarsSlice";
 import { hapticVibration } from "../../../hooks/hapticVibration";
 import { useTranslation } from "react-i18next";
+import { selectedCompany } from "../../../app/features/companyStateSlice";
 
 const Welcome = () => {
+  const companyInfo = useAppSelector(selectedCompany);
+  console.log(companyInfo);
+
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [text, setText] = useState(t("next"));
@@ -58,6 +63,8 @@ const Welcome = () => {
     return () => swiper.off("slideChange", updateText);
   }, []);
 
+  console.log(companyInfo?.photos_sample[0].photo_url_large);
+
   return (
     <div className="notFoundPage">
       <div className="notFoundPage__sticker">
@@ -70,9 +77,9 @@ const Welcome = () => {
           ref={swiperRef}>
           <SwiperSlide>
             <WelcomeBox
-              img={searchUtya}
-              title={t("welcomeOne")}
-              text={t("welcomeThree")}
+              img={openDoorUtya}
+              title={companyInfo?.name || t("welcomeOne")}
+              text={companyInfo?.description || t("welcomeThree")}
             />
           </SwiperSlide>
           <SwiperSlide>

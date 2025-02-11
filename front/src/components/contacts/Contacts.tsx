@@ -8,13 +8,13 @@ import { Link } from "react-router-dom";
 import EmailContact from "./Email/EmailContact";
 import SocialMediaComponent from "./SocialMedia/SocialMediaComponent";
 import { useTranslation } from "react-i18next";
-import { useWorkTimeStatus } from "../../hooks/useWorkTimeStatus";
+// import { useWorkTimeStatus } from "../../hooks/useWorkTimeStatus";
 
 import CompanyApps from "./CompanyApps/CompanyApps";
 import Vacancies from "./Vacancies/Vacancies";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
-import WorkingHoursList from "../WorkingHoursList/WorkingHoursList";
-import useSortedWorkingHours from "../../hooks/sortingDays";
+// import WorkingHoursList from "../WorkingHoursList/WorkingHoursList";
+// import useSortedWorkingHours from "../../hooks/sortingDays";
 
 const getAvailableSocialMedia = (
   socialMedia: Record<string, string | any | null>,
@@ -27,20 +27,20 @@ const getAvailableSocialMedia = (
 };
 
 const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
-  const sortedWorkingHours = useSortedWorkingHours(companyInfo?.working_hours);
-  const { status, workingHours } = useWorkTimeStatus(
-    companyInfo?.working_hours,
-  );
+  // const sortedWorkingHours = useSortedWorkingHours(companyInfo?.working_hours);
+  // const { status, workingHours } = useWorkTimeStatus(
+  //   companyInfo?.working_hours,
+  // );
   const { t } = useTranslation();
 
   const actions = useMemo(
     () => [
-      {
-        text: `${status} ${workingHours}`,
-        icon: "Exclude.svg",
-        isDisabled: false,
-        menu: <WorkingHoursList working_hours={sortedWorkingHours} />,
-      },
+      // {
+      //   text: `${status} ${workingHours}`,
+      //   icon: "Exclude.svg",
+      //   isDisabled: false,
+      //   menu: <WorkingHoursList working_hours={sortedWorkingHours} />,
+      // },
       {
         text: companyInfo?.phone_number || t("noNumber"),
         icon: "phone.svg",
