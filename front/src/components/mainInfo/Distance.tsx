@@ -8,22 +8,10 @@ import {
   setuserLocation,
 } from "../../app/features/userLocationSlice";
 // import { errorToast, succesToast } from "../../app/features/toastSlice";
-import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
-import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 
 const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
   const locationUser = useAppSelector(selectedUserLocation);
-  const companyId = useAppSelector(selectedCompanyId);
-
-  useGetCompanyByIdQuery(
-    {
-      id: companyId,
-      lat: locationUser.lat || import.meta.env.VITE_LAT,
-      long: locationUser.lon || import.meta.env.VITE_LON,
-    },
-    { skip: !companyId },
-  );
 
   const dispatch = useAppDispatch();
 

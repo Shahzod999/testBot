@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import {
   useGetCompanyByIdQuery,
   useGetUserInfoQuery,
@@ -14,7 +14,10 @@ import {
   setUserTelegramId,
 } from "../../app/features/getCompanyIdSlice";
 import { TelegramTypes } from "../../app/types/telegramTypes";
-import { setuserLocation } from "../../app/features/userLocationSlice";
+import {
+  selectedUserLocation,
+  setuserLocation,
+} from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
 
 import { Outlet, useNavigate } from "react-router-dom";
@@ -47,11 +50,12 @@ const MainPage = () => {
   const navigate = useNavigate();
   const companyId = useAppSelector(selectedCompanyId);
   const telegramId = useAppSelector(selectedUserTelegramId);
+  const userLocation = useAppSelector(selectedUserLocation);
 
   useGetUserInfoQuery({ id: telegramId }, { skip: !telegramId });
 
   const dispatch = useAppDispatch();
-  const [loc, setLoc] = useState({ lat: 0, lon: 0 });
+  // const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
   useEffect(() => {
     if (!telegramId) {
@@ -87,7 +91,8 @@ const MainPage = () => {
       tg.LocationManager.getLocation((location: any) => {
         if (
           location &&
-          (location.latitude !== loc.lat || location.longitude !== loc.lon)
+          (location.latitude !== userLocation.lat ||
+            location.longitude !== userLocation.lon)
         ) {
           dispatch(
             setuserLocation({
@@ -95,10 +100,10 @@ const MainPage = () => {
               lon: location.longitude,
             }),
           );
-          setLoc({
-            lat: location.latitude,
-            lon: location.longitude,
-          });
+          // setLoc({
+          //   lat: location.latitude,
+          //   lon: location.longitude,
+          // });
         } else {
           console.log("Location access was not granted or is unavailable.");
         }
@@ -148,14 +153,18 @@ const MainPage = () => {
     }
   }, [dispatch, companyId]);
 
-  const { isLoading, isError } = useGetCompanyByIdQuery(
-    {
+  const query = useMemo(
+    () => ({
       id: companyId,
-      lat: loc.lat || import.meta.env.VITE_LAT,
-      long: loc.lon || import.meta.env.VITE_LON,
-    },
-    { skip: !companyId },
+      lat: userLocation.lat || import.meta.env.VITE_LAT,
+      long: userLocation.lon || import.meta.env.VITE_LON,
+    }),
+    [userLocation, companyId],
   );
+
+  const { isLoading, isError } = useGetCompanyByIdQuery(query, {
+    skip: !companyId,
+  });
 
   if (isLoading || isError) return <Skeleton />;
   return (
