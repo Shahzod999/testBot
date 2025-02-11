@@ -75,7 +75,7 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   console.log(locationUser);
 
-  if (!locationUser.lat)
+  if (!locationUser.lat || !locationUser.lon)
     return (
       <div className="distance--warning" onClick={handleLocation}>
         <ReactSVG src="./warning.svg" />
