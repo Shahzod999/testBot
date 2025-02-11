@@ -9,7 +9,7 @@ import baristaUtya from "../../../../public/baristaUtya.json";
 import "./welcome.scss";
 import CommonButton from "../../../components/Actions/CommonButton";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { setConfitti } from "../../../app/features/RaitingStarsSlice";
 import { hapticVibration } from "../../../hooks/hapticVibration";
@@ -18,11 +18,9 @@ import { selectedCompany } from "../../../app/features/companyStateSlice";
 
 const Welcome = () => {
   const companyInfo = useAppSelector(selectedCompany);
-  console.log(companyInfo);
 
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const [text, setText] = useState(t("next"));
   const navigate = useNavigate();
   const swiperRef = useRef<any>(null);
 
@@ -42,28 +40,10 @@ const Welcome = () => {
     const currentSlideIndex = swiper.realIndex;
     swiper.slideNext();
 
-    if (currentSlideIndex === 1) {
-      setText(t("start"));
-    }
     if (currentSlideIndex === 2) {
       handleNavigate();
     }
   };
-
-  useEffect(() => {
-    const swiper = swiperRef.current?.swiper;
-    if (!swiper) return;
-
-    const updateText = () => {
-      const currentSlideIndex = swiper.realIndex;
-      if (currentSlideIndex === 2) setText(t("start"));
-    };
-
-    swiper.on("slideChange", updateText);
-    return () => swiper.off("slideChange", updateText);
-  }, []);
-
-  console.log(companyInfo?.photos_sample[0].photo_url_large);
 
   return (
     <div className="notFoundPage">
@@ -100,7 +80,7 @@ const Welcome = () => {
       </div>
 
       <div className="notFoundPage__button">
-        <CommonButton createdFunction={handleLink}>{text}</CommonButton>
+        <CommonButton createdFunction={handleLink}>{t("next")}</CommonButton>
       </div>
     </div>
   );
