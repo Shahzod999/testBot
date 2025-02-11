@@ -7,68 +7,86 @@ import {
   selectedUserLocation,
   setuserLocation,
 } from "../../app/features/userLocationSlice";
-import { errorToast, succesToast } from "../../app/features/toastSlice";
+// import { errorToast, succesToast } from "../../app/features/toastSlice";
+import { useGetCompanyByIdQuery } from "../../app/api/companySlice";
+import { selectedCompanyId } from "../../app/features/getCompanyIdSlice";
 
 const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
+  const locationUser = useAppSelector(selectedUserLocation);
+  const companyId = useAppSelector(selectedCompanyId);
+
+  useGetCompanyByIdQuery(
+    {
+      id: companyId,
+      lat: locationUser.lat || import.meta.env.VITE_LAT,
+      long: locationUser.lon || import.meta.env.VITE_LON,
+    },
+    { skip: !companyId },
+  );
+
   const dispatch = useAppDispatch();
 
-  // const getLocation = () => {
-  //   if ("geolocation" in navigator) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         console.log("Latitude:", position.coords.latitude);
-  //         console.log("Longitude:", position.coords.longitude);
-  //       },
-  //       (error) => {
-  //         console.error("Ошибка получения геолокации:", error);
-  //       },
-  //     );
-  //   } else {
-  //     console.error("Геолокация не поддерживается");
-  //   }
-  // };
-
-  const location = useAppSelector(selectedUserLocation);
-
   const handleLocation = () => {
-    const tg = window.Telegram.WebApp;
-
-    // Проверяем, поддерживается ли LocationManager
-    if (!tg.LocationManager) {
-      dispatch(errorToast(t("locationNotSupported")));
-      return;
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          dispatch(
+            setuserLocation({
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+            }),
+          );
+        },
+        (error) => {
+          console.error("Ошибка получения геолокации:", error);
+        },
+      );
+    } else {
+      console.error("Геолокация не поддерживается");
     }
-
-    tg.LocationManager.init(() => {
-      tg.LocationManager.requestAccess((result: any) => {
-        if (result.status === "denied") {
-          dispatch(errorToast(t("locationPermissionDenied")));
-          return;
-        }
-
-        if (result.status === "granted") {
-          tg.LocationManager.getLocation((location: any) => {
-            if (location) {
-              dispatch(
-                setuserLocation({
-                  lat: location.latitude,
-                  lon: location.longitude,
-                }),
-              );
-              dispatch(succesToast(t("successfullyUpdated")));
-            } else {
-              dispatch(errorToast(t("locationError")));
-            }
-          });
-        } else {
-          dispatch(errorToast(t("unknownLocationError")));
-        }
-      });
-    });
   };
 
-  if (!location.lat)
+  // const handleLocation = () => {
+  //   const tg = window.Telegram.WebApp;
+
+  //   // Проверяем, поддерживается ли LocationManager
+  //   if (!tg.LocationManager) {
+  //     dispatch(errorToast(t("locationNotSupported")));
+  //     return;
+  //   }
+
+  //   tg.LocationManager.init(() => {
+  //     tg.LocationManager.requestAccess((result: any) => {
+  //       if (result.status === "denied") {
+  //         dispatch(errorToast(t("locationPermissionDenied")));
+  //         return;
+  //       }
+
+  //       if (result.status === "granted") {
+  //         tg.LocationManager.getLocation((location: any) => {
+  //           if (location) {
+  //             dispatch(
+  //               setuserLocation({
+  //                 lat: location.latitude,
+  //                 lon: location.longitude,
+  //               }),
+  //             );
+  //             dispatch(succesToast(t("successfullyUpdated")));
+  //           } else {
+  //             dispatch(errorToast(t("locationError")));
+  //           }
+  //         });
+  //       } else {
+  //         dispatch(errorToast(t("unknownLocationError")));
+  //       }
+  //     });
+  //   });
+  // };
+
+  console.log(locationUser);
+
+  if (!locationUser.lat)
     return (
       <div className="distance--warning" onClick={handleLocation}>
         <ReactSVG src="./warning.svg" />

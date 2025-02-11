@@ -9,6 +9,7 @@ import { openLinkNavigate } from "../../../hooks/openLinkNavigate";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import BottomSheet from "../../Actions/BottomSheet";
 import EditAction from "../../contacts/EditAction";
+import { useMemo } from "react";
 
 interface TaxiProps {
   activeAction: string | null;
@@ -23,9 +24,10 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
   const { t } = useTranslation();
 
   const isBottomSheetOpen = activeAction === "taxi";
+  console.log(location);
 
-  const { data, isLoading, isFetching } = useGetYandexPriceQuery(
-    {
+  const query = useMemo(
+    () => ({
       from_address: {
         lat: location.lat,
         long: location.lon,
@@ -34,11 +36,13 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
         lat: companyInfo.latitude,
         long: companyInfo.longitude,
       },
-    },
-    {
-      skip: !isBottomSheetOpen,
-    },
+    }),
+    [location, companyInfo],
   );
+
+  const { data, isLoading, isFetching } = useGetYandexPriceQuery(query, {
+    skip: !isBottomSheetOpen,
+  });
 
   const yandexUrl = `https://3.redirect.appmetrica.yandex.com/route?start-lat=${location.lat}&start-lon=${location.lon}&end-lat=${companyInfo.latitude}&end-lon=${companyInfo.longitude}&tariffClass=econom&ref=https://truegiswebapp.uz/&appmetrica_tracking_id=1178268795219780156`;
 
