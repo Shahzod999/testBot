@@ -1,7 +1,6 @@
 import convertTo24HourFormat from "../../hooks/convertTo24HourFormat";
 import useDayTranslator from "../../hooks/translateDay";
 import { ContactsActions } from "../contacts/ContactsActions";
-// import useSortedWorkingHours from "../../hooks/sortingDays";
 import { WorkingHours } from "../../app/types/companyType";
 
 interface WorkingHoursProps {
@@ -9,8 +8,6 @@ interface WorkingHoursProps {
 }
 
 const WorkingHoursList = ({ working_hours }: WorkingHoursProps) => {
-  // const sortedWorkingHours = useSortedWorkingHours(working_hours);
-
   const translateDay = useDayTranslator();
 
   return (

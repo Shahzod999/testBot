@@ -16,16 +16,16 @@ const SortDayByToday = (workingHours: WorkingHours): WorkingHours => {
     ];
 
     const todayIndex = new Date().getDay(); // 0 (Sunday) to 6 (Saturday)
-
     // Приводим индекс к нужному дню недели
     const adjustedTodayIndex = todayIndex === 0 ? 6 : todayIndex - 1; // Понедельник = 0, Воскресенье = 6
 
-    // Убираем сегодняшний день из списка
-    const filteredDaysOrder = daysOrder.filter(
-      (_, index) => index !== adjustedTodayIndex,
-    );
+    // Формируем новый порядок дней, начиная с завтрашнего дня
+    const sortedDaysOrder = [
+      ...daysOrder.slice(adjustedTodayIndex + 1),
+      ...daysOrder.slice(0, adjustedTodayIndex),
+    ];
 
-    return filteredDaysOrder.reduce((sortedObj, day) => {
+    return sortedDaysOrder.reduce((sortedObj, day) => {
       if (workingHours[day]) {
         sortedObj[day] = workingHours[day];
       }
