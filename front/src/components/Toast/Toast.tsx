@@ -3,10 +3,12 @@ import "./toast.scss";
 import { useEffect } from "react";
 import { removeToast, selectToastMessage } from "../../app/features/toastSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useTranslation } from "react-i18next";
 
 const Toast = () => {
   const dispatch = useAppDispatch();
   const message = useAppSelector(selectToastMessage);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (message) {
@@ -29,9 +31,9 @@ const Toast = () => {
       <div className="square__box">
         <div className="square__box__text">
           <div className={`toast-container ${message.state}`}></div>
-          {message.state == "error" && <h3>Ошибка</h3>}
-          {message.state == "info" && <h3>Внимание</h3>}
-          {message.state == "success" && <h3>Заявка отправлена</h3>}
+          {message.state == "error" && <h3>{t("error")}</h3>}
+          {message.state == "info" && <h3>{t("attention")}</h3>}
+          {message.state == "success" && <h3>{t("requestSent")}</h3>}
           <p>{message.text}</p>
         </div>
 

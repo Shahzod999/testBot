@@ -7,7 +7,7 @@ import {
   selectedUserLocation,
   setuserLocation,
 } from "../../app/features/userLocationSlice";
-// import { errorToast, succesToast } from "../../app/features/toastSlice";
+import { infoToast } from "../../app/features/toastSlice";
 
 const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
@@ -27,7 +27,8 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
           );
         },
         (error) => {
-          console.error("Ошибка получения геолокации:", error);
+          dispatch(infoToast(t("errorGeolocation")));
+          console.error(t("errorGeolocation"), error);
         },
       );
     } else {

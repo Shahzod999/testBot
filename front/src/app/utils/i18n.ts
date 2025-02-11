@@ -4,6 +4,11 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
+      errorGeolocation: "Error obtaining geolocation.",
+
+      error: "Error",
+      attention: "Attention",
+      requestSent: "Request sent",
       turnOnlocation: "Click to turn on location",
       leaveAComment: "Leave a comment",
       welcomeOne: "Instantly find places closest to you!",
@@ -99,7 +104,6 @@ const resources = {
 
       textCopied: "Text copied to clipboard",
       failedToCopy: "Failed to copy text",
-      error: "Error",
 
       //
 
@@ -177,6 +181,11 @@ const resources = {
   },
   ru: {
     translation: {
+      errorGeolocation: "Ошибка получения геолокации.",
+
+      error: "Ошибка",
+      attention: "Внимание",
+      requestSent: "Заявка отправлена",
       turnOnlocation: "Нажмите чтобы включить локацию",
       leaveAComment: "Оставьте комментарий",
       welcomeOne: "Мгновенно находите ближайшие к вам места!",
@@ -273,7 +282,6 @@ const resources = {
 
       textCopied: "Текст скопирован в буфер обмена",
       failedToCopy: "Не удалось скопировать текст",
-      error: "Ошибка",
 
       //
 
@@ -349,6 +357,11 @@ const resources = {
   },
   uz: {
     translation: {
+      errorGeolocation: "Geolokatsiyani olishda xatolik.",
+
+      error: "Xato",
+      attention: "Diqqat",
+      requestSent: "Ariza yuborildi",
       turnOnlocation: "Bosib, joylashuvni yoqing",
 
       leaveAComment: "Fikr qoldiring",
@@ -447,7 +460,6 @@ const resources = {
 
       textCopied: "Matn buferga nusxalandi",
       failedToCopy: "Matnni nusxalab bo'lmadi",
-      error: "Xato",
 
       //
 
@@ -524,6 +536,10 @@ const resources = {
   },
   cyrl: {
     translation: {
+      errorGeolocation: "Геолокацияни олишда хатолик.",
+      error: "Хато",
+      attention: "Диққат",
+      requestSent: "Ариза юборилди",
       turnOnlocation: "Босиб, жойлашувни ёқинг",
       leaveAComment: "Фикр қолдиринг",
       welcomeOne: "Энг яқин жойларни дарҳол топинг!",
@@ -620,8 +636,6 @@ const resources = {
 
       textCopied: "Матн буферга нусхаланди",
       failedToCopy: "Матнни нусхалаб бўлмади",
-      error: "Хато",
-
       //
 
       editCompany: "Таҳрирлаш",
