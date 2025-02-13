@@ -14,7 +14,7 @@ const SocialMediaComponent = ({
         .map(([name, url]) => {
           const link =
             name.toLowerCase() === "telegram"
-              ? `https://t.me/${url.replace("@", "")}`
+              ? `t.me/${url.replace("@", "")}`
               : name.toLowerCase() === "whatsapp"
               ? `https://wa.me/${url.replace("+", "").trim()}`
               : url;
