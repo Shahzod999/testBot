@@ -44,6 +44,7 @@ declare global {
 const tg = window?.Telegram?.WebApp;
 
 const MainPage = () => {
+  const dispatch = useAppDispatch();
   const companyId = useAppSelector(selectedCompanyId);
   const telegramId = useAppSelector(selectedUserTelegramId);
   const userLocation = useAppSelector(selectedUserLocation);
@@ -52,8 +53,6 @@ const MainPage = () => {
   const { initializeCompany } = useInitializeCompany();
 
   useGetUserInfoQuery({ id: telegramId }, { skip: !telegramId });
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!telegramId) {
@@ -69,8 +68,6 @@ const MainPage = () => {
   }, [telegramId, dispatch]);
 
   useEffect(() => {
-    const requiredVersion = "8.0";
-    const currentVersion = tg.version;
     tg.ready();
     tg.expand();
 
@@ -82,6 +79,8 @@ const MainPage = () => {
 
     dispatch(setPlatform(tg.platform));
 
+    const requiredVersion = "8.0";
+    const currentVersion = tg.version;
     if (
       currentVersion >= requiredVersion &&
       (tg.platform == "ios" || tg.platform == "android")
@@ -93,7 +92,7 @@ const MainPage = () => {
         `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,
       );
     }
-  }, [dispatch, companyId]);
+  }, [dispatch, handleLocation, initializeCompany]);
 
   const query = useMemo(
     () => ({
