@@ -9,22 +9,19 @@ import Skeleton from "../../components/skeleton/Skeleton";
 import {
   selectedCompanyId,
   selectedUserTelegramId,
-  setCompanyId,
   setPlatform,
   setUserTelegramId,
 } from "../../app/features/getCompanyIdSlice";
 import { TelegramTypes } from "../../app/types/telegramTypes";
-import {
-  selectedUserLocation,
-  setuserLocation,
-} from "../../app/features/userLocationSlice";
+import { selectedUserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
-
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 // import eruda from "eruda";
 import LoadingScreen from "../SmallPages/Loading/LoadingScreen";
 import Confetti from "../SmallPages/welComePages/Confetti";
 import Toast from "../../components/Toast/Toast";
+import { useLocation } from "../../app/utils/locationUtils"; // Импортируем хук для работы с местоположением
+import { useInitializeCompany } from "../../app/utils/companyUtils"; // Импортируем хук для инициализации ком
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -47,15 +44,16 @@ declare global {
 const tg = window?.Telegram?.WebApp;
 
 const MainPage = () => {
-  const navigate = useNavigate();
   const companyId = useAppSelector(selectedCompanyId);
   const telegramId = useAppSelector(selectedUserTelegramId);
   const userLocation = useAppSelector(selectedUserLocation);
 
+  const { handleLocation } = useLocation();
+  const { initializeCompany } = useInitializeCompany();
+
   useGetUserInfoQuery({ id: telegramId }, { skip: !telegramId });
 
   const dispatch = useAppDispatch();
-  // const [loc, setLoc] = useState({ lat: 0, lon: 0 });
 
   useEffect(() => {
     if (!telegramId) {
@@ -79,64 +77,8 @@ const MainPage = () => {
     const mode = tg.colorScheme == "dark";
     dispatch(setDarkMode(mode));
 
-    // if (tg?.LocationManager?.isAccessGranted) {
-    //   navigate("/welcome");
-    // }
-
-    tg.LocationManager.init(() => {
-      console.log("LocationManager initialized.");
-      if (tg?.LocationManager?.isAccessRequested == false) {
-        navigate("/welcome");
-      }
-      tg.LocationManager.getLocation((location: any) => {
-        if (
-          location &&
-          (location.latitude !== userLocation.lat ||
-            location.longitude !== userLocation.lon)
-        ) {
-          dispatch(
-            setuserLocation({
-              lat: location.latitude,
-              lon: location.longitude,
-            }),
-          );
-          // setLoc({
-          //   lat: location.latitude,
-          //   lon: location.longitude,
-          // });
-        } else {
-          console.log("Location access was not granted or is unavailable.");
-        }
-      });
-    });
-
-    const initCompanyId =
-      tg?.initDataUnsafe?.start_param || import.meta.env.VITE_COMPANYID;
-
-    if (initCompanyId) {
-      dispatch(setCompanyId(initCompanyId));
-    } else {
-      const storage = tg?.CloudStorage;
-      if (storage) {
-        storage.getItem("companyId", (error: any, value: string | null) => {
-          if (error) {
-            const defaultCompanyId = import.meta.env.VITE_COMPANYID;
-            dispatch(setCompanyId(defaultCompanyId));
-          } else if (value) {
-            const data = JSON.parse(value);
-            if (data?.companyId) {
-              dispatch(setCompanyId(data.companyId));
-            }
-          } else {
-            const defaultCompanyId = import.meta.env.VITE_COMPANYID;
-            dispatch(setCompanyId(defaultCompanyId));
-          }
-        });
-      } else {
-        const defaultCompanyId = import.meta.env.VITE_COMPANYID;
-        dispatch(setCompanyId(defaultCompanyId));
-      }
-    }
+    handleLocation(); // Запрашиваем местоположение
+    initializeCompany(); // Инициализируем компанию
 
     dispatch(setPlatform(tg.platform));
 
