@@ -90,6 +90,8 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
     [companyInfo],
   );
 
+  console.log(companyInfo.website);
+  
   if (!companyInfo) return null;
   return (
     <>

@@ -159,7 +159,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
     event.stopPropagation();
 
     if (companyInfo._id == "673a8bf64ddf83aebaa1c970") {
-      window.open("https://lfcapital.uz/ru/open-account/");
+      window.Telegram.WebApp.openLink("https://lfcapital.uz/ru/open-account/");
       return;
     }
     if (companyInfo?.has_menu) {
