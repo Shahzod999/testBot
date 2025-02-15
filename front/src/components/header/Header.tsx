@@ -13,6 +13,15 @@ interface HeaderProps {
 
 const Header = ({ img }: HeaderProps) => {
   const tg = window.Telegram.WebApp;
+  const newImg = img
+    .map((item) => ({
+      ...item,
+      validUrl: item.photo_url_large || item.photo_url,
+    }))
+    .filter((item) => item.validUrl);
+
+  console.log(newImg);
+
   const [openImg, setOpenImg] = useState(false);
 
   const handleClose = () => {
@@ -22,7 +31,7 @@ const Header = ({ img }: HeaderProps) => {
   useEffect(() => {
     if (openImg) {
       tg.BackButton.show();
-      
+
       const handleBackClick = () => {
         handleClose();
       };
@@ -36,7 +45,14 @@ const Header = ({ img }: HeaderProps) => {
     }
   }, [setOpenImg, handleClose]);
 
-  if (!img || img.length === 0) {
+  useEffect(() => {
+    const video = document.getElementById("videoPlayer") as HTMLVideoElement;
+    if (video) {
+      video.play().catch((error) => console.warn("AutoPlay blocked:", error));
+    }
+  }, []);
+
+  if (!newImg || newImg.length === 0) {
     return (
       <header
         onClick={handleClose}
@@ -88,16 +104,30 @@ const Header = ({ img }: HeaderProps) => {
         className="mySwiper"
         watchSlidesProgress
         loop>
-        {img?.map((item, index) => (
+        {newImg.map((item, index) => (
           <SwiperSlide key={item.photo_id || index}>
             <div className="swiper-zoom-container">
-              <img
-                src={getValidatedUrl(item.photo_url_large)}
-                alt="Slide image"
-                className={openImg ? "" : "headerSwiper"}
-                loading="lazy"
-              />
-              <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+              {item.type == "video" ? (
+                <video
+                  controls
+                  autoPlay
+                  playsInline
+                  muted
+                  className="headerSwiperVideo"
+                  preload="auto">
+                  <source src={item.validUrl} type="video/mp4" />
+                  Ваш браузер не поддерживает видео.
+                </video>
+              ) : (
+                <>
+                  <img
+                    src={getValidatedUrl(item.validUrl)}
+                    alt="image"
+                    loading="lazy"
+                  />
+                  <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                </>
+              )}
             </div>
           </SwiperSlide>
         ))}
