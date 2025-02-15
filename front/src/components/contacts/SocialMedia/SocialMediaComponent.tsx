@@ -7,6 +7,8 @@ const SocialMediaComponent = ({
 }: {
   social_media: SocialMedia;
 }) => {
+  console.log(social_media);
+
   return (
     <div className="dropDownMenuHolderStyle">
       {Object.entries(social_media || {})
@@ -14,7 +16,7 @@ const SocialMediaComponent = ({
         .map(([name, url]) => {
           const link =
             name.toLowerCase() === "telegram"
-              ? `https://t.me/${url.replace("@", "")}`
+              ? `https://t.me/${url.replace(/(@|t\.me\/)/g, "")}`
               : name.toLowerCase() === "whatsapp"
               ? `https://wa.me/${url.replace("+", "").trim()}`
               : url;

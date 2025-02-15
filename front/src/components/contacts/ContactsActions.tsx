@@ -29,7 +29,8 @@ export const ContactsActions = ({
     }
 
     if (phone) {
-      window.open(phone);
+      window.Telegram.WebApp.openLink(phone);
+      // window.open(phone);
     }
   };
 
