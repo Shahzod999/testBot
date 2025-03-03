@@ -17,7 +17,7 @@ const FoodBox = ({ food, isFetching }: any) => {
         <p>{description}</p>
         {discount && (
           <strong className="menu__food__box__text__discount">
-            {price} {currency}
+            {discount.price} {currency}
           </strong>
         )}
         <strong
