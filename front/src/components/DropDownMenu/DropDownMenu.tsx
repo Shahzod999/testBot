@@ -6,8 +6,9 @@ interface DropDownMenuProps {
   toggle: ReactNode;
   menu: ReactNode;
   notAwalible?: boolean;
+  onClick?: () => void;
 }
-const DropDownMenu = ({ toggle, menu, notAwalible }: DropDownMenuProps) => {
+const DropDownMenu = ({ toggle, menu, notAwalible, onClick }: DropDownMenuProps) => {
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -47,7 +48,7 @@ const DropDownMenu = ({ toggle, menu, notAwalible }: DropDownMenuProps) => {
   }, []);
 
   return (
-    <div className={`dropdownMenuHolder ${open ? "deleteAfter" : ""}`}>
+    <div className={`dropdownMenuHolder ${open ? "deleteAfter" : ""}`} onClick={onClick}>
       <div
         className="dropdown__toggle"
         tabIndex={0}

@@ -8,6 +8,7 @@ import toastReducer from "./features/toastSlice";
 import userLocationSlice from "./features/userLocationSlice";
 import bottomSheetSlice from "./features/bottomSheetSlice";
 import userInfoSlice from "./features/userInfoSlice";
+import analyticsSlice from "./features/analyticsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     userLocation: userLocationSlice,
     bottomState: bottomSheetSlice,
     userInfo: userInfoSlice,
+    analytics: analyticsSlice,
   },
 
   middleware: (getDefaultMiddleware) =>

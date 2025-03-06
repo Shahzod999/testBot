@@ -25,6 +25,9 @@ import Distance from "./Distance";
 import WorkingHoursList from "../WorkingHoursList/WorkingHoursList";
 import SortDayByToday from "../../hooks/SortDayByToday";
 
+import { AnalyticsState } from "../../app/features/analyticsSlice";
+import useAnalyticsTracker from "../../hooks/useAnalyticsTracker";
+
 interface ActionsState {
   text: string;
   img: string;
@@ -41,6 +44,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const [favoriteApi] = useFavoriteApiMutation();
   const navigate = useNavigate();
   const isDarkMode = useAppSelector(selectedIsDarkMode);
+  const { track } = useAnalyticsTracker(companyId);
 
   const toggleBookMark = async () => {
     setBookMark((prev) => !prev);
@@ -127,7 +131,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
       {
         text: t("route"),
         img: "./map.fill.svg",
-        key: "map",
+        key: "route",
       },
       {
         text: t("share"),
@@ -141,6 +145,8 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const handleActions = useCallback(
     (item: ActionsState) => {
+      track(item.key as keyof AnalyticsState);
+
       if (item.link) {
         return (window.location.href = item.link);
       }
@@ -249,6 +255,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
         <div>
           <DropDownMenu
+            onClick={() => track("working_hours")}
             toggle={
               <EditAction
                 smallInfo={t("workingHours")}
@@ -300,7 +307,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
         companyInfo={companyInfo}
       />
 
-      <BottomSheet isOpen={activeAction === "map"} onClose={closeBottomSheet}>
+      <BottomSheet isOpen={activeAction === "route"} onClose={closeBottomSheet}>
         <AdressLinks companyInfo={companyInfo} />
       </BottomSheet>
     </>

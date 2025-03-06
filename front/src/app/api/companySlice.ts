@@ -108,6 +108,13 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    updateAnalytics: builder.mutation({
+      query: ({ company_id, data }) => ({
+        url: `/delivery/bot/analytic/${company_id}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 export const {
@@ -120,6 +127,7 @@ export const {
   useUpdateRequestMutation,
   useGetYandexPriceQuery,
   useGetUserInfoQuery,
+  useUpdateAnalyticsMutation,
 } = companyApiSlice;
 
 // https://dev.admin13.uz/v1/delivery/bot/comment/673a89577d6d20cabf0ad3cb // company_id
