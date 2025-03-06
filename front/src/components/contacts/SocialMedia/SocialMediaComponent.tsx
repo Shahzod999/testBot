@@ -7,8 +7,6 @@ const SocialMediaComponent = ({
 }: {
   social_media: SocialMedia;
 }) => {
-  console.log(social_media);
-
   const handleClick = (name: string, url: string) => {
     const link =
       name.toLowerCase() === "telegram"

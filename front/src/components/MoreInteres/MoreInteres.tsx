@@ -41,8 +41,6 @@ const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
-  console.log(menuData);
-
   if (!companyInfo?.has_menu || menuData?.data?.length == 0) return;
   return (
     <div className="moreInteres">

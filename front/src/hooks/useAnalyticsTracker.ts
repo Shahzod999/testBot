@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../app/store";
-import { trackEvent, resetAnalytics } from "../app/features/analyticsSlice";
+import {
+  trackEvent,
+  resetAnalytics,
+  AnalyticsState,
+} from "../app/features/analyticsSlice";
 import { useUpdateAnalyticsMutation } from "../app/api/companySlice";
 
 const useAnalyticsTracker = (companyId: string) => {
@@ -10,25 +14,32 @@ const useAnalyticsTracker = (companyId: string) => {
   const [updateAnalytics] = useUpdateAnalyticsMutation();
   const timeoutRef = useRef<any>(null);
 
-  const track = (event: keyof typeof analyticsData) => {
+  const track = (event: keyof AnalyticsState) => {
     dispatch(trackEvent({ event }));
 
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
     timeoutRef.current = setTimeout(() => {
       sendAnalytics();
-    }, 10_000);
+    }, 10_00);
   };
 
-  const sendAnalytics = () => {
+  const sendAnalytics = async () => {
     if (!companyId) return;
 
-    updateAnalytics({ company_id: companyId, data: analyticsData })
-      .unwrap()
-      .then(() => {
+    try {
+      let res = await updateAnalytics({
+        company_id: companyId,
+        data: analyticsData,
+      }).unwrap();
+      console.log(res);
+
+      if (res?.status == "success") {
         dispatch(resetAnalytics());
-      })
-      .catch((error) => console.error("Ошибка отправки аналитики:", error));
+      }
+    } catch (error) {
+      console.error("Ошибка отправки аналитики:", error);
+    }
   };
 
   useEffect(() => {

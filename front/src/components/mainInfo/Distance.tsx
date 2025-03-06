@@ -36,45 +36,6 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
     }
   };
 
-  // const handleLocation = () => {
-  //   const tg = window.Telegram.WebApp;
-
-  //   // Проверяем, поддерживается ли LocationManager
-  //   if (!tg.LocationManager) {
-  //     dispatch(errorToast(t("locationNotSupported")));
-  //     return;
-  //   }
-
-  //   tg.LocationManager.init(() => {
-  //     tg.LocationManager.requestAccess((result: any) => {
-  //       if (result.status === "denied") {
-  //         dispatch(errorToast(t("locationPermissionDenied")));
-  //         return;
-  //       }
-
-  //       if (result.status === "granted") {
-  //         tg.LocationManager.getLocation((location: any) => {
-  //           if (location) {
-  //             dispatch(
-  //               setuserLocation({
-  //                 lat: location.latitude,
-  //                 lon: location.longitude,
-  //               }),
-  //             );
-  //             dispatch(succesToast(t("successfullyUpdated")));
-  //           } else {
-  //             dispatch(errorToast(t("locationError")));
-  //           }
-  //         });
-  //       } else {
-  //         dispatch(errorToast(t("unknownLocationError")));
-  //       }
-  //     });
-  //   });
-  // };
-
-  console.log(locationUser);
-
   if (!locationUser.lat || !locationUser.lon)
     return (
       <div className="distance--warning" onClick={handleLocation}>
@@ -90,16 +51,11 @@ const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
           {t("distance")}: {companyInfo?.distance?.distance || t("loading")}
         </div>
         <div className="distance-duration">
-          {/* {parseFloat(companyInfo?.distance?.distance) > 2 &&
-          !companyInfo?.distance?.distance?.split(" ")?.includes("km") && (
-            <> */}
           <div className="distance-duration-box">
             <ReactSVG src="./walkPerson.svg" />
             <span>{companyInfo?.distance?.walking_duration}</span>
           </div>
           •
-          {/* </>
-          )} */}
           <div className="distance-duration-box">
             <ReactSVG src="./car.fill.svg" />
             <span>{companyInfo?.distance?.duration}</span>

@@ -10,8 +10,6 @@ export interface AnalyticsState {
   social_media: number;
   website: number;
   working_hours: number;
-  email: number;
-  vacancies: number;
 }
 
 // Функция для загрузки данных из localStorage
@@ -36,8 +34,6 @@ const initialState: AnalyticsState = loadState() || {
   social_media: 0,
   website: 0,
   working_hours: 0,
-  email: 0,
-  vacancies: 0,
 };
 
 const analyticsSlice = createSlice({
@@ -63,8 +59,6 @@ const analyticsSlice = createSlice({
       state.social_media = 0;
       state.website = 0;
       state.working_hours = 0;
-      state.email = 0;
-      state.vacancies = 0;
     },
   },
 });

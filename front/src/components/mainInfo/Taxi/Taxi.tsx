@@ -24,7 +24,6 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
   const { t } = useTranslation();
 
   const isBottomSheetOpen = activeAction === "taxi";
-  console.log(location);
 
   const query = useMemo(
     () => ({

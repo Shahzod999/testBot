@@ -20,8 +20,6 @@ const Header = ({ img }: HeaderProps) => {
     }))
     .filter((item) => item.validUrl);
 
-  console.log(newImg);
-
   const [openImg, setOpenImg] = useState(false);
 
   const handleClose = () => {
