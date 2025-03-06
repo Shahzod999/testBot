@@ -32,7 +32,7 @@ const WorkingHoursComponent = ({
   };
 
   const handleTime = () => {
-    hapticVibration("success", "light");
+    hapticVibration("light");
   };
 
   return (
