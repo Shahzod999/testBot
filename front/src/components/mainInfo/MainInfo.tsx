@@ -18,7 +18,6 @@ import Taxi from "./Taxi/Taxi";
 import { ReactSVG } from "react-svg";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
 import { useNavigate } from "react-router-dom";
-import { hapticVibration } from "../../hooks/hapticVibration";
 import { useTranslation } from "react-i18next";
 import EditAction from "../contacts/EditAction";
 import DropDownMenu from "../DropDownMenu/DropDownMenu";
@@ -45,7 +44,7 @@ const MainInfo = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const toggleBookMark = async () => {
     setBookMark((prev) => !prev);
-    hapticVibration("success", "light");
+    window.Telegram.WebApp.HapticFeedback.selectionChanged();
 
     try {
       await favoriteApi(companyId).unwrap();

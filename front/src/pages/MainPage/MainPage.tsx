@@ -22,6 +22,7 @@ import Confetti from "../SmallPages/welComePages/Confetti";
 import Toast from "../../components/Toast/Toast";
 import { useLocation } from "../../app/utils/locationUtils"; // Импортируем хук для работы с местоположением
 import { useInitializeCompany } from "../../app/utils/companyUtils"; // Импортируем хук для инициализации ком
+import { hapticVibration } from "../../hooks/hapticVibration";
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -87,6 +88,7 @@ const MainPage = () => {
     ) {
       tg.requestFullscreen();
       tg.disableVerticalSwipes();
+      hapticVibration("success", "soft");
     } else {
       console.log(
         `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,
