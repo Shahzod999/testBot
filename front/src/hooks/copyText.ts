@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { hapticVibration } from "./hapticVibration";
+import { hapticVibrationByType } from "./hapticVibration";
 import { errorToast } from "../app/features/toastSlice";
 import { useAppDispatch } from "./reduxHooks";
 import { useTranslation } from "react-i18next";
@@ -16,13 +16,13 @@ export const useCopyAddress = () => {
       .writeText(textToCopy)
       .then(() => {
         console.log(t("textCopied"));
-        hapticVibration("success", "light");
+        hapticVibrationByType("success");
         handleCopy(t("textCopied"), type);
       })
       .catch((error) => {
         dispatch(errorToast(t("error")));
         console.error(t("failedToCopy"), error);
-        hapticVibration("success", "light");
+        hapticVibrationByType("error");
         handleCopy(t("failedToCopy"), type);
       });
   };

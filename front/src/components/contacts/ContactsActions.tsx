@@ -1,6 +1,6 @@
+import { hapticVibrationByType } from "../../hooks/hapticVibration";
 import { ActionProps } from "../mainInfo/ActionButtons";
 import { ReactSVG } from "react-svg";
-import { hapticVibration } from "../../hooks/hapticVibration";
 
 interface ContactProps extends ActionProps {
   isDisabled?: boolean;
@@ -25,12 +25,11 @@ export const ContactsActions = ({
     onClick?.();
 
     if (isDisabled) {
-      hapticVibration("success", "light");
+      hapticVibrationByType("error");
     }
 
     if (phone) {
       window.Telegram.WebApp.openLink(phone);
-      // window.open(phone);
     }
   };
 

@@ -79,7 +79,7 @@ const EditWorkHours = ({ day, hours, setTotalTime }: EditWorkHoursProps) => {
   };
 
   const handleSetOffDay = () => {
-    hapticVibration("success", "light");
+    hapticVibration("light");
     setOffDay(!offDay);
   };
 

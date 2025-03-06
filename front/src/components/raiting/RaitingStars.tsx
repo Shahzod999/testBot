@@ -9,7 +9,7 @@ interface RaitingProps {
 const RaitingStars = ({ count, handleStarClick }: RaitingProps) => {
   const starClick = (index: number) => {
     handleStarClick?.(index);
-    hapticVibration("success", "light");
+    hapticVibration("light");
   };
 
   return (

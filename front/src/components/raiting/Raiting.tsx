@@ -29,7 +29,7 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
   const handleStarClick = (index: number) => {
     dispatch(setCountRaiting(index + 1));
-    hapticVibration("success", "light");
+    hapticVibration("light");
   };
 
   const handleOrder = () => {

@@ -14,7 +14,7 @@ const CommonButton = ({
   disabled,
 }: CommonButtonProps) => {
   const handleHaptic = () => {
-    hapticVibration("success", "light");
+    hapticVibration("light");
 
     if (createdFunction) {
       createdFunction();

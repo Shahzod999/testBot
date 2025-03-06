@@ -88,7 +88,7 @@ const MainPage = () => {
     ) {
       tg.requestFullscreen();
       tg.disableVerticalSwipes();
-      hapticVibration("success", "soft");
+      hapticVibration("soft");
     } else {
       console.log(
         `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,

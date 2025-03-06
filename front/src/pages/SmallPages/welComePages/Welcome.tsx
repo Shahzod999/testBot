@@ -32,7 +32,7 @@ const Welcome = () => {
   };
 
   const handleLink = () => {
-    hapticVibration("success", "light");
+    hapticVibration("light");
 
     const swiper = swiperRef.current?.swiper;
     if (!swiper) return;
