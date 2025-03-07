@@ -23,6 +23,7 @@ import Toast from "../../components/Toast/Toast";
 import { useLocation } from "../../app/utils/locationUtils"; // Импортируем хук для работы с местоположением
 import { useInitializeCompany } from "../../app/utils/companyUtils"; // Импортируем хук для инициализации ком
 import { hapticVibration } from "../../hooks/hapticVibration";
+import OrientationLock from "../../app/utils/OrientationLock";
 
 interface TelegramTotalTypes extends TelegramTypes {
   ready: () => void;
@@ -50,6 +51,7 @@ const MainPage = () => {
   const telegramId = useAppSelector(selectedUserTelegramId);
   const userLocation = useAppSelector(selectedUserLocation);
 
+  const orientation = OrientationLock();
   const { handleLocation } = useLocation();
   const { initializeCompany } = useInitializeCompany();
 
@@ -71,7 +73,8 @@ const MainPage = () => {
   useEffect(() => {
     tg.ready();
     tg.expand();
-
+    orientation.init();
+    
     const mode = tg.colorScheme == "dark";
     dispatch(setDarkMode(mode));
 
@@ -88,6 +91,7 @@ const MainPage = () => {
     ) {
       tg.requestFullscreen();
       tg.disableVerticalSwipes();
+
       hapticVibration("soft");
     } else {
       console.log(
