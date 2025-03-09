@@ -2,8 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
   gap: 8px;
+  background-color: var(--bg-color);
 
   p {
     text-align: center;

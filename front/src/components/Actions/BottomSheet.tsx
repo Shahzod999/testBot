@@ -84,7 +84,11 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
           </div>
           {children}
         </div>
-        <CompanyLink />
+        <div className="bottom-sheet__companyLink">
+          <div className="bottom-sheet__companyLink-box">
+            <CompanyLink />
+          </div>
+        </div>
       </div>
     </>
   );
