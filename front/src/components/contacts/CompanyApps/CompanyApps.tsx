@@ -4,28 +4,32 @@ import { ReactSVG } from "react-svg";
 
 const CompanyApps = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
+
+  const handleOpen = (app: string) => {
+    window.Telegram.WebApp.openLink(app);
+  };
+
   return (
     <div className="dropDownMenuHolderStyle">
-      <div className="dropDownMenuHolderStyle__icons">
+      <div
+        className="dropDownMenuHolderStyle__icons"
+        onClick={() => handleOpen(companyInfo?.mobile_apps?.ios)}>
         <div className="dropDownMenuHolderStyle__icons__logo">
-          <a
-            href={companyInfo?.mobile_apps?.android}
-            target="_blank"
-            rel="noopener noreferrer">
+          <div>
             <ReactSVG src={`./social/appStore.svg`} />
-          </a>
+          </div>
         </div>
 
         <span>{t("link")} App Store</span>
       </div>
-      <div className="dropDownMenuHolderStyle__icons">
+
+      <div
+        className="dropDownMenuHolderStyle__icons"
+        onClick={() => handleOpen(companyInfo?.mobile_apps?.android)}>
         <div className="dropDownMenuHolderStyle__icons__logo">
-          <a
-            href={companyInfo?.mobile_apps?.ios}
-            target="_blank"
-            rel="noopener noreferrer">
+          <div>
             <ReactSVG src={`./social/googlePlay.svg`} />
-          </a>
+          </div>
         </div>
 
         <span>{t("link")} Google Play</span>

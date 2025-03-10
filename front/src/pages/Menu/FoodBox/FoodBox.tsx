@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 import FoodBoxSkeleton from "../MenuSkeleton/FoodBoxSkeleton";
+import { formatPrice } from "../../../app/utils/priceFormat";
 
 const FoodBox = ({ food, isFetching }: any) => {
   const { _id, name, price, currency, description, image, discount } = food;
+
+  let newCurreny = currency == "UZS" ? "SO`M" : currency;
 
   if (isFetching) return <FoodBoxSkeleton />;
 
@@ -17,15 +20,17 @@ const FoodBox = ({ food, isFetching }: any) => {
         <p>{description}</p>
         {discount && (
           <strong className="menu__food__box__text__discount">
-            {discount.price} {currency}
+            {formatPrice(discount.price)} {currency}
           </strong>
         )}
-        <strong
-          className={`menu__food__box__text__price ${
-            discount && "menu__food__box__text__oldPrice"
-          }`}>
-          {price} {currency}
-        </strong>
+        {price && (
+          <strong
+            className={`menu__food__box__text__price ${
+              discount && "menu__food__box__text__oldPrice"
+            }`}>
+            {formatPrice(price)} {newCurreny}
+          </strong>
+        )}
       </div>
     </Link>
   );

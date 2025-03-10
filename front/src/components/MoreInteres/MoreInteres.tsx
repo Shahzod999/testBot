@@ -5,8 +5,10 @@ import { CompanyState } from "../../app/types/companyType";
 import { MenuType } from "../../app/types/menuType";
 import FoodBox from "../../pages/Menu/FoodBox/FoodBox";
 import "./moreInterest.scss";
+import { useTranslation } from "react-i18next";
 
 const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: menuData, isFetching } = useGetMenuQuery({
     company_id: companyInfo?._id,
@@ -44,7 +46,7 @@ const MoreInteres = ({ companyInfo }: { companyInfo: CompanyState }) => {
   if (!companyInfo?.has_menu || menuData?.data?.length == 0) return;
   return (
     <div className="moreInteres">
-      <h3>Вам может понравиться</h3>
+      <h3>{t("youMayLike")}</h3>
       <div
         className="moreInteres__wrapper"
         onScroll={handleScroll}

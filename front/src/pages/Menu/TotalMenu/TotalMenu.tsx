@@ -160,7 +160,6 @@ const soonFood = {
   _id: "soon",
   name: "Новинка скоро тут",
   description: "Мы готовим для вас что-то особенное. Следите за обновлениями.",
-  price: "—",
   currency: "",
   image: "./https:wowUtya.png",
   discount: null,

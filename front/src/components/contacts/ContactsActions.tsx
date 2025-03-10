@@ -8,6 +8,7 @@ interface ContactProps extends ActionProps {
   style?: string;
   arrowRight?: boolean;
   phone?: string | null;
+  website?: string | null;
   onClick?: () => void;
 }
 
@@ -19,6 +20,7 @@ export const ContactsActions = ({
   style,
   arrowRight,
   phone,
+  website,
   onClick,
 }: ContactProps) => {
   const handleClick = () => {
@@ -28,8 +30,12 @@ export const ContactsActions = ({
       hapticVibrationByType("error");
     }
 
+    if (website) {
+      window.Telegram.WebApp.openLink(website);
+    }
+
     if (phone) {
-      window.Telegram.WebApp.openLink(phone);
+      window.open(phone);
     }
   };
 

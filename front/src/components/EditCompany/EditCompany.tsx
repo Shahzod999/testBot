@@ -328,6 +328,7 @@ const EditCompany = ({
           objectKeys="email"
           allowedValues="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" // Email формат
           inputmode="email"
+          textStartWith=""
         />
 
         {Object.keys(newCompanyInfo.mobile_apps).map((platform) => (
@@ -345,6 +346,7 @@ const EditCompany = ({
             handleEditTotalCompany={handleEditTotalCompany}
             objectKeys={`mobile_apps.${platform}`}
             inputmode="url"
+            textStartWith=""
           />
         ))}
       </div>

@@ -4,7 +4,7 @@ $secondBgColor: rgba(0, 0, 0, 0.3);
 header {
   position: sticky;
   top: 0;
-  height: 200px;
+  height: 280px;
   overflow: hidden;
   margin-bottom: 2px;
   z-index: 0;
@@ -49,7 +49,7 @@ header {
   .swiper-pagination-bullet {
     flex: 1;
     position: relative;
-    min-width: 156px;
+    min-width: 100px;
     height: auto;
     text-align: left;
     border-radius: 20px;
@@ -112,6 +112,35 @@ header {
 
     100% {
       width: 100%;
+    }
+  }
+
+
+  .header__foto {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: absolute;
+    z-index: 5;
+    bottom: 16px;
+    right: 16px;
+
+
+    svg {
+      width: 20px;
+      height: 16px;
+
+      path {
+        fill: white;
+      }
+    }
+
+    span {
+      font-weight: 400;
+      font-size: 15px;
+      color: white;
+      line-height: 21px;
+      letter-spacing: -0.32px;
     }
   }
 

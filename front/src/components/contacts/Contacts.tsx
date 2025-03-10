@@ -64,7 +64,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
         text: companyInfo?.website?.replace("https://", "") || t("noWebsite"),
         isDisabled: !companyInfo.website,
         icon: "australia.svg",
-        phone: companyInfo?.website ? companyInfo.website : null,
+        website: companyInfo?.website ? companyInfo.website : null,
         analytics: "website",
       },
       {
@@ -99,10 +99,13 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
 
         <div className="contacts__actions contacts__totalmenu">
           {actions.map(
-            ({ text, icon, isDisabled, phone, menu, analytics }, index) => (
+            (
+              { text, icon, isDisabled, phone, menu, analytics, website },
+              index,
+            ) => (
               <DropDownMenu
                 onClick={() => track(analytics as keyof AnalyticsState)}
-                notAwalible={isDisabled || !!phone}
+                notAwalible={isDisabled || !!phone || !!website}
                 key={index}
                 toggle={
                   <ContactsActions
@@ -110,6 +113,7 @@ const Contacts = ({ companyInfo }: { companyInfo: CompanyState }) => {
                     icon={icon}
                     isDisabled={isDisabled}
                     phone={phone}
+                    website={website}
                   />
                 }
                 menu={menu}

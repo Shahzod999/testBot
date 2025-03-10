@@ -6,6 +6,7 @@ import "swiper/swiper-bundle.css";
 import "./header.scss";
 import { Autoplay, Pagination, Zoom } from "swiper/modules";
 import { getValidatedUrl } from "../../hooks/imgGetValidatedUrl";
+import { ReactSVG } from "react-svg";
 
 interface HeaderProps {
   img: PhotosSample[];
@@ -131,6 +132,11 @@ const Header = ({ img }: HeaderProps) => {
         ))}
         <div className="swiper-pagination"></div>
       </Swiper>
+
+      <div className="header__foto">
+        <ReactSVG src="./camera.fill.svg" />
+        <span>{img.length}</span>
+      </div>
     </header>
   );
 };
