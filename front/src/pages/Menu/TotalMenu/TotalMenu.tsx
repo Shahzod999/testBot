@@ -97,8 +97,6 @@ const TotalMenu = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  console.log(activeCategoryName);
-
   if (!companyInfo || !categoryname) return null;
 
   return (
@@ -158,6 +156,16 @@ interface CategoryProductsProps {
   categoryName: string;
 }
 
+const soonFood = {
+  _id: "soon",
+  name: "Новинка скоро тут",
+  description: "Мы готовим для вас что-то особенное. Следите за обновлениями.",
+  price: "—",
+  currency: "",
+  image: "./https:wowUtya.png",
+  discount: null,
+};
+
 const CategoryProducts = ({
   companyId,
   categoryId,
@@ -181,16 +189,23 @@ const CategoryProducts = ({
         {categoryName}
       </h2>
       <div className="menu__food">
-        {menuData?.data?.map((food: MenuType, index: number) => (
-          <div
-            key={food._id}
-            style={{
-              animationDelay: `${index * 0.1}s`,
-            }}
-            className="menu__food-item">
-            <FoodBox key={food._id} food={food} isFetching={isFetching} />
+        {menuData?.data && menuData?.data.length > 0 ? (
+          menuData?.data?.map((food: MenuType, index: number) => (
+            <div
+              key={food._id}
+              style={{
+                animationDelay: `${index * 0.1}s`,
+              }}
+              className="menu__food-item">
+              <FoodBox key={food._id} food={food} isFetching={isFetching} />
+            </div>
+          ))
+        ) : (
+          <div className="menu__food-empty">
+            <div className="coming-soon-label">Скоро</div>
+            <FoodBox key={soonFood._id} food={soonFood} isFetching={false} />
           </div>
-        ))}
+        )}
       </div>
     </>
   );

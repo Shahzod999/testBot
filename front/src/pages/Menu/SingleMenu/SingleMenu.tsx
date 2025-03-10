@@ -6,6 +6,7 @@ import FoodBox from "../FoodBox/FoodBox";
 import { useTranslation } from "react-i18next";
 import SingleMenuSkeleton from "../MenuSkeleton/SingleMenuSkeleton";
 import { useEffect } from "react";
+import NotFoundPage from "../../SmallPages/404/NotFoundPage";
 
 const SingleMenu = () => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ const SingleMenu = () => {
   }, [singleProd]);
 
   if (isLoading) return <SingleMenuSkeleton />;
-  if (!singleProd) return null;
+  if (!singleProd) return <NotFoundPage />;
   return (
     <div className="singleMenu">
       {isFetching ? (

@@ -5,7 +5,7 @@ const cors = require("cors");
 const TelegramBot = require("node-telegram-bot-api");
 const token = process.env.TELEGRAM_BOT_TOKEN;
 
-const webAppUrl = "https://test-bot-green.vercel.app/";
+const webAppUrl = "https://gxfl20sh-5173.euw.devtunnels.ms/";
 const bot = new TelegramBot(token, { polling: true });
 
 const app = express();
