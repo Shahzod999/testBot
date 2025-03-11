@@ -20,7 +20,7 @@ const FoodBox = ({ food, isFetching }: any) => {
         <p>{description}</p>
         {discount && (
           <strong className="menu__food__box__text__discount">
-            {formatPrice(discount.price)} {currency}
+            {formatPrice(discount.price)} {currency.toLowerCase()}
           </strong>
         )}
         {price && (
@@ -28,7 +28,7 @@ const FoodBox = ({ food, isFetching }: any) => {
             className={`menu__food__box__text__price ${
               discount && "menu__food__box__text__oldPrice"
             }`}>
-            {formatPrice(price)} {newCurreny}
+            {formatPrice(price)} {newCurreny.toLowerCase()}
           </strong>
         )}
       </div>
