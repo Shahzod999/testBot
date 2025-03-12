@@ -46,8 +46,10 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
 
   useEffect(() => {
     const tg = window.Telegram.WebApp;
+    const root = document.getElementById("root")!;
+
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      root.style.overflow = "hidden";
       tg.BackButton.show();
       const handleBackClick = () => {
         onClose();
@@ -60,7 +62,7 @@ const BottomSheet = memo(({ isOpen, onClose, children }: BottomSheetProps) => {
       if (pathname == "/") {
         tg.BackButton.hide();
       }
-      document.body.style.overflow = "";
+      root.style.overflow = "";
     }
   }, [isOpen]);
 

@@ -13,9 +13,12 @@ export const companyApiSlice = apiSlice.injectEndpoints({
         },
       }),
     }),
-    getSingleProd: builder.query<SingleProdTypeTotal, String | undefined>({
-      query: (id) => ({
-        url: `/delivery/bot/product/${id}`,
+    getSingleProd: builder.query<
+      SingleProdTypeTotal,
+      { id: string | undefined; companyId: string | undefined }
+    >({
+      query: ({ id, companyId }) => ({
+        url: `/delivery/bot/product/${id}?company_id=${companyId}`,
       }),
     }),
     getCategory: builder.query({

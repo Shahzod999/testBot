@@ -80,9 +80,6 @@
   -webkit-user-drag: none;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
 
 html,
 body {
@@ -93,6 +90,10 @@ body {
   background: var(--bg-color) !important;
   color: var(--text-color);
   height: var(--tg-viewport-height);
+  -ms-overflow-style: none;
+  // 
+  overflow: hidden;
+  height: 100vh;
 }
 
 html {
@@ -102,10 +103,21 @@ html {
   margin: auto;
   position: relative;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+  // 
+  overflow: hidden;
+  height: 100vh;
 }
 
 #root {
   position: relative;
+  // 
+  height: 100%;
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .no-scroll {
@@ -323,7 +335,3 @@ button:disabled {
 //   }
 
 // }
-
-::-webkit-scrollbar {
-  display: none;
-}

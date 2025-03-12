@@ -19,10 +19,12 @@ const Raiting = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
 
   const toggleComment = () => {
+    const root = document.getElementById("root")!;
+
     if (!openComment) {
-      document.body.style.overflow = "hidden";
+      root.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "";
+      root.style.overflow = "";
     }
     setOpenCommet(!openComment);
   };

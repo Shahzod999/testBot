@@ -20,8 +20,10 @@ const EditPage = () => {
   }, []);
 
   const handleActionClick = useCallback((key: string | null) => {
+    const root = document.getElementById("root")!;
+
     if (key) {
-      document.body.style.overflow = "hidden";
+      root.style.overflow = "hidden";
       setActiveAction(key);
     }
   }, []);
@@ -48,7 +50,8 @@ const EditPage = () => {
   }, [handleBackButtonClick]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const root = document.getElementById("root")!;
+    root.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   if (!companyInfo) return;

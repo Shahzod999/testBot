@@ -7,17 +7,25 @@ import { useTranslation } from "react-i18next";
 import SingleMenuSkeleton from "../MenuSkeleton/SingleMenuSkeleton";
 import { useEffect } from "react";
 import NotFoundPage from "../../SmallPages/404/NotFoundPage";
+import { useAppSelector } from "../../../hooks/reduxHooks";
+import { selectedCompanyId } from "../../../app/features/getCompanyIdSlice";
+import { formatPrice, newCurrency } from "../../../app/utils/priceFormat";
 
 const SingleMenu = () => {
   const { t } = useTranslation();
 
   const { id } = useParams();
-  const { data, isLoading, isFetching } = useGetSingleProdQuery(id);
+  const companyId = useAppSelector(selectedCompanyId);
+  const { data, isLoading, isFetching } = useGetSingleProdQuery({
+    id,
+    companyId,
+  });
 
   const singleProd = data?.data;
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const root = document.getElementById("root")!;
+    root.scrollTo({ top: 0, behavior: "smooth" });
   }, [singleProd]);
 
   if (isLoading) return <SingleMenuSkeleton />;
@@ -42,7 +50,8 @@ const SingleMenu = () => {
               </div>
 
               <strong>
-                {singleProd.price} {singleProd.currency}
+                {formatPrice(singleProd.price)}{" "}
+                {newCurrency(singleProd.currency)}
               </strong>
               <div className="singleMenu__main__devider"></div>
             </div>
