@@ -56,10 +56,15 @@ export const useLocation = () => {
       });
 
       // если доступ выключен с настроек и запрос по кнопке чтобы атоматически запрос не шел то мы используем веб локацию
-      if (!tg.LocationManager.isAccessGranted && type == "accessByButton") {
+
+      if (
+        tg.LocationManager.isAccessRequested &&
+        !tg.LocationManager.isAccessGranted &&
+        type == "accessByButton"
+      ) {
         return getWebLocation();
       }
-
+      
       // если пользователь впервые заходит в приложение то локацию получаем только по кнопке чтобы автоматически запрос не шел
       if (type == "accessByButton") {
         getLocation();
