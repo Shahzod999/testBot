@@ -64,10 +64,10 @@ export const useLocation = () => {
       ) {
         return getWebLocation();
       }
-      
+
       // если пользователь впервые заходит в приложение то локацию получаем только по кнопке чтобы автоматически запрос не шел
-      if (type == "accessByButton") {
-        getLocation();
+      if (!tg.LocationManager.isAccessRequested && type == "accessByButton") {
+        return getLocation();
       }
     },
     [dispatch, navigate, userLocation],
