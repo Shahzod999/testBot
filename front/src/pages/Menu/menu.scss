@@ -93,9 +93,18 @@
         width: 100%;
         display: flex;
         gap: 8px;
-        overflow: scroll;
+        overflow-x: auto;
+        overflow-y: hidden;
         padding: 0 16px;
-
+        scrollbar-width: none; /* Для Firefox */
+        -ms-overflow-style: none; /* Для IE/Edge */
+        scroll-behavior: smooth;
+        // padding-left: calc(16px + (100% - min(100%, 450px)) / 2);
+        // padding-right: calc(16px + (100% - min(100%, 450px)) / 2);
+        
+        &::-webkit-scrollbar {
+            display: none; /* Для Chrome/Safari/Opera */
+        }
 
         &__text {
             white-space: nowrap;
@@ -162,8 +171,16 @@
             font-weight: 700;
             color: var(--text-color);
         }
+
     }
 
+
+    ////// __categoryName
+    .categoryProductsWrapper {
+        margin-bottom: 50px;
+    }
+
+    //////
     &__categoryName {
 
 
@@ -303,11 +320,11 @@
             background: linear-gradient(135deg, #fcf9f2, #f5f0e1, #fcf9f2);
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(128, 103, 30, 0.08),
-                       inset 0 1px 2px rgba(255, 255, 255, 0.8);
+                inset 0 1px 2px rgba(255, 255, 255, 0.8);
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(215, 185, 130, 0.3);
-            
+
             .coming-soon-label {
                 position: absolute;
                 top: 10px;
@@ -324,7 +341,7 @@
                 backdrop-filter: blur(2px);
                 border: 1px solid rgba(215, 185, 130, 0.2);
             }
-            
+
             &::before {
                 content: '';
                 position: absolute;
@@ -332,14 +349,14 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: linear-gradient(135deg, 
-                    rgba(255, 255, 255, 0.05),
-                    rgba(255, 255, 255, 0.1),
-                    rgba(255, 255, 255, 0.05));
+                background: linear-gradient(135deg,
+                        rgba(255, 255, 255, 0.05),
+                        rgba(255, 255, 255, 0.1),
+                        rgba(255, 255, 255, 0.05));
                 opacity: 0.7;
                 z-index: 1;
             }
-            
+
             &::after {
                 content: '';
                 position: absolute;
@@ -347,10 +364,10 @@
                 left: -100%;
                 width: 50%;
                 height: 100%;
-                background: linear-gradient(90deg, 
-                    rgba(255, 255, 255, 0),
-                    rgba(255, 255, 255, 0.3),
-                    rgba(255, 255, 255, 0));
+                background: linear-gradient(90deg,
+                        rgba(255, 255, 255, 0),
+                        rgba(255, 255, 255, 0.3),
+                        rgba(255, 255, 255, 0));
                 transform: skewX(-25deg);
                 animation: shimmer 3s infinite;
                 z-index: 2;
@@ -361,16 +378,16 @@
                 box-shadow: none;
                 height: 100%;
                 width: 100%;
-                
+
                 &:hover {
                     transform: none;
                 }
             }
-            
+
             .menu__food__box__text {
                 position: relative;
                 z-index: 3;
-                
+
                 h4 {
                     color: #8a7140;
                     font-weight: 700;
@@ -378,12 +395,12 @@
                     letter-spacing: 0;
                     font-size: 15px;
                 }
-                
+
                 p {
                     color: #a08952;
                     font-weight: 500;
                 }
-                
+
                 strong {
                     color: #b19258;
                     font-weight: 700;
@@ -396,7 +413,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                
+
                 img {
                     width: auto;
                     height: 120px;
@@ -433,15 +450,19 @@
     0% {
         left: -100%;
     }
+
     100% {
         left: 100%;
     }
 }
 
 @keyframes gentle-float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-5px);
     }

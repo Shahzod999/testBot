@@ -25,6 +25,12 @@ const Welcome = () => {
   const swiperRef = useRef<any>(null);
 
   const handleNavigate = () => {
+    const tg = window.Telegram?.WebApp;
+
+    if (tg.version >= "6.9") {
+      tg.CloudStorage.setItem("user", "true");
+    }
+
     navigate("/");
     setTimeout(() => {
       dispatch(setConfitti());

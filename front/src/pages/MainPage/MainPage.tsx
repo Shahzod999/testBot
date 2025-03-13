@@ -76,8 +76,9 @@ const MainPage = () => {
     const mode = tg.colorScheme == "dark";
     dispatch(setDarkMode(mode));
 
-    handleLocation(); // Запрашиваем местоположение
     initializeCompany(); // Инициализируем компанию
+
+    handleLocation();
 
     dispatch(setPlatform(tg.platform));
 
@@ -90,7 +91,7 @@ const MainPage = () => {
       tg.requestFullscreen();
       tg.disableVerticalSwipes();
 
-      hapticVibration("soft");
+      hapticVibration("rigid");
     } else {
       console.log(
         `requestFullscreen не поддерживается в версии ${currentVersion}. Требуется версия ${requiredVersion} или выше.`,

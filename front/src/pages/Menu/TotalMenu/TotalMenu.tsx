@@ -13,6 +13,7 @@ import "./totalMenu.scss";
 import { ReactSVG } from "react-svg";
 import { useTranslation } from "react-i18next";
 import MenuSkeleton from "../MenuSkeleton/MenuSkeleton";
+import { hapticVibration } from "../../../hooks/hapticVibration";
 
 const TotalMenu = () => {
   const { t } = useTranslation();
@@ -62,19 +63,24 @@ const TotalMenu = () => {
   }, [categories]);
 
   useEffect(() => {
-    const categoryElements = document.querySelectorAll(".menu__categoryName");
-
+    const categoryElements = document.querySelectorAll(
+      ".categoryProductsWrapper",
+    );
     const categoryObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveCategoryName(entry.target.id); // Устанавливаем активную категорию
+            hapticVibration("soft");
+            const activeCategory = entry.target.getAttribute("data-category");
+            if (activeCategory) {
+              setActiveCategoryName(activeCategory);
+            }
           }
         });
       },
       {
         root: null,
-        rootMargin: "0px 0px -80% 0px", // Смещение, чтобы категория менялась чуть раньше
+        rootMargin: "0px 0px -45% 0px", // Смещение, чтобы категория менялась чуть раньше
         threshold: 0.1, // Срабатывает, когда 10% элемента видимо
       },
     );
@@ -89,12 +95,15 @@ const TotalMenu = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    const root = document.getElementById("root")!;
+    if (!root) return;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+      setIsScrolled(root.scrollTop > 100);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    root.addEventListener("scroll", handleScroll);
+    return () => root.removeEventListener("scroll", handleScroll);
   }, []);
 
   if (!companyInfo || !categoryname) return null;
@@ -138,7 +147,9 @@ const TotalMenu = () => {
       {loadedCategories.map((category: CategoryType, index: number) => (
         <div
           key={category._id}
-          ref={index === loadedCategories.length - 1 ? lastCategoryRef : null}>
+          className="categoryProductsWrapper"
+          ref={index === loadedCategories.length - 1 ? lastCategoryRef : null}
+          data-category={category.name}>
           <CategoryProducts
             companyId={companyInfo._id}
             categoryId={category._id}

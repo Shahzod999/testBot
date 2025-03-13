@@ -57,10 +57,8 @@
     }
 
     .skeleton {
-        background: linear-gradient(90deg,
-                #e0e0e0 25%,
-                #f0f0f0 50%,
-                #e0e0e0 75%);
+        background: linear-gradient(90deg, #0000001a 25%, #f0f0f0 50%, #0000001a 75%);
+
         background-size: 200% 100%;
         animation: pulse 1.5s infinite;
 

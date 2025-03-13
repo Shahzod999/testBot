@@ -18,35 +18,48 @@ const tg = window?.Telegram?.WebApp;
 export const useLocation = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const userLocation = useAppSelector((state) => state.userLocation) as any
+  const userLocation = useAppSelector((state) => state.userLocation) as any;
   const locationRequested = useRef(false);
 
-  const handleLocation = useCallback(() => {
-    if (locationRequested.current) return; // Если запрос уже выполнен, выходим
-    locationRequested.current = true; // Устанавливаем флаг
+  const handleLocation = useCallback(
+    (type?: "accessByButton") => {
+      if (locationRequested.current) return; // Если запрос уже выполнен, выходим
+      console.log("✅WEEEAREH✅✅ччч✅✅EARE");
 
-    tg.LocationManager.init(() => {
-      if (tg?.LocationManager?.isAccessRequested === false) {
-        navigate("/welcome");
-      }
-      tg.LocationManager.getLocation((location: any) => {
-        if (
-          location &&
-          (location.latitude !== userLocation.lat ||
-            location.longitude !== userLocation.lon)
-        ) {
-          dispatch(
-            setuserLocation({
-              lat: location.latitude,
-              lon: location.longitude,
-            }),
-          );
-        } else {
-          console.log("Location access was not granted or is unavailable.");
+      const getLocation = () => {
+        tg.LocationManager.getLocation((location: any) => {
+          if (
+            location &&
+            (location.latitude !== userLocation.lat ||
+              location.longitude !== userLocation.lon)
+          ) {
+            dispatch(
+              setuserLocation({
+                lat: location.latitude,
+                lon: location.longitude,
+              }),
+            );
+            locationRequested.current = true; // Устанавливаем флаг чтобы функция много раз не перезапускалась
+          } else {
+            console.log("Location access was not granted or is unavailable.");
+          }
+        });
+      };
+
+      // Если доступ уже есть, сразу получаем местоположение или через спц кнопку получаем доступ
+
+      tg.LocationManager.init(() => {
+        if (tg?.LocationManager?.isAccessGranted) {
+          return getLocation();
         }
       });
-    });
-  }, [dispatch, navigate, userLocation]);
+
+      if (tg?.LocationManager?.isAccessGranted || type == "accessByButton") {
+        getLocation();
+      }
+    },
+    [dispatch, navigate, userLocation],
+  );
 
   return { handleLocation };
 };

@@ -10,6 +10,7 @@ import { useAppSelector } from "../../../hooks/reduxHooks";
 import BottomSheet from "../../Actions/BottomSheet";
 import EditAction from "../../contacts/EditAction";
 import { useMemo } from "react";
+import LocationNotAvailable from "../../LocationNotAvailable/LocationNotAvailable";
 
 interface TaxiProps {
   activeAction: string | null;
@@ -62,6 +63,8 @@ const Taxi = ({ activeAction, closeBottomSheet, companyInfo }: TaxiProps) => {
       <BottomSheet isOpen={isBottomSheetOpen} onClose={closeBottomSheet}>
         <div className="contacts__actions">
           <h3 className="contacts__actions__centerTitle">{t("taxi")}</h3>
+
+          {(!location.lat || !location.lon) && <LocationNotAvailable />}
 
           <EditAction
             smallInfo={

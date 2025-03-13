@@ -2,47 +2,18 @@ import { useTranslation } from "react-i18next";
 import { ReactSVG } from "react-svg";
 import { CompanyState } from "../../app/types/companyType";
 import "./distance.scss";
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import {
-  selectedUserLocation,
-  setuserLocation,
-} from "../../app/features/userLocationSlice";
-import { infoToast } from "../../app/features/toastSlice";
+import { useAppSelector } from "../../hooks/reduxHooks";
+import { selectedUserLocation } from "../../app/features/userLocationSlice";
+import LocationNotAvailable from "../LocationNotAvailable/LocationNotAvailable";
 
 const Distance = ({ companyInfo }: { companyInfo: CompanyState }) => {
   const { t } = useTranslation();
   const locationUser = useAppSelector(selectedUserLocation);
 
-  const dispatch = useAppDispatch();
 
-  const handleLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          dispatch(
-            setuserLocation({
-              lat: position.coords.latitude,
-              lon: position.coords.longitude,
-            }),
-          );
-        },
-        (error) => {
-          dispatch(infoToast(t("errorGeolocation")));
-          console.error(t("errorGeolocation"), error);
-        },
-      );
-    } else {
-      console.error("Геолокация не поддерживается");
-    }
-  };
-
-  if (!locationUser.lat || !locationUser.lon)
-    return (
-      <div className="distance--warning" onClick={handleLocation}>
-        <ReactSVG src="./warning.svg" />
-        <span className="warningText">{t("turnOnlocation")}!</span>
-      </div>
-    );
+  console.log(locationUser,'user');
+  
+  if (!locationUser.lat || !locationUser.lon) return <LocationNotAvailable />;
   return (
     <div className="distance">
       <ReactSVG src="icons/route.svg" />
