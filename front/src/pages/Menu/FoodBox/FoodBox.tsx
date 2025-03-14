@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 import { getValidatedUrl } from "../../../hooks/imgGetValidatedUrl";
 import FoodBoxSkeleton from "../MenuSkeleton/FoodBoxSkeleton";
 import { formatPrice, newCurrency } from "../../../app/utils/priceFormat";
+import { useTranslation } from "react-i18next";
 
 const FoodBox = ({ food, isFetching }: any) => {
-  const { _id, name, price, currency, description, image, discount } = food;
+  const { _id, name, price, currency, description, image, discount, active } =
+    food;
+  const { t } = useTranslation();
 
   if (isFetching) return <FoodBoxSkeleton />;
 
@@ -30,6 +33,12 @@ const FoodBox = ({ food, isFetching }: any) => {
           </strong>
         )}
       </div>
+
+      {!active && (
+        <div className="menu__food__box--Nonactive">
+          <span>{t("outStock")}</span>
+        </div>
+      )}
     </Link>
   );
 };

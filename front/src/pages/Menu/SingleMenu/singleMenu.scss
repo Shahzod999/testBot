@@ -44,6 +44,12 @@
                 padding: 16px;
             }
 
+            .singleProd--outStock {
+                padding: 16px;
+                color: (var(--destructive-color));
+                font-weight: 500;
+            }
+
             p {
                 font-family: var(--font-family);
                 font-weight: 400;

@@ -58,9 +58,12 @@ const SingleMenu = () => {
                 </div>
 
                 <strong>
-                  {formatPrice(singleProd.price)}{" "}
+                  {formatPrice(singleProd.price)}
                   {newCurrency(singleProd.currency)}
                 </strong>
+                {!singleProd.active && (
+                  <h4 className="singleProd--outStock">{t("outStock")}</h4>
+                )}
                 <div className="singleMenu__main__devider"></div>
               </div>
             </div>

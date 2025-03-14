@@ -2,15 +2,6 @@ declare global {
   interface WebApp {
     lockOrientation: () => void;
     unlockOrientation: () => void;
-  }
-
-  interface WebAppEventsMap {
-    activated: () => void;
-    deactivated: () => void;
-  }
-}
-declare global {
-  interface WebApp {
     onEvent<K extends keyof WebAppEventsMap>(
       event: K,
       callback: WebAppEventsMap[K],
@@ -20,17 +11,25 @@ declare global {
       callback: WebAppEventsMap[K],
     ): void;
   }
+
+  interface WebAppEventsMap {
+    activated: () => void;
+    deactivated: () => void;
+  }
 }
 
 const OrientationLock = () => {
-  const isSupported = "orientation" in screen;
+  const isSupported = typeof screen.orientation !== "undefined";
 
-  const lock = () => Telegram.WebApp.lockOrientation();
-  const unlock = () => Telegram.WebApp.unlockOrientation();
+  const lock = () => Telegram?.WebApp?.lockOrientation?.();
+  const unlock = () => Telegram?.WebApp?.unlockOrientation?.();
 
   const check = () => {
-    if (!["ios", "android"].includes(Telegram.WebApp.platform)) return;
-    if (screen.orientation.type.startsWith("portrait")) {
+    if (!Telegram?.WebApp?.platform) return;
+
+    const isPortrait = screen.orientation?.type?.startsWith("portrait") ?? true;
+
+    if (isPortrait) {
       lock();
     } else {
       unlock();
@@ -40,15 +39,15 @@ const OrientationLock = () => {
   const enableListeners = () => {
     if (!isSupported) return;
     window.addEventListener("orientationchange", check);
-    Telegram.WebApp.onEvent("activated", check);
-    Telegram.WebApp.onEvent("deactivated", unlock);
+    Telegram?.WebApp?.onEvent("activated", check);
+    Telegram?.WebApp?.onEvent("deactivated", unlock);
   };
 
   const disableListeners = () => {
     if (!isSupported) return;
     window.removeEventListener("orientationchange", check);
-    Telegram.WebApp.offEvent("activated", check);
-    Telegram.WebApp.offEvent("deactivated", unlock);
+    Telegram?.WebApp?.offEvent("activated", check);
+    Telegram?.WebApp?.offEvent("deactivated", unlock);
   };
 
   const init = () => {

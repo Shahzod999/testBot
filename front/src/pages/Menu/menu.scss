@@ -96,14 +96,17 @@
         overflow-x: auto;
         overflow-y: hidden;
         padding: 0 16px;
-        scrollbar-width: none; /* Для Firefox */
-        -ms-overflow-style: none; /* Для IE/Edge */
+        scrollbar-width: none;
+        /* Для Firefox */
+        -ms-overflow-style: none;
+        /* Для IE/Edge */
         scroll-behavior: smooth;
         // padding-left: calc(16px + (100% - min(100%, 450px)) / 2);
         // padding-right: calc(16px + (100% - min(100%, 450px)) / 2);
-        
+
         &::-webkit-scrollbar {
-            display: none; /* Для Chrome/Safari/Opera */
+            display: none;
+            /* Для Chrome/Safari/Opera */
         }
 
         &__text {
@@ -216,6 +219,45 @@
             background: rgba(116, 116, 128, 0.08);
             transition: 0.2s ease-in-out;
 
+            position: relative;
+
+            &--Nonactive {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                border-radius: 16px;
+                overflow: hidden;
+                backdrop-filter: blur(2px);
+                //
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+
+                //
+                span {
+                    color: white;
+                    font-family: var(--font-family);
+                    font-weight: 600;
+                    font-size: 12px;
+                    line-height: 129%;
+                    letter-spacing: -0.04em;
+                    white-space: nowrap;
+                    text-shadow: 0 2px 1px black;
+                }
+
+                &::after {
+                    content: "";
+                    width: 60px;
+                    height: 60px;
+                    background: url("../../../public/utya/NotProduct.png") no-repeat center / contain;
+                }
+            }
+
+
             &:active,
             &:hover {
                 transform: scale(1.05);
@@ -223,6 +265,7 @@
 
             &__img {
                 height: 150px;
+                width: 100%;
 
                 img {
                     width: 100%;
