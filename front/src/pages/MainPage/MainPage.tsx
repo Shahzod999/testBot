@@ -16,7 +16,7 @@ import { TelegramTypes } from "../../app/types/telegramTypes";
 import { selectedUserLocation } from "../../app/features/userLocationSlice";
 import CompanyLink from "../../components/CompanyLink/CompanyLink";
 import { Outlet } from "react-router-dom";
-import eruda from "eruda";
+// import eruda from "eruda";
 import LoadingScreen from "../SmallPages/Loading/LoadingScreen";
 import Confetti from "../SmallPages/welComePages/Confetti";
 import Toast from "../../components/Toast/Toast";
@@ -65,7 +65,7 @@ const MainPage = () => {
         dispatch(setUserTelegramId(userId));
       }
     }
-    eruda.init();
+    // eruda.init();
   }, [telegramId, dispatch]);
 
   useEffect(() => {
