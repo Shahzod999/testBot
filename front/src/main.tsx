@@ -3,7 +3,7 @@ import "./assets/sass/index.scss";
 import { Provider } from "react-redux";
 import { store } from "./app/store.ts";
 import MainPage from "./pages/MainPage/MainPage.tsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage.tsx";
 import EditPage from "./pages/Edit/EditPage.tsx";
 import NotFoundPage from "./pages/SmallPages/404/NotFoundPage.tsx";
@@ -13,7 +13,7 @@ import SingleMenu from "./pages/Menu/SingleMenu/SingleMenu.tsx";
 import TotalMenu from "./pages/Menu/TotalMenu/TotalMenu.tsx";
 import "./app/utils/i18n.ts";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <MainPage />,
