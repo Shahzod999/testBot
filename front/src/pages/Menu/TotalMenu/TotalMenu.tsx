@@ -13,7 +13,7 @@ import "./totalMenu.scss";
 import { ReactSVG } from "react-svg";
 import { useTranslation } from "react-i18next";
 import MenuSkeleton from "../MenuSkeleton/MenuSkeleton";
-import { hapticVibration } from "../../../hooks/hapticVibration";
+// import { hapticVibration } from "../../../hooks/hapticVibration";
 
 const TotalMenu = () => {
   const { t } = useTranslation();
@@ -27,6 +27,10 @@ const TotalMenu = () => {
   );
 
   const categories = categoryname?.data || [];
+  console.log('====================================');
+  console.log(categories);
+  console.log('====================================');
+
   const [loadedCategories, setLoadedCategories] = useState<CategoryType[]>([]);
   const [activeCategoryName, setActiveCategoryName] = useState<string | null>(
     null,
@@ -70,7 +74,7 @@ const TotalMenu = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            hapticVibration("soft");
+            // hapticVibration("soft");
             const activeCategory = entry.target.getAttribute("data-category");
             if (activeCategory) {
               setActiveCategoryName(activeCategory);

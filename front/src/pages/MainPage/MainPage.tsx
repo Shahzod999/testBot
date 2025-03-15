@@ -88,7 +88,7 @@ const MainPage = () => {
       currentVersion >= requiredVersion &&
       (tg.platform == "ios" || tg.platform == "android")
     ) {
-      tg.requestFullscreen();
+      // tg.requestFullscreen();
       tg.disableVerticalSwipes();
 
       hapticVibration("rigid");
